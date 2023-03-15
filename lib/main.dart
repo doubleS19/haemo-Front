@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hae_mo/Page/clubPage.dart';
+import 'package:hae_mo/Page/myPage.dart';
+import 'package:hae_mo/Page/recommendPage.dart';
 
-import 'homePage.dart';
+import 'Page/homePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,14 +41,14 @@ class _MyHomePageState extends State<MyHomePage> {
     const HomePage(
       title: 'Home',
     ),
-    const HomePage(
-      title: 'Home',
+    const ClubPage(
+      title: '소모임',
     ),
-    const HomePage(
-      title: 'Home',
+    const RecommendPage(
+      title: '추천장소',
     ),
-    const HomePage(
-      title: 'Home',
+    const MyPage(
+      title: '마이페이지',
     ),
   ];
 
@@ -78,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: _onItemTapped,
       ),
       // floatingActionButton: FloatingActionButton(
-      //   onPressed: ,
+      //   onPressed: Na,
       //   tooltip: 'Increment',
       //   child: const Icon(Icons.add),
       // ),
