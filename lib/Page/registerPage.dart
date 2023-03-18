@@ -36,6 +36,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _genderList = ["남자", "여자"];
   var _selectedGender = "남자";
 
+  final TextEditingController _textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +52,9 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const TextField(
-                decoration: InputDecoration(
+              TextFormField(
+                controller: _textController,
+                decoration: const InputDecoration(
                   labelText: 'Nickname',
                   hintText: '닉네임을 입력하세요.',
                   labelStyle: TextStyle(color: Colors.blueGrey),
@@ -68,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Container(
                   alignment: Alignment.centerLeft,
                   child: Row(
@@ -103,22 +106,35 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                         ),
                       ])),
-              SizedBox(height: 60),
-              SizedBox(
-                  height: 45.0,
-                  width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HomePage(
-                              title: '헤쳐모여 TUK',
-                            ),
-                          ));
-                    },
-                    child: const Text("가입"),
-                  ))
+              const SizedBox(height: 60),
+              if (_selectedMajor == "학과 선택" ||
+                  _textController.text.isEmpty) ...[
+                SizedBox(
+                    height: 45.0,
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueGrey),
+                      onPressed: null,
+                      child: const Text("가입"),
+                    ))
+              ] else ...[
+                SizedBox(
+                    height: 45.0,
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HomePage(
+                                title: '헤쳐모여 TUK',
+                              ),
+                            ));
+                      },
+                      child: const Text("가입"),
+                    ))
+              ]
             ],
           ),
         ));
