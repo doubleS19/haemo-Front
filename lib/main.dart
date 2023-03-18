@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart'
+    show GetMaterialApp;
 import 'package:hae_mo/Page/clubPage.dart';
 import 'package:hae_mo/Page/myPage.dart';
 import 'package:hae_mo/Page/recommendPage.dart';
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: '헤쳐모여 TUK',
       theme: ThemeData(
         primarySwatch: Colors.blue,
