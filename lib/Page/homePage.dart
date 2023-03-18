@@ -60,6 +60,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: _widgetOptions.elementAt(_selectedIndex),

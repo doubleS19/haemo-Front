@@ -33,67 +33,94 @@ class _RegisterPageState extends State<RegisterPage> {
   final _majorList = ["학과 선택", "컴퓨터공학과", "소프트웨어공학과", "인공지능학과"];
   var _selectedMajor = "학과 선택";
 
+  final _genderList = ["남자", "여자"];
+  var _selectedGender = "남자";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.all(30.0),
-        child: Column(
-          children: [
-            Align(
-                alignment: Alignment.topLeft,
-                child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(Icons.arrow_back_ios))),
-            const TextField(
-              decoration: InputDecoration(
-                labelText: 'Nickname',
-                hintText: '닉네임을 입력하세요.',
-                labelStyle: TextStyle(color: Colors.blueGrey),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(width: 1, color: Colors.blueGrey),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(width: 1, color: Colors.blueGrey),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          foregroundColor: Colors.black,
+          elevation: 0.0,
+          automaticallyImplyLeading: true,
+        ),
+        body: Container(
+          margin: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const TextField(
+                decoration: InputDecoration(
+                  labelText: 'Nickname',
+                  hintText: '닉네임을 입력하세요.',
+                  labelStyle: TextStyle(color: Colors.blueGrey),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(width: 1, color: Colors.blueGrey),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(width: 1, color: Colors.blueGrey),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),
                 ),
               ),
-            ),
-            DropdownButton(
-              value: _selectedMajor,
-              items: _majorList.map((value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
-                setState(() {
-                  _selectedMajor = value!;
-                });
-              },
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(
-                        title: '헤쳐모여 TUK',
-                      ),
-                    ));
-              },
-              child: const Text("가입"),
-            )
-          ],
-        ),
-      ),
-    );
+              SizedBox(height: 30),
+              Container(
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        DropdownButton(
+                          value: _selectedMajor,
+                          items: _majorList.map((value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedMajor = value!;
+                            });
+                          },
+                        ),
+                        DropdownButton(
+                          value: _selectedGender,
+                          items: _genderList.map((value) {
+                            return DropdownMenuItem(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedGender = value!;
+                            });
+                          },
+                        ),
+                      ])),
+              SizedBox(height: 60),
+              SizedBox(
+                  height: 45.0,
+                  width: MediaQuery.of(context).size.width,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage(
+                              title: '헤쳐모여 TUK',
+                            ),
+                          ));
+                    },
+                    child: const Text("가입"),
+                  ))
+            ],
+          ),
+        ));
   }
 }
