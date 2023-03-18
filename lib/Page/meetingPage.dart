@@ -29,8 +29,11 @@ class MeetingPage extends StatefulWidget {
 class _HomePageState extends State<MeetingPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("모임 페이지")),
+    return Scaffold(
+      body: Container(
+          alignment: Alignment.center,
+          color: Colors.white,
+          child: Text("모임 페이지")),
     );
   }
 }

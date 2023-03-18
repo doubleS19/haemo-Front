@@ -59,13 +59,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        elevation: 0.0,
+        title: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(widget.title,
+                textAlign: TextAlign.left,
+                style: const TextStyle(fontWeight: FontWeight.w800))),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),

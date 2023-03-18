@@ -29,8 +29,9 @@ class ClubPage extends StatefulWidget {
 class _ClubPageState extends State<ClubPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("소모임")),
+    return Scaffold(
+      body: Container(
+          alignment: Alignment.center, color: Colors.white, child: Text("소모임")),
     );
   }
 }

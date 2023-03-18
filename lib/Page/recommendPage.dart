@@ -29,8 +29,11 @@ class RecommendPage extends StatefulWidget {
 class _RecommendPageState extends State<RecommendPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("추천합니당")),
+    return Scaffold(
+      body: Container(
+          alignment: Alignment.center,
+          color: Colors.white,
+          child: Text("추천합니당")),
     );
   }
 }
