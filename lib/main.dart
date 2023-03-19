@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
-import 'package:hae_mo/Page/clubPage.dart';
 import 'package:hae_mo/Page/loadingPage.dart';
-import 'package:hae_mo/Page/myPage.dart';
-import 'package:hae_mo/Page/recommendPage.dart';
-import 'Page/meetingPage.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +11,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
