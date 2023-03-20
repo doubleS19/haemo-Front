@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hae_mo/Page/recommendPage.dart';
+import 'package:hae_mo/Page/recommend_page.dart';
 
-import 'clubPage.dart';
-import 'meetingPage.dart';
-import 'myPage.dart';
+import 'club_page.dart';
+import 'meeting_page.dart';
+import 'my_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

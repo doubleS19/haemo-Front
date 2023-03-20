@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:hae_mo/Page/registerPage.dart';
+import 'package:hae_mo/Page/register_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

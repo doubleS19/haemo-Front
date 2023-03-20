@@ -32,7 +32,7 @@ class _RecommendPageState extends State<RecommendPage> {
       body: Container(
           alignment: Alignment.center,
           color: Colors.white,
-          child: Text("추천합니당")),
+          child: const Text("추천합니당")),
     );
   }
 }
