@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hae_mo/Page/register_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -45,12 +46,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     Timer(const Duration(milliseconds: 1500), () {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const RegisterPage(
-                    title: '헤모',
-                  )));
+      Get.to(const RegisterPage());
     });
   }
 }

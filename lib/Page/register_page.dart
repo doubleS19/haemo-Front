@@ -14,15 +14,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const RegisterPage(title: 'Flutter Demo Home Page'),
+      home: const RegisterPage(),
     );
   }
 }
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key, required this.title});
-
-  final String title;
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -123,13 +121,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const HomePage(
-                                title: '헤쳐모여 TUK',
-                              ),
-                            ));
+                        Get.to(const HomePage());
                       },
                       child: const Text("가입"),
                     ))

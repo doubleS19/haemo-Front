@@ -11,15 +11,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const RecommendPage(title: 'Flutter Demo Home Page'),
+      home: const RecommendPage(),
     );
   }
 }
 
 class RecommendPage extends StatefulWidget {
-  const RecommendPage({super.key, required this.title});
-
-  final String title;
+  const RecommendPage({super.key});
 
   @override
   State<RecommendPage> createState() => _RecommendPageState();

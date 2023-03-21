@@ -11,15 +11,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ClubPage(title: 'Flutter Demo Home Page'),
+      home: const ClubPage(),
     );
   }
 }
 
 class ClubPage extends StatefulWidget {
-  const ClubPage({super.key, required this.title});
-
-  final String title;
+  const ClubPage({super.key});
 
   @override
   State<ClubPage> createState() => _ClubPageState();
@@ -30,7 +28,9 @@ class _ClubPageState extends State<ClubPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          alignment: Alignment.center, color: Colors.white, child: Text("소모임")),
+          alignment: Alignment.center,
+          color: Colors.white,
+          child: const Text("소모임")),
     );
   }
 }

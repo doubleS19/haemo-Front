@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
 
 import 'club_page.dart';
@@ -16,15 +17,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -37,15 +36,9 @@ class _HomePageState extends State<HomePage> {
     const MeetingPage(
       title: 'Home',
     ),
-    const ClubPage(
-      title: '소모임',
-    ),
-    const RecommendPage(
-      title: '추천장소',
-    ),
-    const MyPage(
-      title: '마이페이지',
-    ),
+    const ClubPage(),
+    const RecommendPage(),
+    const MyPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -59,11 +52,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        title: Align(
+        title: const Align(
             alignment: Alignment.centerLeft,
-            child: Text(widget.title,
+            child: Text("헤쳐모여 TUK",
                 textAlign: TextAlign.left,
-                style: const TextStyle(fontWeight: FontWeight.w800))),
+                style: TextStyle(fontWeight: FontWeight.w800))),
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         automaticallyImplyLeading: false,
@@ -87,13 +80,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const MyPage(
-                      title: 'MyPage',
-                    )),
-          );
+          Get.to(const MyPage());
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

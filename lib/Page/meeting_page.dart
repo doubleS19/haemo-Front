@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hae_mo/Page/my_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -67,13 +68,7 @@ class _HomePageState extends State<MeetingPage> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const MyPage(
-                                        title: 'MyPage',
-                                      )),
-                            );
+                            Get.to(const MyPage());
                           },
                           child: Center(
                               child: Row(
