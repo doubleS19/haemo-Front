@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/Page/board_register_page.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
 
 import 'club_page.dart';
@@ -80,7 +81,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(const MyPage());
+          Get.to(const BoardRegisterPage());
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
