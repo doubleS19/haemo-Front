@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/route_manager.dart';
 import 'package:hae_mo/Page/home_page.dart';
+
+import '../controller/user_controller.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -34,6 +37,9 @@ class _RegisterPageState extends State<RegisterPage> {
   var _selectedGender = "남자";
 
   final TextEditingController _textController = TextEditingController();
+
+  final UserController _userController = Get.put(UserController());
+  final RegisterState _registerState = RegisterState.Fail;
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +89,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             );
                           }).toList(),
                           onChanged: (value) {
+                            _userController.CheckUserInfo(_textController.text,
+                                _selectedMajor, _selectedGender);
                             setState(() {
                               _selectedMajor = value!;
                             });
@@ -100,12 +108,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             setState(() {
                               _selectedGender = value!;
                             });
+                            _userController.CheckUserInfo(_textController.text,
+                                _selectedMajor, _selectedGender);
                           },
                         ),
                       ])),
               const SizedBox(height: 60),
-              if (_selectedMajor == "학과 선택" ||
-                  _textController.text.isEmpty) ...[
+              if (_registerState == RegisterState.Empty) ...[
                 SizedBox(
                     height: 45.0,
                     width: MediaQuery.of(context).size.width,
