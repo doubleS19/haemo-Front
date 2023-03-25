@@ -52,104 +52,138 @@ class _BoardRegisterPageState extends State<BoardRegisterPage> {
           foregroundColor: Colors.black,
         ),
         body: Container(
+            margin: const EdgeInsets.all(20.0),
             child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: _textController,
-              decoration: const InputDecoration(
-                labelText: 'Title',
-                hintText: '게시물 제목',
-                labelStyle: TextStyle(color: Colors.blueGrey),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(width: 1, color: Colors.blueGrey),
+              children: [
+                TextFormField(
+                  controller: _textController,
+                  decoration: const InputDecoration(
+                    labelText: 'Title',
+                    hintText: '게시물 제목',
+                    labelStyle: TextStyle(color: Colors.blueGrey),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(width: 1, color: Colors.blueGrey),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(width: 1, color: Colors.blueGrey),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                  ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  borderSide: BorderSide(width: 1, color: Colors.blueGrey),
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-            TextButton(
-                onPressed: () {
-                  showModalBottomSheet(
-                      context: context,
-                      backgroundColor: const Color.fromRGBO(22, 22, 22, 1),
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      builder: (BuildContext context) {
-                        return SizedBox(
-                          height: 200,
-                          child: selectDate(),
-                        );
-                      });
-                },
-                child: const Text("날짜 선택")),
-            Container(
-                alignment: Alignment.centerLeft,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      DropdownButton(
-                        value: _selectedHeadCount,
-                        items: _headCountList.map((value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedHeadCount = value!;
-                          });
-                        },
-                      ),
-                      DropdownButton(
-                        value: _selectedCategory,
-                        items: _categoryList.map((value) {
-                          return DropdownMenuItem(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedCategory = value!;
-                          });
-                        },
-                      ),
-                    ])),
-            const SizedBox(height: 60),
-            if (_selectedHeadCount == "인원 선택" ||
-                _textController.text.isEmpty ||
-                _selectedCategory == "카테고리 선택") ...[
-              Container(
-                  height: 45.0,
-                  alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey),
-                    onPressed: null,
-                    child: const Text("등록"),
-                  ))
-            ] else ...[
-              Container(
-                  height: 45.0,
-                  alignment: Alignment.bottomRight,
-                  child: ElevatedButton(
+                const SizedBox(height: 30),
+                TextButton(
                     onPressed: () {
-                      Get.to(const HomePage());
+                      showModalBottomSheet(
+                          context: context,
+                          backgroundColor: const Color.fromRGBO(22, 22, 22, 1),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          builder: (BuildContext context) {
+                            return SizedBox(
+                              height: 200,
+                              child: selectDate(),
+                            );
+                          });
                     },
-                    child: const Text("등록"),
-                  ))
-            ]
-          ],
-        )));
+                    child: const Text("날짜 선택")),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          DropdownButton(
+                            value: _selectedHeadCount,
+                            items: _headCountList.map((value) {
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedHeadCount = value!;
+                              });
+                            },
+                          ),
+                          DropdownButton(
+                            value: _selectedCategory,
+                            items: _categoryList.map((value) {
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedCategory = value!;
+                              });
+                            },
+                          ),
+                        ])),
+                Container(
+                  height: 380,
+                  margin: const EdgeInsets.only(top: 20.0),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(17),
+                      color: const Color.fromARGB(212, 236, 236, 236)),
+                  child: TextField(
+                      cursorColor: Colors.white,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: 18,
+                      maxLength: 300,
+                      style: const TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.black,
+                      ),
+                      onChanged: null,
+                      decoration: InputDecoration(
+                        focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide.none),
+                        contentPadding: const EdgeInsets.all(16),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        focusColor: Colors.transparent,
+                        hintText: "게시물 내용을 작성해주세요.",
+                        hintStyle: const TextStyle(
+                          color: Color.fromARGB(255, 29, 29, 29),
+                          fontSize: 14.0,
+                        ),
+                      )),
+                ),
+                const SizedBox(height: 60),
+                if (_selectedHeadCount == "인원 선택" ||
+                    _textController.text.isEmpty ||
+                    _selectedCategory == "카테고리 선택") ...[
+                  Container(
+                      height: 45.0,
+                      alignment: Alignment.bottomRight,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueGrey),
+                        onPressed: null,
+                        child: const Text("등록"),
+                      ))
+                ] else ...[
+                  Container(
+                      height: 45.0,
+                      alignment: Alignment.bottomRight,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.to(const HomePage());
+                        },
+                        child: const Text("등록"),
+                      ))
+                ]
+              ],
+            )));
   }
 
   Widget selectDate() {
@@ -200,7 +234,7 @@ class _BoardRegisterPageState extends State<BoardRegisterPage> {
                 ),
               ),
               child: CupertinoDatePicker(
-                backgroundColor: Color(0xff161616),
+                backgroundColor: Color(0xffffffff),
                 initialDateTime: selectDate,
                 maximumYear: DateTime.now().year + 1,
                 maximumDate: DateTime.now(),
