@@ -37,6 +37,7 @@ class _BoardRegisterPageState extends State<BoardRegisterPage> {
   var _selectedCategory = "카테고리 선택";
 
   final TextEditingController _textController = TextEditingController();
+  final TextEditingController _contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +134,7 @@ class _BoardRegisterPageState extends State<BoardRegisterPage> {
                       borderRadius: BorderRadius.circular(17),
                       color: const Color.fromARGB(212, 236, 236, 236)),
                   child: TextField(
+                      controller: _contentController,
                       cursorColor: Colors.white,
                       keyboardType: TextInputType.multiline,
                       maxLines: 18,
@@ -141,7 +143,9 @@ class _BoardRegisterPageState extends State<BoardRegisterPage> {
                         fontSize: 14.0,
                         color: Colors.black,
                       ),
-                      onChanged: null,
+                      onChanged: (value) {
+                        _contentController.text = value;
+                      },
                       decoration: InputDecoration(
                         focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide.none),
@@ -161,7 +165,8 @@ class _BoardRegisterPageState extends State<BoardRegisterPage> {
                 const SizedBox(height: 60),
                 if (_selectedHeadCount == "인원 선택" ||
                     _textController.text.isEmpty ||
-                    _selectedCategory == "카테고리 선택") ...[
+                    _selectedCategory == "카테고리 선택" ||
+                    _contentController.text.isEmpty) ...[
                   Container(
                       height: 45.0,
                       alignment: Alignment.bottomRight,
