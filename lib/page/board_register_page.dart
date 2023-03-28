@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/my_page.dart';
+import 'package:hae_mo/controller/board_register_controller.dart';
 
 import 'home_page.dart';
 
@@ -39,8 +40,16 @@ class _BoardRegisterPageState extends State<BoardRegisterPage> {
   final TextEditingController _textController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
 
+  final BoardRegisterController _boradRegisterController =
+      Get.put(BoardRegisterController());
+
+  late BoardRegisterState _boardRegisterState;
+  final _formKey = GlobalKey<FormState>();
+  final _key = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    _boardRegisterState = _boradRegisterController.boardRegisterState;
     return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
@@ -54,140 +63,177 @@ class _BoardRegisterPageState extends State<BoardRegisterPage> {
         ),
         body: Container(
             margin: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _textController,
-                  decoration: const InputDecoration(
-                    labelText: 'Title',
-                    hintText: '게시물 제목',
-                    labelStyle: TextStyle(color: Colors.blueGrey),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide: BorderSide(width: 1, color: Colors.blueGrey),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      borderSide: BorderSide(width: 1, color: Colors.blueGrey),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                TextButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context,
-                          backgroundColor: const Color.fromRGBO(22, 22, 22, 1),
-                          shape: const RoundedRectangleBorder(
+            child: GetBuilder<BoardRegisterController>(
+              builder: (_boardRegisterController) {
+                return Column(
+                  children: [
+                    Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          controller: _textController,
+                          decoration: const InputDecoration(
+                            labelText: 'Title',
+                            hintText: '게시물 제목',
+                            labelStyle: TextStyle(color: Colors.blueGrey),
+                            focusedBorder: OutlineInputBorder(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          builder: (BuildContext context) {
-                            return SizedBox(
-                              height: 200,
-                              child: selectDate(),
-                            );
-                          });
-                    },
-                    child: const Text("날짜 선택")),
-                Container(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          DropdownButton(
-                            value: _selectedHeadCount,
-                            items: _headCountList.map((value) {
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedHeadCount = value!;
-                              });
-                            },
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.blueGrey),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                              borderSide:
+                                  BorderSide(width: 1, color: Colors.blueGrey),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0)),
+                            ),
                           ),
-                          DropdownButton(
-                            value: _selectedCategory,
-                            items: _categoryList.map((value) {
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedCategory = value!;
-                              });
-                            },
-                          ),
-                        ])),
-                Container(
-                  height: 380,
-                  margin: const EdgeInsets.only(top: 20.0),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(17),
-                      color: const Color.fromARGB(212, 236, 236, 236)),
-                  child: TextField(
-                      controller: _contentController,
-                      cursorColor: Colors.white,
-                      keyboardType: TextInputType.multiline,
-                      maxLines: 18,
-                      maxLength: 300,
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        color: Colors.black,
-                      ),
-                      onChanged: (value) {
-                        _contentController.text = value;
-                      },
-                      decoration: InputDecoration(
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide.none),
-                        contentPadding: const EdgeInsets.all(16),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusColor: Colors.transparent,
-                        hintText: "게시물 내용을 작성해주세요.",
-                        hintStyle: const TextStyle(
-                          color: Color.fromARGB(255, 29, 29, 29),
-                          fontSize: 14.0,
-                        ),
-                      )),
-                ),
-                const SizedBox(height: 60),
-                if (_selectedHeadCount == "인원 선택" ||
-                    _textController.text.isEmpty ||
-                    _selectedCategory == "카테고리 선택" ||
-                    _contentController.text.isEmpty) ...[
-                  Container(
-                      height: 45.0,
-                      alignment: Alignment.bottomRight,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey),
-                        onPressed: null,
-                        child: const Text("등록"),
-                      ))
-                ] else ...[
-                  Container(
-                      height: 45.0,
-                      alignment: Alignment.bottomRight,
-                      child: ElevatedButton(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              _boardRegisterState = BoardRegisterState.Empty;
+                            }
+                          },
+                        )),
+                    const SizedBox(height: 30),
+                    TextButton(
                         onPressed: () {
-                          Get.to(const HomePage());
+                          showModalBottomSheet(
+                              context: context,
+                              backgroundColor:
+                                  const Color.fromRGBO(22, 22, 22, 1),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              builder: (BuildContext context) {
+                                return SizedBox(
+                                  height: 200,
+                                  child: selectDate(),
+                                );
+                              });
                         },
-                        child: const Text("등록"),
-                      ))
-                ]
-              ],
+                        child: const Text("날짜 선택")),
+                    Container(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              DropdownButton(
+                                value: _selectedHeadCount,
+                                items: _headCountList.map((value) {
+                                  return DropdownMenuItem(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedHeadCount = value!;
+                                  });
+                                  _boardRegisterController.checkEssentialInfo(
+                                      _selectedHeadCount,
+                                      _textController.text,
+                                      _contentController.text,
+                                      _selectedCategory);
+                                },
+                              ),
+                              DropdownButton(
+                                value: _selectedCategory,
+                                items: _categoryList.map((value) {
+                                  return DropdownMenuItem(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedCategory = value!;
+                                  });
+                                },
+                              ),
+                            ])),
+                    Container(
+                        height: 380,
+                        margin: const EdgeInsets.only(top: 20.0),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(17),
+                            color: const Color.fromARGB(212, 236, 236, 236)),
+                        child: Form(
+                            key: _key,
+                            child: TextFormField(
+                              controller: _contentController,
+                              cursorColor: Colors.white,
+                              keyboardType: TextInputType.multiline,
+                              maxLines: 18,
+                              maxLength: 300,
+                              style: const TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black,
+                              ),
+                              onChanged: (value) {
+                                _contentController.text = value;
+                                _boardRegisterController.checkEssentialInfo(
+                                    _selectedHeadCount,
+                                    _textController.text,
+                                    _contentController.text,
+                                    _selectedCategory);
+                              },
+                              decoration: InputDecoration(
+                                focusedBorder: const UnderlineInputBorder(
+                                    borderSide: BorderSide.none),
+                                contentPadding: const EdgeInsets.all(16),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                focusColor: Colors.transparent,
+                                hintText: "게시물 내용을 작성해주세요.",
+                                hintStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 29, 29, 29),
+                                  fontSize: 14.0,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  _boardRegisterState =
+                                      BoardRegisterState.Empty;
+                                }
+                                _boardRegisterController.checkEssentialInfo(
+                                    _selectedHeadCount,
+                                    _textController.text,
+                                    _contentController.text,
+                                    _selectedCategory);
+                              },
+                            ))),
+                    const SizedBox(height: 60),
+                    if (_boardRegisterState == BoardRegisterState.Empty) ...[
+                      Container(
+                          height: 45.0,
+                          alignment: Alignment.bottomRight,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blueGrey),
+                            onPressed: null,
+                            child: const Text("등록"),
+                          ))
+                    ] else ...[
+                      Container(
+                          height: 45.0,
+                          alignment: Alignment.bottomRight,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Get.to(const HomePage());
+                            },
+                            child: const Text("등록"),
+                          ))
+                    ]
+                  ],
+                );
+              },
             )));
   }
 
