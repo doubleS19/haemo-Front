@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/Page/board_register_page.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
 import 'package:hae_mo/model/chatlist_model.dart';
+import 'package:hae_mo/page/posting_page.dart';
 
 import 'chat_list_page.dart';
 import 'club_page.dart';
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(const ChatListPage());
+          Get.to(const PostingPage());
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

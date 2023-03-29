@@ -18,19 +18,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const BoardRegisterPage(),
+      home: const PostingPage(),
     );
   }
 }
 
-class BoardRegisterPage extends StatefulWidget {
-  const BoardRegisterPage({super.key});
+class PostingPage extends StatefulWidget {
+  const PostingPage({super.key});
 
   @override
-  State<BoardRegisterPage> createState() => _BoardRegisterPageState();
+  State<PostingPage> createState() => _PostingPageState();
 }
 
-class _BoardRegisterPageState extends State<BoardRegisterPage> {
+class _PostingPageState extends State<PostingPage> {
   final _headCountList = ["인원 선택", "1명", "2명", "3명", "4명", "5명 이상"];
   var _selectedHeadCount = "인원 선택";
 
