@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/Page/board_register_page.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
-import 'package:hae_mo/model/chatlist_model.dart';
 import 'package:hae_mo/page/posting_page.dart';
-
-import 'chat_list_page.dart';
 import 'club_page.dart';
 import 'meeting_page.dart';
 import 'my_page.dart';
