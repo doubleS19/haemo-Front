@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/board_register_page.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
+import 'package:hae_mo/model/chatlist_model.dart';
 
+import 'chat_list_page.dart';
 import 'club_page.dart';
 import 'meeting_page.dart';
 import 'my_page.dart';
@@ -81,7 +83,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(const BoardRegisterPage());
+          Get.to(const ChatListPage());
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
