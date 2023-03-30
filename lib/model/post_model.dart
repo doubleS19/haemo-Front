@@ -1,20 +1,19 @@
+import 'dart:convert';
 import 'dart:ffi';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
 class Post {
-  String? nickname;
-  String? title;
-  String? content;
-  Int? pId;
-  Int? person;
-  String? category;
+  final String? nickname;
+  final String? title;
+  final String? content;
+  final String? person;
+  final String? category;
 
   Post(
       {required this.nickname,
       required this.title,
       required this.content,
-      required this.pId,
       required this.person,
       required this.category});
 
@@ -23,8 +22,24 @@ class Post {
         nickname: json['nickname'],
         title: json['title'],
         content: json['content'],
-        pId: json['pId'],
         person: json['person'],
         category: json['category']);
+  }
+  Map<String, dynamic> toJson() => {
+        'nickname': nickname,
+        'title': title,
+        'content': content,
+        'person': person,
+        'category': category,
+      };
+}
+
+Future<List<Post>> fetchPost() async {
+  final response = await http.get(Uri.parse("http://localhost:8080/post"));
+  if (response.statusCode == 200) {
+    final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
+    return parsed.map<Post>((json) => Post.fromJson(json)).toList();
+  } else {
+    throw Exception("Failed to fetch Post");
   }
 }

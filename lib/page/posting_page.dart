@@ -210,7 +210,8 @@ class _PostingPageState extends State<PostingPage> {
                               },
                             ))),
                     const SizedBox(height: 60),
-                    if (_boardRegisterState == BoardRegisterState.Empty) ...[
+                    if (_boardRegisterState == BoardRegisterState.Empty ||
+                        _contentController.text.isEmpty) ...[
                       Container(
                           height: 45.0,
                           alignment: Alignment.bottomRight,
@@ -226,6 +227,11 @@ class _PostingPageState extends State<PostingPage> {
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
                             onPressed: () {
+                              _boradRegisterController.saveBoard(
+                                  _selectedHeadCount,
+                                  _textController.text,
+                                  _contentController.text,
+                                  _selectedCategory);
                               Get.to(const HomePage());
                             },
                             child: const Text("등록"),
@@ -285,7 +291,7 @@ class _PostingPageState extends State<PostingPage> {
                 ),
               ),
               child: CupertinoDatePicker(
-                backgroundColor: Color(0xffffffff),
+                backgroundColor: const Color(0xffffffff),
                 initialDateTime: selectDate,
                 maximumYear: DateTime.now().year + 1,
                 maximumDate: DateTime.now(),

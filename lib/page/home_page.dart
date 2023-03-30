@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(const ChatListPage());
+          Get.to(const PostingPage());
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

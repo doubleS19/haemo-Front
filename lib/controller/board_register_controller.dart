@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
+import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/page/home_page.dart';
+import 'package:hae_mo/service/db_service.dart';
 import "dart:developer" as dev;
+
+import 'package:http/http.dart';
 
 enum BoardRegisterState { Full, Empty }
 
@@ -29,9 +33,17 @@ class BoardRegisterController extends GetxController {
     update();
   }
 
-  Future saveBoard(String nickname, String major, String gender) async {
+  Future<void> saveBoard(
+      String person, String title, String content, String category) async {
     if (_BoardRegisterState == BoardRegisterState.Full) {
+      DBService db = DBService();
       _BoardState = BoardState.Success;
+      db.savePost(Post(
+          nickname: "닉네임입니다용",
+          title: title,
+          content: content,
+          person: person,
+          category: category));
       Get.to(const HomePage());
       dev.log("Success~");
     } else {
