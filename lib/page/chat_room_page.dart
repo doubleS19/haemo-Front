@@ -33,11 +33,28 @@ class _ChatRoomState extends State<ChatRoom> {
     );
   }
 
-  Widget Sender(){
-    return Column(
-      children: [
-        Text("안녕하세요 응답")
-      ],
+  Widget Sender(String text, String time){
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(time, style: TextStyle(fontSize: 20)),
+          SizedBox(width:5),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(13),
+                color: Color(0xFFfeec34)
+              ),
+              child: Text(text),
+            )
+          )
+        ]
+      )
+
     );
   }
 

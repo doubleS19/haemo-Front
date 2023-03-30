@@ -3,7 +3,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
 import 'package:hae_mo/Page/loading_page.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+    //final Future<FirebaseApp> _initialization = Firebase.initializeApp();
     return GetMaterialApp(
       title: '헤쳐모여 TUK',
       theme: ThemeData(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/Page/board_register_page.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
 import 'package:hae_mo/model/chatlist_model.dart';
 
