@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+// firebase chatList
 class ChatList{
   String? chatUser1;
   String? chatUser2;
