@@ -77,7 +77,7 @@ class _ChatListPageState extends State<ChatListPage> {
                   actionExtentRatio: 0.15,
                   secondaryActions: [
                     Container(
-                        margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                        margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
                         height: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
