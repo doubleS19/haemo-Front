@@ -76,19 +76,22 @@ class _ChatListPageState extends State<ChatListPage> {
                   actionPane: const SlidableDrawerActionPane(),
                   actionExtentRatio: 0.15,
                   secondaryActions: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.redAccent),
-                      child: const Text("삭제",
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 13.0)),
-                      onPressed: () {
-                        chatList.removeWhere((element) {
-                          return element.nickname == personone.nickname;
-                        }); //go through the loop and match content to delete from list
-                        setState(() {});
-                      },
-                    ),
+                    Container(
+                        margin: EdgeInsets.only(top: 5.0, bottom: 5.0),
+                        height: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.redAccent),
+                          child: const Text("삭제",
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 13.0)),
+                          onPressed: () {
+                            chatList.removeWhere((element) {
+                              return element.nickname == personone.nickname;
+                            });
+                            setState(() {});
+                          },
+                        )),
                   ],
                   child: Card(
                     child: ListTile(
