@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,23 +13,36 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
 
-  Widget Receiver() {
+  Widget Receiver(String text, String name, String time, dynamic profile) {
     return Column(
       children: [
         Row(
           children: [
-            Image.asset("assets/image.png"),
-            Column(
-              children: const [
-                Text("닉네임", style: TextStyle(
-
-                ),),
-                SizedBox(height: 20)
-              ],
+            const CircleAvatar(
+              backgroundColor: Colors.amberAccent,
             ),
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(name),
+                  Container(
+                    child: Text(text),
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(13),
+                      color: Colors.white
+                    ),
+                  )
+                ],
+              )
+            ),
+            const SizedBox(
+              width: 5
+            ),
+            Text(time, style: const TextStyle(fontSize: 12))
           ],
         ),
-        Text("안녕하세요 메세지")
       ],
     );
   }
@@ -58,6 +72,20 @@ class _ChatRoomState extends State<ChatRoom> {
     );
   }
 
+  Widget TimeLine(String time){
+    return Container(
+      padding: const EdgeInsets.all(7),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Color(0xFF9cafbe)
+      ),
+      child: Text(
+        time,
+        style: TextStyle(color: Colors.white)
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +100,7 @@ class _ChatRoomState extends State<ChatRoom> {
                 actions: [
                   IconButton(
                     icon: const Icon(
-                        Icons.report_gmailerrorred_rounded, size: 20),
+                        Icons.report_gmailerrorred_rounded, size: 23,),
                     onPressed: () {
 
                     },
@@ -85,10 +113,15 @@ class _ChatRoomState extends State<ChatRoom> {
                   Expanded(
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: Column(
-                          children: [
-                            Text("2021년 2월 23일 금요일")
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Column(
+                            children: [
+                              TimeLine("2023년 2월 3일 수요일"),
+                              Receiver("안녕", "민수", "오전 10:00", 1),
+                              Sender("안녕", "오전 10:00")
+                            ],
+                          ),
                         )
                       )
                   ),
