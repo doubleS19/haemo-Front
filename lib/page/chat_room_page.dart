@@ -3,6 +3,10 @@ import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../model/chatlist_model.dart';
+import '../model/chatmessage_model.dart';
 
 class ChatRoom extends StatefulWidget {
   const ChatRoom({Key? key}) : super(key: key);
@@ -12,8 +16,15 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
+  final List<ChatMessage> chatList = [
+    ChatMessage(
+        text: "text", image: "", sender: "sender", createdAt: "createdAt"),
+    ChatMessage(
+        text: "text", image: "", sender: "receiver", createdAt: "createdAt"),
+  ];
+  final TextEditingController _textController = TextEditingController();
 
-  Widget Receiver(String text, String name, String time, dynamic profile) {
+  Widget receiver(String text, String name, String time, dynamic profile) {
     return Column(
       children: [
         Row(
@@ -22,24 +33,20 @@ class _ChatRoomState extends State<ChatRoom> {
               backgroundColor: Colors.amberAccent,
             ),
             Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(name),
-                  Container(
-                    child: Text(text),
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(name),
+                Container(
+                  child: Text(text),
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(13),
-                      color: Colors.white
-                    ),
-                  )
-                ],
-              )
-            ),
-            const SizedBox(
-              width: 5
-            ),
+                      color: Colors.white),
+                )
+              ],
+            )),
+            const SizedBox(width: 5),
             Text(time, style: const TextStyle(fontSize: 12))
           ],
         ),
@@ -47,99 +54,135 @@ class _ChatRoomState extends State<ChatRoom> {
     );
   }
 
-  Widget Sender(String text, String time){
-
+  Widget sender(String text, String time) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(time, style: TextStyle(fontSize: 20)),
-          SizedBox(width:5),
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Text(time, style: TextStyle(fontSize: 12)),
+          SizedBox(width: 5),
           Flexible(
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
+              child: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(13),
-                color: Color(0xFFfeec34)
-              ),
-              child: Text(text),
-            )
-          )
-        ]
-      )
+                color: Color(0xFFfeec34)),
+            child: Text(text, style: TextStyle(fontSize: 20)),
+          ))
+        ]));
+  }
 
+  Widget timeLine(String time) {
+    return Container(
+        padding: const EdgeInsets.all(7),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15), color: Color(0xFF9cafbe)),
+        child: Text(time, style: TextStyle(color: Colors.white)));
+  }
+
+  Widget chatIconButton(Icon icon) {
+    return IconButton(
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      icon: icon,
+      iconSize: 25,
+      onPressed: () {},
     );
   }
 
-  Widget TimeLine(String time){
-    return Container(
-      padding: const EdgeInsets.all(7),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Color(0xFF9cafbe)
-      ),
-      child: Text(
-        time,
-        style: TextStyle(color: Colors.white)
-      )
-    );
+  void _handleSubmitted(text) {
+    _textController.clear();
+
+    setState(() {
+      chatList.add(ChatMessage(
+          text: text, image: "image", sender: "sender", createdAt: "time"
+/*          DateFormat("a K:a")
+              .format(DateTime.now())
+              .replaceAll("AM", "오전")
+              .replaceAll("PM", "오후"))*/
+          ));
+    });
+  }
+
+  Widget chooseSender(ChatMessage chat) {
+    if (chat.sender == "sender") {
+      return sender(chat.text!, chat.text!);
+    } else {
+      return receiver(chat.text!, chat.sender!, chat.text!, 1);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          //color: ,
-          child: Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                title: Text("Seoyeon"),
-                //style: Theme.of(context).textTheme.headline6
-                actions: [
-                  IconButton(
-                    icon: const Icon(
-                        Icons.report_gmailerrorred_rounded, size: 23,),
-                    onPressed: () {
+      //color: ,
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Text("Seoyeon"),
+            //style: Theme.of(context).textTheme.headline6
+            leading: IconButton(
+              icon: const Icon(FontAwesomeIcons.arrowLeft),
+              onPressed: () {},
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(
+                  Icons.report_gmailerrorred_rounded,
+                  size: 23,
+                ),
+                onPressed: () {},
+              ),
+              const SizedBox(width: 25)
+            ],
+          ),
+          body: Column(children: [
+            Expanded(
+                child: SingleChildScrollView(
+                    child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  for (var chat in chatList) chooseSender(chat)
 
-                    },
-                  ),
-                  const SizedBox(width: 25)
+/*                    ListView.builder(
+                      itemCount: chats.length,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        if (chats[index].sender == "sender") {
+                          return Sender(chats[index].text!, chats[index].text!);
+                        } else {
+                          return Receiver(chats[index].text!,
+                              chats[index].sender!, chats[index].text!, 1);
+                        }
+                      },
+                    )*/
                 ],
               ),
-              body: Column(
-                children:[
-                  Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Column(
-                            children: [
-                              TimeLine("2023년 2월 3일 수요일"),
-                              Receiver("안녕", "민수", "오전 10:00", 1),
-                              Sender("안녕", "오전 10:00")
-                            ],
-                          ),
-                        )
-                      )
-                  ),
-                  Row(
-                    children: [
-                      TextField(
-
+            ))),
+            Container(
+                height: 60,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    chatIconButton(const Icon(FontAwesomeIcons.squarePlus)),
+                    Expanded(
+                        child: Container(
+                            child: TextField(
+                      controller: _textController,
+                      maxLines: 1,
+                      style: TextStyle(fontSize: 20),
+                      decoration: InputDecoration(
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
                       ),
-                      Icon(Icons.send)
-
-                    ],
-                  )
-                ]
-              )
-          ),
-        )
-
-    );
+                      onSubmitted: _handleSubmitted,
+                    ))),
+                    chatIconButton(Icon(FontAwesomeIcons.faceSmile)),
+                    chatIconButton(Icon(FontAwesomeIcons.gear))
+                  ],
+                ))
+          ])),
+    ));
   }
-
 }
