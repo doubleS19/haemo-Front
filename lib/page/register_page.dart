@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              _registerState = RegisterState.Empty;
+                              _registerState = RegisterState.empty;
                             }
                           },
                         )),
@@ -106,10 +106,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                   );
                                 }).toList(),
                                 onChanged: (value) {
-                                  _userController.checkUserInfo(
-                                      _textController.text,
-                                      _selectedMajor,
-                                      _selectedGender);
                                   setState(() {
                                     _selectedMajor = value!;
                                   });
@@ -135,8 +131,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             ])),
                     const SizedBox(height: 60),
-                    if (_registerState == RegisterState.Fail ||
-                        _registerState == RegisterState.Empty) ...[
+                    if (_registerState == RegisterState.fail ||
+                        _registerState == RegisterState.empty) ...[
                       SizedBox(
                           height: 45.0,
                           width: MediaQuery.of(context).size.width,
