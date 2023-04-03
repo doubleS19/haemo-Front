@@ -2,6 +2,10 @@ import 'package:get/get.dart';
 import 'package:hae_mo/page/home_page.dart';
 import "dart:developer" as dev;
 
+import 'package:hae_mo/service/db_service.dart';
+
+import '../model/user_model.dart';
+
 enum RegisterState { success, fail, empty, okay }
 
 class UserController extends GetxController {
@@ -23,8 +27,9 @@ class UserController extends GetxController {
   Future saveInfo(String nickname, String major, String gender) async {
     if (_registerState == RegisterState.okay) {
       _registerState = RegisterState.success;
-      Get.to(const HomePage());
-      dev.log("Success~");
+      DBService dbService = DBService();
+      dbService
+          .saveUser(User(nickname: "nickname", major: major, gender: gender));
     } else {
       _registerState = RegisterState.fail;
       dev.log("Fail~");

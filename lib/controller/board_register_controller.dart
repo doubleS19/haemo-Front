@@ -42,8 +42,6 @@ class BoardRegisterController extends GetxController {
           content: content,
           person: person,
           category: category));
-      Get.to(const HomePage());
-      dev.log("Success~");
     } else {
       _BoardState = BoardState.fail;
       dev.log("Fail~");

@@ -148,7 +148,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
                             onPressed: () {
-                              Get.to(const HomePage());
+                              _userController.saveInfo(_textController.text,
+                                  _selectedMajor, _selectedGender);
                             },
                             child: const Text("가입"),
                           ))
