@@ -38,7 +38,7 @@ class _ChatRoomState extends State<ChatRoom> {
               children: [
                 Text(name),
                 Container(
-                  child: Text(text),
+                  child: Text(text, style: TextStyle(fontSize: 20)),
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(13),
@@ -47,7 +47,14 @@ class _ChatRoomState extends State<ChatRoom> {
               ],
             )),
             const SizedBox(width: 5),
-            Text(time, style: const TextStyle(fontSize: 12))
+            Flexible(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 22),
+                Text(time, style: const TextStyle(fontSize: 12, color: Colors.black26))
+              ],
+            )),
           ],
         ),
       ],
@@ -58,7 +65,13 @@ class _ChatRoomState extends State<ChatRoom> {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0),
         child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          Text(time, style: TextStyle(fontSize: 12)),
+          Column(
+            children: [
+              SizedBox(height: 18),
+              Text(time,
+                  style: TextStyle(fontSize: 12,  color: Colors.black26)),
+            ],
+          ),
           SizedBox(width: 5),
           Flexible(
               child: Container(
@@ -129,11 +142,11 @@ class _ChatRoomState extends State<ChatRoom> {
               IconButton(
                 icon: const Icon(
                   Icons.report_gmailerrorred_rounded,
-                  size: 23,
+                  size: 25
                 ),
                 onPressed: () {},
               ),
-              const SizedBox(width: 25)
+              const SizedBox(width: 8)
             ],
           ),
           body: Column(children: [
