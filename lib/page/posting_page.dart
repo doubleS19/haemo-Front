@@ -94,7 +94,7 @@ class _PostingPageState extends State<PostingPage> {
                           ),
                           validator: (value) {
                             if (value!.isEmpty) {
-                              _boardRegisterState = BoardRegisterState.Empty;
+                              _boardRegisterState = BoardRegisterState.empty;
                             }
                           },
                         )),
@@ -133,11 +133,6 @@ class _PostingPageState extends State<PostingPage> {
                                   setState(() {
                                     _selectedHeadCount = value!;
                                   });
-                                  _boardRegisterController.checkEssentialInfo(
-                                      _selectedHeadCount,
-                                      _textController.text,
-                                      _contentController.text,
-                                      _selectedCategory);
                                 },
                               ),
                               DropdownButton(
@@ -200,7 +195,7 @@ class _PostingPageState extends State<PostingPage> {
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   _boardRegisterState =
-                                      BoardRegisterState.Empty;
+                                      BoardRegisterState.empty;
                                 }
                                 _boardRegisterController.checkEssentialInfo(
                                     _selectedHeadCount,
@@ -210,7 +205,7 @@ class _PostingPageState extends State<PostingPage> {
                               },
                             ))),
                     const SizedBox(height: 60),
-                    if (_boardRegisterState == BoardRegisterState.Empty ||
+                    if (_boardRegisterState == BoardRegisterState.empty ||
                         _contentController.text.isEmpty) ...[
                       Container(
                           height: 45.0,
@@ -227,6 +222,11 @@ class _PostingPageState extends State<PostingPage> {
                           alignment: Alignment.bottomRight,
                           child: ElevatedButton(
                             onPressed: () {
+                              _boardRegisterController.checkEssentialInfo(
+                                  _selectedHeadCount,
+                                  _textController.text,
+                                  _contentController.text,
+                                  _selectedCategory);
                               _boradRegisterController.saveBoard(
                                   _selectedHeadCount,
                                   _textController.text,
