@@ -22,7 +22,7 @@ class User {
 }
 
 Future<List<User>> fetchUser() async {
-  final response = await http.get(Uri.parse("http://localhost:8080/user"));
+  final response = await http.get(Uri.parse("3.34.190.238:8080/user"));
   if (response.statusCode == 200) {
     final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<User>((json) => User.fromJson(json)).toList();
