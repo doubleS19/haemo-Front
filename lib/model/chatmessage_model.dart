@@ -10,7 +10,13 @@ class ChatUser {
 class ChatMessage {
   String? text;
   String? sender;
-  Timestamp? createdAt;
+  String? createdAt;  //  임시
+
+  ChatMessage({
+    required this.text,
+    required this.sender,
+    required this.createdAt
+  });
 }
 
 

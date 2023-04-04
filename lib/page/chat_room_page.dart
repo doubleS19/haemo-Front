@@ -18,9 +18,9 @@ class ChatRoom extends StatefulWidget {
 class _ChatRoomState extends State<ChatRoom> {
   final List<ChatMessage> chatList = [
     ChatMessage(
-        text: "text", image: "", sender: "sender", createdAt: "createdAt"),
+        text: "text", sender: "sender", createdAt: "createdAt"),
     ChatMessage(
-        text: "text", image: "", sender: "receiver", createdAt: "createdAt"),
+        text: "text", sender: "receiver", createdAt: "createdAt"),
   ];
   final TextEditingController _textController = TextEditingController();
 
@@ -105,8 +105,9 @@ class _ChatRoomState extends State<ChatRoom> {
     _textController.clear();
 
     setState(() {
-      chatList.add(ChatMessage(
-          text: text, image: "image", sender: "sender", createdAt: "time"
+      chatList.add(
+          ChatMessage(
+              text: text, sender: "sender", createdAt: "time"
 /*          DateFormat("a K:a")
               .format(DateTime.now())
               .replaceAll("AM", "오전")
