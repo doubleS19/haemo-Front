@@ -30,6 +30,7 @@ class UserController extends GetxController {
       // DBService dbService = DBService();
       // dbService
       //     .saveUser(User(nickname: "nickname", major: major, gender: gender));
+      Get.to(const HomePage());
     } else {
       _registerState = RegisterState.fail;
       dev.log("Fail~");
