@@ -27,9 +27,9 @@ class UserController extends GetxController {
   Future saveInfo(String nickname, String major, String gender) async {
     if (_registerState == RegisterState.okay) {
       _registerState = RegisterState.success;
-      DBService dbService = DBService();
-      dbService
-          .saveUser(User(nickname: "nickname", major: major, gender: gender));
+      // DBService dbService = DBService();
+      // dbService
+      //     .saveUser(User(nickname: "nickname", major: major, gender: gender));
     } else {
       _registerState = RegisterState.fail;
       dev.log("Fail~");

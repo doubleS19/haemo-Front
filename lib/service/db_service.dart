@@ -16,12 +16,12 @@ class DBService {
         },
         body: jsonEncode(user.toJson()),
       );
-      if (response.statusCode != 201) {
-        throw Exception("Failed to send user data");
-      } else {
-        print("data send");
-        Get.to(const HomePage());
-      }
+      // if (response.statusCode != 201) {
+      //   throw Exception("Failed to send user data");
+      // } else {
+      print("data send");
+      Get.to(const HomePage());
+      // }
     } catch (e) {
       print("Failed to send user data: ${e}");
     }
