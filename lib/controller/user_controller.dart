@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:hae_mo/model/shared_preference.dart';
 import 'package:hae_mo/page/home_page.dart';
 import "dart:developer" as dev;
 
@@ -26,10 +27,11 @@ class UserController extends GetxController {
 
   Future saveInfo(String nickname, String major, String gender) async {
     if (_registerState == RegisterState.okay) {
+      User user = User(nickname: nickname, major: major, gender: gender);
       _registerState = RegisterState.success;
+      SharedPreference.saveUser(user);
       DBService dbService = DBService();
-      dbService
-          .saveUser(User(nickname: nickname, major: major, gender: gender));
+      dbService.saveUser(user);
     } else {
       _registerState = RegisterState.fail;
       dev.log("Fail~");

@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class User {
-  final String? nickname;
-  final String? major;
-  final String? gender;
+  final String nickname;
+  final String major;
+  final String gender;
 
   User({required this.nickname, required this.major, required this.gender});
 
