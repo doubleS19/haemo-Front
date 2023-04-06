@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:get/get.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/page/home_page.dart';
@@ -20,7 +22,8 @@ class BoardRegisterController extends GetxController {
       String person, String title, String content, String category) async {
     if (content.isNotEmpty &&
         title.isNotEmpty &&
-        person != "인원 선택" &&
+        person.isNotEmpty &&
+        person != "0" &&
         category != "카테고리 선택") {
       _BoardRegisterState = BoardRegisterState.full;
       dev.log("Full~");
@@ -32,7 +35,7 @@ class BoardRegisterController extends GetxController {
   }
 
   Future<void> saveBoard(
-      String person, String title, String content, String category) async {
+      int person, String title, String content, String category) async {
     if (_BoardRegisterState == BoardRegisterState.full) {
       DBService db = DBService();
       _BoardState = BoardState.success;

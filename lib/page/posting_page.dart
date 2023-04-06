@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/my_page.dart';
-import 'package:hae_mo/controller/board_register_controller.dart';
+import 'package:hae_mo/controller/posting_controller.dart';
 
 import 'home_page.dart';
 
@@ -39,6 +39,7 @@ class _PostingPageState extends State<PostingPage> {
 
   final TextEditingController _textController = TextEditingController();
   final TextEditingController _contentController = TextEditingController();
+  final TextEditingController _personController = TextEditingController();
 
   final BoardRegisterController _boradRegisterController =
       Get.put(BoardRegisterController());
@@ -46,6 +47,7 @@ class _PostingPageState extends State<PostingPage> {
   late BoardRegisterState _boardRegisterState;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<FormState>();
+  final _headKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -116,42 +118,63 @@ class _PostingPageState extends State<PostingPage> {
                               });
                         },
                         child: const Text("날짜 선택")),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                              child: SizedBox(
+                                  width: 30,
+                                  child: Form(
+                                    key: _headKey,
+                                    child: TextFormField(
+                                      controller: _personController,
+                                      decoration: const InputDecoration(
+                                        labelText: '인원 수',
+                                        hintText: '인원',
+                                        labelStyle:
+                                            TextStyle(color: Colors.blueGrey),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide: BorderSide(
+                                              width: 1, color: Colors.blueGrey),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide: BorderSide(
+                                              width: 1, color: Colors.blueGrey),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          _boardRegisterState =
+                                              BoardRegisterState.empty;
+                                        }
+                                      },
+                                    ),
+                                  ))),
+                          DropdownButton(
+                            value: _selectedCategory,
+                            items: _categoryList.map((value) {
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedCategory = value!;
+                              });
+                            },
+                          ),
+                        ]),
                     Container(
-                        alignment: Alignment.centerLeft,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              DropdownButton(
-                                value: _selectedHeadCount,
-                                items: _headCountList.map((value) {
-                                  return DropdownMenuItem(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedHeadCount = value!;
-                                  });
-                                },
-                              ),
-                              DropdownButton(
-                                value: _selectedCategory,
-                                items: _categoryList.map((value) {
-                                  return DropdownMenuItem(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _selectedCategory = value!;
-                                  });
-                                },
-                              ),
-                            ])),
-                    Container(
-                        height: 380,
+                        height: 370,
                         margin: const EdgeInsets.only(top: 20.0),
                         width: double.infinity,
                         decoration: BoxDecoration(
@@ -228,7 +251,7 @@ class _PostingPageState extends State<PostingPage> {
                                   _contentController.text,
                                   _selectedCategory);
                               _boradRegisterController.saveBoard(
-                                  _selectedHeadCount,
+                                  int.parse(_personController.text),
                                   _textController.text,
                                   _contentController.text,
                                   _selectedCategory);

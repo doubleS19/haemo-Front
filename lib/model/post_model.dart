@@ -4,11 +4,11 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
 class Post {
-  final String? nickname;
-  final String? title;
-  final String? content;
-  final String? person;
-  final String? category;
+  final String nickname;
+  final String title;
+  final String content;
+  final int person;
+  final String category;
 
   Post(
       {required this.nickname,
