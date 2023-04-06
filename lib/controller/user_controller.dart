@@ -29,9 +29,10 @@ class UserController extends GetxController {
     if (_registerState == RegisterState.okay) {
       User user = User(nickname: nickname, major: major, gender: gender);
       _registerState = RegisterState.success;
-      SharedPreference.saveUser(user);
+      PreferenceUtil.saveUser(user);
       DBService dbService = DBService();
       dbService.saveUser(user);
+      dev.log(PreferenceUtil.getString("nickname")!);
     } else {
       _registerState = RegisterState.fail;
       dev.log("Fail~");

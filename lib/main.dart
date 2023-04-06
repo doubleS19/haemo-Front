@@ -1,12 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
 import 'package:hae_mo/Page/loading_page.dart';
 import 'package:get/get.dart';
+
+import 'model/shared_preference.dart';
+import 'networks/http_override.dart';
 //import 'package:firebase_core/firebase_core.dart';
 
+void main() async {
+  HttpOverrides.global = NoCheckCertificateHttpOverrides();
 
-void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PreferenceUtil.init();
   runApp(const MyApp());
 }
 
