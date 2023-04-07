@@ -10,7 +10,7 @@ class ChatUser {
 class ChatMessage {
   String? text;
   String? sender;
-  String? createdAt;  //  임시
+  DateTime createdAt;  //  임시
 
   ChatMessage({
     required this.text,
@@ -43,13 +43,11 @@ class ChatData {
     );
   }
 
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toMap() {
     Map<String, dynamic> data = {};
     data['chatUser1'] = chatUser1;
     data['chatUser2'] = chatUser2;
     data['chatMessageList'] = chatMessageList;
     return data;
   }
-
-
 }

@@ -1,10 +1,7 @@
-import 'dart:developer';
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import 'package:hae_mo/utils/chage_time_format.dart';
 import '../model/chatlist_model.dart';
 import '../model/chatmessage_model.dart';
 
@@ -18,13 +15,13 @@ class ChatRoom extends StatefulWidget {
 class _ChatRoomState extends State<ChatRoom> {
   final List<ChatMessage> chatList = [
     ChatMessage(
-        text: "text", sender: "sender", createdAt: "createdAt"),
+        text: "text", sender: "sender", createdAt: DateTime.now()),
     ChatMessage(
-        text: "text", sender: "receiver", createdAt: "createdAt"),
+        text: "text", sender: "receiver", createdAt: DateTime.now()),
   ];
   final TextEditingController _textController = TextEditingController();
 
-  Widget receiver(String text, String name, String time, dynamic profile) {
+  Widget receiver(String text, String name, DateTime time, dynamic profile) {
     return Column(
       children: [
         Row(
@@ -52,7 +49,7 @@ class _ChatRoomState extends State<ChatRoom> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 22),
-                Text(time, style: const TextStyle(fontSize: 12, color: Colors.black26))
+                Text(changeDatetimeToString(time), style: const TextStyle(fontSize: 12, color: Colors.black26))
               ],
             )),
           ],
@@ -61,14 +58,14 @@ class _ChatRoomState extends State<ChatRoom> {
     );
   }
 
-  Widget sender(String text, String time) {
+  Widget sender(String text, DateTime time) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0),
         child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           Column(
             children: [
               SizedBox(height: 18),
-              Text(time,
+              Text(changeDatetimeToString(time),
                   style: TextStyle(fontSize: 12,  color: Colors.black26)),
             ],
           ),
@@ -107,7 +104,7 @@ class _ChatRoomState extends State<ChatRoom> {
     setState(() {
       chatList.add(
           ChatMessage(
-              text: text, sender: "sender", createdAt: "time"
+              text: text, sender: "sender", createdAt: DateTime.now()
 /*          DateFormat("a K:a")
               .format(DateTime.now())
               .replaceAll("AM", "오전")
@@ -116,11 +113,13 @@ class _ChatRoomState extends State<ChatRoom> {
     });
   }
 
+
   Widget chooseSender(ChatMessage chat) {
+    // sharedpreference에 저장된 아이디라면
     if (chat.sender == "sender") {
-      return sender(chat.text!, chat.text!);
+      return sender(chat.text!, chat.createdAt!);
     } else {
-      return receiver(chat.text!, chat.sender!, chat.text!, 1);
+      return receiver(chat.text!, chat.sender!, chat.createdAt!, 1);
     }
   }
 
