@@ -22,7 +22,7 @@ class BoardRegisterController extends GetxController {
       String person, String title, String content, String category) async {
     if (content.isNotEmpty &&
         title.isNotEmpty &&
-        person.isNotEmpty &&
+        person != "" &&
         person != "0" &&
         category != "카테고리 선택") {
       _BoardRegisterState = BoardRegisterState.full;
