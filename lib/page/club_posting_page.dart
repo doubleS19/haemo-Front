@@ -18,19 +18,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const PostingPage(),
+      home: const ClubPostingPage(),
     );
   }
 }
 
-class PostingPage extends StatefulWidget {
-  const PostingPage({super.key});
+class ClubPostingPage extends StatefulWidget {
+  const ClubPostingPage({super.key});
 
   @override
-  State<PostingPage> createState() => _PostingPageState();
+  State<ClubPostingPage> createState() => _ClubPostingPageState();
 }
 
-class _PostingPageState extends State<PostingPage> {
+class _ClubPostingPageState extends State<ClubPostingPage> {
   final _headCountList = ["인원 선택", "1명", "2명", "3명", "4명", "5명 이상"];
   var _selectedHeadCount = "인원 선택";
 
@@ -160,6 +160,12 @@ class _PostingPageState extends State<PostingPage> {
                                           _boardRegisterState =
                                               BoardRegisterState.empty;
                                         }
+                                        _boardRegisterController
+                                            .checkEssentialInfo(
+                                                _personController.text,
+                                                _textController.text,
+                                                _contentController.text,
+                                                _selectedCategory);
                                       },
                                     ),
                                   ))),
@@ -200,7 +206,7 @@ class _PostingPageState extends State<PostingPage> {
                               onChanged: (value) {
                                 _contentController.text = value;
                                 _boardRegisterController.checkEssentialInfo(
-                                    _selectedHeadCount,
+                                    _personController.text,
                                     _textController.text,
                                     _contentController.text,
                                     _selectedCategory);

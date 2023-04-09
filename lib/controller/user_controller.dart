@@ -28,7 +28,7 @@ class UserController extends GetxController {
   Future saveInfo(String nickname, String major, String gender) async {
     if (_registerState == RegisterState.okay) {
       User user = User(
-          studentId: "2019152028",
+          studentId: "00000000",
           nickname: nickname,
           major: major,
           gender: gender);

@@ -5,6 +5,7 @@ import 'package:hae_mo/Page/recommend_page.dart';
 import 'package:hae_mo/page/chat_list_page.dart';
 import 'package:hae_mo/page/posting_page.dart';
 import 'club_page.dart';
+import 'club_posting_page.dart';
 import 'meeting_page.dart';
 import 'my_page.dart';
 
@@ -118,7 +119,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.indigo.shade900,
           labelBackgroundColor: Colors.indigo.shade900,
           onTap: () {
-            Get.to(const PostingPage());
+            Get.to(const ClubPostingPage());
           },
         )
       ],
