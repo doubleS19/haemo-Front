@@ -52,33 +52,41 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          title: const Align(
-              alignment: Alignment.centerLeft,
-              child: Text("헤쳐모여 TUK",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontWeight: FontWeight.w800))),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          automaticallyImplyLeading: false,
-        ),
         body: SafeArea(
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.local_drink), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: ""),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
-          ],
-          currentIndex: _selectedIndex,
-          unselectedItemColor: Colors.blueGrey,
-          selectedItemColor: Colors.green,
-          onTap: _onItemTapped,
+        bottomNavigationBar: Container(
+          margin: EdgeInsets.only(left: 2.0, right: 2.0),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15.0),
+                  topLeft: Radius.circular(15.0)),
+              boxShadow: [
+                BoxShadow(
+                    color: Color(0xff3ac7e7),
+                    spreadRadius: 2.0,
+                    blurRadius: 0.0)
+              ]),
+          child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15.0),
+                  topLeft: Radius.circular(15.0)),
+              child: BottomNavigationBar(
+                backgroundColor: Colors.white,
+                type: BottomNavigationBarType.fixed,
+                items: const <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.local_drink), label: ""),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.settings), label: ""),
+                  BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
+                ],
+                currentIndex: _selectedIndex,
+                unselectedItemColor: const Color(0xffadadad),
+                selectedItemColor: const Color(0xff3ac7e7),
+                onTap: _onItemTapped,
+              )),
         ),
         floatingActionButton: floatingButton());
   }
@@ -98,30 +106,36 @@ class _HomePageState extends State<HomePage> {
       animatedIcon: AnimatedIcons.add_event,
       visible: true,
       curve: Curves.bounceIn,
-      backgroundColor: Colors.indigo.shade900,
+      foregroundColor: Colors.white,
+      backgroundColor: Color(0xff3ac7e7),
       children: [
         SpeedDialChild(
-          child: const Icon(Icons.star, color: Colors.white),
-          label: "모임",
+          label: "핫플 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          backgroundColor: Colors.indigo.shade900,
-          labelBackgroundColor: Colors.indigo.shade900,
+          labelBackgroundColor: Color(0xff3ac7e7),
           onTap: () {
             Get.to(const PostingPage());
           },
         ),
         SpeedDialChild(
-          child: const Icon(Icons.star, color: Colors.white),
-          label: "소모임",
+          label: "소모임 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          backgroundColor: Colors.indigo.shade900,
-          labelBackgroundColor: Colors.indigo.shade900,
+          labelBackgroundColor: Color(0xff3ac7e7),
           onTap: () {
             Get.to(const ClubPostingPage());
           },
-        )
+        ),
+        SpeedDialChild(
+          label: "새 글쓰기",
+          labelStyle: const TextStyle(
+              fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
+          labelBackgroundColor: Color(0xff3ac7e7),
+          onTap: () {
+            Get.to(const PostingPage());
+          },
+        ),
       ],
     );
   }
