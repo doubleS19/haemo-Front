@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatUser {
   String studentId;
-  Int profileImage;
+  int profileImage;
 
   ChatUser({required this.studentId, required this.profileImage});
 
@@ -50,7 +50,7 @@ class ChatData {
   String chatRoomId;
   ChatUser chatUser1;
   ChatUser chatUser2;
-  List<ChatMessage> chatMessageList;
+  List<ChatMessage>? chatMessageList;
 
   ChatData(
       {required this.chatRoomId,
