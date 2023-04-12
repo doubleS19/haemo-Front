@@ -6,6 +6,8 @@ import 'package:hae_mo/page/home_page.dart';
 import 'package:hae_mo/service/db_service.dart';
 import "dart:developer" as dev;
 
+import 'package:intl/intl.dart';
+
 enum BoardRegisterState { full, empty }
 
 enum BoardState { success, fail }
@@ -37,6 +39,7 @@ class BoardRegisterController extends GetxController {
   Future<void> saveBoard(
       int person, String title, String content, String category) async {
     if (_BoardRegisterState == BoardRegisterState.full) {
+      String date = DateFormat("yyyy년 MM월 dd일 HH시").format(DateTime.now());
       DBService db = DBService();
       _BoardState = BoardState.success;
       db.savePost(Post(
@@ -44,7 +47,8 @@ class BoardRegisterController extends GetxController {
           title: title,
           content: content,
           person: person,
-          category: category));
+          category: category,
+          createdAt: date));
     } else {
       _BoardState = BoardState.fail;
       dev.log("Fail~");
