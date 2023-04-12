@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/my_page.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
@@ -132,7 +133,12 @@ class _PostingPageState extends State<PostingPage> {
                                   child: Form(
                                     key: _headKey,
                                     child: TextFormField(
+                                      keyboardType: TextInputType.number,
                                       controller: _personController,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[0-9]'))
+                                      ],
                                       decoration: const InputDecoration(
                                         labelText: '인원 수',
                                         hintText: '인원',

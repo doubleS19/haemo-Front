@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/my_page.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
@@ -31,9 +32,6 @@ class ClubPostingPage extends StatefulWidget {
 }
 
 class _ClubPostingPageState extends State<ClubPostingPage> {
-  final _headCountList = ["인원 선택", "1명", "2명", "3명", "4명", "5명 이상"];
-  var _selectedHeadCount = "인원 선택";
-
   final _categoryList = ["카테고리 선택", "술", "미팅", "밥"];
   var _selectedCategory = "카테고리 선택";
 
@@ -132,7 +130,12 @@ class _ClubPostingPageState extends State<ClubPostingPage> {
                                   child: Form(
                                     key: _headKey,
                                     child: TextFormField(
+                                      keyboardType: TextInputType.number,
                                       controller: _personController,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[0-9]'))
+                                      ],
                                       decoration: const InputDecoration(
                                         labelText: '인원 수',
                                         hintText: '인원',
