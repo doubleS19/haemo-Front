@@ -1,53 +1,94 @@
 import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class ChatUser {
-  String? name;
-  Int? profileImage;
+  String studentId;
+  Int profileImage;
+
+  ChatUser({required this.studentId, required this.profileImage});
+
+  factory ChatUser.fromJson(Map<String, dynamic> json){
+    return ChatUser(
+      studentId: json['studentId'],
+      profileImage: json['profileImage']
+    );
+  }
 }
 
 class ChatMessage {
-  String? text;
-  String? sender;
-  DateTime createdAt;  //  임시
+  String text;
+  String sender;
+  DateTime createdAt; //  임시
+  bool isRead;
 
-  ChatMessage({
-    required this.text,
-    required this.sender,
-    required this.createdAt
-  });
-}
+  ChatMessage(
+      {required this.text,
+      required this.sender,
+      required this.createdAt,
+      required this.isRead});
 
-
-class ChatData {
-  ChatUser? chatUser1;
-  ChatUser? chatUser2;
-  List<ChatMessage>? chatMessageList;
-
-  ChatData({
-    required this.chatUser1,
-    required this.chatUser2,
-    required this.chatMessageList
-  });
-
-  // Map to data
-  factory ChatData.fromMap({
-    required ChatUser chatUser1,
-    required ChatUser chatUser2,
-    required List<ChatMessage> chatMessageList }){
-    return ChatData(
-      chatUser1: chatUser1,
-      chatUser2: chatUser2,
-      chatMessageList: chatMessageList
+  factory ChatMessage.fromJson(Map<String, dynamic> json) {
+    return ChatMessage(
+      text: json['text'],
+      sender: json['sender'],
+      createdAt: json['createdAt'],
+      isRead: json['isRead']
     );
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> data = {};
-    data['chatUser1'] = chatUser1;
-    data['chatUser2'] = chatUser2;
-    data['chatMessageList'] = chatMessageList;
+    data['text'] = text;
+    data['sender'] = sender;
+    data['createdAt'] = createdAt;
+    data['isRead'] = isRead;
     return data;
+  }
+}
+
+class ChatData {
+  String chatRoomId;
+  ChatUser chatUser1;
+  ChatUser chatUser2;
+  List<ChatMessage> chatMessageList;
+
+  ChatData(
+      {required this.chatRoomId,
+      required this.chatUser1,
+      required this.chatUser2,
+      required this.chatMessageList});
+
+  // Json to data
+  factory ChatData.fromJson(Map<String, dynamic> json) {
+    return ChatData(
+        chatRoomId: json['text'],
+        chatUser1: json['chatUser1'].map((user) => ChatUser.fromJson(user)),
+        chatUser2: json['chatUser1'].map((user) => ChatUser.fromJson(user)),
+        chatMessageList: json['messageList'].map((message) => ChatMessage.fromJson(message)).toList()
+    );
+  }
+
+  factory ChatData.fromDocumentSnapshot(DocumentSnapshot snapshot){
+    final List<ChatMessage> message = [];
+    final messageShapshot = List<Map>.from(snapshot['messageList'] as List);
+    for (var a in messageShapshot){
+      message.add(ChatMessage.fromJson(a as Map<String, dynamic>));
+    }
+
+    return ChatData(
+      chatRoomId: snapshot['chatRoomId'],
+      chatUser1: ChatUser.fromJson(snapshot['chatUser1'] as Map<String, dynamic>),
+      chatUser2: ChatUser.fromJson(snapshot['chatUser2'] as Map<String, dynamic>),
+      chatMessageList: message
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'chatRoomId' : chatRoomId,
+      'chatUser1' : chatUser1,
+      'chatUser2' : chatUser2,
+      'chatMessageList' :  chatMessageList,
+    };
   }
 }
