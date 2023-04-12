@@ -18,36 +18,19 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MeetingPage(title: 'Flutter Demo Home Page'),
+      home: const MeetingPage(),
     );
   }
 }
 
 class MeetingPage extends StatefulWidget {
-  const MeetingPage({super.key, required this.title});
-
-  final String title;
+  const MeetingPage({super.key});
 
   @override
   State<MeetingPage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<MeetingPage> {
-  final List<String> exIndex = <String>[
-    "5명이서 술 마실 사람?",
-    "나랑 혜화역 갈 사람? 살 게 있어",
-    "놀자놀자놀자ㅇ",
-    "존잘남이랑 사귈 사람?",
-    "곧 벚꽃 시즌인데 꽃놀이 갈 사람",
-    "핫뜌",
-    "영화 볼 사람",
-    "2:2 미팅 할 건데 여자 구해용",
-    "야 진짜 배고프지 않냐 밥 먹자",
-    "치킨 기프티콘 있는데 혼자 먹긴 좀 ㅜ",
-    "알고리즘 듣는 사람",
-    "cvwe"
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

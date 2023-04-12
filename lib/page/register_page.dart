@@ -70,9 +70,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 padding: const EdgeInsets.only(top: 30.0),
                 child: Column(children: [
                   const Text(
-                    "헤쳐모여 TUK",
-                    style:
-                        TextStyle(fontSize: 30.0, fontWeight: FontWeight.w200),
+                    "헤모 🍻",
+                    style: TextStyle(fontSize: 48.0),
                   ),
                   const SizedBox(
                     height: 30.0,
@@ -231,12 +230,14 @@ class _RegisterPageState extends State<RegisterPage> {
             if (_registerState == RegisterState.fail ||
                 _registerState == RegisterState.empty) ...[
               Container(
-                  margin: const EdgeInsets.only(right: 20, left: 20.0),
-                  height: 40.0,
+                  margin: const EdgeInsets.only(right: 30, left: 30.0),
+                  height: 45.0,
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueGrey),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0)),
+                        backgroundColor: Colors.white),
                     onPressed: null,
                     child: const Text(
                       "등록",
@@ -246,11 +247,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   ))
             ] else ...[
               Container(
-                  margin: const EdgeInsets.only(right: 20, left: 20.0),
-                  height: 40.0,
+                  margin: const EdgeInsets.only(right: 30, left: 30.0),
+                  height: 45.0,
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
                       backgroundColor: const Color(0xff3ac7e7),
                     ),
                     onPressed: () {

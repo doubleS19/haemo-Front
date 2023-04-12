@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: '헤쳐모여 TUK',
       theme: ThemeData(
+        fontFamily: 'SCDream',
         primarySwatch: Colors.blue,
       ),
       home: const LoadingPage(title: '헤쳐모여 TUK'),
