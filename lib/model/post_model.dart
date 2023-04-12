@@ -25,6 +25,7 @@ class Post {
         person: json['person'],
         category: json['category']);
   }
+
   Map<String, dynamic> toJson() => {
         'nickname': nickname,
         'title': title,
@@ -32,14 +33,4 @@ class Post {
         'person': person,
         'category': category,
       };
-}
-
-Future<List<Post>> fetchPost() async {
-  final response = await http.get(Uri.parse("http://localhost:8080/post"));
-  if (response.statusCode == 200) {
-    final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
-    return parsed.map<Post>((json) => Post.fromJson(json)).toList();
-  } else {
-    throw Exception("Failed to fetch Post");
-  }
 }

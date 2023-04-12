@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/my_page.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
+import 'package:hae_mo/service/db_service.dart';
 
+import '../model/post_model.dart';
 import 'home_page.dart';
 
 class MyApp extends StatelessWidget {

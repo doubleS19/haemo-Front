@@ -4,6 +4,9 @@ import 'package:hae_mo/Page/my_page.dart';
 import 'package:hae_mo/page/chat_list_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../model/post_model.dart';
+import '../service/db_service.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -101,14 +104,7 @@ class _HomePageState extends State<MeetingPage> {
                       return todayNotice();
                     },
                   )),
-                  Expanded(
-                    flex: 3,
-                    child: ListView.builder(
-                        itemCount: exIndex.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return boardList(index);
-                        }),
-                  )
+                  Expanded(flex: 3, child: boardList())
                 ]))));
   }
 
@@ -195,61 +191,82 @@ class _HomePageState extends State<MeetingPage> {
     );
   }
 
-  Widget boardList(int index) {
-    return Column(children: [
-      Container(
-          height: 50.0,
-          width: double.infinity,
-          margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-          padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-          child: Align(
-              alignment: Alignment.centerLeft,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        exIndex[index],
-                        style: const TextStyle(
-                            color: Color(0xff595959),
-                            fontSize: 13.5,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      const Text(
-                        "3/5",
-                        style: TextStyle(
-                            fontSize: 12.0,
-                            color: Color(0xff3ac7e7),
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 13.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "5명",
-                        style: TextStyle(
-                            color: Color(0xff999999),
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w300),
-                      ),
-                      Text(
-                        "2023.03.16 7시",
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: Color(0xff595959),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ))),
-      const Divider(thickness: 1.0, color: Color(0xffbbbbbb))
-    ]);
+  Widget boardList() {
+    DBService db = DBService();
+    return FutureBuilder(
+        future: db.fetchPost(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final List<Post> postList = snapshot.data as List<Post>;
+            return ListView.builder(
+                itemCount: postList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Column(children: [
+                    Container(
+                        height: 50.0,
+                        width: double.infinity,
+                        margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                        padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      postList[index].title,
+                                      style: const TextStyle(
+                                          color: Color(0xff595959),
+                                          fontSize: 13.5,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    const Text(
+                                      "3/5",
+                                      style: TextStyle(
+                                          fontSize: 12.0,
+                                          color: Color(0xff3ac7e7),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 13.0,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "${postList[index].person}명",
+                                      style: const TextStyle(
+                                          color: Color(0xff999999),
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                    const Text(
+                                      "2023.03.16 7시",
+                                      style: TextStyle(
+                                        fontSize: 12.0,
+                                        color: Color(0xff595959),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ))),
+                    const Divider(thickness: 1.0, color: Color(0xffbbbbbb))
+                  ]);
+                });
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text("${snapshot.error}"),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
 }

@@ -46,4 +46,14 @@ class DBService {
       print("Failed to send post data: ${e}");
     }
   }
+
+  Future<List<Post>> fetchPost() async {
+    final response = await http.get(Uri.parse("http://localhost:8080/post"));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body) as List<dynamic>;
+      return jsonData.map((post) => Post.fromJson(post)).toList();
+    } else {
+      throw Exception("Failed to fetch Post");
+    }
+  }
 }
