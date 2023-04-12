@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'chat_list_page.dart';
 import 'my_page.dart';
 
 class MyApp extends StatelessWidget {
@@ -48,7 +49,7 @@ class _ClubPageState extends State<ClubPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Container(
-              padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 0.0),
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,12 +70,23 @@ class _ClubPageState extends State<ClubPage> {
                   ),
                 ],
               )),
+          actions: [
+            IconButton(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(top: 10.0, right: 10.0),
+              onPressed: () {
+                Get.to(const ChatListPage());
+              },
+              icon: const Icon(Icons.menu),
+              color: const Color(0xff36b6d2),
+            )
+          ],
           elevation: 0.0,
           automaticallyImplyLeading: false,
         ),
         body: Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
+            // padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             color: Colors.white,
             child: Expanded(
                 flex: 1,
@@ -103,7 +115,7 @@ class _ClubPageState extends State<ClubPage> {
     return Container(
       width: 124.0,
       height: 148.0,
-      margin: const EdgeInsets.only(top: 5.0, bottom: 15.0),
+      margin: const EdgeInsets.fromLTRB(8.0, 5.0, 0.0, 15.0),
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(20.0), boxShadow: [
         BoxShadow(
@@ -187,7 +199,8 @@ class _ClubPageState extends State<ClubPage> {
       Container(
           height: 50.0,
           width: double.infinity,
-          padding: const EdgeInsets.only(left: 5.0, top: 5.0, right: 5.0),
+          margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+          padding: const EdgeInsets.only(left: 5.0, right: 5.0),
           child: Align(
               alignment: Alignment.centerLeft,
               child: Column(

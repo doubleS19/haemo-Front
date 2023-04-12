@@ -75,12 +75,12 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.white,
                 type: BottomNavigationBarType.fixed,
                 items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
+                  BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
+                  BottomNavigationBarItem(icon: Icon(Icons.group), label: ""),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.local_drink), label: ""),
+                      icon: Icon(Icons.location_on), label: ""),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.settings), label: ""),
-                  BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
                 ],
                 currentIndex: _selectedIndex,
                 unselectedItemColor: const Color(0xffadadad),
