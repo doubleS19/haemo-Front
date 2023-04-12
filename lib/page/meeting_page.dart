@@ -50,7 +50,7 @@ class _HomePageState extends State<MeetingPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Container(
-              padding: const EdgeInsets.fromLTRB(5.0, 10.0, 0.0, 0.0),
+              padding: const EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 0.0),
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class _HomePageState extends State<MeetingPage> {
         ),
         body: Container(
             alignment: Alignment.center,
-            padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 20.0),
+            padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             color: Colors.white,
             child: Expanded(
                 flex: 1,
@@ -133,7 +133,7 @@ class _HomePageState extends State<MeetingPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
+                          const Text(
                             "술 마실 사람 여자 3명임",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -142,7 +142,7 @@ class _HomePageState extends State<MeetingPage> {
                                 fontSize: 13.5,
                                 color: Color(0xff595959)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 40.0,
                           ),
                           Align(
@@ -153,7 +153,7 @@ class _HomePageState extends State<MeetingPage> {
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    children: [
+                                    children: const [
                                       Icon(
                                         Icons.local_fire_department,
                                         size: 15.0,
@@ -168,7 +168,7 @@ class _HomePageState extends State<MeetingPage> {
                                       ),
                                     ],
                                   ),
-                                  Text(
+                                  const Text(
                                     "2023.03.16 7시",
                                     style: TextStyle(
                                         fontSize: 12.0,
@@ -218,15 +218,15 @@ class _HomePageState extends State<MeetingPage> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: const [
                       Text(
                         "5명",
-                        style: const TextStyle(
+                        style: TextStyle(
                             color: Color(0xff999999),
                             fontSize: 12.0,
                             fontWeight: FontWeight.w300),
                       ),
-                      const Text(
+                      Text(
                         "2023.03.16 7시",
                         style: TextStyle(
                           fontSize: 12.0,

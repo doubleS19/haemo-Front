@@ -56,8 +56,8 @@ class _HomePageState extends State<HomePage> {
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: Container(
-          margin: EdgeInsets.only(left: 2.0, right: 2.0),
-          decoration: BoxDecoration(
+          margin: const EdgeInsets.only(left: 2.0, right: 2.0),
+          decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                   topRight: Radius.circular(15.0),
                   topLeft: Radius.circular(15.0)),
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                     blurRadius: 0.0)
               ]),
           child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(15.0),
                   topLeft: Radius.circular(15.0)),
               child: BottomNavigationBar(
