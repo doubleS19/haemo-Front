@@ -222,9 +222,9 @@ class _HomePageState extends State<MeetingPage> {
                                           fontSize: 13.5,
                                           fontWeight: FontWeight.w600),
                                     ),
-                                    const Text(
-                                      "3/5",
-                                      style: TextStyle(
+                                    Text(
+                                      "3/${postList[index].person}",
+                                      style: const TextStyle(
                                           fontSize: 12.0,
                                           color: Color(0xff3ac7e7),
                                           fontWeight: FontWeight.w600),
@@ -245,9 +245,9 @@ class _HomePageState extends State<MeetingPage> {
                                           fontSize: 12.0,
                                           fontWeight: FontWeight.w300),
                                     ),
-                                    const Text(
-                                      "2023.03.16 7시",
-                                      style: TextStyle(
+                                    Text(
+                                      postList[index].createdAt,
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         color: Color(0xff595959),
                                       ),
