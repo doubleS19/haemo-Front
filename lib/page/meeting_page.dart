@@ -105,7 +105,7 @@ class _HomePageState extends State<MeetingPage> {
     return Container(
       width: 124.0,
       height: 148.0,
-      margin: const EdgeInsets.only(top: 5.0, bottom: 15.0, right: 10.0),
+      margin: const EdgeInsets.only(top: 5.0, bottom: 15.0),
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(20.0), boxShadow: [
         BoxShadow(
