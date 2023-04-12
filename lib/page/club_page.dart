@@ -112,7 +112,7 @@ class _ClubPageState extends State<ClubPage> {
 
   Widget todayNotice() {
     return Container(
-      width: 124.0,
+      width: 130.0,
       height: 148.0,
       margin: const EdgeInsets.fromLTRB(8.0, 5.0, 0.0, 15.0),
       decoration:
