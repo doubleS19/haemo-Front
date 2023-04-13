@@ -36,19 +36,21 @@ class BoardRegisterController extends GetxController {
     update();
   }
 
-  Future<void> saveBoard(
-      int person, String title, String content, String category) async {
+  Future<void> saveBoard(int person, String title, String content,
+      String category, int type) async {
     if (_BoardRegisterState == BoardRegisterState.full) {
       String date = DateFormat("yyyy년 MM월 dd일 HH시").format(DateTime.now());
       DBService db = DBService();
       _BoardState = BoardState.success;
       db.savePost(Post(
-          nickname: "닉네임입니다용",
-          title: title,
-          content: content,
-          person: person,
-          category: category,
-          createdAt: date));
+        nickname: "닉네임입니다용",
+        title: title,
+        content: content,
+        person: person,
+        category: category,
+        createdAt: date,
+        type: type,
+      ));
     } else {
       _BoardState = BoardState.fail;
       dev.log("Fail~");
