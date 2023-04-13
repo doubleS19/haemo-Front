@@ -35,9 +35,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    const MeetingPage(
-      title: 'Home',
-    ),
+    const MeetingPage(),
     const ClubPage(),
     const RecommendPage(),
     const MyPage(),

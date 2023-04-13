@@ -7,7 +7,6 @@ import 'my_page.dart';
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -113,7 +112,7 @@ class _ClubPageState extends State<ClubPage> {
 
   Widget todayNotice() {
     return Container(
-      width: 124.0,
+      width: 130.0,
       height: 148.0,
       margin: const EdgeInsets.fromLTRB(8.0, 5.0, 0.0, 15.0),
       decoration:

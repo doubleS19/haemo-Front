@@ -127,9 +127,10 @@ class _PostingPageState extends State<PostingPage> {
                         },
                         child: const Text("날짜 선택")),
                     Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
+                              flex: 2,
                               child: SizedBox(
                                   width: 30,
                                   child: Form(
@@ -171,19 +172,25 @@ class _PostingPageState extends State<PostingPage> {
                                       },
                                     ),
                                   ))),
-                          DropdownButton(
-                            value: _selectedCategory,
-                            items: _categoryList.map((value) {
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                _selectedCategory = value!;
-                              });
-                            },
+                          const SizedBox(
+                            width: 40.0,
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: DropdownButton(
+                              value: _selectedCategory,
+                              items: _categoryList.map((value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedCategory = value!;
+                                });
+                              },
+                            ),
                           ),
                         ]),
                     Container(
@@ -206,7 +213,6 @@ class _PostingPageState extends State<PostingPage> {
                                 color: Colors.black,
                               ),
                               onChanged: (value) {
-                                _contentController.text = value;
                                 _boardRegisterController.checkEssentialInfo(
                                     _selectedHeadCount,
                                     _textController.text,
@@ -238,6 +244,7 @@ class _PostingPageState extends State<PostingPage> {
                                     _textController.text,
                                     _contentController.text,
                                     _selectedCategory);
+                                return null;
                               },
                             ))),
                     const SizedBox(height: 60),
