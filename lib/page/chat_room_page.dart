@@ -11,10 +11,7 @@ import '../model/chatmessage_model.dart';
 import '../model/shared_preference.dart';
 
 class ChatRoom extends StatefulWidget {
-  const ChatRoom({
-    Key? key,
-    required this.chatRoomId
-  }) : super(key: key);
+  const ChatRoom({Key? key, required this.chatRoomId}) : super(key: key);
 
   final String chatRoomId;
 
@@ -32,7 +29,6 @@ class _ChatRoomState extends State<ChatRoom> {
       ? PreferenceUtil.getInt("profileImage")!
       : 1;
 
-
   Widget receiver(String text, String name, DateTime time, dynamic profile) {
     return Column(
       children: [
@@ -43,29 +39,28 @@ class _ChatRoomState extends State<ChatRoom> {
             ),
             Flexible(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(name),
-                    Container(
-                      child: Text(text, style: TextStyle(fontSize: 20)),
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(13),
-                          color: Colors.white),
-                    )
-                  ],
-                )),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(name),
+                Container(
+                  child: Text(text, style: TextStyle(fontSize: 20)),
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(13),
+                      color: Colors.white),
+                )
+              ],
+            )),
             const SizedBox(width: 5),
             Flexible(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 22),
-                    Text(changeDatetimeToString(time),
-                        style: const TextStyle(
-                            fontSize: 12, color: Colors.black26))
-                  ],
-                )),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 22),
+                Text(changeDatetimeToString(time),
+                    style: const TextStyle(fontSize: 12, color: Colors.black26))
+              ],
+            )),
           ],
         ),
       ],
@@ -86,12 +81,12 @@ class _ChatRoomState extends State<ChatRoom> {
           SizedBox(width: 5),
           Flexible(
               child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(13),
-                    color: Color(0xFFfeec34)),
-                child: Text(text, style: TextStyle(fontSize: 20)),
-              ))
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(13),
+                color: Color(0xFFfeec34)),
+            child: Text(text, style: TextStyle(fontSize: 20)),
+          ))
         ]));
   }
 
@@ -116,9 +111,15 @@ class _ChatRoomState extends State<ChatRoom> {
 
   _handleSubmitted() {
     // firestore에 저장 후 변경을 보고 가져온 리스트가 자동으로 controller로 추가되게
+
+    if (_textController.text == ""){
+      return;
+    }
+
     controller.sendData(
         widget.chatRoomId,
-        ChatMessage(text: _textController.text,
+        ChatMessage(
+            text: _textController.text,
             sender: studentId,
             createdAt: DateTime.now(),
             isRead: false));
@@ -139,101 +140,97 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          //color: ,
-          child: Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                backgroundColor: Colors.transparent,
-                title: Text("Seoyeon"),
-                //style: Theme.of(context).textTheme.headline6
-                leading: IconButton(
-                  icon: const Icon(FontAwesomeIcons.arrowLeft),
-                  onPressed: () {},
-                ),
-                actions: [
-                  IconButton(
-                    icon: const Icon(
-                        Icons.report_gmailerrorred_rounded, size: 25),
-                    onPressed: () {},
-                  ),
-                  const SizedBox(width: 8)
-                ],
+      //color: ,
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Text("Seoyeon"),
+            //style: Theme.of(context).textTheme.headline6
+            leading: IconButton(
+              icon: const Icon(FontAwesomeIcons.arrowLeft),
+              onPressed: () {},
+            ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.report_gmailerrorred_rounded, size: 25),
+                onPressed: () {},
               ),
-              body: Column(children: [
-                Expanded(
-                    flex: 3,
-                    child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Column(
-                            children: [
-                              StreamBuilder(
-                                stream: controller.streamChatMessage(widget
-                                    .chatRoomId),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<dynamic> snapshot) {
-                                  if (snapshot.hasData) {
-                                    ChatData chatData = snapshot.data;
-                                    List<ChatMessage>? listMessage = chatData
-                                        .chatMessageList;
-                                    return ListView.builder(
-                                      itemCount: listMessage?.length,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      itemBuilder: (BuildContext context,
-                                          int index) {
-                                        for (var chat in controller
-                                            .chatMessageList) {
-                                          if (chat.sender == studentId) {
-                                            return sender(
-                                                chat.text!, chat.createdAt!);
-                                          } else {
-                                            return receiver(
-                                                chat.text!, chat.sender!,
-                                                chat.createdAt!, 1);
-                                          }
-                                        }
-                                      },
-                                    );
+              const SizedBox(width: 8)
+            ],
+          ),
+          body: Column(children: [
+            Expanded(
+                flex: 3,
+                child: SingleChildScrollView(
+                    child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    children: [
+                      StreamBuilder(
+                        stream: controller.streamChatMessage(widget.chatRoomId),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.hasData) {
+                            ChatData chatData = snapshot.data;
+                            List<ChatMessage>? listMessage =
+                                chatData.chatMessageList;
+                            return ListView.builder(
+                              itemCount: listMessage?.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                for (var chat in controller.chatMessageList) {
+                                  if (chat.sender == studentId) {
+                                    return sender(chat.text!, chat.createdAt!);
                                   } else {
-                                    return const Center(child: Text("a"));
+                                    return receiver(chat.text!, chat.sender!,
+                                        chat.createdAt!, 1);
                                   }
-                                },
-                              ),
-                            ],
-                          ),
-                        ))),
-                sendTextField(widget.chatRoomId)
-              ])),
-        ));
+                                }
+                              },
+                            );
+                          } else {
+                            return const Center(child: Text("a"));
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ))),
+            sendTextField(widget.chatRoomId)
+          ])),
+    ));
   }
 
   Widget sendTextField(String chatRoomId) {
     return Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.7,
+        height: MediaQuery.of(context).size.height * 0.7,
         color: Colors.white,
         child: Row(
-            children: [
+          children: [
             chatIconButton(const Icon(FontAwesomeIcons.squarePlus)),
-    Expanded(
-    child: Container(
-    child: TextFormField(
-    controller: _textController,
-    maxLines: 1,
-    style: const TextStyle(fontSize: 20),
-    decoration: const InputDecoration(
-    focusedBorder: InputBorder.none,
-    enabledBorder: InputBorder.none,
-    ),
-
-
-    ))),
-    chatIconButton(const Icon(FontAwesomeIcons.faceSmile)),
-    chatIconButton(const Icon(FontAwesomeIcons.gear))
-    ],
-    )
-    );
+            Expanded(
+                child: Container(
+                    child: TextFormField(
+                      /// https://dalgoodori.tistory.com/60
+                      controller: _textController,
+                      maxLines: 1,
+                      cursorColor: Colors.orange,
+                      style: const TextStyle(fontSize: 20),
+                      decoration: const InputDecoration(
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                      ),
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (String value) {
+                        _handleSubmitted();
+                      },
+                  )
+                )
+            ),
+            chatIconButton(const Icon(FontAwesomeIcons.faceSmile)),
+            chatIconButton(const Icon(FontAwesomeIcons.gear))
+          ],
+        ));
   }
 }
