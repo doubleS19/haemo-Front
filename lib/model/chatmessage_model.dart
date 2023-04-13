@@ -37,7 +37,7 @@ class ChatMessage {
     return ChatMessage(
       text: json['text'],
       sender: json['sender'],
-      createdAt: json['createdAt'],
+      createdAt: json['createdAt'].toDate(),
       isRead: json['isRead']
     );
   }
@@ -62,9 +62,9 @@ class ChatMessage {
 }
 
 class ChatData {
-  String chatRoomId;
-  ChatUser chatUser1;
-  ChatUser chatUser2;
+  String? chatRoomId;
+  ChatUser? chatUser1;
+  ChatUser? chatUser2;
   List<ChatMessage>? chatMessageList;
 
   ChatData(
@@ -85,7 +85,7 @@ class ChatData {
 
   factory ChatData.fromDocumentSnapshot(DocumentSnapshot snapshot){
     final List<ChatMessage> message = [];
-    final messageShapshot = List<Map>.from(snapshot['messageList'] as List);
+    final messageShapshot = List<Map>.from(snapshot['chatMessageList'] as List);
     for (var a in messageShapshot){
       message.add(ChatMessage.fromJson(a as Map<String, dynamic>));
     }
@@ -101,8 +101,8 @@ class ChatData {
   Map<String, dynamic> toJson() {
     return {
       'chatRoomId' : chatRoomId,
-      'chatUser1' : chatUser1.toJson(),
-      'chatUser2' : chatUser2.toJson(),
+      'chatUser1' : chatUser1?.toJson(),
+      'chatUser2' : chatUser2?.toJson(),
       'chatMessageList' :  chatMessageList!.map((message) => message.toJson()).toList(),
     };
   }
