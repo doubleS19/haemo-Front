@@ -13,7 +13,6 @@ import '../model/shared_preference.dart';
 
 class ChatController extends GetxController {
   final firestore = FirebaseFirestore.instance;
-  late String chatRoomId = "";
   final RxString _text = "".obs;
   final RxString _sender = "".obs;
   final createdAt = DateTime.now();
@@ -24,25 +23,6 @@ class ChatController extends GetxController {
 
   StreamController<List<ChatMessage>> streamController = StreamController<List<ChatMessage>>();
 
-  var message = ChatMessage(
-      text: "",
-      sender: "",
-      createdAt: DateTime.now(),
-      isRead: false
-  ).obs;
-
-  change({
-    required String text,
-    required String sender,
-  }) {
-    message.update((message) {
-      message?.text = text;
-      message?.sender = sender;
-      message?.createdAt = DateTime.now();
-      message?.isRead = false;
-    });
-  }
-
   void startStream(){
 
   }
@@ -51,25 +31,24 @@ class ChatController extends GetxController {
   void onInit() {
     super.onInit();
 
-
-    ever(message, (_) {
-      chatMessageList.add(message.value);
-      for (var i in chatMessageList) {
-        print(i.text);
-      }
-    });
   }
 
-  // 최초 메세지 전송 시 채팅방 생성 필요
+  /// Firestore doc에 새로운 체탱창 생성
+  /// @param ChatUser chatuser receiver의 ChatUser 정보
+  /// @param ChatMessage chatMessage sender이 입력한 ChatMessage
+  /// @return void
+  /// @success - 채팅창 생성 성공
+  /// @author: seoyeon
+  /// @ 테스트 후 studentId를 sharedPreference에서 가져오도록 변경하기
   void createChatroom(ChatUser otherUser, ChatMessage chatMessage) {
     // me, other 사이에 생성된 채팅방이 있는지 확인 - 게시물에서 채팅으로 넘어갈 때 필요할 듯?
-    // chatRoomId 여기서 생성해야 될 듯?
+    var chatRoomId = "${PreferenceUtil.getString("studentId") != null ? PreferenceUtil.getString("studentId")! : "seoyeon"}_${otherUser.studentId}";
 
-    late String createChatRoomId = "";
     var chatroom = ChatData(
-      chatRoomId: createChatRoomId,
+      chatRoomId: chatRoomId,
       chatUser1: ChatUser(
-/*          studentId: PreferenceUtil.getString("studentId")!,
+/*          studentId:
+PreferenceUtil.getString("studentId")!,
           profileImage: PreferenceUtil.getInt("profileImage") != null? PreferenceUtil.getInt("profileImage")! : 1*/
         studentId: "seoyeon",
         profileImage: 1
@@ -78,43 +57,50 @@ class ChatController extends GetxController {
       chatMessageList: [chatMessage]
     );
 
-    streamController.sink.add([chatMessage]);
-
-    firestore.collection('haemo').doc("first")
+    firestore.collection('haemo').doc(chatRoomId)
         .set(chatroom.toJson());
 
-    // 자신의 채팅방 리스트에 추가해야 됨
-    // UI 변화도 - Stream에서 메세지 받게 해서 할까?
   }
 
 
-  // 메세지 전송 클릭 시 FireStore로 전송
-  void sendData(String chatRoomId, ChatUser chatUser, ChatMessage chatMessage) async{
+  /// 메세지 전송 클릭 시 FireStore로 전송되어 chatMessageList에 저장됨
+  /// @param String chatRoomId 고유 채팅방 Id
+  /// @param ChatMessage chatMessage 전송할 채팅 메세지
+  /// @return void
+  /// @success - 채팅창 메세지 저장 성공
+  /// @author: seoyeon
+  void sendData(String chatRoomId, ChatMessage chatMessage) async{
     try {
       final snapshot = await firestore.collection('haemo').doc(chatRoomId).get();
+      print(snapshot.data());
 
-      if(snapshot.exists){
+      if(snapshot.exists) {
+        final chatData = ChatData.fromDocumentSnapshot(snapshot);
+        print("chatData: $chatData");
+        final messages = chatData.chatMessageList;
+        messages?.add(chatMessage);
 
+        print(messages);
 
-      } else{
-        createChatroom(chatUser ,chatMessage);
+        firestore
+            .collection('haemo')
+            .doc(chatRoomId)
+            .update(
+            {'chatMessageList': messages?.map((e) => e.toJson()).toList()});
       }
-      change(text: text,
-          sender: PreferenceUtil.getString("studentId")!,
-      );
-
-/*      firestore.collection('haemo/$chatRoomId/chat/messageList/message').update(
-          message.value.toMap()).then((value) =>
-          print("DocumentSnapshot added with ID: ${value.id}")
-      );*/
     } catch (ex) {
-      log('error', error: ex.toString(), stackTrace: StackTrace.current);
+      log('error', error: ex.toString());
     }
   }
 
-  // 메세지 읽었을 때 false -> true
+  /// 메세지 읽었을 때 false -> true
 
-  // 메시지 가져오기 - stream
+
+  /// Firestore에서 새로운 메시지 가져오기 - stream
+  /// @param String chatRoomId 고유 채팅방 Id
+  /// @return Stream<ChatData> (Streambuilder에서 바로 사용)
+  /// @notSuccess
+  /// @author: seoyeon
   Stream<ChatData> streamChatMessage(String chatRoomId) {
     try {
       // charRoomId가 없으면 조회되지 않음
@@ -125,9 +111,6 @@ class ChatController extends GetxController {
           .snapshots()
           .map((event) => ChatData.fromDocumentSnapshot(event));
 
-      snapshots.listen((event){
-        streamController.sink.add(event.chatMessageList!!);
-      });
       return snapshots;
     } catch (ex) {
       log('error: ', error: ex.toString(), stackTrace: StackTrace.current);
