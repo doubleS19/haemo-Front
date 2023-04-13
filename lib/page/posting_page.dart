@@ -214,7 +214,7 @@ class _PostingPageState extends State<PostingPage> {
                               ),
                               onChanged: (value) {
                                 _boardRegisterController.checkEssentialInfo(
-                                    _selectedHeadCount,
+                                    _personController.text,
                                     _textController.text,
                                     _contentController.text,
                                     _selectedCategory);
@@ -274,7 +274,8 @@ class _PostingPageState extends State<PostingPage> {
                                   int.parse(_personController.text),
                                   _textController.text,
                                   _contentController.text,
-                                  _selectedCategory);
+                                  _selectedCategory,
+                                  1);
                               Get.to(const HomePage());
                             },
                             child: const Text("등록"),

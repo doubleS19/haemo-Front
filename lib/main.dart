@@ -6,13 +6,11 @@ import 'package:get/get_navigation/src/root/get_material_app.dart'
 import 'package:hae_mo/Page/loading_page.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/user_controller.dart';
-import 'package:hae_mo/page/chat_room_page.dart';
-
+import 'package:hae_mo/page/loading_page.dart' as prefix;
 
 import 'model/shared_preference.dart';
 import 'networks/http_override.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 
 void main() async {
   HttpOverrides.global = NoCheckCertificateHttpOverrides();
@@ -24,7 +22,7 @@ void main() async {
   runApp(const MyApp());
 }
 
-Future<void> initializeDefault() async{
+Future<void> initializeDefault() async {
   if (Platform.isIOS) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
@@ -49,7 +47,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'SCDream',
         primarySwatch: Colors.blue,
       ),
-      home: const ChatRoom(),
+      home: const LoadingPage(title: 'TUK'),
     );
   }
 }

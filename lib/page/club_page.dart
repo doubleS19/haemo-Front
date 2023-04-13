@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../model/post_model.dart';
+import '../service/db_service.dart';
 import 'chat_list_page.dart';
 import 'my_page.dart';
 
@@ -85,7 +87,6 @@ class _ClubPageState extends State<ClubPage> {
         ),
         body: Container(
             alignment: Alignment.center,
-            // padding: const EdgeInsets.only(top: 5.0, left: 10.0, right: 10.0),
             color: Colors.white,
             child: Expanded(
                 flex: 1,
@@ -99,14 +100,7 @@ class _ClubPageState extends State<ClubPage> {
                       return todayNotice();
                     },
                   )),
-                  Expanded(
-                    flex: 3,
-                    child: ListView.builder(
-                        itemCount: exIndex.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return boardList(index);
-                        }),
-                  )
+                  Expanded(flex: 3, child: clubList())
                 ]))));
   }
 
@@ -193,61 +187,92 @@ class _ClubPageState extends State<ClubPage> {
     );
   }
 
-  Widget boardList(int index) {
-    return Column(children: [
-      Container(
-          height: 50.0,
-          width: double.infinity,
-          margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-          padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-          child: Align(
-              alignment: Alignment.centerLeft,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        exIndex[index],
-                        style: const TextStyle(
-                            color: Color(0xff595959),
-                            fontSize: 13.5,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      const Text(
-                        "3/5",
-                        style: TextStyle(
-                            fontSize: 12.0,
-                            color: Color(0xff3ac7e7),
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 13.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text(
-                        "5명",
-                        style: TextStyle(
-                            color: Color(0xff999999),
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w300),
-                      ),
-                      Text(
-                        "2023.03.16 7시",
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: Color(0xff595959),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ))),
-      const Divider(thickness: 1.0, color: Color(0xffbbbbbb))
-    ]);
+  Widget clubList() {
+    DBService db = DBService();
+    return FutureBuilder(
+        future: db.fetchPost(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final List<Post> postList = snapshot.data as List<Post>;
+            postList.removeWhere((element) => element.type == 1);
+            if (postList.isEmpty) {
+              return const Center(
+                  child: Text(
+                "게시물이 없어요!",
+                style: TextStyle(
+                    fontWeight: FontWeight.w300, color: Color(0xff595959)),
+              ));
+            } else {
+              return ListView.builder(
+                  itemCount: postList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(children: [
+                      Container(
+                          height: 50.0,
+                          width: double.infinity,
+                          margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                          padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        postList[index].title,
+                                        style: const TextStyle(
+                                            color: Color(0xff595959),
+                                            fontSize: 13.5,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        "3/${postList[index].person}",
+                                        style: const TextStyle(
+                                            fontSize: 12.0,
+                                            color: Color(0xff3ac7e7),
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 13.0,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "${postList[index].person}명",
+                                        style: const TextStyle(
+                                            color: Color(0xff999999),
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                      Text(
+                                        postList[index].createdAt,
+                                        style: const TextStyle(
+                                          fontSize: 12.0,
+                                          color: Color(0xff595959),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ))),
+                      const Divider(thickness: 1.0, color: Color(0xffbbbbbb))
+                    ]);
+                  });
+            }
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text("${snapshot.error}"),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
   }
 }
