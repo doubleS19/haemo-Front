@@ -218,6 +218,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 setState(() {
                                   _selectedMajor = value!;
                                 });
+                                _userController.checkUserInfo(
+                                    _textController.text,
+                                    _selectedMajor,
+                                    _selectedGender);
                               },
                             ),
                           )

@@ -207,7 +207,6 @@ class _ClubPostingPageState extends State<ClubPostingPage> {
                                 color: Colors.black,
                               ),
                               onChanged: (value) {
-                                _contentController.text = value;
                                 _boardRegisterController.checkEssentialInfo(
                                     _personController.text,
                                     _textController.text,
@@ -239,6 +238,7 @@ class _ClubPostingPageState extends State<ClubPostingPage> {
                                     _textController.text,
                                     _contentController.text,
                                     _selectedCategory);
+                                return null;
                               },
                             ))),
                     const SizedBox(height: 60),
@@ -268,7 +268,8 @@ class _ClubPostingPageState extends State<ClubPostingPage> {
                                   int.parse(_personController.text),
                                   _textController.text,
                                   _contentController.text,
-                                  _selectedCategory);
+                                  _selectedCategory,
+                                  2);
                               Get.to(const HomePage());
                             },
                             child: const Text("등록"),
