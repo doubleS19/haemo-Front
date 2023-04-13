@@ -13,6 +13,12 @@ class ChatUser {
       profileImage: json['profileImage']
     );
   }
+  toJson(){
+    return {
+      'studentId': studentId,
+      'profileImage' : profileImage
+    };
+  }
 }
 
 class ChatMessage {
@@ -44,6 +50,15 @@ class ChatMessage {
     data['isRead'] = isRead;
     return data;
   }
+
+  toJson(){
+    return {
+      'text' : text,
+      'sender' : sender,
+      'createdAt': createdAt,
+      'isRead': isRead
+    };
+  }
 }
 
 class ChatData {
@@ -63,7 +78,7 @@ class ChatData {
     return ChatData(
         chatRoomId: json['text'],
         chatUser1: json['chatUser1'].map((user) => ChatUser.fromJson(user)),
-        chatUser2: json['chatUser1'].map((user) => ChatUser.fromJson(user)),
+        chatUser2: json['chatUser2'].map((user) => ChatUser.fromJson(user)),
         chatMessageList: json['messageList'].map((message) => ChatMessage.fromJson(message)).toList()
     );
   }
@@ -86,9 +101,9 @@ class ChatData {
   Map<String, dynamic> toJson() {
     return {
       'chatRoomId' : chatRoomId,
-      'chatUser1' : chatUser1,
-      'chatUser2' : chatUser2,
-      'chatMessageList' :  chatMessageList,
+      'chatUser1' : chatUser1.toJson(),
+      'chatUser2' : chatUser2.toJson(),
+      'chatMessageList' :  chatMessageList!.map((message) => message.toJson()).toList(),
     };
   }
 }
