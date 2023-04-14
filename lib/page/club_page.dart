@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/model/post_response_model.dart';
 
 import '../model/post_model.dart';
 import '../service/db_service.dart';
@@ -193,7 +194,8 @@ class _ClubPageState extends State<ClubPage> {
         future: db.fetchPost(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final List<Post> postList = snapshot.data as List<Post>;
+            final List<PostResponse> postList =
+                snapshot.data as List<PostResponse>;
             postList.removeWhere((element) => element.type == 1);
             if (postList.isEmpty) {
               return const Center(

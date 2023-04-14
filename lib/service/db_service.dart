@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/post_model.dart';
+import 'package:hae_mo/model/post_response_model.dart' as prefix;
 import 'package:hae_mo/page/home_page.dart';
 import 'package:http/http.dart' as http;
 
+import '../model/post_response_model.dart';
 import '../model/user_model.dart';
 
 class DBService {
@@ -47,13 +50,26 @@ class DBService {
     }
   }
 
-  Future<List<Post>> fetchPost() async {
+  Future<List<PostResponse>> fetchPost() async {
     final response = await http.get(Uri.parse("http://localhost:8080/post"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as List<dynamic>;
-      return jsonData.map((post) => Post.fromJson(post)).toList();
+      return jsonData.map((post) => PostResponse.fromJson(post)).toList();
     } else {
-      throw Exception("Failed to fetch Post");
+      throw Exception("Failed to fefch Post List");
+    }
+  }
+
+  Future<PostResponse> getPostById(int pId) async {
+    final response =
+        await http.post(Uri.parse("http://localhost:8080/post/get?id=$pId"));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body) as Map<String, dynamic>;
+      return PostResponse.fromJson(jsonData);
+    } else if (response.statusCode == 404) {
+      throw Exception("Post not found");
+    } else {
+      throw Exception("Failed to fetch Post by Id");
     }
   }
 }
