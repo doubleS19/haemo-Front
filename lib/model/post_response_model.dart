@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
 class PostResponse {
-  final int pId;
   final String nickname;
   final String title;
   final String content;
@@ -12,37 +11,38 @@ class PostResponse {
   final String category;
   final String createdAt;
   final int type;
+  final int pid;
 
   PostResponse(
-      {required this.pId,
-      required this.nickname,
+      {required this.nickname,
       required this.title,
       required this.content,
       required this.person,
       required this.category,
       required this.createdAt,
-      required this.type});
+      required this.type,
+      required this.pid});
 
   factory PostResponse.fromJson(Map<String, dynamic> json) {
     return PostResponse(
-        pId: json['pId'],
         nickname: json['nickname'],
         title: json['title'],
         content: json['content'],
         person: json['person'],
         category: json['category'],
         createdAt: json['createdAt'],
-        type: json['type']);
+        type: json['type'],
+        pid: json['pid']);
   }
 
   Map<String, dynamic> toJson() => {
-        'pId': pId,
         'nickname': nickname,
         'title': title,
         'content': content,
         'person': person,
         'category': category,
         'createdAt': createdAt,
-        'type': type
+        'type': type,
+        'pid': pid
       };
 }

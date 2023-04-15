@@ -199,7 +199,7 @@ class _HomePageState extends State<MeetingPage> {
                     return GestureDetector(
                         onTap: () {
                           Get.to(BoardDetailPage(
-                            pId: postList[index].pId,
+                            pId: postList[index].pid,
                           ));
                         },
                         child: Column(children: [
