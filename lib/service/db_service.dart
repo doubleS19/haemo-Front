@@ -50,7 +50,7 @@ class DBService {
     }
   }
 
-  Future<List<PostResponse>> fetchPost() async {
+  Future<List<PostResponse>> getAllPost() async {
     final response = await http.get(Uri.parse("http://localhost:8080/post"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
@@ -62,12 +62,12 @@ class DBService {
     }
   }
 
-  Future<PostResponse> getPostById(int id) async {
+  Future<Post> getPostById(int id) async {
     final response =
         await http.get(Uri.parse("http://localhost:8080/post/$id"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
-      return PostResponse.fromJson(jsonData);
+      return Post.fromJson(jsonData);
     } else if (response.statusCode == 404) {
       throw Exception("Post not found");
     } else {

@@ -44,7 +44,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
               future: db.getPostById(widget.pId),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  final PostResponse post = snapshot.data as PostResponse;
+                  final Post post = snapshot.data as Post;
                   return Column(
                     children: [
                       Text(

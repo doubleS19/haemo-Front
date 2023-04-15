@@ -179,7 +179,7 @@ class _HomePageState extends State<MeetingPage> {
   Widget boardList() {
     DBService db = DBService();
     return FutureBuilder(
-        future: db.fetchPost(),
+        future: db.getAllPost(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List<PostResponse> postList =
@@ -198,9 +198,9 @@ class _HomePageState extends State<MeetingPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () {
-                          print(postList[index].pid);
+                          print(postList[index].pId);
                           Get.to(BoardDetailPage(
-                            pId: postList[index].pid,
+                            pId: postList[index].pId,
                           ));
                         },
                         child: Column(children: [

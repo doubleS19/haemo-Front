@@ -191,7 +191,7 @@ class _ClubPageState extends State<ClubPage> {
   Widget clubList() {
     DBService db = DBService();
     return FutureBuilder(
-        future: db.fetchPost(),
+        future: db.getAllPost(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List<PostResponse> postList =

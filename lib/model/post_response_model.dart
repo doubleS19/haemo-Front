@@ -11,7 +11,7 @@ class PostResponse {
   final String category;
   final String createdAt;
   final int type;
-  final int pid;
+  final int pId;
 
   PostResponse(
       {required this.nickname,
@@ -21,7 +21,7 @@ class PostResponse {
       required this.category,
       required this.createdAt,
       required this.type,
-      required this.pid});
+      required this.pId});
 
   factory PostResponse.fromJson(Map<String, dynamic> json) {
     return PostResponse(
@@ -32,7 +32,7 @@ class PostResponse {
         category: json['category'],
         createdAt: json['createdAt'],
         type: json['type'],
-        pid: json['pid']);
+        pId: json['pid']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -43,6 +43,6 @@ class PostResponse {
         'category': category,
         'createdAt': createdAt,
         'type': type,
-        'pid': pid
+        'pid': pId
       };
 }
