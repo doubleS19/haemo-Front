@@ -54,18 +54,9 @@ class DBService {
     final response = await http.get(Uri.parse("http://localhost:8080/post"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
-      return data.map((json) {
-        return PostResponse(
-          pid: json['pid'],
-          nickname: json['nickname'],
-          title: json['title'],
-          content: json['content'],
-          person: json['person'],
-          category: json['category'],
-          createdAt: json['createdAt'],
-          type: json['type'],
-        );
-      }).toList();
+      return data
+          .map<PostResponse>((json) => PostResponse.fromJson(json))
+          .toList();
     } else {
       throw Exception('Failed to load post llist');
     }
@@ -73,7 +64,7 @@ class DBService {
 
   Future<PostResponse> getPostById(int id) async {
     final response =
-        await http.post(Uri.parse("http://localhost:8080/post/get?id=$id"));
+        await http.get(Uri.parse("http://localhost:8080/post/$id"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return PostResponse.fromJson(jsonData);

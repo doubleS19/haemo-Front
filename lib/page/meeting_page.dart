@@ -198,6 +198,7 @@ class _HomePageState extends State<MeetingPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () {
+                          print(postList[index].pid);
                           Get.to(BoardDetailPage(
                             pId: postList[index].pid,
                           ));
