@@ -77,20 +77,18 @@ class _HomePageState extends State<MeetingPage> {
         body: Container(
             alignment: Alignment.center,
             color: Colors.white,
-            child: Expanded(
-                flex: 1,
-                child: Column(children: [
-                  const Divider(thickness: 0.5, color: Color(0xffbbbbbb)),
-                  Expanded(
-                      child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    itemBuilder: (BuildContext context, int index) {
-                      return todayNotice();
-                    },
-                  )),
-                  Expanded(flex: 3, child: boardList())
-                ]))));
+            child: Column(children: [
+              const Divider(thickness: 0.5, color: Color(0xffbbbbbb)),
+              Expanded(
+                  child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (BuildContext context, int index) {
+                  return todayNotice();
+                },
+              )),
+              Expanded(flex: 3, child: boardList())
+            ])));
   }
 
   Widget todayNotice() {

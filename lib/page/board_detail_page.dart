@@ -59,8 +59,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                           return Container(
                               margin: const EdgeInsets.fromLTRB(
                                   20.0, 10.0, 20.0, 0.0),
-                              child: Expanded(
-                                  child: Column(
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -133,7 +132,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                         ),
                                       )),
                                 ],
-                              )));
+                              ));
                         } else if (snapshot.hasError) {
                           return Center(
                             child: Text("${snapshot.error}"),
