@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/register_page.dart';
+import 'package:hae_mo/model/shared_preference.dart';
+import 'package:hae_mo/page/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -45,8 +48,13 @@ class _LoadingPageState extends State<LoadingPage> {
 
   @override
   void initState() {
+    String? id = PreferenceUtil.getString("id");
     Timer(const Duration(milliseconds: 1500), () {
-      Get.to(const RegisterPage());
+      if (id != "" || id?.isNotEmpty == true) {
+        Get.to(const HomePage());
+      } else {
+        Get.to(const RegisterPage());
+      }
     });
   }
 }
