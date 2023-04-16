@@ -100,37 +100,41 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                           MediaQuery.of(context).size.height *
                                               0.4,
                                       width: double.infinity,
-                                      color: const Color(0xff595959)
-                                          .withOpacity(0.05),
+                                      // color: const Color(0xff595959)
+                                      //     .withOpacity(0.05),
                                       child: Text(
                                         post.content,
                                         maxLines: 20,
                                       )),
                                   const Divider(color: Color(0xff393939)),
-                                  Container(
-                                      margin: const EdgeInsets.only(
-                                          right: 30, left: 30.0),
-                                      height: 45.0,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        20.0)),
-                                            backgroundColor: Color(0xff3ac7e7)),
-                                        onPressed: (() {
-                                          // Get.to(ChatRoom(
-                                          //     chatRoomId:
-                                          //         "20191520282019156027"));
-                                        }),
-                                        child: const Text(
-                                          "주문하신 채팅하기 버튼 나왔습니다.",
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                      )),
+                                  Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                          margin: const EdgeInsets.only(
+                                              right: 30, left: 30.0),
+                                          height: 45.0,
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20.0)),
+                                                backgroundColor:
+                                                    const Color(0xff3ac7e7)),
+                                            onPressed: (() {
+                                              // Get.to(ChatRoom(
+                                              //     chatRoomId:
+                                              //         "20191520282019156027"));
+                                            }),
+                                            child: const Text(
+                                              "주문하신 채팅하기 버튼 나왔습니다.",
+                                              style: TextStyle(
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w300),
+                                            ),
+                                          ))),
                                 ],
                               ));
                         } else if (snapshot.hasError) {

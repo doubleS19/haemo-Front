@@ -13,12 +13,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    flutterVersionCode = '4'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    flutterVersionName = '1.0.4'
 }
 
 apply plugin: 'com.android.application'
@@ -26,8 +26,9 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
+    buildToolsVersion "33"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -47,11 +48,27 @@ android {
         applicationId "com.example.hae_mo"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion 18
-        targetSdkVersion flutter.targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multidexEnabled true
     }
+
+    def keystoreProperties = new Properties()
+    def keystorePropertiesFile = rootProject.file('key.properties')
+    if (keystorePropertiesFile.exists()) {
+       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    }
+   android {
+        signingConfigs {
+            release {
+                storeFile file('../keystore/key.jks')
+                storePassword file('../keystore/keystore.password').text.trim()
+                keyPassword file('../keystore/keystore.password').text.trim()
+                keyAlias 'key'
+            }
+        }
 
     buildTypes {
         release {
@@ -68,4 +85,12 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation ('com.google.firebase:firebase-analytics'){
+        exclude group: 'com.google.android.gms', module: 'play-services-safetynet'
+    }
+    implementation platform('com.google.firebase:firebase-bom:26.2.0'){
+         exclude group: 'com.google.android.gms', module: 'play-services-safetynet'
+    }
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+}
 }
