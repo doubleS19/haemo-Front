@@ -62,29 +62,59 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Row(children: [
+                                    Container(
+                                      width: 41,
+                                      height: 41,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: const Color(0xff393939),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/sunset.jpg'))),
+                                    ),
+                                    const SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(user.nickname,
+                                            style: const TextStyle(
+                                                fontSize: 12.0,
+                                                color: Color(0xff393939),
+                                                fontWeight: FontWeight.w600)),
+                                        Row(
+                                          children: [
+                                            Text('${user.major}  /  ',
+                                                style: const TextStyle(
+                                                    fontSize: 12.0,
+                                                    color: Color(0xff393939),
+                                                    fontWeight:
+                                                        FontWeight.w400)),
+                                            Text(user.gender,
+                                                style: const TextStyle(
+                                                    fontSize: 12.0,
+                                                    color: Color(0xff393939),
+                                                    fontWeight:
+                                                        FontWeight.w400))
+                                          ],
+                                        )
+                                      ],
+                                    )
+                                  ]),
+                                  const SizedBox(
+                                    height: 30.0,
+                                  ),
                                   Text(
                                     post.title,
                                     style: const TextStyle(
-                                        fontSize: 20.0,
+                                        fontSize: 18.0,
                                         fontWeight: FontWeight.w400),
                                   ),
                                   const SizedBox(
                                     height: 5.0,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(user.nickname,
-                                          style: const TextStyle(
-                                              fontSize: 12.0,
-                                              color: Color(0xff999999),
-                                              fontWeight: FontWeight.w400)),
-                                      const SizedBox(width: 5.0),
-                                      Text(user.major,
-                                          style: const TextStyle(
-                                              fontSize: 12.0,
-                                              color: Color(0xff999999),
-                                              fontWeight: FontWeight.w400))
-                                    ],
                                   ),
                                   const SizedBox(
                                     height: 10.0,

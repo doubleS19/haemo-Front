@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
 import 'package:hae_mo/page/chat_list_page.dart';
 import 'package:hae_mo/page/posting_page.dart';
+import '../model/shared_preference.dart';
 import 'club_page.dart';
 import 'club_posting_page.dart';
 import 'meeting_page.dart';
@@ -113,6 +114,7 @@ class _HomePageState extends State<HomePage> {
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
           labelBackgroundColor: Color(0xff3ac7e7),
           onTap: () {
+            PreferenceUtil.remove("id");
             Get.to(const PostingPage());
           },
         ),
