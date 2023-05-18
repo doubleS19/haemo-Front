@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hae_mo/model/shared_preference.dart';
 import 'package:hae_mo/model/user_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/page/chat_list_page.dart';
+import 'package:hae_mo/page/chat_room_page.dart';
+import 'package:hae_mo/page/home_page.dart';
 import 'package:hae_mo/service/db_service.dart';
 
 class MyPage extends StatefulWidget {
@@ -12,6 +16,7 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
+  var myPageList = ["내가 작성한 글", "찜한 장소", "가고 싶은 모임"];
   @override
   Widget build(BuildContext context) {
     DBService db = DBService();
@@ -29,19 +34,15 @@ class _MyPageState extends State<MyPage> {
           ),
           automaticallyImplyLeading: false,
         ),
-        body: Column(children: [
-          const Divider(color: Color(0xff595959)),
-          FutureBuilder(
-              future:
-                  db.getUserByNickname(PreferenceUtil.getString("nickname")!),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  final UserResponse user = snapshot.data as UserResponse;
-                  return Container(
-                    width: 360.0,
-                    height: 367.0,
+        body: FutureBuilder(
+            future: db.getUserByNickname(PreferenceUtil.getString("nickname")!),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final UserResponse user = snapshot.data as UserResponse;
+                return Container(
                     margin: const EdgeInsets.only(top: 20.0),
                     child: Column(children: [
+                      const Divider(color: Color(0xff595959)),
                       const Text(
                         "프로필",
                         style: TextStyle(
@@ -84,12 +85,100 @@ class _MyPageState extends State<MyPage> {
                         height: 30.0,
                       ),
                       const Divider(color: Color(0xff595959)),
-                    ]),
-                  );
-                } else {
-                  return Text("회원 정보를 불러오는데 실패했습니다.\n다시 시도해주세요.");
-                }
-              })
-        ]));
+                      InkWell(
+                          onTap: () {
+                            Get.to(const ChatRoom(
+                              chatRoomId: '3',
+                            ));
+                          },
+                          child: Container(
+                              width: double.infinity,
+                              height: 44.0,
+                              margin: const EdgeInsets.only(left: 20.0),
+                              alignment: Alignment.centerLeft,
+                              child: const Text(
+                                "내가 작성한 글",
+                                style: TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.w300,
+                                    color: Color(0xff393939)),
+                              ))),
+                      const Divider(color: Color(0xff595959)),
+                      InkWell(
+                          onTap: () {
+                            Get.to(const ChatRoom(
+                              chatRoomId: '3',
+                            ));
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 44.0,
+                            margin: const EdgeInsets.only(left: 20.0),
+                            alignment: Alignment.centerLeft,
+                            child: const Text(
+                              "찜한 장소",
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w300,
+                                  color: Color(0xff393939)),
+                            ),
+                          )),
+                      const Divider(color: Color(0xff595959)),
+                      InkWell(
+                          onTap: () {
+                            Get.to(const ChatRoom(
+                              chatRoomId: '3',
+                            ));
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 44.0,
+                            margin: const EdgeInsets.only(left: 20.0),
+                            alignment: Alignment.centerLeft,
+                            child: const Text(
+                              "가고 싶은 모임",
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w300,
+                                  color: Color(0xff393939)),
+                            ),
+                          ))
+                    ]));
+              } else {
+                return const Center(
+                    child: Text("회원 정보를 불러오는데 실패했습니다.\n다시 시도해주세요."));
+              }
+            }));
+  }
+
+  Widget myList() {
+    return ListView.builder(
+        itemCount: myPageList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+              onTap: () {
+                Get.to(const ChatListPage());
+              },
+              child: Column(children: [
+                Container(
+                    height: 50.0,
+                    width: double.infinity,
+                    margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                    padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                    child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Column(children: [
+                          Text(
+                            myPageList[index],
+                            style: const TextStyle(
+                                color: Color(0xff595959),
+                                fontSize: 13.5,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          const Divider(
+                              thickness: 1.0, color: Color(0xffbbbbbb))
+                        ])))
+              ]));
+        });
   }
 }
