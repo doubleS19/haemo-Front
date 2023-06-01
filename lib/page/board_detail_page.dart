@@ -1,19 +1,7 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:hae_mo/model/post_response_model.dart';
-import 'package:hae_mo/model/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/page/chat_list_page.dart';
-import 'package:hae_mo/page/chat_room_page.dart';
-import 'package:http/http.dart';
-
-import '../controller/posting_controller.dart';
 import '../model/post_model.dart';
-import '../model/user_model.dart';
 import '../service/db_service.dart';
 
 class BoardDetailPage extends StatefulWidget {
@@ -68,7 +56,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                       height: 41,
                                       decoration: const BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: const Color(0xff393939),
+                                          color: Color(0xff393939),
                                           image: DecorationImage(
                                               image: AssetImage(
                                                   'assets/images/sunset.jpg'))),

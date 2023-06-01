@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/shared_preference.dart';
-import 'package:hae_mo/model/user_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/page/chat_list_page.dart';
 import 'package:hae_mo/page/chat_room_page.dart';
-import 'package:hae_mo/page/home_page.dart';
 import 'package:hae_mo/page/my_meeting_page.dart';
 import 'package:hae_mo/service/db_service.dart';
 

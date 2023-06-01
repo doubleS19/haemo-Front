@@ -112,7 +112,7 @@ class _ChatRoomState extends State<ChatRoom> {
   _handleSubmitted() {
     // firestore에 저장 후 변경을 보고 가져온 리스트가 자동으로 controller로 추가되게
 
-    if (_textController.text == ""){
+    if (_textController.text == "") {
       return;
     }
 
@@ -167,33 +167,33 @@ class _ChatRoomState extends State<ChatRoom> {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: Column(
                     children: [
-                      StreamBuilder(
-                        stream: controller.streamChatMessage(widget.chatRoomId),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<dynamic> snapshot) {
-                          if (snapshot.hasData) {
-                            ChatData chatData = snapshot.data;
-                            List<ChatMessage>? listMessage =
-                                chatData.chatMessageList;
-                            return ListView.builder(
-                              itemCount: listMessage?.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                for (var chat in controller.chatMessageList) {
-                                  if (chat.sender == studentId) {
-                                    return sender(chat.text!, chat.createdAt!);
-                                  } else {
-                                    return receiver(chat.text!, chat.sender!,
-                                        chat.createdAt!, 1);
-                                  }
-                                }
-                              },
-                            );
-                          } else {
-                            return const Center(child: Text("a"));
-                          }
-                        },
-                      ),
+                      // StreamBuilder(
+                      //   stream: controller.streamChatMessage(widget.chatRoomId),
+                      //   builder: (BuildContext context,
+                      //       AsyncSnapshot<dynamic> snapshot) {
+                      //     if (snapshot.hasData) {
+                      //       ChatData chatData = snapshot.data;
+                      //       List<ChatMessage>? listMessage =
+                      //           chatData.chatMessageList;
+                      //       return ListView.builder(
+                      //         itemCount: listMessage?.length,
+                      //         physics: const NeverScrollableScrollPhysics(),
+                      //         itemBuilder: (BuildContext context, int index) {
+                      //           for (var chat in controller.chatMessageList) {
+                      //             if (chat.sender == studentId) {
+                      //               return sender(chat.text!, chat.createdAt!);
+                      //             } else {
+                      //               return receiver(chat.text!, chat.sender!,
+                      //                   chat.createdAt!, 1);
+                      //             }
+                      //           }
+                      //         },
+                      //       );
+                      //     } else {
+                      //       return const Center(child: Text("a"));
+                      //     }
+                      //   },
+                      // ),
                     ],
                   ),
                 ))),
@@ -212,22 +212,20 @@ class _ChatRoomState extends State<ChatRoom> {
             Expanded(
                 child: Container(
                     child: TextFormField(
-                      /// https://dalgoodori.tistory.com/60
-                      controller: _textController,
-                      maxLines: 1,
-                      cursorColor: Colors.orange,
-                      style: const TextStyle(fontSize: 20),
-                      decoration: const InputDecoration(
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                      ),
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) {
-                        _handleSubmitted();
-                      },
-                  )
-                )
-            ),
+              /// https://dalgoodori.tistory.com/60
+              controller: _textController,
+              maxLines: 1,
+              cursorColor: Colors.orange,
+              style: const TextStyle(fontSize: 20),
+              decoration: const InputDecoration(
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+              ),
+              textInputAction: TextInputAction.next,
+              onFieldSubmitted: (String value) {
+                _handleSubmitted();
+              },
+            ))),
             chatIconButton(const Icon(FontAwesomeIcons.faceSmile)),
             chatIconButton(const Icon(FontAwesomeIcons.gear))
           ],

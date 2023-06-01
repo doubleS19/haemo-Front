@@ -1,27 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/post_response_model.dart';
-
-import '../model/post_model.dart';
 import '../service/db_service.dart';
 import 'board_detail_page.dart';
 import 'chat_list_page.dart';
 import 'my_page.dart';
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '헤쳐모여 TUK',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const ClubPage(),
-    );
-  }
-}
 
 class ClubPage extends StatefulWidget {
   const ClubPage({super.key});

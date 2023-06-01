@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:get/route_manager.dart';
-import 'package:hae_mo/Page/home_page.dart';
-
 import '../controller/user_controller.dart';
 
 class MyApp extends StatelessWidget {

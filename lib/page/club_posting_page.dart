@@ -1,28 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/Page/my_page.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
-
 import 'home_page.dart';
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '헤쳐모여 TUK',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const ClubPostingPage(),
-    );
-  }
-}
 
 class ClubPostingPage extends StatefulWidget {
   const ClubPostingPage({super.key});

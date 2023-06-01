@@ -2,28 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
-import 'package:hae_mo/page/chat_list_page.dart';
 import 'package:hae_mo/page/posting_page.dart';
 import '../model/shared_preference.dart';
 import 'club_page.dart';
 import 'club_posting_page.dart';
 import 'meeting_page.dart';
 import 'my_page.dart';
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '헤쳐모여 TUK',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(),
-    );
-  }
-}
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -106,13 +90,13 @@ class _HomePageState extends State<HomePage> {
       visible: true,
       curve: Curves.bounceIn,
       foregroundColor: Colors.white,
-      backgroundColor: Color(0xff3ac7e7),
+      backgroundColor: const Color(0xff3ac7e7),
       children: [
         SpeedDialChild(
           label: "핫플 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: Color(0xff3ac7e7),
+          labelBackgroundColor: const Color(0xff3ac7e7),
           onTap: () {
             PreferenceUtil.remove("id");
             Get.to(const PostingPage());
@@ -122,7 +106,7 @@ class _HomePageState extends State<HomePage> {
           label: "소모임 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: Color(0xff3ac7e7),
+          labelBackgroundColor: const Color(0xff3ac7e7),
           onTap: () {
             Get.to(const ClubPostingPage());
           },
@@ -131,7 +115,7 @@ class _HomePageState extends State<HomePage> {
           label: "새 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: Color(0xff3ac7e7),
+          labelBackgroundColor: const Color(0xff3ac7e7),
           onTap: () {
             Get.to(const PostingPage());
           },
