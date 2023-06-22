@@ -61,7 +61,7 @@ class _ClubPageState extends State<ClubPage> {
               alignment: Alignment.center,
               padding: const EdgeInsets.only(top: 10.0, right: 10.0),
               onPressed: () {
-                Get.to(const ChatListPage());
+                Get.to(() => const ChatListPage());
               },
               icon: const Icon(Icons.menu),
               color: const Color(0xff36b6d2),
@@ -110,7 +110,7 @@ class _ClubPageState extends State<ClubPage> {
                       borderRadius: BorderRadius.circular(20.0)),
                   backgroundColor: Colors.white),
               onPressed: () {
-                Get.to(const MyPage());
+                Get.to(() => const MyPage());
               },
               child: Column(
                 children: [
@@ -192,10 +192,9 @@ class _ClubPageState extends State<ClubPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () {
-                          print(postList[index].pId);
-                          Get.to(BoardDetailPage(
-                            pId: postList[index].pId,
-                          ));
+                          Get.to(() => BoardDetailPage(
+                                pId: postList[index].pId,
+                              ));
                         },
                         child: Column(children: [
                           Container(

@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
           labelBackgroundColor: const Color(0xff3ac7e7),
           onTap: () {
             PreferenceUtil.remove("id");
-            Get.to(const PostingPage());
+            Get.to(() => const PostingPage());
           },
         ),
         SpeedDialChild(
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
           labelBackgroundColor: const Color(0xff3ac7e7),
           onTap: () {
-            Get.to(const ClubPostingPage());
+            Get.to(() => const ClubPostingPage());
           },
         ),
         SpeedDialChild(
@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
           labelBackgroundColor: const Color(0xff3ac7e7),
           onTap: () {
-            Get.to(const PostingPage());
+            Get.to(() => const PostingPage());
           },
         ),
       ],

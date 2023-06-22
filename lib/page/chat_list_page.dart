@@ -37,7 +37,6 @@ class ChatListPage extends StatefulWidget {
 class _ChatListPageState extends State<ChatListPage> {
   ChatListController controller = ChatListController();
 
-
   @override
   void initState() {
     //adding item to list, you can add using json from network
@@ -74,14 +73,12 @@ class _ChatListPageState extends State<ChatListPage> {
                               }).toList(),
                             );
                           });
-                    }else{
-                      return const Column(
-
+                    } else {
+                      return Column(
+                        children: [Text("data")],
                       );
                     }
-                  }
-              )
-          ),
+                  })),
         ));
   }
 
@@ -101,11 +98,9 @@ Widget slidableCard(ChatList chat) {
           margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
           height: double.infinity,
           child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
             child: const Text("삭제",
-                style: TextStyle(
-                    color: Colors.white, fontSize: 13.0)),
+                style: TextStyle(color: Colors.white, fontSize: 13.0)),
             onPressed: () {
               // chat.removeWhere((element) {
               //   return element.nickname == personone.nickname;
@@ -116,7 +111,7 @@ Widget slidableCard(ChatList chat) {
     child: Card(
       child: ListTile(
         title: Text("chat.nickname"),
-        subtitle: Text(chat.lastChat != null?chat.lastChat!:""),
+        subtitle: Text(chat.lastChat != null ? chat.lastChat! : ""),
       ),
     ),
   );

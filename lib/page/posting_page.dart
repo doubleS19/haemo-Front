@@ -255,7 +255,7 @@ class _PostingPageState extends State<PostingPage> {
                                   _contentController.text,
                                   _selectedCategory,
                                   1);
-                              Get.to(const HomePage());
+                              Get.to(() => const HomePage());
                             },
                             child: const Text("등록"),
                           ))

@@ -24,7 +24,7 @@ class DBService {
         throw Exception("Failed to send data");
       } else {
         print("User Data sent successfully");
-        Get.to(const HomePage());
+        Get.to(() => const HomePage());
       }
     } catch (e) {
       print("Failed to send post data: ${e}");
@@ -44,7 +44,7 @@ class DBService {
         throw Exception("Failed to send data");
       } else {
         print("Post Data sent successfully");
-        Get.to(const HomePage());
+        Get.to(() => const HomePage());
       }
     } catch (e) {
       print("Failed to send post data: ${e}");

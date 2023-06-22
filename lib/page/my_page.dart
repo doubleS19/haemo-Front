@@ -86,7 +86,7 @@ class _MyPageState extends State<MyPage> {
                       const Divider(color: Color(0xff595959)),
                       InkWell(
                           onTap: () {
-                            Get.to(const MyMeetingPage());
+                            Get.to(() => const MyMeetingPage());
                           },
                           child: Container(
                               width: double.infinity,
@@ -103,9 +103,9 @@ class _MyPageState extends State<MyPage> {
                       const Divider(color: Color(0xff595959)),
                       InkWell(
                           onTap: () {
-                            Get.to(const ChatRoom(
-                              chatRoomId: '3',
-                            ));
+                            Get.to(() => const ChatRoom(
+                                  chatRoomId: '3',
+                                ));
                           },
                           child: Container(
                             width: double.infinity,
@@ -123,9 +123,9 @@ class _MyPageState extends State<MyPage> {
                       const Divider(color: Color(0xff595959)),
                       InkWell(
                           onTap: () {
-                            Get.to(const ChatRoom(
-                              chatRoomId: '3',
-                            ));
+                            Get.to(() => const ChatRoom(
+                                  chatRoomId: '3',
+                                ));
                           },
                           child: Container(
                             width: double.infinity,
@@ -154,7 +154,7 @@ class _MyPageState extends State<MyPage> {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
               onTap: () {
-                Get.to(const ChatListPage());
+                Get.to(() => const ChatListPage());
               },
               child: Column(children: [
                 Container(

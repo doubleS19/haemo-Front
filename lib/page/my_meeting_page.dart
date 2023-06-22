@@ -75,9 +75,9 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                     return InkWell(
                         onTap: () {
                           print(postList[index].pId);
-                          Get.to(BoardDetailPage(
-                            pId: postList[index].pId,
-                          ));
+                          Get.to(() => BoardDetailPage(
+                                pId: postList[index].pId,
+                              ));
                         },
                         child: Card(
                             shape: RoundedRectangleBorder(

@@ -35,7 +35,7 @@ class _LoadingPageState extends State<LoadingPage> {
     String? id = PreferenceUtil.getString("id");
     dev.log("id: ${PreferenceUtil.getString("nickname")}");
     Timer(const Duration(milliseconds: 1500), () {
-      if (id != null || id?.isNotEmpty == true) {
+      if (id != null || id?.isNotEmpty == true || id != "") {
         Get.to(const HomePage());
       } else {
         Get.to(const RegisterPage());
