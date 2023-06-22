@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
 import 'package:hae_mo/model/chatlist_model.dart';
 
+import '../controller/chatlist_controller.dart';
 import 'club_page.dart';
 import 'meeting_page.dart';
 import 'my_page.dart';
@@ -32,23 +35,12 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
-  List<Chat> chatList = [];
+  ChatListController controller = ChatListController();
+
 
   @override
   void initState() {
     //adding item to list, you can add using json from network
-    chatList.add(Chat(nickname: "정왕동 뿡뿡이", message: "Hari Prasad Chaudhary"));
-    chatList.add(Chat(nickname: "정직한 정서연", message: "Krishna Karki"));
-    chatList.add(Chat(nickname: "귀찮은 송미란", message: "Hari Prasad Chaudhary"));
-    chatList.add(Chat(nickname: "ㅎㅎㅅ", message: "Krishna Karki"));
-    chatList.add(Chat(nickname: "ㅇㅅㅊ", message: "Hari Prasad Chaudhary"));
-    chatList.add(Chat(nickname: "ㅂㅈㅁ", message: "Krishna Karki"));
-    chatList.add(Chat(nickname: "ㅅㅇㅅ 렛츠고", message: "Hari Prasad Chaudhary"));
-    chatList.add(Chat(nickname: "어리둥절빙글빙글", message: "Krishna Karki"));
-    chatList.add(Chat(nickname: "돌아가는", message: "Hari Prasad Chaudhary"));
-    chatList.add(Chat(nickname: "쨍구의하루", message: "Krishna Karki"));
-    chatList.add(Chat(nickname: "또라에모옹도와죠", message: "Hari Prasad Chaudhary"));
-    chatList.add(Chat(nickname: "인천섹시남", message: "Krishna Karki"));
 
     super.initState();
   }
@@ -60,7 +52,7 @@ class _ChatListPageState extends State<ChatListPage> {
           elevation: 0.0,
           title: const Align(
               alignment: Alignment.centerLeft,
-              child: Text("헤쳐모여 TUK",
+              child: Text("채팅리스트",
                   textAlign: TextAlign.left,
                   style: TextStyle(fontWeight: FontWeight.w800))),
           backgroundColor: Colors.white,
@@ -68,40 +60,27 @@ class _ChatListPageState extends State<ChatListPage> {
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              children: chatList.map((personone) {
-                return Slidable(
-                  key: Key(personone.nickname),
-                  actionPane: const SlidableDrawerActionPane(),
-                  actionExtentRatio: 0.15,
-                  secondaryActions: [
-                    Container(
-                        margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-                        height: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.redAccent),
-                          child: const Text("삭제",
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: 13.0)),
-                          onPressed: () {
-                            chatList.removeWhere((element) {
-                              return element.nickname == personone.nickname;
-                            });
-                            setState(() {});
-                          },
-                        )),
-                  ],
-                  child: Card(
-                    child: ListTile(
-                      title: Text(personone.nickname),
-                      subtitle: Text(personone.message),
-                    ),
-                  ),
-                );
-              }).toList(),
-            ),
+              padding: const EdgeInsets.all(10),
+              child: StreamBuilder(
+                  stream: controller.streamController.stream,
+                  builder: (BuildContext context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          itemCount: snapshot.data.hashCode,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: controller.chatList.map((snapshot) {
+                                return slidableCard(snapshot);
+                              }).toList(),
+                            );
+                          });
+                    }else{
+                      return const Column(
+
+                      );
+                    }
+                  }
+              )
           ),
         ));
   }
@@ -112,7 +91,39 @@ class _ChatListPageState extends State<ChatListPage> {
   }
 }
 
+Widget slidableCard(ChatList chat) {
+  return Slidable(
+    key: Key(chat.chatRoomId!!),
+    actionPane: const SlidableDrawerActionPane(),
+    actionExtentRatio: 0.15,
+    secondaryActions: [
+      Container(
+          margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
+          height: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent),
+            child: const Text("삭제",
+                style: TextStyle(
+                    color: Colors.white, fontSize: 13.0)),
+            onPressed: () {
+              // chat.removeWhere((element) {
+              //   return element.nickname == personone.nickname;
+              // });
+            },
+          )),
+    ],
+    child: Card(
+      child: ListTile(
+        title: Text("chat.nickname"),
+        subtitle: Text(chat.lastChat != null?chat.lastChat!:""),
+      ),
+    ),
+  );
+}
+
 class Chat {
   String nickname, message;
+
   Chat({required this.nickname, required this.message});
 }
