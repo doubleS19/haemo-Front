@@ -11,12 +11,13 @@ import 'package:hae_mo/page/loading_page.dart' as prefix;
 import 'model/shared_preference.dart';
 import 'networks/http_override.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:get_storage/get_storage.dart';
 void main() async {
   HttpOverrides.global = NoCheckCertificateHttpOverrides();
 
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDefault();
+  await GetStorage.init();
 
   await PreferenceUtil.init();
   runApp(const MyApp());
