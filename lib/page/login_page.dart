@@ -14,15 +14,12 @@ class LoginPage extends StatefulWidget {
 // 자동로그인 만들기
 
 class _LoginPageState extends State<LoginPage> {
-  LoginController _loginController = Get.put(LoginController());
+  final LoginController _loginController = Get.put(LoginController());
 
-  @override
-  void initState() {
-    super.initState();
+  TextEditingController idCtr = TextEditingController();
+  TextEditingController passwordCtr = TextEditingController();
+  var switchValue = false;
 
-    // 될까?
-    _loginController.getSecureStorageInfo().then((_) => {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,33 +33,37 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: TextField(
+              child: TextFormField(
+                controller: idCtr,
+                validator: (value) {
+                  return (value == null || value.isEmpty)
+                      ? 'Please Enter Email'
+                      : null;
+                },
                 decoration: const InputDecoration(labelText: 'ID'),
-                onChanged: (_) {},
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
-              child: TextField(
+              child: TextFormField(
+                validator: (value) {
+                  return (value == null || value.isEmpty)
+                      ? 'Please Enter Password'
+                      : null;
+                },
+                controller: passwordCtr,
                 decoration: const InputDecoration(labelText: 'PW'),
-                onChanged: (_) {},
               ),
             ),
             OutlinedButton(
-                onPressed: () {
-                  if (true) {
-                    //  로그인이 성공하고 secureStorage에 저장되어 있다면 바로 Home으로 이동
-                    print('로그인 성공');
-                    Get.offAll(HomePage());
-                  } else if (true) {
-                    //  로그인이 성공하고 secureStorage에 저장되어 있지 않다면(최초로그인)
-                    print('최초 로그인 성공');
-                  } else {
-                    // 로그인 실패
-                    print('로그인 실패');
-                  }
+                onPressed: () async {
+                  await _loginController.loginUser(
+                      idCtr.text, passwordCtr.text);
                 },
-                child: const Text('Login'))
+                child: const Text('Login')),
+            Switch(value: _loginController.autoLogin, onChanged: (value) {
+              _loginController.setAutoLogin();
+            })
           ],
         )));
   }
