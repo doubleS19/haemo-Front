@@ -18,6 +18,8 @@ class AuthenticationManager extends GetxController with CacheManager {
     await saveToken(token);
   }
 
+
+
   void checkLoginStatus() {
     final token = getToken();
     if (token != null) {
@@ -27,7 +29,6 @@ class AuthenticationManager extends GetxController with CacheManager {
 }
 
 mixin CacheManager {
-
 
   Future<bool> saveToken(String? token) async {
     final box = GetStorage();

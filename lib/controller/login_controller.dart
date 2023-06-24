@@ -17,15 +17,23 @@ class LoginController extends GetxController{
   late final AuthenticationManager _authManager;
   bool autoLogin = false;
 
-  static const storage = FlutterSecureStorage();
-  dynamic userInfo ='';
-
   @override
   void onInit(){
     super.onInit();
+    if(autoLogin){
+      checkLogin();
+    }
     _loginService = Get.put(LoginService());
     _authManager = Get.find();
 
+  }
+
+  void checkLogin(){
+    _authManager.checkLoginStatus();
+
+    if (_authManager.isLogged.value){
+      /// 정보 등록 확인 및 페이지 이동
+    }
   }
 
   Future<void> loginUser(String id, String password) async {
@@ -45,8 +53,8 @@ class LoginController extends GetxController{
     }
   }
 
-
   void setAutoLogin(){
+    print(autoLogin.toString());
     autoLogin = autoLogin? false: true;
   }
 }
