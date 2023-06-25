@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/post_response_model.dart' as prefix;
 import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/page/home_page.dart';
+import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/post_response_model.dart';
