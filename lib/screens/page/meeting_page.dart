@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/my_page.dart';
 import 'package:hae_mo/model/post_response_model.dart';
-import 'package:hae_mo/page/board_detail_page.dart';
-import 'package:hae_mo/page/chat_list_page.dart';
-import '../service/db_service.dart';
+import 'package:hae_mo/screens/page/board_detail_page.dart';
+import 'package:hae_mo/screens/page/chat_list_page.dart';
+import '../../service/db_service.dart';
 
 class MeetingPage extends StatefulWidget {
   const MeetingPage({super.key});

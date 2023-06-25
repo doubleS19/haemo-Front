@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/Page/register_page.dart';
 import 'package:hae_mo/model/shared_preference.dart';
-import 'package:hae_mo/page/home_page.dart';
+import 'package:hae_mo/screens/page/home_page.dart';
 import "dart:developer" as dev;
 
 class LoadingPage extends StatefulWidget {

@@ -6,7 +6,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart'
 import 'package:hae_mo/Page/loading_page.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/user_controller.dart';
-import 'package:hae_mo/page/loading_page.dart' as prefix;
+import 'package:hae_mo/screens/page/loading_page.dart' as prefix;
 
 import 'model/shared_preference.dart';
 import 'networks/http_override.dart';

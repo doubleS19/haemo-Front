@@ -2,7 +2,7 @@ import 'dart:ffi';
 
 import 'package:get/get.dart';
 import 'package:hae_mo/model/post_model.dart' as prefix;
-import 'package:hae_mo/page/home_page.dart';
+import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:hae_mo/service/db_service.dart';
 import "dart:developer" as dev;
 

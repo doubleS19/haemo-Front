@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/Page/recommend_page.dart';
 import 'package:hae_mo/model/chatlist_model.dart';
 
-import '../controller/chatlist_controller.dart';
+import '../../controller/chatlist_controller.dart';
 import 'club_page.dart';
 import 'meeting_page.dart';
 import 'my_page.dart';

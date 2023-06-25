@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/post_response_model.dart';
-import '../service/db_service.dart';
+import '../../service/db_service.dart';
 import 'board_detail_page.dart';
 import 'chat_list_page.dart';
 import 'my_page.dart';

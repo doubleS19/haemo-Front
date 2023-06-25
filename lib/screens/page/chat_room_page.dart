@@ -6,9 +6,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:hae_mo/controller/chat_controller.dart';
 import 'package:hae_mo/utils/chage_time_format.dart';
-import '../model/chatlist_model.dart';
-import '../model/chatmessage_model.dart';
-import '../model/shared_preference.dart';
+import '../../model/chatlist_model.dart';
+import '../../model/chatmessage_model.dart';
+import '../../model/shared_preference.dart';
 
 class ChatRoom extends StatefulWidget {
   const ChatRoom({Key? key, required this.chatRoomId}) : super(key: key);

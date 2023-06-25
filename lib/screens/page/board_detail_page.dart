@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/user_response_model.dart';
-import '../model/post_model.dart';
-import '../service/db_service.dart';
+import '../../model/post_model.dart';
+import '../../service/db_service.dart';
 
 class BoardDetailPage extends StatefulWidget {
   const BoardDetailPage({super.key, required this.pId});
