@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/Page/my_page.dart';
+import 'package:hae_mo/screens/Page/my_page.dart';
 import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/screens/page/board_detail_page.dart';
 import 'package:hae_mo/screens/page/chat_list_page.dart';

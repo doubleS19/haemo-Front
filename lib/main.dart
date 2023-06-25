@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
-import 'package:hae_mo/Page/loading_page.dart';
+import 'package:hae_mo/screens/Page/loading_page.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/user_controller.dart';
 import 'package:hae_mo/screens/page/loading_page.dart' as prefix;
