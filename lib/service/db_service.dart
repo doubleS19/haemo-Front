@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/post_response_model.dart' as prefix;
 import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/page/home_page.dart';
+import 'package:hae_mo/page/home_page.dart';
 import 'package:http/http.dart' as http;
 
 import '../model/post_response_model.dart';
@@ -14,7 +14,7 @@ class DBService {
   Future<void> saveUser(User user) async {
     try {
       final response = await http.post(
-        Uri.parse("http://localhost:1004/user"),
+        Uri.parse("http://43.201.211.1:1004/user"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -34,7 +34,7 @@ class DBService {
   Future<void> savePost(Post post) async {
     try {
       final response = await http.post(
-        Uri.parse("http://localhost:1004/post"),
+        Uri.parse("http://43.201.211.1:1004/post"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -52,7 +52,7 @@ class DBService {
   }
 
   Future<List<PostResponse>> getAllPost() async {
-    final response = await http.get(Uri.parse("http://localhost:1004/post"));
+    final response = await http.get(Uri.parse("http://43.201.211.1:1004/post"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -65,7 +65,7 @@ class DBService {
 
   Future<Post> getPostById(int id) async {
     final response =
-        await http.get(Uri.parse("http://localhost:1004/post/$id"));
+        await http.get(Uri.parse("http://43.201.211.1:1004/post/$id"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return Post.fromJson(jsonData);
@@ -77,8 +77,8 @@ class DBService {
   }
 
   Future<UserResponse> getUserByPost(int pId) async {
-    final response =
-        await http.get(Uri.parse("http://localhost:1004/post/postUser/$pId"));
+    final response = await http
+        .get(Uri.parse("http://43.201.211.1:1004/post/postUser/$pId"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -91,7 +91,7 @@ class DBService {
 
   Future<UserResponse> getUserByNickname(String nickname) async {
     final response =
-        await http.get(Uri.parse("http://localhost:1004/user/$nickname"));
+        await http.get(Uri.parse("http://43.201.211.1:1004/user/$nickname"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
