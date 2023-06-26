@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/controller/user_controller.dart';
 import 'package:hae_mo/screens/page/loading_page.dart' as prefix;
 
+import 'common/theme.dart';
 import 'model/shared_preference.dart';
 import 'networks/http_override.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -44,11 +45,9 @@ class MyApp extends StatelessWidget {
     //final Future<FirebaseApp> _initialization = Firebase.initializeApp();
     return GetMaterialApp(
       title: '헤쳐모여 TUK',
-      theme: ThemeData(
-        fontFamily: 'SCDream',
-        primarySwatch: Colors.blue,
-      ),
+      theme: CustomThemes.mainTheme,
       home: const LoadingPage(title: 'TUK'),
     );
   }
 }
+//CustomThemes.mainTheme
