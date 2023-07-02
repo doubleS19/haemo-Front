@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/model/post_type_model.dart';
 import 'package:hae_mo/screens/Page/recommend_page.dart';
 import 'package:hae_mo/screens/page/posting_page.dart';
 import '../../model/shared_preference.dart';
@@ -99,7 +100,7 @@ class _HomePageState extends State<HomePage> {
           labelBackgroundColor: const Color(0xff3ac7e7),
           onTap: () {
             PreferenceUtil.remove("id");
-            Get.to(() => const PostingPage());
+            Get.to(() => const PostingPage(postType: PostType.hotPlace));
           },
         ),
         SpeedDialChild(
@@ -108,7 +109,7 @@ class _HomePageState extends State<HomePage> {
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
           labelBackgroundColor: const Color(0xff3ac7e7),
           onTap: () {
-            Get.to(() => const ClubPostingPage());
+            Get.to(() => const PostingPage(postType: PostType.club));
           },
         ),
         SpeedDialChild(
@@ -117,7 +118,7 @@ class _HomePageState extends State<HomePage> {
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
           labelBackgroundColor: const Color(0xff3ac7e7),
           onTap: () {
-            Get.to(() => const PostingPage());
+            Get.to(() => const PostingPage(postType: PostType.meeting));
           },
         ),
       ],
