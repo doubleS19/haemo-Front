@@ -5,6 +5,7 @@ class CustomThemes {
   static final ThemeData mainTheme = ThemeData(
       primaryColor: appTheme.mainColor,
       buttonTheme: const ButtonThemeData(),
+      iconTheme: IconThemeData(color: appTheme.postingPageHeadlineColor),
       textTheme: TextTheme(
           headlineLarge: TextStyle(
               color: appTheme.mainPageHeadlineColor,
@@ -13,12 +14,16 @@ class CustomThemes {
           headlineMedium: TextStyle(
               color: appTheme.postingPageHeadlineColor,
               fontWeight: FontWeight.bold,
-              fontSize: 20),
+              fontSize: 18),
+          headlineSmall: TextStyle(
+              color: appTheme.mainPageHeadlineColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 16),
           bodyLarge: TextStyle(color: appTheme.mainPageTextColor, fontSize: 15),
           bodyMedium:
-              TextStyle(color: appTheme.mainPageTextColor, fontSize: 12),
+              TextStyle(color: appTheme.mainPageTextColor, fontSize: 14),
           bodySmall:
-              TextStyle(color: appTheme.mainPageSubTextColor, fontSize: 12)),
+              TextStyle(color: appTheme.mainPageSubTextColor, fontSize: 13)),
       dividerColor: appTheme.dividerColor,
       indicatorColor: appTheme.mainPageBottomNavItemColor);
 

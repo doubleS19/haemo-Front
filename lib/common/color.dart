@@ -18,6 +18,7 @@ class appTheme{
   static var postingPageHeadlineColor = const Color(0xFFFFFFFF);
 
 
+  /// 채팅 페이지
   static var borderColor = const Color(0xFFD9D9D9);
   static var buttonColor = const Color(0xFFFFFFFF);
   static var receiverText = const Color(0xFFDEDEDE);
