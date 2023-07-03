@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/post_type_model.dart';
 import 'package:hae_mo/screens/Page/recommend_page.dart';
 import 'package:hae_mo/screens/page/posting_page.dart';
@@ -41,13 +42,13 @@ class _HomePageState extends State<HomePage> {
         ),
         bottomNavigationBar: Container(
           margin: const EdgeInsets.only(left: 2.0, right: 2.0),
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(15.0),
                   topLeft: Radius.circular(15.0)),
               boxShadow: [
                 BoxShadow(
-                    color: Color(0xff3ac7e7),
+                    color: appTheme.mainColor,
                     spreadRadius: 2.0,
                     blurRadius: 0.0)
               ]),
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                 ],
                 currentIndex: _selectedIndex,
                 unselectedItemColor: const Color(0xffadadad),
-                selectedItemColor: const Color(0xff3ac7e7),
+                selectedItemColor: appTheme.mainColor,
                 onTap: _onItemTapped,
               )),
         ),
@@ -91,13 +92,13 @@ class _HomePageState extends State<HomePage> {
       visible: true,
       curve: Curves.bounceIn,
       foregroundColor: Colors.white,
-      backgroundColor: const Color(0xff3ac7e7),
+      backgroundColor: appTheme.mainColor,
       children: [
         SpeedDialChild(
           label: "핫플 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: const Color(0xff3ac7e7),
+          labelBackgroundColor: appTheme.mainColor,
           onTap: () {
             PreferenceUtil.remove("id");
             Get.to(() => const PostingPage(postType: PostType.hotPlace));
@@ -107,7 +108,7 @@ class _HomePageState extends State<HomePage> {
           label: "소모임 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: const Color(0xff3ac7e7),
+          labelBackgroundColor: appTheme.mainColor,
           onTap: () {
             Get.to(() => const PostingPage(postType: PostType.club));
           },
@@ -116,7 +117,7 @@ class _HomePageState extends State<HomePage> {
           label: "새 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: const Color(0xff3ac7e7),
+          labelBackgroundColor: appTheme.mainColor,
           onTap: () {
             Get.to(() => const PostingPage(postType: PostType.meeting));
           },

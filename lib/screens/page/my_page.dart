@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/page/chat_list_page.dart';
@@ -24,10 +25,10 @@ class _MyPageState extends State<MyPage> {
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
           elevation: 0.0,
-          title: const Text(
+          title: Text(
             "마이 페이지",
             style: TextStyle(
-              color: Color(0xff595959),
+              color: appTheme.mainPageTextColor,
               fontSize: 19.0,
             ),
           ),
@@ -41,7 +42,7 @@ class _MyPageState extends State<MyPage> {
                 return Container(
                     margin: const EdgeInsets.only(top: 20.0),
                     child: Column(children: [
-                      const Divider(color: Color(0xff595959)),
+                      Divider(color: appTheme.mainPageTextColor),
                       const Text(
                         "프로필",
                         style: TextStyle(
@@ -56,7 +57,7 @@ class _MyPageState extends State<MyPage> {
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
-                            color: const Color(0xffe3e3e3),
+                            color: appTheme.registerPageFormColor,
                             borderRadius: BorderRadius.circular(15.0)),
                         alignment: Alignment.center,
                       ),
@@ -83,7 +84,7 @@ class _MyPageState extends State<MyPage> {
                       const SizedBox(
                         height: 30.0,
                       ),
-                      const Divider(color: Color(0xff595959)),
+                      Divider(color: appTheme.mainPageTextColor),
                       InkWell(
                           onTap: () {
                             Get.to(() => const MyMeetingPage());
@@ -93,14 +94,14 @@ class _MyPageState extends State<MyPage> {
                               height: 44.0,
                               margin: const EdgeInsets.only(left: 20.0),
                               alignment: Alignment.centerLeft,
-                              child: const Text(
+                              child: Text(
                                 "내가 작성한 글",
                                 style: TextStyle(
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w300,
-                                    color: Color(0xff393939)),
+                                    color: appTheme.mainTextColor),
                               ))),
-                      const Divider(color: Color(0xff595959)),
+                      Divider(color: appTheme.mainPageTextColor),
                       InkWell(
                           onTap: () {
                             Get.to(() => const ChatRoom(
@@ -112,15 +113,15 @@ class _MyPageState extends State<MyPage> {
                             height: 44.0,
                             margin: const EdgeInsets.only(left: 20.0),
                             alignment: Alignment.centerLeft,
-                            child: const Text(
+                            child: Text(
                               "찜한 장소",
                               style: TextStyle(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w300,
-                                  color: Color(0xff393939)),
+                                  color: appTheme.mainTextColor),
                             ),
                           )),
-                      const Divider(color: Color(0xff595959)),
+                      Divider(color: appTheme.mainPageTextColor),
                       InkWell(
                           onTap: () {
                             Get.to(() => const ChatRoom(
@@ -132,12 +133,12 @@ class _MyPageState extends State<MyPage> {
                             height: 44.0,
                             margin: const EdgeInsets.only(left: 20.0),
                             alignment: Alignment.centerLeft,
-                            child: const Text(
+                            child: Text(
                               "가고 싶은 모임",
                               style: TextStyle(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w300,
-                                  color: Color(0xff393939)),
+                                  color: appTheme.mainTextColor),
                             ),
                           ))
                     ]));
@@ -167,13 +168,12 @@ class _MyPageState extends State<MyPage> {
                         child: Column(children: [
                           Text(
                             myPageList[index],
-                            style: const TextStyle(
-                                color: Color(0xff595959),
+                            style: TextStyle(
+                                color: appTheme.mainPageTextColor,
                                 fontSize: 13.5,
                                 fontWeight: FontWeight.w600),
                           ),
-                          const Divider(
-                              thickness: 1.0, color: Color(0xffbbbbbb))
+                          Divider(thickness: 1.0, color: appTheme.dividerColor)
                         ])))
               ]));
         });

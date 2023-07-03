@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/screens/page/board_detail_page.dart';
 import '../../service/db_service.dart';
@@ -32,7 +33,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
             margin: const EdgeInsets.only(right: 10.0, left: 10.0),
             color: Colors.white,
             child: Column(children: [
-              const Divider(thickness: 0.5, color: Color(0xffbbbbbb)),
+              Divider(thickness: 0.5, color: appTheme.dividerColor),
               const SizedBox(
                 height: 10.0,
               ),
@@ -44,8 +45,8 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
               const SizedBox(
                 height: 10.0,
               ),
-              const Divider(
-                color: Color(0xffbbbbbb),
+              Divider(
+                color: appTheme.dividerColor,
                 thickness: 0.5,
               ),
               Expanded(flex: 3, child: myBoardList())
@@ -62,89 +63,86 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                 snapshot.data as List<PostResponse>;
             postList.removeWhere((element) => element.type == 2);
             if (postList.isEmpty) {
-              return const Center(
+              return Center(
                   child: Text(
                 "게시물이 없어요!",
                 style: TextStyle(
-                    fontWeight: FontWeight.w300, color: Color(0xff595959)),
+                    fontWeight: FontWeight.w300,
+                    color: appTheme.mainPageTextColor),
               ));
             } else {
               return ListView.builder(
                   itemCount: postList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
+                    return GestureDetector(
                         onTap: () {
-                          print(postList[index].pId);
                           Get.to(() => BoardDetailPage(
                                 pId: postList[index].pId,
                               ));
                         },
-                        child: Card(
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(color: Color(0xffd9d9d9)),
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            child: Column(children: [
-                              Container(
-                                  height: 60.0,
-                                  width: double.infinity,
-                                  margin: const EdgeInsets.fromLTRB(
-                                      8.0, 8.0, 8.0, 0.0),
-                                  padding: const EdgeInsets.only(
-                                      left: 5.0, right: 5.0),
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Column(
+                        child: Column(children: [
+                          Container(
+                              height: 50.0,
+                              width: double.infinity,
+                              margin:
+                                  const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 5.0),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                postList[index].title,
-                                                style: const TextStyle(
-                                                    color: Color(0xff595959),
-                                                    fontSize: 13.5,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                              Text(
-                                                "3/${postList[index].person}",
-                                                style: const TextStyle(
-                                                    fontSize: 12.0,
-                                                    color: Color(0xff3ac7e7),
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                            ],
+                                          Text(
+                                            postList[index].title,
+                                            style: TextStyle(
+                                                color:
+                                                    appTheme.mainPageTextColor,
+                                                fontSize: 13.5,
+                                                fontWeight: FontWeight.w600),
                                           ),
-                                          const SizedBox(
-                                            height: 13.0,
+                                          Text(
+                                            "3/${postList[index].person}",
+                                            style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: appTheme
+                                                    .mainPagePersonColor,
+                                                fontWeight: FontWeight.w600),
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "${postList[index].person}명",
-                                                style: const TextStyle(
-                                                    color: Color(0xff999999),
-                                                    fontSize: 12.0,
-                                                    fontWeight:
-                                                        FontWeight.w300),
-                                              ),
-                                              Text(
-                                                postList[index].createdAt,
-                                                style: const TextStyle(
-                                                  fontSize: 12.0,
-                                                  color: Color(0xff595959),
-                                                ),
-                                              ),
-                                            ],
-                                          )
                                         ],
-                                      )))
-                            ])));
+                                      ),
+                                      const SizedBox(
+                                        height: 13.0,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "${postList[index].person}명",
+                                            style: TextStyle(
+                                                color: appTheme
+                                                    .mainPageSubTextColor,
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                          Text(
+                                            postList[index].createdAt,
+                                            style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: appTheme.mainPageTextColor,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ))),
+                          const Divider(
+                              thickness: 1.0, color: Color(0xffbbbbbb))
+                        ]));
                   });
             }
           } else if (snapshot.hasError) {

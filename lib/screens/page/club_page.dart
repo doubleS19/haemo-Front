@@ -51,9 +51,10 @@ class _ClubPageState extends State<ClubPage> {
                   const SizedBox(
                     height: 5,
                   ),
-                  const Text(
+                  Text(
                     "공지 24시간",
-                    style: TextStyle(color: Color(0xff393939), fontSize: 10.0),
+                    style: TextStyle(
+                        color: appTheme.mainTextColor, fontSize: 10.0),
                   ),
                 ],
               )),

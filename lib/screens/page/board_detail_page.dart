@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import '../../model/post_model.dart';
 import '../../service/db_service.dart';
@@ -22,17 +23,17 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
           elevation: 0.0,
-          title: const Text(
+          title: Text(
             "게시물 조회",
             style: TextStyle(
-              color: Color(0xff595959),
+              color: appTheme.mainAppBarColor,
               fontSize: 19.0,
             ),
           ),
           automaticallyImplyLeading: true,
         ),
         body: Column(children: [
-          const Divider(color: Color(0xff3ac7e7)),
+          Divider(color: appTheme.mainColor),
           FutureBuilder(
               future: db.getPostById(widget.pId),
               builder: (context, snapshot) {
@@ -54,10 +55,10 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                     Container(
                                       width: 41,
                                       height: 41,
-                                      decoration: const BoxDecoration(
+                                      decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: Color(0xff393939),
-                                          image: DecorationImage(
+                                          color: appTheme.mainTextColor,
+                                          image: const DecorationImage(
                                               image: AssetImage(
                                                   'assets/images/sunset.jpg'))),
                                     ),
@@ -69,22 +70,24 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(user.nickname,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 12.0,
-                                                color: Color(0xff393939),
+                                                color: appTheme.mainTextColor,
                                                 fontWeight: FontWeight.w600)),
                                         Row(
                                           children: [
                                             Text('${user.major}  /  ',
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                     fontSize: 12.0,
-                                                    color: Color(0xff393939),
+                                                    color:
+                                                        appTheme.mainTextColor,
                                                     fontWeight:
                                                         FontWeight.w400)),
                                             Text(user.gender,
-                                                style: const TextStyle(
+                                                style: TextStyle(
                                                     fontSize: 12.0,
-                                                    color: Color(0xff393939),
+                                                    color:
+                                                        appTheme.mainTextColor,
                                                     fontWeight:
                                                         FontWeight.w400))
                                           ],
@@ -107,7 +110,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                   const SizedBox(
                                     height: 10.0,
                                   ),
-                                  const Divider(color: Color(0xff393939)),
+                                  Divider(color: appTheme.mainTextColor),
                                   const SizedBox(
                                     height: 10.0,
                                   ),
@@ -118,13 +121,11 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                           MediaQuery.of(context).size.height *
                                               0.4,
                                       width: double.infinity,
-                                      // color: const Color(0xff595959)
-                                      //     .withOpacity(0.05),
                                       child: Text(
                                         post.content,
                                         maxLines: 20,
                                       )),
-                                  const Divider(color: Color(0xff393939)),
+                                  Divider(color: appTheme.mainTextColor),
                                   Align(
                                       alignment: Alignment.bottomCenter,
                                       child: Container(
@@ -140,7 +141,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                         BorderRadius.circular(
                                                             20.0)),
                                                 backgroundColor:
-                                                    const Color(0xff3ac7e7)),
+                                                    appTheme.mainColor),
                                             onPressed: (() {
                                               // Get.to(ChatRoom(
                                               //     chatRoomId:

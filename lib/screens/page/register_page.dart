@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/common/color.dart';
 import '../../controller/user_controller.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -31,10 +32,10 @@ class _RegisterPageState extends State<RegisterPage> {
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
         elevation: 0.0,
-        title: const Text(
+        title: Text(
           "회원가입",
           style: TextStyle(
-            color: Color(0xff595959),
+            color: appTheme.mainAppBarColor,
             fontSize: 19.0,
           ),
         ),
@@ -43,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: GetBuilder<UserController>(
         builder: (_userController) {
           return Column(children: [
-            const Divider(color: Color(0xff3ac7e7)),
+            Divider(color: appTheme.mainColor),
             Container(
                 margin: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
                 alignment: Alignment.topCenter,
@@ -56,11 +57,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(
                     height: 30.0,
                   ),
-                  const Text(
+                  Text(
                     "프로필",
                     style: TextStyle(
                         fontSize: 20.0,
-                        color: Color(0xff818181),
+                        color: appTheme.registerPageHintColor,
                         fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(
@@ -70,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: 200,
                     height: 200,
                     decoration: BoxDecoration(
-                        color: const Color(0xffe3e3e3),
+                        color: appTheme.registerPageFormColor,
                         borderRadius: BorderRadius.circular(15.0)),
                     alignment: Alignment.center,
                   ),
@@ -80,10 +81,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   Container(
                     margin: const EdgeInsets.only(left: 10.0),
                     alignment: Alignment.centerLeft,
-                    child: const Text(
+                    child: Text(
                       "닉네임",
                       style: TextStyle(
-                          color: Color(0xff393939),
+                          color: appTheme.mainTextColor,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w800),
                     ),
@@ -95,25 +96,28 @@ class _RegisterPageState extends State<RegisterPage> {
                       key: _formKey,
                       child: TextFormField(
                         controller: _textController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           filled: true,
-                          fillColor: Color(0xffe3e3e3),
+                          fillColor: appTheme.registerPageFormColor,
                           hintText: '닉네임을 입력하세요.',
                           hintStyle: TextStyle(
-                              color: Color(0xff818181), fontSize: 15.0),
+                              color: appTheme.registerPageHintColor,
+                              fontSize: 15.0),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Color(0xffe3e3e3)),
+                                const BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(
+                                width: 1,
+                                color: appTheme.registerPageFormColor),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(20.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Color(0xffe3e3e3)),
+                                const BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(
+                                width: 1,
+                                color: appTheme.registerPageFormColor),
                           ),
-                          border: OutlineInputBorder(
+                          border: const OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20.0)),
                           ),
@@ -133,12 +137,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Align(
+                          Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "성별",
                               style: TextStyle(
-                                  color: Color(0xff393939),
+                                  color: appTheme.mainTextColor,
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w800),
                             ),
@@ -171,12 +175,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Align(
+                          Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "전공",
                               style: TextStyle(
-                                  color: Color(0xff393939),
+                                  color: appTheme.mainTextColor,
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w800),
                             ),
@@ -238,7 +242,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
-                      backgroundColor: const Color(0xff3ac7e7),
+                      backgroundColor: appTheme.mainColor,
                     ),
                     onPressed: () {
                       _userController.saveInfo(_textController.text,
