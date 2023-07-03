@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/screens/Page/my_page.dart';
 import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/screens/page/board_detail_page.dart';
@@ -24,18 +25,17 @@ class _HomePageState extends State<MeetingPage> {
               alignment: Alignment.centerLeft,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    "친구 구하는 페이지",
-                    style: TextStyle(
+                children: [
+                  Text("친구 구하는 페이지",
+                      style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 17.0,
-                        color: Color(0xff36b6d2)),
-                  ),
-                  SizedBox(
+                        color: appTheme.mainPageHeadlineColor,
+                      )),
+                  const SizedBox(
                     height: 5,
                   ),
-                  Text(
+                  const Text(
                     "공지 24시간",
                     style: TextStyle(color: Color(0xff393939), fontSize: 10.0),
                   ),
@@ -49,7 +49,7 @@ class _HomePageState extends State<MeetingPage> {
                 Get.to(() => const ChatListPage());
               },
               icon: const Icon(Icons.menu),
-              color: const Color(0xff36b6d2),
+              color: appTheme.mainPageHeadlineColor,
             )
           ],
           elevation: 0.0,
@@ -59,7 +59,7 @@ class _HomePageState extends State<MeetingPage> {
             alignment: Alignment.center,
             color: Colors.white,
             child: Column(children: [
-              const Divider(thickness: 0.5, color: Color(0xffbbbbbb)),
+              Divider(thickness: 0.5, color: appTheme.dividerColor),
               Expanded(
                   child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -80,7 +80,7 @@ class _HomePageState extends State<MeetingPage> {
       decoration:
           BoxDecoration(borderRadius: BorderRadius.circular(20.0), boxShadow: [
         BoxShadow(
-          color: const Color(0xff00b2db).withOpacity(0.3),
+          color: appTheme.mainPageBlurColor.withOpacity(0.3),
           blurRadius: 4.0,
         ),
       ]),
@@ -104,14 +104,14 @@ class _HomePageState extends State<MeetingPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          const Text(
+                          Text(
                             "술 마실 사람 여자 3명임",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 13.5,
-                                color: Color(0xff595959)),
+                                color: appTheme.mainPageTextColor),
                           ),
                           const SizedBox(
                             height: 40.0,
@@ -165,11 +165,12 @@ class _HomePageState extends State<MeetingPage> {
                 snapshot.data as List<PostResponse>;
             postList.removeWhere((element) => element.type == 2);
             if (postList.isEmpty) {
-              return const Center(
+              return Center(
                   child: Text(
                 "게시물이 없어요!",
                 style: TextStyle(
-                    fontWeight: FontWeight.w300, color: Color(0xff595959)),
+                    fontWeight: FontWeight.w300,
+                    color: appTheme.mainPageTextColor),
               ));
             } else {
               return ListView.builder(
@@ -199,16 +200,18 @@ class _HomePageState extends State<MeetingPage> {
                                         children: [
                                           Text(
                                             postList[index].title,
-                                            style: const TextStyle(
-                                                color: Color(0xff595959),
+                                            style: TextStyle(
+                                                color:
+                                                    appTheme.mainPageTextColor,
                                                 fontSize: 13.5,
                                                 fontWeight: FontWeight.w600),
                                           ),
                                           Text(
                                             "3/${postList[index].person}",
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                                 fontSize: 12.0,
-                                                color: Color(0xff3ac7e7),
+                                                color: appTheme
+                                                    .mainPagePersonColor,
                                                 fontWeight: FontWeight.w600),
                                           ),
                                         ],
@@ -222,16 +225,17 @@ class _HomePageState extends State<MeetingPage> {
                                         children: [
                                           Text(
                                             "${postList[index].person}명",
-                                            style: const TextStyle(
-                                                color: Color(0xff999999),
+                                            style: TextStyle(
+                                                color: appTheme
+                                                    .mainPageSubTextColor,
                                                 fontSize: 12.0,
                                                 fontWeight: FontWeight.w300),
                                           ),
                                           Text(
                                             postList[index].createdAt,
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontSize: 12.0,
-                                              color: Color(0xff595959),
+                                              color: appTheme.mainPageTextColor,
                                             ),
                                           ),
                                         ],
