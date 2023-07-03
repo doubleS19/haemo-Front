@@ -91,6 +91,7 @@ class _HomePageState extends State<MeetingPage> {
           elevation: 0.0,
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(
+                  shadowColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0)),
                   backgroundColor: Colors.white),
