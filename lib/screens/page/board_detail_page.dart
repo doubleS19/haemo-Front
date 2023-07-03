@@ -33,7 +33,10 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
           automaticallyImplyLeading: true,
         ),
         body: Column(children: [
-          Divider(color: appTheme.mainColor),
+          Divider(
+            color: appTheme.mainColor,
+            thickness: 1.0,
+          ),
           FutureBuilder(
               future: db.getPostById(widget.pId),
               builder: (context, snapshot) {
@@ -100,12 +103,10 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                   ),
                                   Text(
                                     post.title,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontSize: 18.0,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                  const SizedBox(
-                                    height: 5.0,
+                                        color: appTheme.mainTextColor,
+                                        fontWeight: FontWeight.w500),
                                   ),
                                   const SizedBox(
                                     height: 10.0,
@@ -117,14 +118,26 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                   Container(
                                       margin:
                                           const EdgeInsets.only(bottom: 10.0),
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.4,
                                       width: double.infinity,
-                                      child: Text(
-                                        post.content,
-                                        maxLines: 20,
-                                      )),
+                                      child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                            Text(
+                                              post.content,
+                                              style: TextStyle(
+                                                  color: appTheme.mainTextColor,
+                                                  fontWeight: FontWeight.w400),
+                                              maxLines: 20,
+                                            ),
+                                            const SizedBox(
+                                              height: 20.0,
+                                            ),
+                                          ])),
                                   Divider(color: appTheme.mainTextColor),
                                   Align(
                                       alignment: Alignment.bottomCenter,

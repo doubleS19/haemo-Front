@@ -65,6 +65,8 @@ dev_dependencies:
 flutter:
   assets:
     - assets/
+    - assets/fonts/
+    - assets/images/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -74,6 +76,8 @@ flutter:
   fonts:
     - family: SCDream
       fonts:
+        - asset: assets/fonts/SCDream/SCDream1.otf
+          weight: 100
         - asset: assets/fonts/SCDream/SCDream2.otf
           weight: 200
         - asset: assets/fonts/SCDream/SCDream3.otf

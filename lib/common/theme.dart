@@ -3,6 +3,7 @@ import 'package:hae_mo/common/color.dart';
 
 class CustomThemes {
   static final ThemeData mainTheme = ThemeData(
+      fontFamily: 'SCDream',
       primaryColor: appTheme.mainColor,
       buttonTheme: const ButtonThemeData(),
       iconTheme: IconThemeData(color: appTheme.postingPageHeadlineColor),
