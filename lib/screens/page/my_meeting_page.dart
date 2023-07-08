@@ -130,7 +130,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                                 fontWeight: FontWeight.w300),
                                           ),
                                           Text(
-                                            postList[index].createdAt,
+                                            postList[index].date,
                                             style: TextStyle(
                                               fontSize: 12.0,
                                               color: appTheme.mainPageTextColor,
