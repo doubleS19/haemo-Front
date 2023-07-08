@@ -9,7 +9,7 @@ class PostResponse {
   final String content;
   final int person;
   final String category;
-  final String createdAt;
+  final String date;
   final int type;
   final int pId;
 
@@ -19,7 +19,7 @@ class PostResponse {
       required this.content,
       required this.person,
       required this.category,
-      required this.createdAt,
+      required this.date,
       required this.type,
       required this.pId});
 
@@ -30,7 +30,7 @@ class PostResponse {
         content: json['content'],
         person: json['person'],
         category: json['category'],
-        createdAt: json['createdAt'],
+        date: json['date'],
         type: json['type'],
         pId: json['pid']);
   }
@@ -41,7 +41,7 @@ class PostResponse {
         'content': content,
         'person': person,
         'category': category,
-        'createdAt': createdAt,
+        'date': date,
         'type': type,
         'pid': pId
       };

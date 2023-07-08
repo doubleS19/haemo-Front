@@ -50,7 +50,7 @@ class BoardRegisterController extends GetxController {
         content: content,
         person: person,
         category: category,
-        createdAt: date,
+        date: date,
         type: type,
       ));
     } else {
