@@ -116,93 +116,83 @@ class _HomePageState extends State<MeetingPage> {
                                           BorderRadius.circular(20.0)),
                                   elevation: 0.0,
                                   child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          shadowColor: Colors.transparent,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0)),
-                                          backgroundColor: Colors.white),
-                                      onPressed: () {
-                                        Get.to(() => const MyPage());
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                              padding: const EdgeInsets.only(
-                                                  top: 20.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
+                                    style: ElevatedButton.styleFrom(
+                                      shadowColor: Colors.transparent,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      backgroundColor: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      Get.to(() => BoardDetailPage(
+                                            pId: postList[index].pId,
+                                          ));
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Text(
+                                          postList[index].title,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 13.5,
+                                            color: appTheme.mainPageTextColor,
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
+                                                  const Icon(
+                                                    Icons.local_fire_department,
+                                                    size: 15.0,
+                                                    color: Color(0xffff2e00),
+                                                  ),
                                                   Text(
-                                                    postList[index].title,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 13.5,
-                                                        color: appTheme
-                                                            .mainPageTextColor),
+                                                    "${postList[index].person}명",
+                                                    style: const TextStyle(
+                                                      fontSize: 12.0,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
                                                   ),
-                                                  const SizedBox(
-                                                    height: 40.0,
-                                                  ),
-                                                  Align(
-                                                      alignment:
-                                                          Alignment.bottomRight,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              const Icon(
-                                                                Icons
-                                                                    .local_fire_department,
-                                                                size: 15.0,
-                                                                color: Color(
-                                                                    0xffff2e00),
-                                                              ),
-                                                              Text(
-                                                                "${postList[index].person}명",
-                                                                style: const TextStyle(
-                                                                    fontSize:
-                                                                        12.0,
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Text(
-                                                            postList[index]
-                                                                .date,
-                                                            style: const TextStyle(
-                                                                fontSize: 12.0,
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                          ),
-                                                        ],
-                                                      ))
                                                 ],
-                                              ))
-                                        ],
-                                      ))),
+                                              ),
+                                              Text(
+                                                postList[index]
+                                                    .date
+                                                    .replaceAll('년 ', '.')
+                                                    .replaceAll('월 ', '.')
+                                                    .replaceAll('일', ''),
+                                                style: const TextStyle(
+                                                  fontSize: 11.2,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
                             ));
                       }));
             }
-            ;
           } else if (snapshot.hasError) {
             return Center(
               child: Text("${snapshot.error}"),
