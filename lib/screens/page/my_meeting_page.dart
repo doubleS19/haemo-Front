@@ -33,7 +33,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
             margin: const EdgeInsets.only(right: 10.0, left: 10.0),
             color: Colors.white,
             child: Column(children: [
-              Divider(thickness: 0.5, color: appTheme.dividerColor),
+              Divider(thickness: 0.5, color: AppTheme.dividerColor),
               const SizedBox(
                 height: 10.0,
               ),
@@ -46,7 +46,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                 height: 10.0,
               ),
               Divider(
-                color: appTheme.dividerColor,
+                color: AppTheme.dividerColor,
                 thickness: 0.5,
               ),
               Expanded(flex: 3, child: myBoardList())
@@ -68,7 +68,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                 "게시물이 없어요!",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
-                    color: appTheme.mainPageTextColor),
+                    color: AppTheme.mainPageTextColor),
               ));
             } else {
               return ListView.builder(
@@ -100,7 +100,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                             postList[index].title,
                                             style: TextStyle(
                                                 color:
-                                                    appTheme.mainPageTextColor,
+                                                    AppTheme.mainPageTextColor,
                                                 fontSize: 13.5,
                                                 fontWeight: FontWeight.w600),
                                           ),
@@ -108,7 +108,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                             "3/${postList[index].person}",
                                             style: TextStyle(
                                                 fontSize: 12.0,
-                                                color: appTheme
+                                                color: AppTheme
                                                     .mainPagePersonColor,
                                                 fontWeight: FontWeight.w600),
                                           ),
@@ -124,7 +124,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                           Text(
                                             "${postList[index].person}명",
                                             style: TextStyle(
-                                                color: appTheme
+                                                color: AppTheme
                                                     .mainPageSubTextColor,
                                                 fontSize: 12.0,
                                                 fontWeight: FontWeight.w300),
@@ -133,7 +133,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                             postList[index].date,
                                             style: TextStyle(
                                               fontSize: 12.0,
-                                              color: appTheme.mainPageTextColor,
+                                              color: AppTheme.mainPageTextColor,
                                             ),
                                           ),
                                         ],

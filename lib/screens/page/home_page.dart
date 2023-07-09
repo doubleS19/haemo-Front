@@ -7,7 +7,6 @@ import 'package:hae_mo/screens/Page/recommend_page.dart';
 import 'package:hae_mo/screens/page/posting_page.dart';
 import '../../model/shared_preference.dart';
 import 'club_page.dart';
-import 'club_posting_page.dart';
 import 'meeting_page.dart';
 import 'my_page.dart';
 
@@ -48,7 +47,7 @@ class _HomePageState extends State<HomePage> {
                   topLeft: Radius.circular(15.0)),
               boxShadow: [
                 BoxShadow(
-                    color: appTheme.mainColor,
+                    color: AppTheme.mainColor,
                     spreadRadius: 2.0,
                     blurRadius: 0.0)
               ]),
@@ -69,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                 ],
                 currentIndex: _selectedIndex,
                 unselectedItemColor: const Color(0xffadadad),
-                selectedItemColor: appTheme.mainColor,
+                selectedItemColor: AppTheme.mainColor,
                 onTap: _onItemTapped,
               )),
         ),
@@ -92,13 +91,13 @@ class _HomePageState extends State<HomePage> {
       visible: true,
       curve: Curves.bounceIn,
       foregroundColor: Colors.white,
-      backgroundColor: appTheme.mainColor,
+      backgroundColor: AppTheme.mainColor,
       children: [
         SpeedDialChild(
           label: "핫플 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: appTheme.mainColor,
+          labelBackgroundColor: AppTheme.mainColor,
           onTap: () {
             PreferenceUtil.remove("id");
             Get.to(() => const PostingPage(postType: PostType.hotPlace));
@@ -108,7 +107,7 @@ class _HomePageState extends State<HomePage> {
           label: "소모임 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: appTheme.mainColor,
+          labelBackgroundColor: AppTheme.mainColor,
           onTap: () {
             Get.to(() => const PostingPage(postType: PostType.club));
           },
@@ -117,7 +116,7 @@ class _HomePageState extends State<HomePage> {
           label: "새 글쓰기",
           labelStyle: const TextStyle(
               fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: appTheme.mainColor,
+          labelBackgroundColor: AppTheme.mainColor,
           onTap: () {
             Get.to(() => const PostingPage(postType: PostType.meeting));
           },

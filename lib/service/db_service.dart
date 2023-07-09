@@ -1,12 +1,10 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/post_model.dart';
-import 'package:hae_mo/model/post_response_model.dart' as prefix;
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:http/http.dart' as http;
-
+import 'dart:developer' as dev;
 import '../model/post_response_model.dart';
 import '../model/user_model.dart';
 
@@ -24,11 +22,11 @@ class DBService {
       if (response.statusCode != 201) {
         throw Exception("Failed to send data");
       } else {
-        print("User Data sent successfully");
+        dev.log("User Data sent successfully");
         Get.to(() => const HomePage());
       }
     } catch (e) {
-      print("Failed to send post data: ${e}");
+      dev.log("Failed to send post data: ${e}");
     }
   }
 
@@ -45,11 +43,11 @@ class DBService {
       if (response.statusCode != 201) {
         throw Exception("Failed to send data");
       } else {
-        print("Post Data sent successfully");
+        dev.log("Post Data sent successfully");
         Get.to(() => const HomePage());
       }
     } catch (e) {
-      print("Failed to send post data: ${e}");
+      dev.log("Failed to send post data: ${e}");
     }
   }
 

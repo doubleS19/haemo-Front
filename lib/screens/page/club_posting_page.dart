@@ -82,6 +82,7 @@ class _ClubPostingPageState extends State<ClubPostingPage> {
                                 _textController.text,
                                 _contentController.text,
                                 _selectedCategory);
+                            return null;
                           },
                         )),
                     const SizedBox(height: 30),
@@ -150,6 +151,7 @@ class _ClubPostingPageState extends State<ClubPostingPage> {
                                                 _textController.text,
                                                 _contentController.text,
                                                 _selectedCategory);
+                                        return null;
                                       },
                                     ),
                                   ))),

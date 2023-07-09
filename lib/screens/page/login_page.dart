@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/login_controller.dart';
 
-import 'home_page.dart';
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -19,7 +17,6 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController idCtr = TextEditingController();
   TextEditingController passwordCtr = TextEditingController();
   var switchValue = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +58,11 @@ class _LoginPageState extends State<LoginPage> {
                       idCtr.text, passwordCtr.text);
                 },
                 child: const Text('Login')),
-            Switch(value: _loginController.autoLogin, onChanged: (value) {
-              _loginController.setAutoLogin();
-            })
+            Switch(
+                value: _loginController.autoLogin,
+                onChanged: (value) {
+                  _loginController.setAutoLogin();
+                })
           ],
         )));
   }

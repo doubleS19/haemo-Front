@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 Widget customAppbar(String appBarText) {
   return Builder(
@@ -10,6 +9,7 @@ Widget customAppbar(String appBarText) {
             centerTitle: true,
             leading: IconButton(
               onPressed: () {
+                Get.back();
               },
               color: Theme.of(context).iconTheme.color,
               icon: const Icon(Icons.arrow_back),

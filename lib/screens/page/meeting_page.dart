@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/screens/Page/my_page.dart';
 import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/screens/page/board_detail_page.dart';
 import 'package:hae_mo/screens/page/chat_list_page.dart';
@@ -30,7 +29,7 @@ class _HomePageState extends State<MeetingPage> {
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 17.0,
-                        color: appTheme.mainPageHeadlineColor,
+                        color: AppTheme.mainPageHeadlineColor,
                       )),
                   const SizedBox(
                     height: 5,
@@ -49,7 +48,7 @@ class _HomePageState extends State<MeetingPage> {
                 Get.to(() => const ChatListPage());
               },
               icon: const Icon(Icons.menu),
-              color: appTheme.mainPageHeadlineColor,
+              color: AppTheme.mainPageHeadlineColor,
             )
           ],
           elevation: 0.0,
@@ -59,7 +58,7 @@ class _HomePageState extends State<MeetingPage> {
             alignment: Alignment.center,
             color: Colors.white,
             child: Column(children: [
-              Divider(thickness: 0.5, color: appTheme.dividerColor),
+              Divider(thickness: 0.5, color: AppTheme.dividerColor),
               Expanded(child: todayNotice()),
               Expanded(flex: 3, child: boardList())
             ])));
@@ -80,7 +79,7 @@ class _HomePageState extends State<MeetingPage> {
                 "아직 시간이 많이 남았네용",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
-                    color: appTheme.mainPageTextColor),
+                    color: AppTheme.mainPageTextColor),
               ));
             } else {
               return Align(
@@ -104,7 +103,7 @@ class _HomePageState extends State<MeetingPage> {
                                   borderRadius: BorderRadius.circular(20.0),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: appTheme.mainPageBlurColor
+                                      color: AppTheme.mainPageBlurColor
                                           .withOpacity(0.3),
                                       blurRadius: 4.0,
                                     ),
@@ -142,7 +141,7 @@ class _HomePageState extends State<MeetingPage> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 13.5,
-                                            color: appTheme.mainPageTextColor,
+                                            color: AppTheme.mainPageTextColor,
                                           ),
                                         ),
                                         Align(
@@ -220,7 +219,7 @@ Widget boardList() {
               "게시물이 없어요!",
               style: TextStyle(
                   fontWeight: FontWeight.w300,
-                  color: appTheme.mainPageTextColor),
+                  color: AppTheme.mainPageTextColor),
             ));
           } else {
             return ListView.builder(
@@ -251,7 +250,7 @@ Widget boardList() {
                                         Text(
                                           postList[index].title,
                                           style: TextStyle(
-                                              color: appTheme.mainPageTextColor,
+                                              color: AppTheme.mainPageTextColor,
                                               fontSize: 13.5,
                                               fontWeight: FontWeight.w600),
                                         ),
@@ -260,7 +259,7 @@ Widget boardList() {
                                           style: TextStyle(
                                               fontSize: 12.0,
                                               color:
-                                                  appTheme.mainPagePersonColor,
+                                                  AppTheme.mainPagePersonColor,
                                               fontWeight: FontWeight.w600),
                                         ),
                                       ],
@@ -276,7 +275,7 @@ Widget boardList() {
                                           "${postList[index].person}명",
                                           style: TextStyle(
                                               color:
-                                                  appTheme.mainPageSubTextColor,
+                                                  AppTheme.mainPageSubTextColor,
                                               fontSize: 12.0,
                                               fontWeight: FontWeight.w300),
                                         ),
@@ -284,7 +283,7 @@ Widget boardList() {
                                           postList[index].date,
                                           style: TextStyle(
                                             fontSize: 12.0,
-                                            color: appTheme.mainPageTextColor,
+                                            color: AppTheme.mainPageTextColor,
                                           ),
                                         ),
                                       ],

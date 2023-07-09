@@ -46,7 +46,7 @@ class _ClubPageState extends State<ClubPage> {
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 17.0,
-                        color: appTheme.mainPageHeadlineColor),
+                        color: AppTheme.mainPageHeadlineColor),
                   ),
                   const SizedBox(
                     height: 5,
@@ -54,7 +54,7 @@ class _ClubPageState extends State<ClubPage> {
                   Text(
                     "공지 24시간",
                     style: TextStyle(
-                        color: appTheme.mainTextColor, fontSize: 10.0),
+                        color: AppTheme.mainTextColor, fontSize: 10.0),
                   ),
                 ],
               )),
@@ -66,7 +66,7 @@ class _ClubPageState extends State<ClubPage> {
                 Get.to(() => const ChatListPage());
               },
               icon: const Icon(Icons.menu),
-              color: appTheme.mainPageHeadlineColor,
+              color: AppTheme.mainPageHeadlineColor,
             )
           ],
           elevation: 0.0,
@@ -76,7 +76,7 @@ class _ClubPageState extends State<ClubPage> {
             alignment: Alignment.center,
             color: Colors.white,
             child: Column(children: [
-              Divider(thickness: 0.5, color: appTheme.dividerColor),
+              Divider(thickness: 0.5, color: AppTheme.dividerColor),
               Expanded(child: todayNotice()),
               Expanded(flex: 3, child: clubList())
             ])));
@@ -97,7 +97,7 @@ class _ClubPageState extends State<ClubPage> {
                 "아직 시간이 많이 남았네용",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
-                    color: appTheme.mainPageTextColor),
+                    color: AppTheme.mainPageTextColor),
               ));
             } else {
               return Align(
@@ -121,7 +121,7 @@ class _ClubPageState extends State<ClubPage> {
                                   borderRadius: BorderRadius.circular(20.0),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: appTheme.mainPageBlurColor
+                                      color: AppTheme.mainPageBlurColor
                                           .withOpacity(0.3),
                                       blurRadius: 4.0,
                                     ),
@@ -159,7 +159,7 @@ class _ClubPageState extends State<ClubPage> {
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 13.5,
-                                            color: appTheme.mainPageTextColor,
+                                            color: AppTheme.mainPageTextColor,
                                           ),
                                         ),
                                         Align(
@@ -237,7 +237,7 @@ Widget clubList() {
               "게시물이 없어요!",
               style: TextStyle(
                   fontWeight: FontWeight.w300,
-                  color: appTheme.mainPageTextColor),
+                  color: AppTheme.mainPageTextColor),
             ));
           } else {
             return ListView.builder(
@@ -268,7 +268,7 @@ Widget clubList() {
                                         Text(
                                           postList[index].title,
                                           style: TextStyle(
-                                              color: appTheme.mainPageTextColor,
+                                              color: AppTheme.mainPageTextColor,
                                               fontSize: 13.5,
                                               fontWeight: FontWeight.w600),
                                         ),
@@ -277,7 +277,7 @@ Widget clubList() {
                                           style: TextStyle(
                                               fontSize: 12.0,
                                               color:
-                                                  appTheme.mainPagePersonColor,
+                                                  AppTheme.mainPagePersonColor,
                                               fontWeight: FontWeight.w600),
                                         ),
                                       ],
@@ -300,14 +300,14 @@ Widget clubList() {
                                           postList[index].date,
                                           style: TextStyle(
                                             fontSize: 12.0,
-                                            color: appTheme.mainPageTextColor,
+                                            color: AppTheme.mainPageTextColor,
                                           ),
                                         ),
                                       ],
                                     )
                                   ],
                                 ))),
-                        Divider(thickness: 1.0, color: appTheme.dividerColor)
+                        Divider(thickness: 1.0, color: AppTheme.dividerColor)
                       ]));
                 });
           }

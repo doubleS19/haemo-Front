@@ -32,6 +32,7 @@ class _LoadingPageState extends State<LoadingPage> {
 
   @override
   void initState() {
+    super.initState();
     String? id = PreferenceUtil.getString("id");
     dev.log("id: ${PreferenceUtil.getString("nickname")}");
     Timer(const Duration(milliseconds: 1500), () {

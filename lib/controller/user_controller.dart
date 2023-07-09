@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:hae_mo/model/shared_preference.dart';
-import 'package:hae_mo/screens/page/home_page.dart';
 import "dart:developer" as dev;
 
 import 'package:hae_mo/service/db_service.dart';

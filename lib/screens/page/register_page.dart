@@ -35,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
         title: Text(
           "회원가입",
           style: TextStyle(
-            color: appTheme.mainAppBarColor,
+            color: AppTheme.mainAppBarColor,
             fontSize: 19.0,
           ),
         ),
@@ -44,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: GetBuilder<UserController>(
         builder: (_userController) {
           return Column(children: [
-            Divider(color: appTheme.mainColor),
+            Divider(color: AppTheme.mainColor),
             Container(
                 margin: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
                 alignment: Alignment.topCenter,
@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     "프로필",
                     style: TextStyle(
                         fontSize: 20.0,
-                        color: appTheme.registerPageHintColor,
+                        color: AppTheme.registerPageHintColor,
                         fontWeight: FontWeight.w700),
                   ),
                   const SizedBox(
@@ -71,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     width: 200,
                     height: 200,
                     decoration: BoxDecoration(
-                        color: appTheme.registerPageFormColor,
+                        color: AppTheme.registerPageFormColor,
                         borderRadius: BorderRadius.circular(15.0)),
                     alignment: Alignment.center,
                   ),
@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Text(
                       "닉네임",
                       style: TextStyle(
-                          color: appTheme.mainTextColor,
+                          color: AppTheme.mainTextColor,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w800),
                     ),
@@ -98,24 +98,24 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: _textController,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor: appTheme.registerPageFormColor,
+                          fillColor: AppTheme.registerPageFormColor,
                           hintText: '닉네임을 입력하세요.',
                           hintStyle: TextStyle(
-                              color: appTheme.registerPageHintColor,
+                              color: AppTheme.registerPageHintColor,
                               fontSize: 15.0),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(20.0)),
                             borderSide: BorderSide(
                                 width: 1,
-                                color: appTheme.registerPageFormColor),
+                                color: AppTheme.registerPageFormColor),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(20.0)),
                             borderSide: BorderSide(
                                 width: 1,
-                                color: appTheme.registerPageFormColor),
+                                color: AppTheme.registerPageFormColor),
                           ),
                           border: const OutlineInputBorder(
                             borderRadius:
@@ -126,6 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           if (value!.isEmpty) {
                             _registerState = RegisterState.empty;
                           }
+                          return null;
                         },
                       )),
                   const SizedBox(
@@ -142,7 +143,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: Text(
                               "성별",
                               style: TextStyle(
-                                  color: appTheme.mainTextColor,
+                                  color: AppTheme.mainTextColor,
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w800),
                             ),
@@ -180,7 +181,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: Text(
                               "전공",
                               style: TextStyle(
-                                  color: appTheme.mainTextColor,
+                                  color: AppTheme.mainTextColor,
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w800),
                             ),
@@ -242,7 +243,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0)),
-                      backgroundColor: appTheme.mainColor,
+                      backgroundColor: AppTheme.mainColor,
                     ),
                     onPressed: () {
                       _userController.saveInfo(_textController.text,

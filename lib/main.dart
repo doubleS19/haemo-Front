@@ -5,14 +5,13 @@ import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
 import 'package:hae_mo/screens/Page/loading_page.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/controller/user_controller.dart';
-import 'package:hae_mo/screens/page/loading_page.dart' as prefix;
 
 import 'common/theme.dart';
 import 'model/shared_preference.dart';
 import 'networks/http_override.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_storage/get_storage.dart';
+
 void main() async {
   HttpOverrides.global = NoCheckCertificateHttpOverrides();
 

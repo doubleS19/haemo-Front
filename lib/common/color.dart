@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-class appTheme {
+class AppTheme {
   static var mainColor = const Color(0xFF3AC7E7);
   static var dividerColor = const Color(0xFFBBBBBB);
   static var mainTextColor = const Color(0xFF393939);

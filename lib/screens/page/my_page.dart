@@ -28,7 +28,7 @@ class _MyPageState extends State<MyPage> {
           title: Text(
             "마이 페이지",
             style: TextStyle(
-              color: appTheme.mainPageTextColor,
+              color: AppTheme.mainPageTextColor,
               fontSize: 19.0,
             ),
           ),
@@ -42,7 +42,7 @@ class _MyPageState extends State<MyPage> {
                 return Container(
                     margin: const EdgeInsets.only(top: 20.0),
                     child: Column(children: [
-                      Divider(color: appTheme.mainPageTextColor),
+                      Divider(color: AppTheme.mainPageTextColor),
                       const Text(
                         "프로필",
                         style: TextStyle(
@@ -57,7 +57,7 @@ class _MyPageState extends State<MyPage> {
                         width: 200,
                         height: 200,
                         decoration: BoxDecoration(
-                            color: appTheme.registerPageFormColor,
+                            color: AppTheme.registerPageFormColor,
                             borderRadius: BorderRadius.circular(15.0)),
                         alignment: Alignment.center,
                       ),
@@ -84,7 +84,7 @@ class _MyPageState extends State<MyPage> {
                       const SizedBox(
                         height: 30.0,
                       ),
-                      Divider(color: appTheme.mainPageTextColor),
+                      Divider(color: AppTheme.mainPageTextColor),
                       InkWell(
                           onTap: () {
                             Get.to(() => const MyMeetingPage());
@@ -99,9 +99,9 @@ class _MyPageState extends State<MyPage> {
                                 style: TextStyle(
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.w300,
-                                    color: appTheme.mainTextColor),
+                                    color: AppTheme.mainTextColor),
                               ))),
-                      Divider(color: appTheme.mainPageTextColor),
+                      Divider(color: AppTheme.mainPageTextColor),
                       InkWell(
                           onTap: () {
                             Get.to(() => const ChatRoom(
@@ -118,10 +118,10 @@ class _MyPageState extends State<MyPage> {
                               style: TextStyle(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w300,
-                                  color: appTheme.mainTextColor),
+                                  color: AppTheme.mainTextColor),
                             ),
                           )),
-                      Divider(color: appTheme.mainPageTextColor),
+                      Divider(color: AppTheme.mainPageTextColor),
                       InkWell(
                           onTap: () {
                             Get.to(() => const ChatRoom(
@@ -138,7 +138,7 @@ class _MyPageState extends State<MyPage> {
                               style: TextStyle(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w300,
-                                  color: appTheme.mainTextColor),
+                                  color: AppTheme.mainTextColor),
                             ),
                           ))
                     ]));
@@ -169,11 +169,11 @@ class _MyPageState extends State<MyPage> {
                           Text(
                             myPageList[index],
                             style: TextStyle(
-                                color: appTheme.mainPageTextColor,
+                                color: AppTheme.mainPageTextColor,
                                 fontSize: 13.5,
                                 fontWeight: FontWeight.w600),
                           ),
-                          Divider(thickness: 1.0, color: appTheme.dividerColor)
+                          Divider(thickness: 1.0, color: AppTheme.dividerColor)
                         ])))
               ]));
         });

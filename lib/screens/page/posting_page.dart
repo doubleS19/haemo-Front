@@ -2,14 +2,11 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
 import '../../model/post_type_model.dart';
 import '../components/customAppBar.dart';
-import '../components/customDropDownButton.dart';
 import '../components/customTextField.dart';
-import 'home_page.dart';
 
 class PostingPage extends StatefulWidget {
   const PostingPage({super.key, required this.postType});
@@ -21,8 +18,8 @@ class PostingPage extends StatefulWidget {
 }
 
 class _PostingPageState extends State<PostingPage> {
-  var _selectedHeadCount = "인원 선택";
-  var _selectedCategory = "카테고리 선택";
+  final _selectedHeadCount = "인원 선택";
+  final _selectedCategory = "카테고리 선택";
 
   final TextEditingController _textController = TextEditingController();
 
@@ -49,28 +46,27 @@ class _PostingPageState extends State<PostingPage> {
                           min(post.title.length, post.description.length),
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 17),
-                          child:Row(children: [
-                            Flexible(
-                                flex: 2,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(post.title[index],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineSmall),
-                                  ],
-                                )),
-                            Flexible(
-                              flex: 8,
-                              child: postingPageTitleTextField(
-                                  post.description[index],
-                                  _textController,
-                                  context),
-                            )
-                          ])
-                        );
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 17),
+                            child: Row(children: [
+                              Flexible(
+                                  flex: 2,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(post.title[index],
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall),
+                                    ],
+                                  )),
+                              Flexible(
+                                flex: 8,
+                                child: postingPageTitleTextField(
+                                    post.description[index],
+                                    _textController,
+                                    context),
+                              )
+                            ]));
                       }))
               //for (int i = 0; i < min(post.title.length, post.description.length); i++)
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import '../../model/post_model.dart';
@@ -26,7 +25,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
           title: Text(
             "게시물 조회",
             style: TextStyle(
-              color: appTheme.mainAppBarColor,
+              color: AppTheme.mainAppBarColor,
               fontSize: 19.0,
             ),
           ),
@@ -34,7 +33,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
         ),
         body: Column(children: [
           Divider(
-            color: appTheme.mainColor,
+            color: AppTheme.mainColor,
             thickness: 1.0,
           ),
           FutureBuilder(
@@ -60,7 +59,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                       height: 41,
                                       decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: appTheme.mainTextColor,
+                                          color: AppTheme.mainTextColor,
                                           image: const DecorationImage(
                                               image: AssetImage(
                                                   'assets/images/sunset.jpg'))),
@@ -75,7 +74,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                         Text(user.nickname,
                                             style: TextStyle(
                                                 fontSize: 12.0,
-                                                color: appTheme.mainTextColor,
+                                                color: AppTheme.mainTextColor,
                                                 fontWeight: FontWeight.w600)),
                                         Row(
                                           children: [
@@ -83,14 +82,14 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                 style: TextStyle(
                                                     fontSize: 12.0,
                                                     color:
-                                                        appTheme.mainTextColor,
+                                                        AppTheme.mainTextColor,
                                                     fontWeight:
                                                         FontWeight.w400)),
                                             Text(user.gender,
                                                 style: TextStyle(
                                                     fontSize: 12.0,
                                                     color:
-                                                        appTheme.mainTextColor,
+                                                        AppTheme.mainTextColor,
                                                     fontWeight:
                                                         FontWeight.w400))
                                           ],
@@ -105,13 +104,13 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                     post.title,
                                     style: TextStyle(
                                         fontSize: 18.0,
-                                        color: appTheme.mainTextColor,
+                                        color: AppTheme.mainTextColor,
                                         fontWeight: FontWeight.w500),
                                   ),
                                   const SizedBox(
                                     height: 10.0,
                                   ),
-                                  Divider(color: appTheme.mainTextColor),
+                                  Divider(color: AppTheme.mainTextColor),
                                   const SizedBox(
                                     height: 10.0,
                                   ),
@@ -130,7 +129,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                             Text(
                                               post.content,
                                               style: TextStyle(
-                                                  color: appTheme.mainTextColor,
+                                                  color: AppTheme.mainTextColor,
                                                   fontWeight: FontWeight.w400),
                                               maxLines: 20,
                                             ),
@@ -138,7 +137,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               height: 20.0,
                                             ),
                                           ])),
-                                  Divider(color: appTheme.mainTextColor),
+                                  Divider(color: AppTheme.mainTextColor),
                                   Align(
                                       alignment: Alignment.bottomCenter,
                                       child: Container(
@@ -154,7 +153,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                         BorderRadius.circular(
                                                             20.0)),
                                                 backgroundColor:
-                                                    appTheme.mainColor),
+                                                    AppTheme.mainColor),
                                             onPressed: (() {
                                               // Get.to(ChatRoom(
                                               //     chatRoomId:

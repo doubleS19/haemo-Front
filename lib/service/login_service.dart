@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:get/get_connect/connect.dart';
 
 import '../model/login_model.dart';
@@ -18,5 +16,4 @@ class LoginService extends GetConnect {
       return null;
     }*/
   }
-
 }

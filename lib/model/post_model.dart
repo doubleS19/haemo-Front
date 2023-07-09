@@ -1,8 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
-import 'package:http/http.dart' as http;
-import 'package:flutter/foundation.dart';
-
 class Post {
   final String nickname;
   final String title;
