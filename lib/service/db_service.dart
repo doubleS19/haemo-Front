@@ -107,8 +107,10 @@ class DBService {
   }
 
   Future<UserResponse> getUserByNickname(String nickname) async {
+    // final response =
+    //     await http.get(Uri.parse("http://43.201.211.1:1004/user/$nickname"));
     final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/user/$nickname"));
+        await http.get(Uri.parse("http://localhost:1004/user/$nickname"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
