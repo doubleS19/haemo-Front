@@ -2,11 +2,14 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
 import '../../model/post_type_model.dart';
 import '../components/customAppBar.dart';
+import '../components/customDropDownButton.dart';
 import '../components/customTextField.dart';
+import 'home_page.dart';
 
 class PostingPage extends StatefulWidget {
   const PostingPage({super.key, required this.postType});
@@ -21,7 +24,8 @@ class _PostingPageState extends State<PostingPage> {
   final _selectedHeadCount = "인원 선택";
   final _selectedCategory = "카테고리 선택";
 
-  final TextEditingController _textController = TextEditingController();
+  final List<TextEditingController> _textController = [TextEditingController(), TextEditingController()];
+  final detailTextContext = TextEditingController();
 
   final BoardRegisterController _boradRegisterController =
       Get.put(BoardRegisterController());
@@ -36,7 +40,7 @@ class _PostingPageState extends State<PostingPage> {
             child:
                 Builder(builder: (context) => customAppbar(post.appBarText))),
         body: Container(
-          padding: EdgeInsets.all(30),
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: [
               Flexible(
@@ -63,7 +67,7 @@ class _PostingPageState extends State<PostingPage> {
                                 flex: 8,
                                 child: postingPageTitleTextField(
                                     post.description[index],
-                                    _textController,
+                                    _textController[index],
                                     context),
                               )
                             ]));
