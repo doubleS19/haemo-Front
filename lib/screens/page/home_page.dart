@@ -5,6 +5,7 @@ import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/post_type_model.dart';
 import 'package:hae_mo/screens/Page/recommend_page.dart';
 import 'package:hae_mo/screens/page/posting_page.dart';
+import '../../controller/meeting_page_controller.dart';
 import '../../model/shared_preference.dart';
 import 'club_page.dart';
 import 'meeting_page.dart';
@@ -35,6 +36,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(MeetingPageController());
     return Scaffold(
         body: SafeArea(
           child: _widgetOptions.elementAt(_selectedIndex),
