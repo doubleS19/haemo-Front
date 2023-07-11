@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
-import '../../model/post_type_model.dart';
+import '../../model/dropdown_type.dart';
+import '../../model/post_type.dart';
+import '../../service/date_service.dart';
 import '../components/customAppBar.dart';
 import '../components/customDropDownButton.dart';
 import '../components/customTextField.dart';
@@ -21,10 +23,10 @@ class PostingPage extends StatefulWidget {
 }
 
 class _PostingPageState extends State<PostingPage> {
-  final _selectedHeadCount = "인원 선택";
-  final _selectedCategory = "카테고리 선택";
-
-  final List<TextEditingController> _textController = [TextEditingController(), TextEditingController()];
+  final List<TextEditingController> _textController = [
+    TextEditingController(),
+    TextEditingController()
+  ];
   final detailTextContext = TextEditingController();
 
   final BoardRegisterController _boradRegisterController =
@@ -71,115 +73,98 @@ class _PostingPageState extends State<PostingPage> {
                                     context),
                               )
                             ]));
-                      }))
-              //for (int i = 0; i < min(post.title.length, post.description.length); i++)
-
-/*                  Container(
-                      height: 300,
-                      width: 500,
-                      child: Row(
-
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            selectDropdownButton('headCount'),
-                            selectDropdownButton('category')
-                          ])
-                  ),*/
+                      })),
+              selectDropDownButtonType(widget.postType),
+              postingPageDetailTextField(post.hintText, detailTextContext, context)
             ],
           ),
         ));
   }
 }
 
-/*                    Container(
-                        height: 370,
-                        margin: const EdgeInsets.only(top: 20.0),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(17),
-                            color: const Color.fromARGB(212, 236, 236, 236)),
-                        child: Form(
-                            key: _key,
-                            child: TextFormField(
-                              controller: _contentController,
-                              cursorColor: Colors.white,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: 18,
-                              maxLength: 300,
-                              style: const TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
-                              onChanged: (value) {
-                                _boardRegisterController.checkEssentialInfo(
-                                    _personController.text,
-                                    _textController.text,
-                                    _contentController.text,
-                                    _selectedCategory);
-                              },
-                              decoration: InputDecoration(
-                                focusedBorder: const UnderlineInputBorder(
-                                    borderSide: BorderSide.none),
-                                contentPadding: const EdgeInsets.all(16),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                focusColor: Colors.transparent,
-                                hintText: "게시물 내용을 작성해주세요.",
-                                hintStyle: const TextStyle(
-                                  color: Color.fromARGB(255, 29, 29, 29),
-                                  fontSize: 14.0,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  _boardRegisterState =
-                                      BoardRegisterState.empty;
-                                }
-                                _boardRegisterController.checkEssentialInfo(
-                                    _personController.text,
-                                    _textController.text,
-                                    _contentController.text,
-                                    _selectedCategory);
-                                return null;
-                              },
-                            ))),
-                    const SizedBox(height: 60),
-                    if (_boardRegisterState == BoardRegisterState.empty ||
-                        _contentController.text.isEmpty) ...[
-                      Container(
-                          height: 45.0,
-                          alignment: Alignment.bottomRight,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blueGrey),
-                            onPressed: null,
-                            child: const Text("등록"),
-                          ))
-                    ] else ...[
-                      Container(
-                          height: 45.0,
-                          alignment: Alignment.bottomRight,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              _boardRegisterController.checkEssentialInfo(
-                                  _personController.text,
-                                  _textController.text,
-                                  _contentController.text,
-                                  _selectedCategory);
-                              _boradRegisterController.saveBoard(
-                                  int.parse(_personController.text),
-                                  _textController.text,
-                                  _contentController.text,
-                                  _selectedCategory,
-                                  1);
-                              Get.to(() => const HomePage());
-                            },
-                            child: const Text("등록"),
-                          ))
-                    ]*/
+Widget selectDropDownButtonType(PostType type) {
+  switch (type) {
+    case PostType.hotPlace:
+      return Container();
+    case PostType.club:
+      return Column(
+        children: [
+          Row(
+            children: [
+              selectDropdownButton(DropDownType.headCount),
+              selectDropdownButton(DropDownType.category),
+            ],
+          ),
+          Row(
+            children: [selectDropdownButton(DropDownType.date)],
+          )
+        ],
+      );
+  }
+  return Container();
+}
 
+Widget selectDropdownButton(DropDownType type) {
+  List<String> list = [];
+
+  switch (type) {
+    case DropDownType.headCount:
+      list = headCountList;
+      return dropDownButtonWidth(
+          90, CustomDropDownButton(list: list, basicType: '0명'));
+    case DropDownType.category:
+      list = categoryList;
+      return dropDownButtonWidth(
+          130, CustomDropDownButton(list: list, basicType: "모임 카테고리"));
+    case DropDownType.date:
+      var selectedYear = DateTime.now().year;
+      var selectedMonth = DateTime.now().month;
+      var selectedDay = DateTime.now().day;
+
+      return Row(children: [
+        dropDownButtonWidth(
+            90,
+            CustomDropDownButton(
+                list: setYearList(DateTime.now().year),
+                basicType: "$selectedYear년")),
+        dropDownButtonWidth(
+            90,
+            CustomDropDownButton(
+                list: setMonthList(), basicType: "$selectedMonth월")),
+        dropDownButtonWidth(
+            90,
+            CustomDropDownButton(
+                list: setDayList(), basicType: "$selectedDay월"))
+      ]);
+  }
+}
+
+List<String> setYearList(int year) {
+  List<String> yearList = [];
+  for (int i = year; i < year + 3; i++) {
+    yearList.add("$i년");
+  }
+  return yearList;
+}
+
+List<String> setMonthList() {
+  List<String> monthList = [];
+  for (int i = 1; i < 13; i++) {
+    monthList.add("$i월");
+  }
+  return monthList;
+}
+
+List<String> setDayList() {
+  List<String> dayList = [];
+  for (int i = 1; i < 31; i++) {
+    dayList.add("$i일");
+  }
+  return dayList;
+}
+
+// date 스피너
+/*
 Widget selectDate() {
   DateTime selectDate = DateTime.now();
   return Column(
@@ -242,3 +227,4 @@ Widget selectDate() {
     ],
   );
 }
+*/
