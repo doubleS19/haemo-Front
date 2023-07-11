@@ -3,7 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/club_page_controller.dart';
-import 'package:hae_mo/model/post_type_model.dart';
+import 'package:hae_mo/model/post_type.dart';
 import 'package:hae_mo/screens/Page/recommend_page.dart';
 import 'package:hae_mo/screens/page/posting_page.dart';
 import '../../controller/meeting_page_controller.dart';

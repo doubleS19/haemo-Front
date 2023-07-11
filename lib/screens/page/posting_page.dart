@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
+import 'package:textfield_tags/textfield_tags.dart';
 import '../../model/dropdown_type.dart';
 import '../../model/post_type.dart';
 import '../../service/date_service.dart';
@@ -28,7 +29,7 @@ class _PostingPageState extends State<PostingPage> {
     TextEditingController()
   ];
   final detailTextContext = TextEditingController();
-
+  final textFieldTagController = TextfieldTagsController();
   final BoardRegisterController _boradRegisterController =
       Get.put(BoardRegisterController());
 
@@ -75,7 +76,8 @@ class _PostingPageState extends State<PostingPage> {
                             ]));
                       })),
               selectDropDownButtonType(widget.postType),
-              postingPageDetailTextField(post.hintText, detailTextContext, context)
+              postingPageDetailTextField(post.hintText, detailTextContext, context),
+              hashTagTextField(textFieldTagController)
             ],
           ),
         ));
