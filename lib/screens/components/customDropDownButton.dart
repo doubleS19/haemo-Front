@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../service/date_service.dart';
+import '../../common/color.dart';
 
 final headCountList = ["0명", "1명", "2명", "3명", "4명", "5명 이상"];
 final categoryList = ["술", "미팅", "밥"];
@@ -21,15 +21,20 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> list = widget.list;
-    String type = widget.basicType;
     String? selectedValue = list[0];
 
-    return DropdownButtonFormField(
+    return DropdownButtonHideUnderline(
+        child: DropdownButton(
+      //padding: EdgeInsets.all(30),
       value: selectedValue,
+      //hint: Text(widget.basicType, style: Theme.of(context).textTheme.bodySmall),
+      menuMaxHeight: 150,
+
+      icon: const Icon(Icons.keyboard_arrow_down),
       items: list.map((value) {
         return DropdownMenuItem(
           value: value,
-          child: Text(value),
+          child: Text(value, style: Theme.of(context).textTheme.bodySmall),
         );
       }).toList(),
       onChanged: (value) {
@@ -37,70 +42,21 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
           selectedValue = value as String?;
         });
       },
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(width: 2),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(width: 2),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        filled: true,
-        //fillColor: Colors.blueAccent,
-      ),
-    );
+
+      isExpanded: true,
+    ));
   }
 }
 
-Widget selectDropdownButton(String type) {
-  List<String> list = [];
-
-  switch (type) {
-    case 'headCount':
-      list = headCountList;
-      return CustomDropDownButton(list: list, basicType: '');
-    case 'category':
-      list = categoryList;
-      return CustomDropDownButton(list: list, basicType: "모임 카테고리");
-    case 'date':
-      var selectedYear = getYear();
-      var selectedMonth = getMonth();
-      var selectedDay = getDay();
-
-      return Row(children: [
-        CustomDropDownButton(
-            list: setYearList(int.parse(selectedYear)),
-            basicType: "$selectedYear년"),
-        CustomDropDownButton(
-            list: setMonthList(), basicType: "$selectedMonth월"),
-        CustomDropDownButton(list: setDayList(), basicType: "$selectedDay월")
-      ]);
-  }
-
-  return Container();
+Widget dropDownButtonWidth(double width, Widget dropDownButton) {
+  return Container(
+      //height: 50,
+      width: width,
+      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+      decoration: BoxDecoration(
+          border: Border.all(
+              width: 1, color: AppTheme.postingPageDetailTextFieldColor),
+          borderRadius: const BorderRadius.all(Radius.circular(6.0))),
+      child: dropDownButton);
 }
 
-List<String> setYearList(int year) {
-  List<String> yearList = [];
-  for (int i = year; i < year + 3; i++) {
-    yearList.add("$i년");
-  }
-  return yearList;
-}
-
-List<String> setMonthList() {
-  List<String> monthList = [];
-  for (int i = 0; i < 13; i++) {
-    monthList.add("$i월");
-  }
-  return monthList;
-}
-
-List<String> setDayList() {
-  List<String> dayList = [];
-  for (int i = 0; i < 31; i++) {
-    dayList.add("$i일");
-  }
-  return dayList;
-}
