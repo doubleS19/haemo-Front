@@ -18,9 +18,8 @@ Widget postingPageTitleTextField(
 
 Widget postingPageDetailTextField(String hintText, TextEditingController textEdController, dynamic context){
   return Container(
-      padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+      padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
       alignment: Alignment.center,
-      //color: Theme.of(context).cardColor,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),       color: Theme.of(context).cardColor,
       ),
@@ -34,6 +33,14 @@ Widget postingPageDetailTextField(String hintText, TextEditingController textEdC
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
         border: InputBorder.none,
+        filled: true,
+        fillColor: Theme.of(context).cardColor,
+        hintText: hintText,
+        hintStyle: TextStyle(
+          fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
+            fontFamily: Theme.of(context).textTheme.bodySmall?.fontFamily,
+            color: AppTheme.postingPageDetailHintTextColor
+        )
       ),
     )
   );

@@ -21,6 +21,7 @@ class AppTheme {
   /// 포스팅 게시물 페이지
   static var postingPageHeadlineColor = const Color(0xFFFFFFFF);
   static var postingPageDetailTextFieldColor = const Color(0xFFDEDEDE);
+  static var postingPageDetailHintTextColor = const Color(0xFFB6B6B6);
 
   /// 채팅 페이지
   static var borderColor = const Color(0xFFD9D9D9);
