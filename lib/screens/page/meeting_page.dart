@@ -30,7 +30,7 @@ class _MeetingPageState extends State<MeetingPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "소모임/동아리 게시판",
+                "친구 구하는 페이지",
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 17.0,

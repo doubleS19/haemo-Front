@@ -18,6 +18,9 @@ class AppTheme {
   static var mainPageBottomNavItemColor = const Color(0xFFADADAD);
   static var mainPagePersonColor = const Color(0xff3AC7E7);
 
+  /// 소모임 게시물 페이지
+  static var clubPageTitleColor = const Color(0xFF353535);
+
   /// 포스팅 게시물 페이지
   static var postingPageHeadlineColor = const Color(0xFFFFFFFF);
   static var postingPageDetailTextFieldColor = const Color(0xFFDEDEDE);
