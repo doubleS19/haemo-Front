@@ -10,6 +10,7 @@ import '../../model/dropdown_type.dart';
 import '../../model/post_type.dart';
 import '../../service/date_service.dart';
 import '../components/customAppBar.dart';
+import '../components/customButton.dart';
 import '../components/customDropDownButton.dart';
 import '../components/customTextField.dart';
 import 'home_page.dart';
@@ -77,7 +78,8 @@ class _PostingPageState extends State<PostingPage> {
                       })),
               selectDropDownButtonType(widget.postType),
               postingPageDetailTextField(post.hintText, detailTextContext, context),
-              hashTagTextField(textFieldTagController)
+              hashTagTextField(textFieldTagController),
+              selectPictureButton(1, context)
             ],
           ),
         ));
@@ -99,7 +101,8 @@ Widget selectDropDownButtonType(PostType type) {
           ),
           Row(
             children: [selectDropdownButton(DropDownType.date)],
-          )
+          ),
+
         ],
       );
   }
