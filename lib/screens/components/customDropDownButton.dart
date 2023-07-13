@@ -29,7 +29,6 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
       value: selectedValue,
       //hint: Text(widget.basicType, style: Theme.of(context).textTheme.bodySmall),
       menuMaxHeight: 150,
-
       icon: const Icon(Icons.keyboard_arrow_down),
       items: list.map((value) {
         return DropdownMenuItem(
@@ -42,15 +41,13 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
           selectedValue = value as String?;
         });
       },
-
-      isExpanded: true,
     ));
   }
 }
 
 Widget dropDownButtonWidth(double width, Widget dropDownButton) {
   return Container(
-      //height: 50,
+      height: 35,
       width: width,
       padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
       decoration: BoxDecoration(
@@ -59,4 +56,3 @@ Widget dropDownButtonWidth(double width, Widget dropDownButton) {
           borderRadius: const BorderRadius.all(Radius.circular(6.0))),
       child: dropDownButton);
 }
-

@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
 import 'package:textfield_tags/textfield_tags.dart';
+import '../../common/color.dart';
 import '../../model/dropdown_type.dart';
 import '../../model/post_type.dart';
 import '../../service/date_service.dart';
@@ -47,62 +48,103 @@ class _PostingPageState extends State<PostingPage> {
           padding: const EdgeInsets.all(30),
           child: Column(
             children: [
-              Flexible(
-                  flex: 1,
-                  child: ListView.builder(
-                      itemCount:
-                          min(post.title.length, post.description.length),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 17),
-                            child: Row(children: [
-                              Flexible(
-                                  flex: 2,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(post.title[index],
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall),
-                                    ],
-                                  )),
-                              Flexible(
-                                flex: 8,
-                                child: postingPageTitleTextField(
-                                    post.description[index],
-                                    _textController[index],
-                                    context),
-                              )
-                            ]));
-                      })),
-              selectDropDownButtonType(widget.postType),
-              postingPageDetailTextField(post.hintText, detailTextContext, context),
+              Container(
+                height: MediaQuery.of(context).size.height / 8,
+                alignment: Alignment.center,
+                child: enterTitleTextField(post, _textController),
+              ),
+              //enterTitleTextField(post, _textController),
+              Container(
+                alignment: Alignment.centerLeft,
+                height: MediaQuery.of(context).size.height / 6,
+                child: selectDropDownButtonListType(widget.postType, context),
+              ),
+              Expanded(
+                child: postingPageDetailTextField(
+                    post.hintText, detailTextContext, context),
+              ),
+              Container(
+                  decoration: const BoxDecoration(
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(6.0))),
+                  child: postingButton(context))
+/*              Flexible(
+                flex: 1,
+                child: postingPageDetailTextField(post.hintText,detailTextContext, context),
+              ),*/
+
+/*              postingPageDetailTextField(
+                  post.hintText, detailTextContext, context),
               hashTagTextField(textFieldTagController),
-              selectPictureButton(1, context)
+              selectPictureButton(1, context)*/
             ],
           ),
         ));
   }
 }
 
-Widget selectDropDownButtonType(PostType type) {
+/// 제목 등록 TextField
+Widget enterTitleTextField(
+    Post post, List<TextEditingController> textController) {
+  return ListView.builder(
+      itemCount: min(post.title.length, post.description.length),
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          child: Row(children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width / 7,
+              child: Text(post.title[index],
+                  style: Theme.of(context).textTheme.headlineSmall),
+            ),
+            Expanded(
+                child: postingPageTitleTextField(
+                    post.description[index], textController[index], context))
+          ]),
+        );
+      });
+}
+
+/// 중간 DropDownButton & Gallery Button
+Widget selectDropDownButtonListType(PostType type, dynamic context) {
   switch (type) {
     case PostType.hotPlace:
-      return Container();
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [galleryButton(1, context)],
+      );
     case PostType.club:
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          galleryButton(1, context),
+          Column(
+            children: [
+              selectDropdownButton(DropDownType.headCount),
+              selectDropdownButton(DropDownType.date)
+            ],
+          ),
+          selectDropdownButton(DropDownType.date),
+        ],
+      );
+    case PostType.meeting:
       return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(
             children: [
               selectDropdownButton(DropDownType.headCount),
+              const Spacer(flex: 1),
               selectDropdownButton(DropDownType.category),
+              const Spacer(
+                flex: 2,
+              ),
             ],
           ),
-          Row(
-            children: [selectDropdownButton(DropDownType.date)],
-          ),
-
+          selectDropdownButton(DropDownType.date)
         ],
       );
   }
@@ -116,17 +158,17 @@ Widget selectDropdownButton(DropDownType type) {
     case DropDownType.headCount:
       list = headCountList;
       return dropDownButtonWidth(
-          90, CustomDropDownButton(list: list, basicType: '0명'));
+          70, CustomDropDownButton(list: list, basicType: '0명'));
     case DropDownType.category:
       list = categoryList;
       return dropDownButtonWidth(
-          130, CustomDropDownButton(list: list, basicType: "모임 카테고리"));
+          90, CustomDropDownButton(list: list, basicType: "모임 카테고리"));
     case DropDownType.date:
       var selectedYear = DateTime.now().year;
       var selectedMonth = DateTime.now().month;
       var selectedDay = DateTime.now().day;
 
-      return Row(children: [
+      return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         dropDownButtonWidth(
             90,
             CustomDropDownButton(

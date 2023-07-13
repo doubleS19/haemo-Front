@@ -68,6 +68,10 @@ Widget hashTagTextField(TextfieldTagsController controller) {
                     color: Theme.of(context).primaryColor,
                   ),
                   hintText: controller.hasTags ? '' : "#해시태그를 입력해주세요",
+                  hintStyle: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
+                      fontFamily: Theme.of(context).textTheme.bodySmall?.fontFamily,
+                      color: AppTheme.postingPageDetailHintTextColor),
                   errorText: error,
                   prefixIconConstraints: BoxConstraints(
                       maxWidth: MediaQuery.of(context).size.width * 0.74),
@@ -132,10 +136,10 @@ Widget hashTagTextField(TextfieldTagsController controller) {
 Widget postingPageDetailTextField(
     String hintText, TextEditingController textEdController, dynamic context) {
   return Container(
-      padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
-      alignment: Alignment.center,
+      padding: const EdgeInsets.all(30),
+      alignment: Alignment.topLeft,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(10),
         color: AppTheme.postingPageDetailTextFieldColor,
       ),
       child: TextFormField(
