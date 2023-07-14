@@ -60,13 +60,16 @@ class _PostingPageState extends State<PostingPage> {
                 child: selectDropDownButtonListType(widget.postType, context),
               ),
               Expanded(
-                child: postingPageDetailTextField(
-                    post.hintText, detailTextContext, context),
+                child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: postingPageDetailTextField(
+                        post.hintText, detailTextContext, context)),
               ),
               Container(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  width: MediaQuery.of(context).size.width * 0.8,
                   decoration: const BoxDecoration(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(6.0))),
+                      borderRadius: BorderRadius.all(Radius.circular(6.0))),
                   child: postingButton(context))
 /*              Flexible(
                 flex: 1,

@@ -14,7 +14,7 @@ Widget galleryButton(int pictureNum, dynamic context) {
       child: OutlinedButton(
         onPressed: () {},
         onFocusChange: null,
-        //style: OutlinedButton.styleFrom(backgroundColor: Colors.red),
+        //style: OutlinedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
         child: Padding(
             padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
@@ -35,6 +35,7 @@ Widget galleryButton(int pictureNum, dynamic context) {
 
 Widget postingButton(dynamic context) {
   return ElevatedButton(onPressed: () {},
+      style: OutlinedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
       child: Text("등록하기", style: TextStyle(
         fontFamily: Theme.of(context).textTheme.headlineSmall?.fontFamily,
           fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize,
