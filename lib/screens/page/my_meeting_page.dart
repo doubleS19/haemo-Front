@@ -61,7 +61,6 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
           if (snapshot.hasData) {
             final List<PostResponse> postList =
                 snapshot.data as List<PostResponse>;
-            postList.removeWhere((element) => element.type == 2);
             if (postList.isEmpty) {
               return Center(
                   child: Text(

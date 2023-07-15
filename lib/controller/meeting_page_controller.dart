@@ -10,7 +10,6 @@ class MeetingPageController extends GetxController {
   void fetchTodayNotice() async {
     try {
       final posts = await dbService.get24HoursPosts();
-      posts.removeWhere((element) => element.type == 2);
       todayNoticeList.assignAll(posts);
     } catch (error) {
       // 오류 처리
@@ -20,7 +19,6 @@ class MeetingPageController extends GetxController {
   void fetchBoardList() async {
     try {
       final posts = await dbService.getAllPost();
-      posts.removeWhere((element) => element.type == 2);
       clubList.assignAll(posts);
     } catch (error) {
       // 오류 처리

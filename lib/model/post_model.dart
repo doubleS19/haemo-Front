@@ -5,7 +5,6 @@ class Post {
   final int person;
   final String category;
   final String date;
-  final int type;
 
   Post(
       {required this.nickname,
@@ -13,8 +12,7 @@ class Post {
       required this.content,
       required this.person,
       required this.category,
-      required this.date,
-      required this.type});
+      required this.date});
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
@@ -23,8 +21,7 @@ class Post {
         content: json['content'],
         person: json['person'],
         category: json['category'],
-        date: json['date'],
-        type: json['type']);
+        date: json['date']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -33,7 +30,6 @@ class Post {
         'content': content,
         'person': person,
         'category': category,
-        'date': date,
-        'type': type
+        'date': date
       };
 }
