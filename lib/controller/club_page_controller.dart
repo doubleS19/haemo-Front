@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hae_mo/service/db_service.dart';
-import '../model/post_response_model.dart';
+import '../model/club_post_response_model.dart';
 
 class ClubPageController extends GetxController {
   var postListLength = 0.obs;
@@ -10,23 +10,12 @@ class ClubPageController extends GetxController {
   }
 
   final DBService dbService = DBService();
-  final RxList<PostResponse> todayNoticeList = <PostResponse>[].obs;
-  final RxList<PostResponse> clubList = <PostResponse>[].obs;
-
-  void fetchTodayNotice() async {
-    try {
-      final posts = await dbService.get24HoursPosts();
-      posts.removeWhere((element) => element.type == 1);
-      todayNoticeList.assignAll(posts);
-    } catch (error) {
-      // 오류 처리
-    }
-  }
+  final RxList<ClubPostResponse> todayNoticeList = <ClubPostResponse>[].obs;
+  final RxList<ClubPostResponse> clubList = <ClubPostResponse>[].obs;
 
   void fetchClubList() async {
     try {
-      final posts = await dbService.getAllPost();
-      posts.removeWhere((element) => element.type == 1);
+      final posts = await dbService.getAllClubPost();
       clubList.assignAll(posts);
     } catch (error) {
       // 오류 처리

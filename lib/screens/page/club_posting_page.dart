@@ -251,8 +251,7 @@ class _ClubPostingPageState extends State<ClubPostingPage> {
                                   int.parse(_personController.text),
                                   _textController.text,
                                   _contentController.text,
-                                  _selectedCategory,
-                                  2);
+                                  _selectedCategory);
                               Get.to(() => const HomePage());
                             },
                             child: const Text("등록"),
