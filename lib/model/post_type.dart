@@ -19,14 +19,14 @@ final hotPlacePostingTextField = [
   "핫플에 대한 간단한 설명을 입력해주세요",
 ];
 
-class Post {
+class PostUi {
   String appBarText;
   List<String> title;
   List<String> description;
   PostType type;
   String hintText;
 
-  Post({
+  PostUi({
     required this.appBarText,
     required this.title,
     required this.description,
@@ -34,7 +34,7 @@ class Post {
     required this.hintText,
   });
 
-  factory Post.fromType(PostType type) {
+  factory PostUi.fromType(PostType type) {
     String appBarText = '';
     List<String> title = [];
     List<String> description = [];
@@ -61,7 +61,7 @@ class Post {
         break;
     }
 
-    return Post(
+    return PostUi(
       appBarText: appBarText,
       title: title,
       description: description,

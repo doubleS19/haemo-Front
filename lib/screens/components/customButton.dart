@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hae_mo/controller/posting_controller.dart';
 
 import '../../common/color.dart';
 
+
+/// PostingPage 사진 첨부 버튼
 Widget galleryButton(int pictureNum, dynamic context) {
   return Container(
       width: 100,
@@ -33,8 +36,11 @@ Widget galleryButton(int pictureNum, dynamic context) {
       ));
 }
 
-Widget postingButton(dynamic context) {
-  return ElevatedButton(onPressed: () {},
+
+
+/// PostingPage 등록 버튼
+Widget postingButton(dynamic context, void Function()? onPressed) {
+  return ElevatedButton(onPressed: onPressed,
       style: OutlinedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
       child: Text("등록하기", style: TextStyle(
         fontFamily: Theme.of(context).textTheme.headlineSmall?.fontFamily,

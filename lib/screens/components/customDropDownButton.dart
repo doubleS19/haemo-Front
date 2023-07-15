@@ -23,25 +23,30 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
     List<dynamic> list = widget.list;
     String? selectedValue = list[0];
 
-    return DropdownButtonHideUnderline(
-        child: DropdownButton(
-      //padding: EdgeInsets.all(30),
-      value: selectedValue,
-      //hint: Text(widget.basicType, style: Theme.of(context).textTheme.bodySmall),
-      menuMaxHeight: 150,
-      icon: const Icon(Icons.keyboard_arrow_down),
-      items: list.map((value) {
-        return DropdownMenuItem(
-          value: value,
-          child: Text(value, style: Theme.of(context).textTheme.bodySmall),
-        );
-      }).toList(),
-      onChanged: (value) {
-        setState(() {
-          selectedValue = value as String?;
-        });
-      },
-    ));
+    return Padding(
+        padding: const EdgeInsets.all(5),
+        child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+          //padding: EdgeInsets.all(30),
+          value: selectedValue,
+          /*hint: Text(widget.basicType,
+              style: Theme.of(context).textTheme.bodySmall),*/
+          menuMaxHeight: 150,
+          icon: const Icon(Icons.keyboard_arrow_down),
+          items: list.map((value) {
+            return DropdownMenuItem(
+              value: value,
+              child: Text(value,
+                  style: Theme.of(context).textTheme.bodySmall,
+                  overflow: TextOverflow.ellipsis),
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value as String?;
+            });
+          },
+        )));
   }
 }
 
@@ -49,7 +54,7 @@ Widget dropDownButtonWidth(double width, Widget dropDownButton) {
   return Container(
       height: 35,
       width: width,
-      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+      //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
       decoration: BoxDecoration(
           border: Border.all(
               width: 1, color: AppTheme.postingPageDetailTextFieldColor),
