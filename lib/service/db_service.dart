@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/post_model.dart';
+import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:http/http.dart' as http;
@@ -118,6 +120,68 @@ class DBService {
       throw Exception("User not found");
     } else {
       throw Exception("Failed to fetch User by Nickname");
+    }
+  }
+
+  Future<void> saveClubPost(ClubPost post) async {
+    try {
+      final response = await http.post(
+        // Uri.parse("http://43.201.211.1:1004/club"),
+        Uri.parse("http://localhost:1004/club"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(post.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send data");
+      } else {
+        dev.log("Post Data sent successfully");
+        Get.to(() => const HomePage());
+      }
+    } catch (e) {
+      dev.log("Failed to send post data: ${e}");
+    }
+  }
+
+  Future<List<ClubPostResponse>> getAllClubPost() async {
+    // final response = await http.get(Uri.parse("http://43.201.211.1:1004/club"));
+    final response = await http.get(Uri.parse("http://localhost:1004/club"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<ClubPostResponse>((json) => ClubPostResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load post llist');
+    }
+  }
+
+  Future<ClubPost> getClubPostById(int id) async {
+    final response =
+        // await http.get(Uri.parse("http://43.201.211.1:1004/club/$id"));
+        await http.get(Uri.parse("http://localhost:1004/club/$id"));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body) as Map<String, dynamic>;
+      return ClubPost.fromJson(jsonData);
+    } else if (response.statusCode == 404) {
+      throw Exception("Post not found");
+    } else {
+      throw Exception("Failed to fetch Post by Id");
+    }
+  }
+
+  Future<UserResponse> getUserByCLubPost(int pId) async {
+    final response = await http
+        // .get(Uri.parse("http://43.201.211.1:1004/club/clubPostUser/$pId"));
+        .get(Uri.parse("http://localhost:1004/club/clubPostUser/$pId"));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body) as Map<String, dynamic>;
+      return UserResponse.fromJson(jsonData);
+    } else if (response.statusCode == 404) {
+      throw Exception("User not found");
+    } else {
+      throw Exception("Failed to fetch User by Post");
     }
   }
 }
