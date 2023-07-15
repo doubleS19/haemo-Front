@@ -171,7 +171,7 @@ class DBService {
     }
   }
 
-  Future<UserResponse> getUserByCLubPost(int pId) async {
+  Future<UserResponse> getUserByClubPost(int pId) async {
     final response = await http
         // .get(Uri.parse("http://43.201.211.1:1004/club/clubPostUser/$pId"));
         .get(Uri.parse("http://localhost:1004/club/clubPostUser/$pId"));

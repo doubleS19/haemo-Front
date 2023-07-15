@@ -4,6 +4,7 @@ import 'package:hae_mo/common/color.dart';
 import '../../controller/club_page_controller.dart';
 import 'board_detail_page.dart';
 import 'chat_list_page.dart';
+import 'club_board_detail_page.dart';
 
 class ClubPage extends StatefulWidget {
   const ClubPage({super.key});
@@ -109,7 +110,7 @@ class _ClubPageState extends State<ClubPage> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                   onTap: () {
-                    Get.to(() => BoardDetailPage(pId: postList[index].pId));
+                    Get.to(() => ClubBoardDetailPage(pId: postList[index].pId));
                   },
                   child: Container(
                       margin: const EdgeInsets.symmetric(
