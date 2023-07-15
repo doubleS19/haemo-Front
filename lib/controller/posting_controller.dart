@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/service/db_service.dart';
 import "dart:developer" as dev;
 
 import 'package:intl/intl.dart';
+import 'package:textfield_tags/textfield_tags.dart';
 
 import '../model/post_model.dart';
 
@@ -10,13 +12,16 @@ enum BoardRegisterState { full, empty }
 
 enum BoardState { success, fail }
 
-class BoardRegisterController extends GetxController {
+class PostController extends GetxController {
   BoardRegisterState _BoardRegisterState = BoardRegisterState.empty;
 
   BoardRegisterState get boardRegisterState => _BoardRegisterState;
 
+
   BoardState _BoardState = BoardState.fail;
   BoardState get boardState => _BoardState;
+
+
 
   Future checkEssentialInfo(
       String person, String title, String content, String category) async {

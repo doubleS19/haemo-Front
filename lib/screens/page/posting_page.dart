@@ -14,6 +14,7 @@ import '../components/customAppBar.dart';
 import '../components/customButton.dart';
 import '../components/customDropDownButton.dart';
 import '../components/customTextField.dart';
+import '../../model/post_model.dart';
 import 'home_page.dart';
 
 class PostingPage extends StatefulWidget {
@@ -32,54 +33,52 @@ class _PostingPageState extends State<PostingPage> {
   ];
   final detailTextContext = TextEditingController();
   final textFieldTagController = TextfieldTagsController();
-  final BoardRegisterController _boradRegisterController =
-      Get.put(BoardRegisterController());
+  final PostController _postController =
+      Get.put(PostController());
 
   @override
   Widget build(BuildContext context) {
-    Post post = Post.fromType(widget.postType);
-
+    PostUi postUi = PostUi.fromType(widget.postType);
+    double containerHeight = (postUi.title.length == 1)
+        ? MediaQuery.of(context).size.height / 16
+        : MediaQuery.of(context).size.height / 8;
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child:
-                Builder(builder: (context) => customAppbar(post.appBarText))),
+                Builder(builder: (context) => customAppbar(postUi.appBarText))),
         body: Container(
           padding: const EdgeInsets.all(30),
           child: Column(
+            //crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height / 8,
-                alignment: Alignment.center,
-                child: enterTitleTextField(post, _textController),
-              ),
-              //enterTitleTextField(post, _textController),
+                  //color: Colors.blue,
+                  height: containerHeight,
+                  child: enterTitleTextField(postUi, _textController)),
               Container(
-                alignment: Alignment.centerLeft,
+                //color: Colors.yellow,
                 height: MediaQuery.of(context).size.height / 6,
                 child: selectDropDownButtonListType(widget.postType, context),
               ),
               Expanded(
-                child: Container(
+                child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: postingPageDetailTextField(
-                        post.hintText, detailTextContext, context)),
+                        postUi.hintText, detailTextContext, context)),
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   width: MediaQuery.of(context).size.width * 0.8,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                  child: postingButton(context))
-/*              Flexible(
-                flex: 1,
-                child: postingPageDetailTextField(post.hintText,detailTextContext, context),
-              ),*/
+                  child: postingButton(context, (){
+/*                    Post post = Post("",_textController[0].text, detailTextContext
 
-/*              postingPageDetailTextField(
-                  post.hintText, detailTextContext, context),
-              hashTagTextField(textFieldTagController),
-              selectPictureButton(1, context)*/
+                    ),
+                    _postController*/
+                  }))
             ],
           ),
         ));
@@ -88,9 +87,9 @@ class _PostingPageState extends State<PostingPage> {
 
 /// 제목 등록 TextField
 Widget enterTitleTextField(
-    Post post, List<TextEditingController> textController) {
+    PostUi postUi, List<TextEditingController> textController) {
   return ListView.builder(
-      itemCount: min(post.title.length, post.description.length),
+      itemCount: min(postUi.title.length, postUi.description.length),
       itemBuilder: (BuildContext context, int index) {
         return Container(
           padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -99,12 +98,12 @@ Widget enterTitleTextField(
               padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width / 7,
-              child: Text(post.title[index],
+              child: Text(postUi.title[index],
                   style: Theme.of(context).textTheme.headlineSmall),
             ),
             Expanded(
                 child: postingPageTitleTextField(
-                    post.description[index], textController[index], context))
+                    postUi.description[index], textController[index], context))
           ]),
         );
       });
@@ -120,17 +119,13 @@ Widget selectDropDownButtonListType(PostType type, dynamic context) {
       );
     case PostType.club:
       return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           galleryButton(1, context),
-          Column(
-            children: [
-              selectDropdownButton(DropDownType.headCount),
-              selectDropdownButton(DropDownType.date)
-            ],
-          ),
-          selectDropdownButton(DropDownType.date),
+          const Spacer(flex: 1),
+          selectDropdownButton(
+              MediaQuery.of(context).size.width * 0.25, DropDownType.headCount),
+          const Spacer(flex: 1),
         ],
       );
     case PostType.meeting:
@@ -139,33 +134,34 @@ Widget selectDropDownButtonListType(PostType type, dynamic context) {
         children: [
           Row(
             children: [
-              selectDropdownButton(DropDownType.headCount),
+              selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
+                  DropDownType.headCount),
               const Spacer(flex: 1),
-              selectDropdownButton(DropDownType.category),
-              const Spacer(
-                flex: 2,
-              ),
+              selectDropdownButton(MediaQuery.of(context).size.width * 0.35,
+                  DropDownType.category),
+              const Spacer(flex: 2),
             ],
           ),
-          selectDropdownButton(DropDownType.date)
+          selectDropdownButton(
+              MediaQuery.of(context).size.width * 0.25, DropDownType.date)
         ],
       );
   }
   return Container();
 }
 
-Widget selectDropdownButton(DropDownType type) {
+Widget selectDropdownButton(double width, DropDownType type) {
   List<String> list = [];
 
   switch (type) {
     case DropDownType.headCount:
       list = headCountList;
       return dropDownButtonWidth(
-          70, CustomDropDownButton(list: list, basicType: '0명'));
+          width, CustomDropDownButton(list: list, basicType: '0명'));
     case DropDownType.category:
       list = categoryList;
       return dropDownButtonWidth(
-          90, CustomDropDownButton(list: list, basicType: "모임 카테고리"));
+          width, CustomDropDownButton(list: list, basicType: "모임 카테고리"));
     case DropDownType.date:
       var selectedYear = DateTime.now().year;
       var selectedMonth = DateTime.now().month;
@@ -173,16 +169,16 @@ Widget selectDropdownButton(DropDownType type) {
 
       return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         dropDownButtonWidth(
-            90,
+            width,
             CustomDropDownButton(
                 list: setYearList(DateTime.now().year),
                 basicType: "$selectedYear년")),
         dropDownButtonWidth(
-            90,
+            width,
             CustomDropDownButton(
                 list: setMonthList(), basicType: "$selectedMonth월")),
         dropDownButtonWidth(
-            90,
+            width,
             CustomDropDownButton(
                 list: setDayList(), basicType: "$selectedDay월"))
       ]);
