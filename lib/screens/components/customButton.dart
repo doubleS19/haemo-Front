@@ -1,41 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hae_mo/controller/image_controller.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
 
 import '../../common/color.dart';
-
-
-/// PostingPage 사진 첨부 버튼
-Widget galleryButton(int pictureNum, dynamic context) {
-  return Container(
-      width: 100,
-      height: 100,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        //border: Bord,
-        borderRadius: BorderRadius.circular(13),
-      ),
-      child: OutlinedButton(
-        onPressed: () {},
-        onFocusChange: null,
-        //style: OutlinedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
-        child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Icon(
-                Icons.photo,
-                color: AppTheme.postingPageDetailHintTextColor,
-              ),
-              Text(
-                "$pictureNum/4",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodySmall,
-              ),
-            ])),
-      ));
-}
-
 
 
 /// PostingPage 등록 버튼
