@@ -11,7 +11,7 @@ import '../model/post_response_model.dart';
 import '../model/user_model.dart';
 
 class DBService {
-  Future<void> saveUser(User user) async {
+  Future<bool> saveUser(User user) async {
     try {
       final response = await http.post(
         // Uri.parse("http://43.201.211.1:1004/user"),
@@ -21,18 +21,20 @@ class DBService {
         },
         body: jsonEncode(user.toJson()),
       );
+
       if (response.statusCode != 201) {
         throw Exception("Failed to send data");
       } else {
         dev.log("User Data sent successfully");
-        Get.to(() => const HomePage());
+        return true;
       }
     } catch (e) {
       dev.log("Failed to send post data: ${e}");
+      return false;
     }
   }
 
-  Future<void> savePost(Post post) async {
+  Future<bool> savePost(Post post) async {
     try {
       final response = await http.post(
         // Uri.parse("http://43.201.211.1:1004/post"),
@@ -46,10 +48,11 @@ class DBService {
         throw Exception("Failed to send data");
       } else {
         dev.log("Post Data sent successfully");
-        Get.to(() => const HomePage());
+        return true;
       }
     } catch (e) {
       dev.log("Failed to send post data: ${e}");
+      return false;
     }
   }
 
@@ -136,7 +139,7 @@ class DBService {
       if (response.statusCode != 201) {
         throw Exception("Failed to send data");
       } else {
-        dev.log("Post Data sent successfully");
+        dev.log("Club Post Data sent successfully");
         Get.to(() => const HomePage());
       }
     } catch (e) {

@@ -1,5 +1,7 @@
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/shared_preference.dart';
+import 'package:hae_mo/screens/page/home_page.dart';
 import "dart:developer" as dev;
 
 import 'package:hae_mo/service/db_service.dart';
@@ -34,11 +36,15 @@ class UserController extends GetxController {
       _registerState = RegisterState.success;
       PreferenceUtil.saveUser(user);
       DBService dbService = DBService();
-      dbService.saveUser(user);
+      bool isUserSaved = await dbService.saveUser(user);
+      if (isUserSaved) {
+        Get.to(const HomePage());
+      } else {}
       dev.log(PreferenceUtil.getString("nickname")!);
     } else {
       _registerState = RegisterState.fail;
       dev.log("Fail~");
+      // Fluttertoast.showToast(msg: "회원 정보를 저장할 수 없습니다.\n잠시 후 다시 시도해주세요.");
     }
     update();
   }

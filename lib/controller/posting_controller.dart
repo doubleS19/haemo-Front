@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../model/post_model.dart';
+import '../screens/Page/home_page.dart';
 
 enum BoardRegisterState { full, empty }
 
@@ -17,7 +18,6 @@ class PostController extends GetxController {
 
   BoardRegisterState get boardRegisterState => _BoardRegisterState;
 
-
   BoardState _BoardState = BoardState.fail;
   BoardState get boardState => _BoardState;
 
@@ -26,8 +26,6 @@ class PostController extends GetxController {
     TextEditingController()
   ];
   final detailTextContext = TextEditingController();
-
-
 
   Future checkEssentialInfo(
       String person, String title, String content, String category) async {
@@ -51,15 +49,21 @@ class PostController extends GetxController {
       String date = DateFormat("yyyy년 MM월 dd일 HH시").format(DateTime.now());
       DBService db = DBService();
       _BoardState = BoardState.success;
-      db.savePost(Post(
+      Post post = Post(
           nickname: "닉네임입니다용",
           title: title,
           content: content,
           person: person,
           category: category,
-          date: date));
+          date: date);
+      db.savePost(post);
+      bool isPostSaved = await db.savePost(post);
+      if (isPostSaved) {
+        Get.to(const HomePage());
+      }
     } else {
       _BoardState = BoardState.fail;
+      // Fluttertoast.showToast(msg: "회원 정보를 저장할 수 없습니다.\n잠시 후 다시 시도해주세요.");
       dev.log("Fail~");
     }
     update();

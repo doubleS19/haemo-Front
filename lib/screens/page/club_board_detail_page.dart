@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
-import '../../model/post_model.dart';
 import '../../service/db_service.dart';
 
 class ClubBoardDetailPage extends StatefulWidget {
