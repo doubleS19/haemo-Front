@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../common/color.dart';
+import '../../controller/posting_controller.dart';
 
 final headCountList = ["0명", "1명", "2명", "3명", "4명", "5명 이상"];
 final categoryList = ["술", "미팅", "밥"];
 
 class CustomDropDownButton extends StatefulWidget {
   const CustomDropDownButton(
-      {Key? key, required this.list, required this.basicType})
+      {Key? key, required this.list, required this.basicType, required this.postController})
       : super(key: key);
 
+  final PostController postController;
   final List<dynamic> list;
   final String basicType;
 
@@ -21,6 +23,7 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> list = widget.list;
+    PostController postController = widget.postController;
     String? selectedValue = list[0];
 
     return Padding(

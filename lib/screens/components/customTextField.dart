@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
+import '../../controller/posting_controller.dart';
+
 Widget postingPageTitleTextField(
     String hintText, TextEditingController textEdController, dynamic context) {
   return TextFormField(

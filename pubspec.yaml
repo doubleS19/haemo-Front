@@ -47,6 +47,7 @@ dependencies:
   flutter_speed_dial: ^6.2.0
   get_storage: ^2.1.1
   textfield_tags: ^2.0.2
+  image_picker: ^1.0.1
 
 dev_dependencies:
   flutter_test:

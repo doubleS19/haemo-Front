@@ -21,6 +21,12 @@ class PostController extends GetxController {
   BoardState _BoardState = BoardState.fail;
   BoardState get boardState => _BoardState;
 
+  final List<TextEditingController> textControllerList = [
+    TextEditingController(),
+    TextEditingController()
+  ];
+  final detailTextContext = TextEditingController();
+
 
 
   Future checkEssentialInfo(
