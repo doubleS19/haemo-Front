@@ -1,10 +1,10 @@
 class Post {
-  final String nickname;
-  final String title;
-  final String content;
-  final int person;
-  final String category;
-  final String date;
+  String nickname;
+  String title;
+  String content;
+  int person;
+  String category;
+  String date;
 
   Post(
       {required this.nickname,

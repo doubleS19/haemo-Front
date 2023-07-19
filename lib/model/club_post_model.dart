@@ -1,9 +1,9 @@
 class ClubPost {
-  final String nickname;
-  final String title;
-  final String content;
-  final int person;
-  final String category;
+  String nickname;
+  String title;
+  String content;
+  int person;
+  String category;
 
   ClubPost(
       {required this.nickname,
