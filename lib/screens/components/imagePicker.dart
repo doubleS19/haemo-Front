@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,10 +22,21 @@ class _ImagePickerState extends State<ImagePicker> {
         init: ImageController(),
         builder: (_) {
           return Container(
+              height: MediaQuery.of(context).size.height / 6,
+              width: MediaQuery.of(context).size.width * 0.8,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: _.pickedImgs.length,
                   itemBuilder: (BuildContext context, int index) {
+                    BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: FileImage(File(_.pickedImgs[index].path))
+                        )
+                    );
+                    /*_.pickedImgs.length < 4*/
+                    galleryButton(_.pickedImgs.length, context, _);
 
                   }));
         });
@@ -31,8 +44,8 @@ class _ImagePickerState extends State<ImagePicker> {
 }
 
 /// PostingPage 사진 첨부 버튼
-Widget galleryButton(
-    int pictureNum, dynamic context, PostController postController) {
+Widget galleryButton(int pictureNum, dynamic context,
+    ImageController imgController) {
   return Container(
       width: 100,
       height: 100,
@@ -43,7 +56,7 @@ Widget galleryButton(
       ),
       child: OutlinedButton(
         onPressed: () {
-          ImageController().pickImageCamera();
+          imgController.pickImageCamera();
         },
         onFocusChange: null,
         //style: OutlinedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
@@ -56,7 +69,10 @@ Widget galleryButton(
               ),
               Text(
                 "$pictureNum/4",
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .bodySmall,
               ),
             ])),
       ));
