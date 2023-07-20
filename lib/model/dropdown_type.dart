@@ -1,5 +1,5 @@
 enum DropDownType{
-  headCount,
+  person,
   date,
   category,
 }
