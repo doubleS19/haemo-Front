@@ -3,7 +3,7 @@ import 'package:hae_mo/model/post_model.dart';
 
 class HotPlacePost extends PostBase {
   late String description;
-  late MultipartFile photo;
+  late MultipartFile? photo;
 
   HotPlacePost(
       {required String nickname,
@@ -11,7 +11,7 @@ class HotPlacePost extends PostBase {
         required String content,
         required String date,
         required this.description,
-        required this.photo})
+        this.photo})
       : super(
     nickname: nickname,
     title: title,

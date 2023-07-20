@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/controller/image_controller.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
 import 'package:http/http.dart';
 import 'package:textfield_tags/textfield_tags.dart';
@@ -19,6 +20,10 @@ import '../../model/post_model.dart';
 import '../components/imagePicker.dart';
 import 'home_page.dart';
 
+/// imagePicker 생성하기
+/// dropdownButton 값 controller에 저장하기
+
+
 class PostingPage extends StatefulWidget {
   const PostingPage({super.key, required this.postType});
 
@@ -29,14 +34,12 @@ class PostingPage extends StatefulWidget {
 }
 
 class _PostingPageState extends State<PostingPage> {
-
   //final detailTextContext = TextEditingController();
-  final PostController _postController =
-      Get.put(PostController());
-
 
   @override
   Widget build(BuildContext context) {
+    PostController postController =
+        Get.put(PostController(widget.postType));
     PostUi postUi = PostUi.fromType(widget.postType);
     double containerHeight = (postUi.title.length == 1)
         ? MediaQuery.of(context).size.height / 16
@@ -55,27 +58,27 @@ class _PostingPageState extends State<PostingPage> {
               Container(
                   //color: Colors.blue,
                   height: containerHeight,
-                  child: enterTitleTextField(postUi, _postController.textControllerList)),
+                  child: enterTitleTextField(
+                      postUi, postController.textControllerList)),
               Container(
                 //color: Colors.yellow,
                 height: MediaQuery.of(context).size.height / 6,
-                child: selectDropDownButtonListType(widget.postType, context, _postController),
+                child: selectDropDownButtonListType(
+                    widget.postType, context, postController),
               ),
               Expanded(
                 child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.8,
-                    child: postingPageDetailTextField(
-                        postUi.hintText, _postController.detailTextContext, context)),
+                    child: postingPageDetailTextField(postUi.hintText,
+                        postController.detailTextContext, context)),
               ),
               Container(
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                   width: MediaQuery.of(context).size.width * 0.8,
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                  child: postingButton(context, (){
-/*                    Post post = Post("",_textController[0].text, detailTextContext, postType,
-
-                    ),*/
+                  child: postingButton(context, () {
+                    /// 버튼 클릭 조건 생성하기
                     //_postController
                   }))
             ],
@@ -109,21 +112,22 @@ Widget enterTitleTextField(
 }
 
 /// 중간 DropDownButton & Gallery Button
-Widget selectDropDownButtonListType(PostType type, dynamic context, PostController postController) {
+Widget selectDropDownButtonListType(
+    PostType type, dynamic context, PostController postController) {
   switch (type) {
     case PostType.hotPlace:
-      return Row(
+      return const Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [galleryButton(1, context, postController)],
+        children: [ImagePicker()],
       );
     case PostType.club:
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          galleryButton(1, context, postController),
+          galleryButton(0, context, ImageController()),
           const Spacer(flex: 1),
-          selectDropdownButton(
-              MediaQuery.of(context).size.width * 0.25, DropDownType.headCount, postController),
+          selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
+              DropDownType.headCount, postController),
           const Spacer(flex: 1),
         ],
       );
@@ -141,44 +145,56 @@ Widget selectDropDownButtonListType(PostType type, dynamic context, PostControll
               const Spacer(flex: 2),
             ],
           ),
-          selectDropdownButton(
-              MediaQuery.of(context).size.width * 0.25, DropDownType.date, postController)
+          selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
+              DropDownType.date, postController)
         ],
       );
   }
 }
 
-Widget selectDropdownButton(double width, DropDownType type, PostController postController) {
+Widget selectDropdownButton(
+    double width, DropDownType type, PostController postController) {
   List<String> list = [];
 
   switch (type) {
     case DropDownType.headCount:
       list = headCountList;
       return dropDownButtonWidth(
-          width, CustomDropDownButton(list: list, basicType: '0명', postController: postController));
+          width,
+          CustomDropDownButton(
+              list: list, basicType: '0명', postController: postController));
     case DropDownType.category:
       list = categoryList;
       return dropDownButtonWidth(
-          width, CustomDropDownButton(list: list, basicType: "모임 카테고리", postController: postController));
+          width,
+          CustomDropDownButton(
+              list: list,
+              basicType: "모임 카테고리",
+              postController: postController));
     case DropDownType.date:
       var selectedYear = DateTime.now().year;
       var selectedMonth = DateTime.now().month;
       var selectedDay = DateTime.now().day;
 
       return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        dropDownButtonWidth(
+         dropDownButtonWidth(
             width,
             CustomDropDownButton(
                 list: setYearList(DateTime.now().year),
-                basicType: "$selectedYear년", postController: postController)),
+                basicType: "$selectedYear년",
+                postController: postController)),
         dropDownButtonWidth(
             width,
             CustomDropDownButton(
-                list: setMonthList(), basicType: "$selectedMonth월", postController: postController)),
+                list: setMonthList(),
+                basicType: "$selectedMonth월",
+                postController: postController)),
         dropDownButtonWidth(
             width,
             CustomDropDownButton(
-                list: setDayList(), basicType: "$selectedDay월", postController: postController))
+                list: setDayList(),
+                basicType: "$selectedDay월",
+                postController: postController))
       ]);
   }
 }
