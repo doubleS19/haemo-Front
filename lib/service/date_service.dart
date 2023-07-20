@@ -1,24 +1,12 @@
-
-
 import 'package:intl/intl.dart';
 
-String getYear(){
-  DateTime now = DateTime.now();
-  DateFormat formatter = DateFormat('yyyy');
-  var strYear = formatter.format(now);
-  return strYear;
-}
 
-String getMonth(){
-  DateTime now = DateTime.now();
-  DateFormat formatter = DateFormat('MM');
-  var strMonth = formatter.format(now);
-  return strMonth;
-}
 
-String getDay(){
+/// YYYY년 MM월 dd일 HH시
+String getNow(){
   DateTime now = DateTime.now();
-  DateFormat formatter = DateFormat('dd');
-  var strDay = formatter.format(now);
-  return strDay;
+  DateFormat formatter = DateFormat('yyyy년 MM월 dd일 HH시');
+  String formattedDate = formatter.format(now);
+
+  return formattedDate;
 }
