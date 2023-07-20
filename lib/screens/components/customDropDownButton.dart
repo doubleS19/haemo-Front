@@ -8,10 +8,13 @@ final categoryList = ["술", "미팅", "밥"];
 
 class CustomDropDownButton extends StatefulWidget {
   const CustomDropDownButton(
-      {Key? key, required this.list, required this.basicType, required this.postController})
+      {Key? key,
+      required this.list,
+      required this.basicType,
+      required this.onChanged})
       : super(key: key);
 
-  final PostController postController;
+  final void Function(String?) onChanged;
   final List<dynamic> list;
   final String basicType;
 
@@ -20,17 +23,22 @@ class CustomDropDownButton extends StatefulWidget {
 }
 
 class _CustomDropDownButtonState extends State<CustomDropDownButton> {
+  String? selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedValue = widget.list[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     List<dynamic> list = widget.list;
-    PostController postController = widget.postController;
-    String? selectedValue = list[0];
 
     return Padding(
         padding: const EdgeInsets.all(5),
         child: DropdownButtonHideUnderline(
             child: DropdownButton(
-          //padding: EdgeInsets.all(30),
           value: selectedValue,
           /*hint: Text(widget.basicType,
               style: Theme.of(context).textTheme.bodySmall),*/
@@ -47,6 +55,8 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
           onChanged: (value) {
             setState(() {
               selectedValue = value as String?;
+              widget.onChanged(selectedValue);
+              //widget.postController
             });
           },
         )));
