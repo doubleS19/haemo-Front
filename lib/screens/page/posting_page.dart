@@ -6,23 +6,16 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/image_controller.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
-import 'package:http/http.dart';
-import 'package:textfield_tags/textfield_tags.dart';
-import '../../common/color.dart';
 import '../../model/dropdown_type.dart';
 import '../../model/post_type.dart';
-import '../../service/date_service.dart';
 import '../components/customAppBar.dart';
 import '../components/customButton.dart';
 import '../components/customDropDownButton.dart';
 import '../components/customTextField.dart';
-import '../../model/post_model.dart';
 import '../components/imagePicker.dart';
-import 'home_page.dart';
 
 /// imagePicker 생성하기
 /// dropdownButton 값 controller에 저장하기
-
 
 class PostingPage extends StatefulWidget {
   const PostingPage({super.key, required this.postType});
@@ -35,11 +28,11 @@ class PostingPage extends StatefulWidget {
 
 class _PostingPageState extends State<PostingPage> {
   //final detailTextContext = TextEditingController();
+  final TextEditingController selectedValueController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    PostController postController =
-        Get.put(PostController(widget.postType));
+    PostController postController = Get.put(PostController(widget.postType));
     PostUi postUi = PostUi.fromType(widget.postType);
     double containerHeight = (postUi.title.length == 1)
         ? MediaQuery.of(context).size.height / 16
@@ -79,7 +72,10 @@ class _PostingPageState extends State<PostingPage> {
                       borderRadius: BorderRadius.all(Radius.circular(6.0))),
                   child: postingButton(context, () {
                     /// 버튼 클릭 조건 생성하기
-                    //_postController
+                    postController.saveControllerData(widget.postType);
+                    print("print categoryController: ${postController.selectedCategory.value}");
+                    print("print date: ${postController.post.date}");
+                    print("print postCategory: ${postController.post.category}");
                   }))
             ],
           ),
@@ -127,7 +123,7 @@ Widget selectDropDownButtonListType(
           galleryButton(0, context, ImageController()),
           const Spacer(flex: 1),
           selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
-              DropDownType.headCount, postController),
+              DropDownType.person, postController),
           const Spacer(flex: 1),
         ],
       );
@@ -138,7 +134,7 @@ Widget selectDropDownButtonListType(
           Row(
             children: [
               selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
-                  DropDownType.headCount, postController),
+                  DropDownType.person, postController),
               const Spacer(flex: 1),
               selectDropdownButton(MediaQuery.of(context).size.width * 0.35,
                   DropDownType.category, postController),
@@ -157,12 +153,17 @@ Widget selectDropdownButton(
   List<String> list = [];
 
   switch (type) {
-    case DropDownType.headCount:
+    case DropDownType.person:
       list = headCountList;
       return dropDownButtonWidth(
           width,
           CustomDropDownButton(
-              list: list, basicType: '0명', postController: postController));
+              list: list,
+              basicType: '0명',
+              onChanged: (value) {
+                String? person = value?.replaceAll(RegExp('[^0-9]'), "") ?? "0";
+                postController.selectedPerson.value = int.parse(person);
+              }));
     case DropDownType.category:
       list = categoryList;
       return dropDownButtonWidth(
@@ -170,31 +171,40 @@ Widget selectDropdownButton(
           CustomDropDownButton(
               list: list,
               basicType: "모임 카테고리",
-              postController: postController));
+              onChanged: (value) {
+                print("category value: $value");
+                postController.selectedCategory.value = value!;
+              }));
     case DropDownType.date:
       var selectedYear = DateTime.now().year;
       var selectedMonth = DateTime.now().month;
       var selectedDay = DateTime.now().day;
 
       return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-         dropDownButtonWidth(
+        dropDownButtonWidth(
             width,
             CustomDropDownButton(
                 list: setYearList(DateTime.now().year),
                 basicType: "$selectedYear년",
-                postController: postController)),
+                onChanged: (value) {
+                  postController.selectedYear.value = value!;
+                })),
         dropDownButtonWidth(
             width,
             CustomDropDownButton(
                 list: setMonthList(),
                 basicType: "$selectedMonth월",
-                postController: postController)),
+                onChanged: (value) {
+                  postController.selectedMonth.value = value!;
+                })),
         dropDownButtonWidth(
             width,
             CustomDropDownButton(
                 list: setDayList(),
                 basicType: "$selectedDay월",
-                postController: postController))
+                onChanged: (value) {
+                  postController.selectedDay.value = value!;
+                }))
       ]);
   }
 }

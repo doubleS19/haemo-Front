@@ -15,6 +15,7 @@ import '../model/post_model.dart';
 import '../model/post_type.dart';
 import '../model/shared_preference.dart';
 import '../screens/Page/home_page.dart';
+import '../service/date_service.dart';
 
 class PostController extends GetxController {
   final List<TextEditingController> textControllerList = [
@@ -23,51 +24,47 @@ class PostController extends GetxController {
   ];
   final detailTextContext = TextEditingController();
 
+  final Rx<int> selectedPerson = 0.obs;
+  final Rx<String> selectedCategory = ''.obs;
+  final Rx<String> selectedYear = ''.obs;
+  final Rx<String> selectedMonth = ''.obs;
+  final Rx<String> selectedDay = ''.obs;
+  final RxList<MultipartFile?> selectedPhoto = [null].obs;
+  final RxList<String?> hashTag = [null].obs;
 
-  // nickname 가져오기
-  final post = Post(
-      nickname: PreferenceUtil.getString("nickname") ?? "a",
-
-      /// 임시
-      title: '',
-      content: '',
-      person: 0,
-      category: '',
-      date: '')
-      .obs;
+  late final Post post;
 
   final clubPost = ClubPost(
-      nickname: PreferenceUtil.getString("nickname") ?? "a",
-      title: '',
-      content: '',
-      person: 0,
-      category: '',
-      photo: [],
-      date: ''
-  ).obs;
+          nickname: PreferenceUtil.getString("nickname") ?? "a",
+          title: '',
+          description: '',
+          content: '',
+          person: 0,
+          photo: null,
+          date: '')
+      .obs;
 
   final hotPlacePost = HotPlacePost(
-      nickname: PreferenceUtil.getString("nickname") ?? "a",
-      title: '',
-      content: '',
-      date: '',
-      description: ''
-  ).obs;
+          nickname: PreferenceUtil.getString("nickname") ?? "a",
+          title: '',
+          content: '',
+          date: '',
+          description: '')
+      .obs;
 
-
-  changePost({
-    required String title,
-    required String content,
-    required int person,
-    required String category,
-    required String date,
-  }) {
-    post.update((val) {
-      val?.title = title;
-      val?.content = content;
-      val!.person = person;
-    });
-  }
+  // changePost({
+  //   required String title,
+  //   required String content,
+  //   required int person,
+  //   required String category,
+  //   required String date,
+  // }) {
+  //   post.update((val) {
+  //     val?.title = title;
+  //     val?.content = content;
+  //     val!.person = person;
+  //   });
+  // }
 
   changeClubPost({
     required String title,
@@ -87,7 +84,6 @@ class PostController extends GetxController {
     required String content,
     required String description,
     MultipartFile? photo,
-
   }) {
     hotPlacePost.update((val) {
       val?.title = title;
@@ -97,71 +93,93 @@ class PostController extends GetxController {
     });
   }
 
-  final Rx<PostBase?> activePost = Rx<PostBase?>(null);
-
-
   PostController(PostType type) {
-
-    StreamController<PostBase?> combinedPost = StreamController<PostBase?>();
-
-    ever(post, (Post? postValue) {
-      if (type != PostType.club) {
-        combinedPost.add(postValue);
-      }
+/*    ever(selectedYear, (String yearValue) {
+      saveTextControllerData(type);
     });
 
-    ever(clubPost, (ClubPost? clubPostValue) {
-      if (type == PostType.club) {
-        combinedPost.add(clubPostValue);
-      }
+    ever(selectedMonth, (String monthValue) {
+
     });
 
-    ever(hotPlacePost, (HotPlacePost? hotPlacePostValue) {
-      if (type == PostType.hotPlace) {
-        combinedPost.add(hotPlacePostValue);
-      }
-    });
+    ever(selectedDay, (String dayValue) {
 
-    activePost.bindStream(combinedPost.stream);
-
-    for (final controller in textControllerList) {
-      controller.addListener(() {
-        saveTextControllerData(type);
-      });
-
-      detailTextContext.addListener(() {
-        saveTextControllerData(type);
-      });
-    }
+    });*/
   }
 
+  // void savePostControllerData(PostType type) {
+  //   final title = textControllerList[0].text;
+  //   final description = textControllerList[1].text;
+  //   final detailText = detailTextContext.text;
+  //   final date = DateTime.now();
+  //   switch (type) {
+  //     case PostType.meeting:
+  //       post.update((val) {
+  //         val?.title = title;
+  //         val?.content = detailText;
+  //       });
+  //       break;
+  //     case PostType.club:
+  //       clubPost.update((val) {
+  //         val?.title = title;
+  //         val?.content = detailText;
+  //       });
+  //       break;
+  //     case PostType.hotPlace:
+  //       hotPlacePost.update((val) {
+  //         val?.title = title;
+  //         val?.content = detailText;
+  //       });
+  //       break;
+  //   }
+  // }
 
-  void saveTextControllerData(PostType type) {
-    final title = textControllerList[0].text;
-    final description = textControllerList[1].text;
-    final detailText = detailTextContext.text;
+  void saveControllerData(PostType type) {
+    var nickname = PreferenceUtil.getString("nickname") ?? "a";
+    final PostBase post;
+
     switch (type) {
-      case PostType.hotPlace:
-        hotPlacePost.update((val) {
-          val?.title = title;
-          val?.content = detailText;
-        });
+      case PostType.meeting:
+        post = Post(
+          title: textControllerList[0].text,
+          content: detailTextContext.text,
+          nickname: nickname,
+          category: selectedCategory.value,
+          person: selectedPerson.value,
+          deadline: getDeadLineFormat(),
+          date: getNow(),
+        );
         break;
       case PostType.club:
-        clubPost.update((val) {
-          val?.title = title;
-          val?.content = detailText;
-        });
+        post = ClubPost(
+          nickname: nickname,
+          date: getNow(),
+          title: textControllerList[0].text,
+          description: textControllerList[1].text,
+          content: detailTextContext.text,
+          person: selectedPerson.value,
+          photo: null,
+          hashTag: [''],
+        );
         break;
-      case PostType.meeting:
-        post.update((val) {
-          val?.title = title;
-          val?.content = detailText;
-        });
+      case PostType.hotPlace:
+        post = HotPlacePost(
+            nickname: nickname,
+            title: textControllerList[0].text,
+            description: textControllerList[1].text,
+            content: detailTextContext.text,
+            date: getNow());
+
         break;
     }
   }
 
+  String getDeadLineFormat() {
+    String deadLine =
+        "${selectedYear.value} ${selectedMonth.value} ${selectedDay.value}";
+
+    return deadLine;
+  }
 
 /*    Future checkEssentialInfo(String person, String title, String content,
         String category) async {
