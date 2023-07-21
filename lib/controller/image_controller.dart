@@ -6,14 +6,18 @@ import 'package:image_picker/image_picker.dart';
 
 class ImageController extends GetxController {
   final ImagePicker _picker = ImagePicker();
-  List<XFile> _pickedImgs = [];
-  get pickedImgs => _pickedImgs;
+  final RxList<XFile> _pickedImgs = RxList<XFile>([]);
+  List<XFile>get pickedImgs => _pickedImgs;
 
   Future<void> pickImageCamera() async {
     try {
       List<XFile> images = await _picker.pickMultiImage();
-      if (images == null) return;
-      _pickedImgs = images;
+      if (images == null) {
+        print('이미지가 선택되지 않았습니다');
+        return;
+      }
+      _pickedImgs.addAll(images);
+      print('이미지 리스트 개수: ${pickedImgs.length}');
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
     }

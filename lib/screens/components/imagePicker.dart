@@ -3,77 +3,119 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../common/color.dart';
 import '../../controller/image_controller.dart';
 import '../../controller/posting_controller.dart';
 
-class ImagePicker extends StatefulWidget {
-  const ImagePicker({Key? key}) : super(key: key);
+class CustomImagePicker extends StatefulWidget {
+  const CustomImagePicker({Key? key}) : super(key: key);
 
   @override
-  State<ImagePicker> createState() => _ImagePickerState();
+  State<CustomImagePicker> createState() => _CustomImagePickerState();
 }
 
-class _ImagePickerState extends State<ImagePicker> {
+class _CustomImagePickerState extends State<CustomImagePicker> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ImageController>(
         init: ImageController(),
         builder: (_) {
           return Container(
-              height: MediaQuery.of(context).size.height / 6,
               width: MediaQuery.of(context).size.width * 0.8,
+              height: 80,
               child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _.pickedImgs.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: FileImage(File(_.pickedImgs[index].path))
-                        )
-                    );
-                    /*_.pickedImgs.length < 4*/
-                    galleryButton(_.pickedImgs.length, context, _);
-
-                  }));
+                scrollDirection: Axis.horizontal, // Enable horizontal scrolling
+                itemCount: _.pickedImgs.length + 1,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                      child: galleryButton(context, index, _));
+                  //galleryButton(context, index, _)
+                },
+              ));
         });
   }
 }
 
-/// PostingPage 사진 첨부 버튼
-Widget galleryButton(int pictureNum, dynamic context,
-    ImageController imgController) {
-  return Container(
-      width: 100,
-      height: 100,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        //border: Bord,
-        borderRadius: BorderRadius.circular(13),
+Widget galleryButton(
+  dynamic context,
+  int index,
+  ImageController imgController,
+) {
+  if (index >= imgController.pickedImgs.length || index >= 4) {
+    return Container(
+        width: 80,
+        height: 80,
+        child: OutlinedButton(
+      onPressed: () {
+        imgController.pickImageCamera();
+      },
+      onFocusChange: null,
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(13)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.photo,
+              color: AppTheme.postingPageDetailHintTextColor,
+            ),
+            Text(
+              "$index/4",
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        ),
       ),
-      child: OutlinedButton(
-        onPressed: () {
-          imgController.pickImageCamera();
-        },
-        onFocusChange: null,
-        //style: OutlinedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
-        child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 15, 10, 15),
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Icon(
-                Icons.photo,
-                color: AppTheme.postingPageDetailHintTextColor,
+    ));
+  } else {
+    // 선택된 이미지
+    return Stack(
+      children: [
+        Container(
+          width: 80,
+          height: 80,
+          padding: const EdgeInsets.all(5),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(13),
+            image: DecorationImage(
+              image: FileImage(File(imgController.pickedImgs[index].path)),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        Text(
+          index.toString(),
+          style: TextStyle(color: Colors.red),
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: InkWell(
+            onTap: () {
+              imgController.deleteImage(index);
+              imgController.update();
+            },
+            child: Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.7),
+                shape: BoxShape.circle,
               ),
-              Text(
-                "$pictureNum/4",
-                style: Theme
-                    .of(context)
-                    .textTheme
-                    .bodySmall,
+              child: Icon(
+                Icons.close,
+                size: 16,
+                color: Colors.white,
               ),
-            ])),
-      ));
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
