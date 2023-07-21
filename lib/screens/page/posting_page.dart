@@ -48,12 +48,12 @@ class _PostingPageState extends State<PostingPage> {
             //crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                   //color: Colors.blue,
                   height: containerHeight,
                   child: enterTitleTextField(
                       postUi, postController.textControllerList)),
-              Container(
+              SizedBox(
                 //color: Colors.yellow,
                 height: MediaQuery.of(context).size.height / 6,
                 child: selectDropDownButtonListType(
@@ -72,10 +72,11 @@ class _PostingPageState extends State<PostingPage> {
                       borderRadius: BorderRadius.all(Radius.circular(6.0))),
                   child: postingButton(context, () {
                     /// 버튼 클릭 조건 생성하기
-                    postController.saveControllerData(widget.postType);
-                    print("print categoryController: ${postController.selectedCategory.value}");
-                    print("print date: ${postController.post.date}");
-                    print("print postCategory: ${postController.post.category}");
+                    postController.saveControllerData();
+                    print(
+                        "print categoryController: ${postController.selectedCategory.value}");
+                    print(
+                        "print post Category: ${postController.post.category}");
                   }))
             ],
           ),
@@ -114,13 +115,13 @@ Widget selectDropDownButtonListType(
     case PostType.hotPlace:
       return const Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [ImagePicker()],
+        children: [CustomImagePicker()],
       );
     case PostType.club:
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          galleryButton(0, context, ImageController()),
+          galleryButton(context, 0, ImageController()),
           const Spacer(flex: 1),
           selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
               DropDownType.person, postController),

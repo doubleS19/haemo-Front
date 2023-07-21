@@ -3,15 +3,15 @@ import 'package:hae_mo/model/post_model.dart';
 
 class HotPlacePost extends PostBase {
   late String description;
-  late MultipartFile? photo;
+  late List<MultipartFile> photoList;
 
   HotPlacePost(
       {required String nickname,
         required String title,
+        required this.description,
         required String content,
         required String date,
-        required this.description,
-        this.photo})
+        required this.photoList})
       : super(
     nickname: nickname,
     title: title,
@@ -25,8 +25,8 @@ class HotPlacePost extends PostBase {
       title: json['title'],
       content: json['content'],
       description: json['description'],
-      photo: json[''],
-      date: json[''],
+      photoList: json['photoList'],
+      date: json['date'],
       /// 멀티파트 이미지 리스트 DB로 전송
     );
   }
@@ -36,7 +36,7 @@ class HotPlacePost extends PostBase {
     'title': title,
     'content': content,
     'description': description,
-    'photo': photo,
+    'photoList': photoList,
     'date': date
     /// 멀티파트 이미지 리스트 변수 넣기
   };

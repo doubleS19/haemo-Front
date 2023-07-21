@@ -23,6 +23,7 @@ class PostController extends GetxController {
     TextEditingController()
   ];
   final detailTextContext = TextEditingController();
+  late PostType postType;
 
   final Rx<int> selectedPerson = 0.obs;
   final Rx<String> selectedCategory = ''.obs;
@@ -33,112 +34,17 @@ class PostController extends GetxController {
   final RxList<String?> hashTag = [null].obs;
 
   late final Post post;
+  late final ClubPost clubPost;
+  late final HotPlacePost hotPlacePost;
 
-  final clubPost = ClubPost(
-          nickname: PreferenceUtil.getString("nickname") ?? "a",
-          title: '',
-          description: '',
-          content: '',
-          person: 0,
-          photo: null,
-          date: '')
-      .obs;
-
-  final hotPlacePost = HotPlacePost(
-          nickname: PreferenceUtil.getString("nickname") ?? "a",
-          title: '',
-          content: '',
-          date: '',
-          description: '')
-      .obs;
-
-  // changePost({
-  //   required String title,
-  //   required String content,
-  //   required int person,
-  //   required String category,
-  //   required String date,
-  // }) {
-  //   post.update((val) {
-  //     val?.title = title;
-  //     val?.content = content;
-  //     val!.person = person;
-  //   });
-  // }
-
-  changeClubPost({
-    required String title,
-    required String content,
-    required int person,
-    required String category,
-  }) {
-    clubPost.update((val) {
-      val?.title = title;
-      val?.content = content;
-      val!.person = person;
-    });
+  PostController(PostType type){
+   postType = type;
   }
 
-  changeHotPlacePost({
-    required String title,
-    required String content,
-    required String description,
-    MultipartFile? photo,
-  }) {
-    hotPlacePost.update((val) {
-      val?.title = title;
-      val?.content = content;
-      val?.description = description;
-      val?.photo = photo;
-    });
-  }
-
-  PostController(PostType type) {
-/*    ever(selectedYear, (String yearValue) {
-      saveTextControllerData(type);
-    });
-
-    ever(selectedMonth, (String monthValue) {
-
-    });
-
-    ever(selectedDay, (String dayValue) {
-
-    });*/
-  }
-
-  // void savePostControllerData(PostType type) {
-  //   final title = textControllerList[0].text;
-  //   final description = textControllerList[1].text;
-  //   final detailText = detailTextContext.text;
-  //   final date = DateTime.now();
-  //   switch (type) {
-  //     case PostType.meeting:
-  //       post.update((val) {
-  //         val?.title = title;
-  //         val?.content = detailText;
-  //       });
-  //       break;
-  //     case PostType.club:
-  //       clubPost.update((val) {
-  //         val?.title = title;
-  //         val?.content = detailText;
-  //       });
-  //       break;
-  //     case PostType.hotPlace:
-  //       hotPlacePost.update((val) {
-  //         val?.title = title;
-  //         val?.content = detailText;
-  //       });
-  //       break;
-  //   }
-  // }
-
-  void saveControllerData(PostType type) {
+  void saveControllerData() {
     var nickname = PreferenceUtil.getString("nickname") ?? "a";
-    final PostBase post;
 
-    switch (type) {
+    switch (postType) {
       case PostType.meeting:
         post = Post(
           title: textControllerList[0].text,
@@ -151,7 +57,7 @@ class PostController extends GetxController {
         );
         break;
       case PostType.club:
-        post = ClubPost(
+        clubPost = ClubPost(
           nickname: nickname,
           date: getNow(),
           title: textControllerList[0].text,
@@ -163,13 +69,13 @@ class PostController extends GetxController {
         );
         break;
       case PostType.hotPlace:
-        post = HotPlacePost(
+        hotPlacePost = HotPlacePost(
             nickname: nickname,
             title: textControllerList[0].text,
             description: textControllerList[1].text,
             content: detailTextContext.text,
-            date: getNow());
-
+            date: getNow(),
+            photoList: []);
         break;
     }
   }
@@ -180,6 +86,8 @@ class PostController extends GetxController {
 
     return deadLine;
   }
+
+
 
 /*    Future checkEssentialInfo(String person, String title, String content,
         String category) async {
