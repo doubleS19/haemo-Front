@@ -26,13 +26,4 @@ class MeetingPageController extends GetxController {
       // 오류 처리
     }
   }
-
-  void fetchCommentList(int pId) async {
-    try {
-      final comments = await dbService.getCommentsByPId(pId);
-      commentList.assignAll(comments);
-    } catch (error) {
-      // 오류 처리
-    }
-  }
 }
