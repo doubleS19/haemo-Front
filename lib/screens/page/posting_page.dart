@@ -41,7 +41,7 @@ class _PostingPageState extends State<PostingPage> {
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child:
-            Builder(builder: (context) => customAppbar(postUi.appBarText))),
+                Builder(builder: (context) => customAppbar(postUi.appBarText))),
         body: Container(
           padding: const EdgeInsets.all(30),
           child: Column(
@@ -49,7 +49,7 @@ class _PostingPageState extends State<PostingPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                //color: Colors.blue,
+                  //color: Colors.blue,
                   height: containerHeight,
                   child: enterTitleTextField(
                       postUi, postController.textControllerList)),
@@ -113,7 +113,7 @@ Widget selectDropDownButtonListType(
     PostType type, dynamic context, PostController postController) {
   switch (type) {
     case PostType.hotPlace:
-      return const Row(
+      return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [CustomImagePicker(imgType: ImageType.hotPlaceImgList)],
       );

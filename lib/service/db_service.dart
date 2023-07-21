@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/club_post_model.dart';
+import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
@@ -185,6 +186,20 @@ class DBService {
       throw Exception("User not found");
     } else {
       throw Exception("Failed to fetch User by Post");
+    }
+  }
+
+  Future<List<CommentResponse>> getCommentsByPId(int pId) async {
+    // final response = await http.get(Uri.parse("http://43.201.211.1:1004/club"));
+    final response = await http
+        .get(Uri.parse("http://localhost:1004/comment/commentPost/$pId"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<CommentResponse>((json) => CommentResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load comment list');
     }
   }
 }

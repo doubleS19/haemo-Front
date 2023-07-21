@@ -1,5 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import '../../model/post_model.dart';
 import '../../service/db_service.dart';
@@ -14,6 +19,7 @@ class BoardDetailPage extends StatefulWidget {
 }
 
 class _BoardDetailPageState extends State<BoardDetailPage> {
+  MeetingPageController meetingController = MeetingPageController();
   @override
   Widget build(BuildContext context) {
     DBService db = DBService();
@@ -138,34 +144,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                             ),
                                           ])),
                                   Divider(color: AppTheme.mainTextColor),
-                                  Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                          margin: const EdgeInsets.only(
-                                              right: 30, left: 30.0),
-                                          height: 45.0,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20.0)),
-                                                backgroundColor:
-                                                    AppTheme.mainColor),
-                                            onPressed: (() {
-                                              // Get.to(ChatRoom(
-                                              //     chatRoomId:
-                                              //         "20191520282019156027"));
-                                            }),
-                                            child: const Text(
-                                              "주문하신 채팅하기 버튼 나왔습니다.",
-                                              style: TextStyle(
-                                                  fontSize: 16.0,
-                                                  fontWeight: FontWeight.w300),
-                                            ),
-                                          ))),
+                                  commentList()
                                 ],
                               ));
                         } else if (snapshot.hasError) {
@@ -187,5 +166,64 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                 );
               })
         ]));
+  }
+
+  Widget commentList() {
+    meetingController.fetchCommentList(pid);
+    return Obx(
+      () {
+        final commentList = meetingController.commentList;
+        if (commentList.isEmpty) {
+          return Center(
+            child: Text(
+              "댓글이 없어요!",
+              style: TextStyle(
+                fontWeight: FontWeight.w300,
+                color: AppTheme.mainPageTextColor,
+              ),
+            ),
+          );
+        } else {
+          return ListView.builder(
+            itemCount: commentList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Column(
+                children: [
+                  Container(
+                    height: 50.0,
+                    width: double.infinity,
+                    margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                    padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        children: [
+                          Text(
+                            commentList[index].nickname,
+                            style: const TextStyle(
+                              color: Color(0xff999999),
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          Text(
+                            commentList[index].content,
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              color: AppTheme.mainPageTextColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Divider(thickness: 1.0, color: AppTheme.dividerColor),
+                ],
+              );
+            },
+          );
+        }
+      },
+    );
   }
 }
