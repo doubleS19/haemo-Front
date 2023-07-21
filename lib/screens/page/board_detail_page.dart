@@ -174,7 +174,37 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
               ),
             ],
           ),
-        ));
+        ),
+        bottomNavigationBar: Container(
+            // 밑에 고정된 버튼
+            width: double.infinity,
+            height: 70.0,
+            color: Colors.grey, // 원하는 배경색상 설정
+            child: Align(
+                alignment: Alignment.center,
+                child: Row(children: [
+                  Expanded(
+                      flex: 1,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            null;
+                          },
+                          child: Container(
+                              width: double.infinity / 2,
+                              child: Text("고정된 버튼"),
+                              height: 70.0))),
+                  Expanded(
+                    flex: 1,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          null;
+                        },
+                        child: Container(
+                            width: double.infinity / 2,
+                            child: Text("고정된 버튼"),
+                            height: 70.0)),
+                  )
+                ]))));
   }
 
   Widget commentList(int pId) {
