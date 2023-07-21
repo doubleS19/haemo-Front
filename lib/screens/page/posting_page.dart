@@ -113,7 +113,7 @@ Widget selectDropDownButtonListType(
     PostType type, dynamic context, PostController postController) {
   switch (type) {
     case PostType.hotPlace:
-      return const Row(
+      return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [CustomImagePicker()],
       );
