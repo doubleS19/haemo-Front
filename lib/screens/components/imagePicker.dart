@@ -7,7 +7,9 @@ import '../../common/color.dart';
 import '../../controller/image_controller.dart';
 
 class CustomImagePicker extends StatefulWidget {
-  const CustomImagePicker({Key? key}) : super(key: key);
+  const CustomImagePicker({Key? key, required this.imgType}) : super(key: key);
+
+  final ImageType imgType;
 
   @override
   State<CustomImagePicker> createState() => _CustomImagePickerState();
@@ -17,31 +19,35 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ImageController>(
-        init: ImageController(),
+        init: ImageController(widget.imgType),
         builder: (_) {
-          return Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.8,
-              height: 80,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal, // Enable horizontal scrolling
-                itemCount: _.pickedImgs.length + 1,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: changeButtonToImage(context, index, _));
-                  //galleryButton(context, index, _)
-                },
-              ));
+          if(widget.imgType == ImageType.hotPlaceImgList){
+            return SizedBox(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.8,
+                height: 80,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal, // Enable horizontal scrolling
+                  itemCount: _.pickedImgs.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                        child: changeButtonToImage(context, index, _));
+                    //galleryButton(context, index, _)
+                  },
+                ));
+          }else {
+            return changeButtonToLogo(context, _);
+          }
         });
   }
 }
 
 Widget changeButtonToImage(dynamic context,
     int index,
-    ImageController imgController,) {
+    ImageController imgController) {
   if (index >= 4) {
     return Container();
   }
@@ -83,7 +89,7 @@ Widget changeButtonToLogo(dynamic context, ImageController imgController){
           right: 0,
           child: InkWell(
             onTap: () {
-              imgController.deleteImage();
+              imgController.deleteImages(0);
               imgController.update();
             },
             child: Container(
@@ -110,7 +116,7 @@ Widget galleryButton(BuildContext context, String buttonText,
     ImageController imgController) {
   return OutlinedButton(
     onPressed: () {
-      imgController.pickImagesGallery();
+      imgController.pickImageGallery();
     },
     onFocusChange: null,
     style: OutlinedButton.styleFrom(
