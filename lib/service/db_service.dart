@@ -190,16 +190,14 @@ class DBService {
   }
 
   Future<List<CommentResponse>> getCommentsByPId(int pId) async {
-    // final response = await http.get(Uri.parse("http://43.201.211.1:1004/club"));
     final response = await http
-        .get(Uri.parse("http://localhost:1004/comment/commentPost/$pId"));
+        .get(Uri.parse('http://localhost:1004/comment/commentPost/$pId'));
+
     if (response.statusCode == 200) {
-      final data = json.decode(response.body) as List<dynamic>;
-      return data
-          .map<CommentResponse>((json) => CommentResponse.fromJson(json))
-          .toList();
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse.map((e) => CommentResponse.fromJson(e)).toList();
     } else {
-      throw Exception('Failed to load comment list');
+      throw Exception('Failed to load comments');
     }
   }
 }

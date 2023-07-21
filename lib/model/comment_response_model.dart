@@ -17,7 +17,7 @@ class CommentResponse {
         content: json['content'],
         nickname: json['nickname'],
         date: json['date'],
-        cId: json['deadline'],
+        cId: json['cid'],
         pId: json['pid']);
   }
 
