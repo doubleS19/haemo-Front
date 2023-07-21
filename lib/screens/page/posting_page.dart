@@ -121,7 +121,7 @@ Widget selectDropDownButtonListType(
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          galleryButton(context, 0, ImageController()),
+          changeButtonToLogo(context, ImageController()),
           const Spacer(flex: 1),
           selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
               DropDownType.person, postController),
