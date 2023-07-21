@@ -16,7 +16,10 @@ class ImageController extends GetxController {
         print('이미지가 선택되지 않았습니다');
         return;
       }
-      _pickedImgs.addAll(images);
+      if(pickedImgs.length + images.length <= 4){
+        /// 이미지 개수가 너무 많다는 다이얼로그 필요
+        _pickedImgs.addAll(images);
+      }
       print('이미지 리스트 개수: ${pickedImgs.length}');
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');

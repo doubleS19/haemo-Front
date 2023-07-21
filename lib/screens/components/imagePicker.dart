@@ -44,33 +44,41 @@ Widget galleryButton(
   int index,
   ImageController imgController,
 ) {
-  if (index >= imgController.pickedImgs.length || index >= 4) {
+  if (index >= 4) {
+    return Container();
+  }
+  if (index >= imgController.pickedImgs.length) {
     return Container(
         width: 80,
         height: 80,
         child: OutlinedButton(
-      onPressed: () {
-        imgController.pickImageCamera();
-      },
-      onFocusChange: null,
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(13)),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.photo,
-              color: AppTheme.postingPageDetailHintTextColor,
+          onPressed: () {
+            imgController.pickImageCamera();
+          },
+          onFocusChange: null,
+          style: OutlinedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(13),
             ),
-            Text(
-              "$index/4",
-              style: Theme.of(context).textTheme.bodySmall,
+          ),
+          child: Container(
+            alignment: Alignment.center,
+            //decoration: BoxDecoration(borderRadius: BorderRadius.circular(13)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.photo,
+                  color: AppTheme.postingPageDetailHintTextColor,
+                ),
+                Text(
+                  "$index/4",
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    ));
+          ),
+        ));
   } else {
     // 선택된 이미지
     return Stack(
@@ -107,7 +115,7 @@ Widget galleryButton(
                 color: Colors.grey.withOpacity(0.7),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.close,
                 size: 16,
                 color: Colors.white,
