@@ -5,7 +5,7 @@ import '../model/post_response_model.dart';
 class MeetingPageController extends GetxController {
   final DBService dbService = DBService();
   final RxList<PostResponse> todayNoticeList = <PostResponse>[].obs;
-  final RxList<PostResponse> clubList = <PostResponse>[].obs;
+  final RxList<PostResponse> postList = <PostResponse>[].obs;
 
   void fetchTodayNotice() async {
     try {
@@ -19,7 +19,7 @@ class MeetingPageController extends GetxController {
   void fetchBoardList() async {
     try {
       final posts = await dbService.getAllPost();
-      clubList.assignAll(posts);
+      postList.assignAll(posts);
     } catch (error) {
       // 오류 처리
     }

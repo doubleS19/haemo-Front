@@ -172,7 +172,7 @@ class _MeetingPageState extends State<MeetingPage> {
                                 ),
                                 Text(
                                   postList[index]
-                                      .date
+                                      .deadline
                                       .replaceAll('년 ', '.')
                                       .replaceAll('월 ', '.')
                                       .replaceAll('일', ''),
@@ -203,7 +203,7 @@ class _MeetingPageState extends State<MeetingPage> {
 
     return Obx(
       () {
-        final postList = meetingController.clubList;
+        final postList = meetingController.postList;
         if (postList.isEmpty) {
           return Center(
             child: Text(
@@ -275,7 +275,7 @@ class _MeetingPageState extends State<MeetingPage> {
                                   ),
                                 ),
                                 Text(
-                                  postList[index].date,
+                                  postList[index].deadline,
                                   style: TextStyle(
                                     fontSize: 12.0,
                                     color: AppTheme.mainPageTextColor,
