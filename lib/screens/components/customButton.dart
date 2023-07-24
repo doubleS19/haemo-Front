@@ -6,7 +6,7 @@ import '../../common/color.dart';
 
 
 /// PostingPage 등록 버튼
-Widget postingButton(dynamic context, void Function()? onPressed) {
+Widget postingButton(BuildContext context, void Function()? onPressed) {
   return ElevatedButton(onPressed: onPressed,
       style: OutlinedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor),
       child: Text("등록하기", style: TextStyle(

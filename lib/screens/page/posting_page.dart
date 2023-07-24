@@ -8,6 +8,7 @@ import 'package:hae_mo/controller/image_controller.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
 import '../../model/dropdown_type.dart';
 import '../../model/post_type.dart';
+import '../Page/home_page.dart';
 import '../components/customAppBar.dart';
 import '../components/customButton.dart';
 import '../components/customDialog.dart';
@@ -67,23 +68,28 @@ class _PostingPageState extends State<PostingPage> {
                         postController.detailTextContext, context)),
               ),
               Container(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(6.0))),
-                  child: postingButton(context, () {
-                    /// Empty라면 true
-                    if(postController.checkEmpty()){
-                      showMyAlertDialog(context, "경고!!!!!", "빈 칸을 채워주세용가리");
-                    } else{
-                      postController.saveControllerData();
-                    }
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                width: MediaQuery.of(context).size.width * 0.8,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                ),
+                child: postingButton(context, () async {
+                  bool isSuccess = false;
+                  if (postController.checkEmpty()) {
+                    showMyAlertDialog(context, "경고!!!!!", "빈칸 안 채우면 못 지나감.");
 
-                    print(
-                        "print categoryController: ${postController.selectedCategory.value}");
-                    print(
-                        "print post Category: ${postController.post.category}");
-                  }))
+                  } else {
+                    postController.saveControllerData();
+                    isSuccess = await postController.saveBoard();
+                    if (isSuccess) {
+                      Get.to(const HomePage());
+                    } else {
+                      showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
+                    }
+                  }
+                }),
+              )
+
             ],
           ),
         ));

@@ -32,7 +32,6 @@ class PostController extends GetxController {
   final Rx<String> selectedDay = ''.obs;
   final RxList<MultipartFile?> selectedPhoto = [null].obs;
   final RxList<String?> hashTag = [null].obs;
-
   late final Post post;
   late final ClubPost clubPost;
   late final HotPlacePost hotPlacePost;
@@ -43,7 +42,6 @@ class PostController extends GetxController {
 
   void saveControllerData() {
     var nickname = PreferenceUtil.getString("nickname") ?? "a";
-
     switch (postType) {
       case PostType.meeting:
         post = Post(
@@ -108,47 +106,22 @@ class PostController extends GetxController {
     }
   }
 
-
-
-/*    Future checkEssentialInfo(String person, String title, String content,
-        String category) async {
-      if (content.isNotEmpty &&
-          title.isNotEmpty &&
-          person != "" &&
-          person != "0" &&
-          category != "카테고리 선택") {
-        _BoardRegisterState = BoardRegisterState.full;
-        dev.log("Full~");
-      } else {
-        _BoardRegisterState = BoardRegisterState.empty;
-        dev.log("Empty~");
-      }
-      update();
-    }*/
-
-/*    Future<void> saveBoard(int person, String title, String content,
-        String category) async {
-      if (_BoardRegisterState == BoardRegisterState.full) {
-        String date = DateFormat("yyyy년 MM월 dd일 HH시").format(DateTime.now());
+    Future<bool> saveBoard() async {
         DBService db = DBService();
-        _BoardState = BoardState.success;
-        Post post = Post(
-            nickname: "닉네임입니다용",
-            title: title,
-            content: content,
-            person: person,
-            category: category,
-            date: date);
-        db.savePost(post);
-        bool isPostSaved = await db.savePost(post);
-        if (isPostSaved) {
-          Get.to(const HomePage());
+        bool isPostSaved = false;
+        switch(postType){
+          case PostType.meeting:
+            isPostSaved = await db.savePost(post);
+            break;
+          case PostType.club:
+            isPostSaved = await db.saveClubPost(clubPost);
+            break;
+          case PostType.hotPlace:
+            isPostSaved = await db.saveHotPlacePost(hotPlacePost);
+            break;
         }
-      } else {
-        _BoardState = BoardState.fail;
+        return isPostSaved;
         // Fluttertoast.showToast(msg: "회원 정보를 저장할 수 없습니다.\n잠시 후 다시 시도해주세요.");
-        dev.log("Fail~");
-      }
       update();
-    }*/
+    }
 }
