@@ -87,6 +87,27 @@ class PostController extends GetxController {
     return deadLine;
   }
 
+  /// Empty라면 true 아니면 false
+  bool checkEmpty(){
+    bool isEmpty = true;
+    switch(postType){
+      case PostType.meeting:
+        isEmpty = textControllerList[0].text.isEmpty;
+        isEmpty = detailTextContext.text.isEmpty;
+        return isEmpty;
+      case PostType.club:
+        isEmpty = textControllerList[0].text.isEmpty;
+        isEmpty = textControllerList[1].text.isEmpty;
+        isEmpty = detailTextContext.text.isEmpty;
+        return isEmpty;
+      case PostType.hotPlace:
+        isEmpty = textControllerList[0].text.isEmpty;
+        isEmpty = textControllerList[1].text.isEmpty;
+        isEmpty = detailTextContext.text.isEmpty;
+        return isEmpty;
+    }
+  }
+
 
 
 /*    Future checkEssentialInfo(String person, String title, String content,

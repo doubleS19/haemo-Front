@@ -10,6 +10,7 @@ import '../../model/dropdown_type.dart';
 import '../../model/post_type.dart';
 import '../components/customAppBar.dart';
 import '../components/customButton.dart';
+import '../components/customDialog.dart';
 import '../components/customDropDownButton.dart';
 import '../components/customTextField.dart';
 import '../components/imagePicker.dart';
@@ -71,8 +72,13 @@ class _PostingPageState extends State<PostingPage> {
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(6.0))),
                   child: postingButton(context, () {
-                    /// 버튼 클릭 조건 생성하기
-                    postController.saveControllerData();
+                    /// Empty라면 true
+                    if(postController.checkEmpty()){
+                      showMyAlertDialog(context, "경고!!!!!", "빈 칸을 채워주세용가리");
+                    } else{
+                      postController.saveControllerData();
+                    }
+
                     print(
                         "print categoryController: ${postController.selectedCategory.value}");
                     print(
