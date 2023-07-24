@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import '../../controller/club_page_controller.dart';
+import '../components/customAppBar.dart';
 import 'board_detail_page.dart';
 import 'chat_list_page.dart';
 import 'club_board_detail_page.dart';
@@ -19,47 +20,7 @@ class _ClubPageState extends State<ClubPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Container(
-          padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 0.0),
-          alignment: Alignment.centerLeft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "소모임/동아리 게시판",
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 17.0,
-                  color: AppTheme.mainPageHeadlineColor,
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                "공지 24시간",
-                style: TextStyle(
-                  color: AppTheme.mainTextColor,
-                  fontSize: 10.0,
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          IconButton(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(top: 10.0, right: 10.0),
-            onPressed: () {
-              Get.to(() => const ChatListPage());
-            },
-            icon: const Icon(Icons.menu),
-            color: AppTheme.mainPageHeadlineColor,
-          ),
-        ],
-        elevation: 0.0,
-        automaticallyImplyLeading: false,
-      ),
+      appBar: customMainAppbar("소모임/동아리 게시판", "공지 24시간" ),
       body: Container(
         alignment: Alignment.center,
         color: Colors.white,

@@ -6,6 +6,8 @@ import '../../controller/posting_controller.dart';
 final headCountList = ["0명", "1명", "2명", "3명", "4명", "5명 이상"];
 final categoryList = ["술", "미팅", "밥"];
 
+
+/// hintText 설정하기
 class CustomDropDownButton extends StatefulWidget {
   const CustomDropDownButton(
       {Key? key,

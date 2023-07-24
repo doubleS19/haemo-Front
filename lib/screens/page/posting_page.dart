@@ -43,7 +43,7 @@ class _PostingPageState extends State<PostingPage> {
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child:
-                Builder(builder: (context) => customAppbar(postUi.appBarText))),
+                Builder(builder: (context) => customPostingAppbar(postUi.appBarText))),
         body: Container(
           padding: const EdgeInsets.all(30),
           child: Column(

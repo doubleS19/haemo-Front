@@ -6,6 +6,7 @@ import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/screens/page/board_detail_page.dart';
 import 'package:hae_mo/screens/page/chat_list_page.dart';
 import '../../service/db_service.dart';
+import '../components/customAppBar.dart';
 
 class MeetingPage extends StatefulWidget {
   const MeetingPage({super.key});
@@ -21,47 +22,7 @@ class _MeetingPageState extends State<MeetingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Container(
-          padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 0.0),
-          alignment: Alignment.centerLeft,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "친구 구하는 페이지",
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 17.0,
-                  color: AppTheme.mainPageHeadlineColor,
-                ),
-              ),
-              const SizedBox(height: 5),
-              Text(
-                "공지 24시간",
-                style: TextStyle(
-                  color: AppTheme.mainTextColor,
-                  fontSize: 10.0,
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: [
-          IconButton(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(top: 10.0, right: 10.0),
-            onPressed: () {
-              Get.to(() => const ChatListPage());
-            },
-            icon: const Icon(Icons.menu),
-            color: AppTheme.mainPageHeadlineColor,
-          ),
-        ],
-        elevation: 0.0,
-        automaticallyImplyLeading: false,
-      ),
+      appBar: customMainAppbar("친구 구하는 페이지", "공지 24시간"),
       body: Container(
         alignment: Alignment.center,
         color: Colors.white,
