@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
+import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
@@ -226,4 +227,17 @@ class DBService {
       return false;
     }
   }
+  Future<List<HotPlacePostResponse>> getAllHotPlacePost() async {
+    // final response = await http.get(Uri.parse("http://43.201.211.1:1004/club"));
+    final response = await http.get(Uri.parse("http://localhost:1004/hotplace")); /// 링크 수정 필요(임의로 설정)
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<HotPlacePostResponse>((json) => HotPlacePostResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load hot list');
+    }
+  }
+
 }
