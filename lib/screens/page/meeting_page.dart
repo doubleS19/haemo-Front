@@ -28,7 +28,6 @@ class _MeetingPageState extends State<MeetingPage> {
         color: Colors.white,
         child: Column(
           children: [
-            Divider(thickness: 0.5, color: AppTheme.dividerColor),
             Expanded(child: todayNotice()),
             Expanded(flex: 3, child: postList()),
           ],

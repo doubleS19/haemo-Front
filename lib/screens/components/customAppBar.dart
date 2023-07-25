@@ -27,7 +27,7 @@ PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle){
   return AppBar(
     backgroundColor: Colors.white,
     title: Container(
-      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
       alignment: Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,6 +49,12 @@ PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle){
             ),
           ),
         ],
+      ),
+    ),
+    shape: Border(
+      bottom: BorderSide(
+        color: AppTheme.dividerColor,
+        width: 0.5,
       ),
     ),
     actions: [

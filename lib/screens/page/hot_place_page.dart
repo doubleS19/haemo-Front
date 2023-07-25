@@ -22,16 +22,41 @@ class _HotPlacePageState extends State<HotPlacePage> {
     return Scaffold(
       appBar: customMainAppbar("핫플", "공지 24시간"),
       body: Container(
+        padding: const EdgeInsets.all(30),
         alignment: Alignment.center,
         color: Colors.white,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
+            Text("현재, 가장 인기있는 핫플"),
+            Expanded(
+                flex: 2,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  // Enable horizontal scrolling
+                  itemCount: 4,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                        color: Colors.green,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.symmetric(horizontal: 5.0),
+                        child: Text("갯골생태공원 이미지"));
+                  },
+                )),
+            Text("장소들.."),
+            Expanded(
+              flex: 3,
+              child: Container(
+                color: Colors.yellow,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+}
 
-
+Widget popularHotPlaceCard() {
+  return Card();
 }

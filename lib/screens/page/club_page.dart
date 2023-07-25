@@ -26,7 +26,6 @@ class _ClubPageState extends State<ClubPage> {
         color: Colors.white,
         child: Column(
           children: [
-            Divider(thickness: 0.5, color: AppTheme.dividerColor),
             Container(
               height: 13.0,
               margin: const EdgeInsets.only(left: 40.0),

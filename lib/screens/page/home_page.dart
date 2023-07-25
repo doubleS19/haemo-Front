@@ -9,6 +9,7 @@ import 'package:hae_mo/screens/page/posting_page.dart';
 import '../../controller/meeting_page_controller.dart';
 import '../../model/shared_preference.dart';
 import 'club_page.dart';
+import 'hot_place_page.dart';
 import 'meeting_page.dart';
 import 'my_page.dart';
 
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _widgetOptions = <Widget>[
     const MeetingPage(),
     const ClubPage(),
-    const RecommendPage(),
+    const HotPlacePage(),
     const MyPage(),
   ];
 
