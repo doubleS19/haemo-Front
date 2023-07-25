@@ -3,10 +3,26 @@ import 'package:hae_mo/common/color.dart';
 
 class CustomThemes {
   static String myFont = 'SCDream';
-  static var hotPlaceSubTitleTextTheme = TextStyle(
+  static var hotPlaceSubTitleTextStyle = TextStyle(
     color: AppTheme.hotPlacePageSubTitleColor,
     fontFamily: myFont,
-    fontSize: 14
+    fontSize: 14,
+  );
+  static var hotPlacePopularTitleTextStyle = TextStyle(
+      color: AppTheme.postingPageHeadlineColor,
+      fontFamily: myFont,
+      fontSize: 15,
+      fontWeight: FontWeight.bold
+  );
+  static var hotPlacePopularSubtitleTextStyle = TextStyle(
+      color: AppTheme.postingPageHeadlineColor,
+      fontFamily: myFont,
+      fontSize: 11
+  );
+  static var hotPlaceTitleTextStyle = TextStyle(
+      color: AppTheme.postingPageHeadlineColor,
+      fontFamily: myFont,
+      fontSize: 13
   );
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',
