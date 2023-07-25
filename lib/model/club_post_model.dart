@@ -3,7 +3,7 @@ import 'package:hae_mo/model/post_model.dart';
 
 class ClubPost extends PostBase {
   late int person;
-  late MultipartFile? photo;
+  late MultipartFile? logo; /// 널 긊 불가/로고 없을 경우 사용할 기본 이미지 나중에 설정하기
   late String description;
   List<String>? hashTag;
 
@@ -13,7 +13,7 @@ class ClubPost extends PostBase {
       required String title,
       required String description,
       required String content,
-      this.photo,
+      this.logo,
       required this.person,
       this.hashTag})
       : super(
@@ -31,7 +31,7 @@ class ClubPost extends PostBase {
         content: json['content'],
         description: json['description'],
         person: json['person'],
-        photo: json['photo'],
+        logo: json['logo'],
         hashTag: json['hashTag']
 
         /// 멀티파트 이미지 리스트 DB로 전송
@@ -45,7 +45,7 @@ class ClubPost extends PostBase {
         'description': description,
         'date': date,
         'person': person,
-        'photo': photo,
+        'logo': logo,
         'hashTag': hashTag
 
         /// 멀티파트 이미지 리스트 변수 넣기

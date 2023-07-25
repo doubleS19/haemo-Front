@@ -62,7 +62,7 @@ class PostController extends GetxController {
           description: textControllerList[1].text,
           content: detailTextContext.text,
           person: selectedPerson.value,
-          photo: null,
+          logo: null,
           hashTag: [''],
         );
         break;
