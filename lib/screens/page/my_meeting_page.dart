@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/post_response_model.dart';
+import 'package:hae_mo/model/shared_preference.dart';
 import 'package:hae_mo/screens/page/board_detail_page.dart';
 import '../../service/db_service.dart';
 
@@ -21,7 +22,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
           foregroundColor: Colors.black,
           elevation: 0.0,
           title: const Text(
-            "헤모",
+            "내가 작성한 글",
             style: TextStyle(
               color: Color(0xff595959),
               fontSize: 19.0,
@@ -33,18 +34,6 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
             margin: const EdgeInsets.only(right: 10.0, left: 10.0),
             color: Colors.white,
             child: Column(children: [
-              Divider(thickness: 0.5, color: AppTheme.dividerColor),
-              const SizedBox(
-                height: 10.0,
-              ),
-              const Text("내가 작성한 글",
-                  style: TextStyle(
-                      color: Color(0xff818181),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16.0)),
-              const SizedBox(
-                height: 10.0,
-              ),
               Divider(
                 color: AppTheme.dividerColor,
                 thickness: 0.5,
@@ -61,10 +50,12 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
           if (snapshot.hasData) {
             final List<PostResponse> postList =
                 snapshot.data as List<PostResponse>;
+            postList.removeWhere((element) =>
+                element.nickname != PreferenceUtil.getString("nickname"));
             if (postList.isEmpty) {
               return Center(
                   child: Text(
-                "게시물이 없어요!",
+                "아직 작성한 게시물이 없어요!",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
                     color: AppTheme.mainPageTextColor),

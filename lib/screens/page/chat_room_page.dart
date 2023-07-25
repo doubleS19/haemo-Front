@@ -149,7 +149,9 @@ class _ChatRoomState extends State<ChatRoom> {
             //style: Theme.of(context).textTheme.headline6
             leading: IconButton(
               icon: const Icon(FontAwesomeIcons.arrowLeft),
-              onPressed: () {},
+              onPressed: () {
+                Get.back();
+              },
             ),
             actions: [
               IconButton(
