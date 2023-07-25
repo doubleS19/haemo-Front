@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
 
 class CustomThemes {
+  static String myFont = 'SCDream';
+  static var hotPlaceSubTitleTextTheme = TextStyle(
+    color: AppTheme.hotPlacePageSubTitleColor,
+    fontFamily: myFont,
+    fontSize: 14
+  );
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',
       primaryColor: AppTheme.mainColor,

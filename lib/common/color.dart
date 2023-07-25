@@ -31,4 +31,7 @@ class AppTheme {
   static var buttonColor = const Color(0xFFFFFFFF);
   static var receiverText = const Color(0xFFDEDEDE);
   static var senderText = const Color(0xFFC6EFF9);
+
+/// 핫플 페이지
+  static var hotPlacePageSubTitleColor = const Color(0xFF414141);
 }
