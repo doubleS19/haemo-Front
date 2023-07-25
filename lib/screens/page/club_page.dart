@@ -20,7 +20,7 @@ class _ClubPageState extends State<ClubPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customMainAppbar("소모임/동아리 게시판", "공지 24시간" ),
+      appBar: customMainAppbar("소모임/동아리 게시판", "공지 24시간"),
       body: Container(
         alignment: Alignment.center,
         color: Colors.white,
@@ -70,7 +70,8 @@ class _ClubPageState extends State<ClubPage> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                   onTap: () {
-                    Get.to(() => ClubBoardDetailPage(pId: postList[index].pId));
+                    Get.to(() =>
+                        ClubBoardDetailPage(pId: postList[index].pId, type: 2));
                   },
                   child: Container(
                       margin: const EdgeInsets.symmetric(

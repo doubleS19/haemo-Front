@@ -67,8 +67,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                     return GestureDetector(
                         onTap: () {
                           Get.to(() => BoardDetailPage(
-                                pId: postList[index].pId,
-                              ));
+                              pId: postList[index].pId, type: 1));
                         },
                         child: Column(children: [
                           Container(
