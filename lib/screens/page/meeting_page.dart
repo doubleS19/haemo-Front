@@ -60,7 +60,8 @@ class _MeetingPageState extends State<MeetingPage> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
-                  Get.to(() => BoardDetailPage(pId: postList[index].pId));
+                  Get.to(
+                      () => BoardDetailPage(pId: postList[index].pId, type: 1));
                 },
                 child: Container(
                   width: 130.0,
@@ -90,7 +91,8 @@ class _MeetingPageState extends State<MeetingPage> {
                         backgroundColor: Colors.white,
                       ),
                       onPressed: () {
-                        Get.to(() => BoardDetailPage(pId: postList[index].pId));
+                        Get.to(() =>
+                            BoardDetailPage(pId: postList[index].pId, type: 1));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -180,7 +182,8 @@ class _MeetingPageState extends State<MeetingPage> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
-                  Get.to(() => BoardDetailPage(pId: postList[index].pId));
+                  Get.to(
+                      () => BoardDetailPage(pId: postList[index].pId, type: 1));
                 },
                 child: Column(
                   children: [

@@ -11,9 +11,10 @@ import '../../model/post_model.dart';
 import '../../service/db_service.dart';
 
 class BoardDetailPage extends StatefulWidget {
-  const BoardDetailPage({super.key, required this.pId});
+  const BoardDetailPage({super.key, required this.pId, required this.type});
 
   final int pId;
+  final int type;
 
   @override
   State<BoardDetailPage> createState() => _BoardDetailPageState();
@@ -148,7 +149,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                   ),
                                 ),
                                 Divider(color: AppTheme.mainTextColor),
-                                commentList(widget.pId),
+                                commentList(widget.pId, widget.type),
                               ],
                             ),
                           );
@@ -207,25 +208,25 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                 ]))));
   }
 
-  Widget commentList(int pId) {
+  Widget commentList(int pId, int type) {
     DBService db = DBService();
     return FutureBuilder<List<CommentResponse>>(
       future: db.getCommentsByPId(pId),
       builder: (context, snapshot) {
         print(snapshot.data);
         if (snapshot.connectionState == ConnectionState.waiting) {
-          // 데이터를 기다리는 동안 로딩 중 화면을 보여줍니다.
+          // 데이터 로딩
           return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasError) {
-          // 오류가 발생한 경우 오류 메시지를 보여줍니다.
+          // 오류
           return const Center(
             child: Text("댓글을 불러오는 중 오류가 발생했습니다."),
           );
         } else if (snapshot.hasData && snapshot.data!.isEmpty) {
-          // 데이터를 성공적으로 받아왔지만 댓글이 없는 경우
-          return Center(
+          // 댓글이 없는 경우
+          return const Center(
             child: Text(
               "댓글이 없어요!",
               style: TextStyle(
@@ -235,11 +236,12 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
             ),
           );
         } else {
-          // 정상적으로 데이터를 받아온 경우 댓글 목록을 보여줍니다.
+          // 댓글 목록
           final commentList = snapshot.data!;
+          commentList.removeWhere((element) => element.type != type);
           return ListView.builder(
-            shrinkWrap: true, // 추가
-            physics: NeverScrollableScrollPhysics(), // 추가
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: commentList.length,
             itemBuilder: (BuildContext context, int index) {
               return Column(
@@ -263,7 +265,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                           ),
                           Text(
                             commentList[index].content,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12.0,
                               color: Colors.black,
                             ),
@@ -272,7 +274,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                       ),
                     ),
                   ),
-                  Divider(thickness: 1.0, color: Colors.black),
+                  const Divider(thickness: 1.0, color: Colors.black),
                 ],
               );
             },
