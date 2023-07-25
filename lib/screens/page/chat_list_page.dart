@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/screens/Page/recommend_page.dart';
 import 'package:hae_mo/model/chatlist_model.dart';
 
 import '../../controller/chatlist_controller.dart';
