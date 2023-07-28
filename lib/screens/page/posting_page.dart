@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/image_controller.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
+import 'package:textfield_tags/textfield_tags.dart';
 import '../../model/dropdown_type.dart';
 import '../../model/post_type.dart';
 import '../Page/home_page.dart';
@@ -34,65 +35,77 @@ class _PostingPageState extends State<PostingPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    /// 상태바 설정하기
+/*    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white, // 회색
+    ));*/
+
     PostController postController = Get.put(PostController(widget.postType));
+    TextfieldTagsController hashTagController = TextfieldTagsController();
     PostUi postUi = PostUi.fromType(widget.postType);
     double containerHeight = (postUi.title.length == 1)
         ? MediaQuery.of(context).size.height / 16
         : MediaQuery.of(context).size.height / 8;
-    return Scaffold(
-        appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(kToolbarHeight),
-            child:
-                Builder(builder: (context) => customPostingAppbar(postUi.appBarText))),
-        body: Container(
-          padding: const EdgeInsets.all(30),
-          child: Column(
-            //crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
+    return GestureDetector(
+      onTap: ()=> FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+          appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child:
+              Builder(builder: (context) => customPostingAppbar(context, postUi.appBarText))),
+          body: Container(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              //crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
                   //color: Colors.blue,
-                  height: containerHeight,
-                  child: enterTitleTextField(
-                      postUi, postController.textControllerList)),
-              SizedBox(
-                //color: Colors.yellow,
-                height: MediaQuery.of(context).size.height / 6,
-                child: selectDropDownButtonListType(
-                    widget.postType, context, postController),
-              ),
-              Expanded(
-                child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: postingPageDetailTextField(postUi.hintText,
-                        postController.detailTextContext, context)),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                width: MediaQuery.of(context).size.width * 0.8,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                    height: containerHeight,
+                    child: enterTitleTextField(
+                        postUi, postController.textControllerList)),
+                SizedBox(
+                  //color: Colors.yellow,
+                  height: MediaQuery.of(context).size.height / 6,
+                  child: selectDropDownButtonListType(
+                      widget.postType, context, postController),
                 ),
-                child: postingButton(context, () async {
-                  bool isSuccess = false;
-                  if (postController.checkEmpty()) {
-                    showMyAlertDialog(context, "경고!!!!!", "빈칸 안 채우면 못 지나감.");
+                Container(
+                    child: hashTagTextField(hashTagController)),
+                Expanded(
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: postingPageDetailTextField(postUi.hintText,
+                          postController.detailTextContext, context)),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                  ),
+                  child: postingButton(context, () async {
+                    bool isSuccess = false;
+                    if (postController.checkEmpty()) {
+                      showMyAlertDialog(context, "경고!!!!!", "빈칸 안 채우면 못 지나감.");
 
-                  } else {
-                    postController.saveControllerData();
-                    isSuccess = await postController.saveBoard();
-                    if (isSuccess) {
-                      Get.to(const HomePage());
                     } else {
-                      showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
+                      postController.saveControllerData();
+                      isSuccess = await postController.saveBoard();
+                      if (isSuccess) {
+                        Get.to(const HomePage());
+                      } else {
+                        showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
+                      }
                     }
-                  }
-                }),
-              )
+                  }),
+                )
 
-            ],
-          ),
-        ));
+              ],
+            ),
+          ))
+    );
   }
 }
 

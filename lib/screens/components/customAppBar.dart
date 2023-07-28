@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../common/color.dart';
 import '../Page/chat_list_page.dart';
 
-Widget customPostingAppbar(String appBarText) {
-  return Builder(
-      builder: (context) => AppBar(
-            title: Text(appBarText,
-                style: Theme.of(context).textTheme.headlineMedium),
-            centerTitle: true,
-            leading: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              color: Theme.of(context).iconTheme.color,
-              icon: const Icon(Icons.arrow_back),
-            ),
-            backgroundColor: Theme.of(context).primaryColor,
-          ));
+Widget customPostingAppbar(BuildContext context, String appBarText) {
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.white, // 회색
+  ));
+
+  return AppBar(
+    title: Text(appBarText,
+        style: Theme.of(context).textTheme.headlineMedium),
+    centerTitle: true,
+    leading: IconButton(
+      onPressed: () {
+        Get.back();
+      },
+      color: Theme.of(context).iconTheme.color,
+      icon: const Icon(Icons.arrow_back),
+    ),
+    elevation: 0.0,
+    backgroundColor: Theme.of(context).primaryColor,
+  );
 }
 
 
@@ -65,7 +71,7 @@ PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle){
           Get.to(() => const ChatListPage());
         },
         icon: const Icon(Icons.menu),
-        color: AppTheme.mainPageHeadlineColor,
+        color: AppTheme.mainColor,
       ),
     ],
     elevation: 0.0,
