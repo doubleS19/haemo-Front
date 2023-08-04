@@ -196,7 +196,7 @@ class DBService {
   Future<bool> saveHotPlacePost(HotPlacePost post) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/hotplace"),
+        Uri.parse("http://43.201.211.1:1004/hot"),
 
         /// 링크 수정 필요(임의로 설정)
         headers: <String, String>{
@@ -217,8 +217,7 @@ class DBService {
   }
 
   Future<List<HotPlacePostResponse>> getAllHotPlacePost() async {
-    final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/hotplace"));
+    final response = await http.get(Uri.parse("http://43.201.211.1:1004/hot"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
