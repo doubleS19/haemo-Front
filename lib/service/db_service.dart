@@ -17,8 +17,7 @@ class DBService {
   Future<bool> saveUser(User user) async {
     try {
       final response = await http.post(
-        // Uri.parse("http://43.201.211.1:1004/user"),
-        Uri.parse("http://localhost:1004/user"),
+        Uri.parse("http://43.201.211.1:1004/user"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -40,8 +39,7 @@ class DBService {
   Future<bool> savePost(Post post) async {
     try {
       final response = await http.post(
-        // Uri.parse("http://43.201.211.1:1004/post"),
-        Uri.parse("http://localhost:1004/post"),
+        Uri.parse("http://43.201.211.1:1004/post"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -60,8 +58,7 @@ class DBService {
   }
 
   Future<List<PostResponse>> getAllPost() async {
-    // final response = await http.get(Uri.parse("http://43.201.211.1:1004/post"));
-    final response = await http.get(Uri.parse("http://localhost:1004/post"));
+    final response = await http.get(Uri.parse("http://43.201.211.1:1004/post"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -73,9 +70,8 @@ class DBService {
   }
 
   Future<List<PostResponse>> get24HoursPosts() async {
-    // final response = await http.get(Uri.parse("http://43.201.211.1:1004/post/24hours"));
     final response =
-        await http.get(Uri.parse("http://localhost:1004/post/24hours"));
+        await http.get(Uri.parse("http://43.201.211.1:1004/post/24hours"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -88,8 +84,7 @@ class DBService {
 
   Future<Post> getPostById(int id) async {
     final response =
-        // await http.get(Uri.parse("http://43.201.211.1:1004/post/$id"));
-        await http.get(Uri.parse("http://localhost:1004/post/$id"));
+        await http.get(Uri.parse("http://43.201.211.1:1004/post/$id"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return Post.fromJson(jsonData);
@@ -102,8 +97,7 @@ class DBService {
 
   Future<UserResponse> getUserByPost(int pId) async {
     final response = await http
-        // .get(Uri.parse("http://43.201.211.1:1004/post/postUser/$pId"));
-        .get(Uri.parse("http://localhost:1004/post/postUser/$pId"));
+        .get(Uri.parse("http://43.201.211.1:1004/post/postUser/$pId"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -115,10 +109,8 @@ class DBService {
   }
 
   Future<UserResponse> getUserByNickname(String nickname) async {
-    // final response =
-    //     await http.get(Uri.parse("http://43.201.211.1:1004/user/$nickname"));
     final response =
-        await http.get(Uri.parse("http://localhost:1004/user/$nickname"));
+        await http.get(Uri.parse("http://43.201.211.1:1004/user/$nickname"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -132,8 +124,7 @@ class DBService {
   Future<bool> saveClubPost(ClubPost post) async {
     try {
       final response = await http.post(
-        // Uri.parse("http://43.201.211.1:1004/club"),
-        Uri.parse("http://localhost:1004/club"),
+        Uri.parse("http://43.201.211.1:1004/club"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -153,8 +144,7 @@ class DBService {
   }
 
   Future<List<ClubPostResponse>> getAllClubPost() async {
-    // final response = await http.get(Uri.parse("http://43.201.211.1:1004/club"));
-    final response = await http.get(Uri.parse("http://localhost:1004/club"));
+    final response = await http.get(Uri.parse("http://43.201.211.1:1004/club"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -167,8 +157,7 @@ class DBService {
 
   Future<ClubPost> getClubPostById(int id) async {
     final response =
-        // await http.get(Uri.parse("http://43.201.211.1:1004/club/$id"));
-        await http.get(Uri.parse("http://localhost:1004/club/$id"));
+        await http.get(Uri.parse("http://43.201.211.1:1004/club/$id"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return ClubPost.fromJson(jsonData);
@@ -181,8 +170,7 @@ class DBService {
 
   Future<UserResponse> getUserByClubPost(int pId) async {
     final response = await http
-        // .get(Uri.parse("http://43.201.211.1:1004/club/clubPostUser/$pId"));
-        .get(Uri.parse("http://localhost:1004/club/clubPostUser/$pId"));
+        .get(Uri.parse("http://43.201.211.1:1004/club/clubPostUser/$pId"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -195,7 +183,7 @@ class DBService {
 
   Future<List<CommentResponse>> getCommentsByPId(int pId) async {
     final response = await http
-        .get(Uri.parse('http://localhost:1004/comment/commentPost/$pId'));
+        .get(Uri.parse('http://43.201.211.1:1004/comment/commentPost/$pId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -208,8 +196,7 @@ class DBService {
   Future<bool> saveHotPlacePost(HotPlacePost post) async {
     try {
       final response = await http.post(
-        // Uri.parse("http://43.201.211.1:1004/club"),
-        Uri.parse("http://localhost:1004/hotplace"),
+        Uri.parse("http://43.201.211.1:1004/hotplace"),
 
         /// 링크 수정 필요(임의로 설정)
         headers: <String, String>{
@@ -228,17 +215,18 @@ class DBService {
       return false;
     }
   }
+
   Future<List<HotPlacePostResponse>> getAllHotPlacePost() async {
-    // final response = await http.get(Uri.parse("http://43.201.211.1:1004/club"));
-    final response = await http.get(Uri.parse("http://localhost:1004/hotplace")); /// 링크 수정 필요(임의로 설정)
+    final response =
+        await http.get(Uri.parse("http://43.201.211.1:1004/hotplace"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
-          .map<HotPlacePostResponse>((json) => HotPlacePostResponse.fromJson(json))
+          .map<HotPlacePostResponse>(
+              (json) => HotPlacePostResponse.fromJson(json))
           .toList();
     } else {
       throw Exception('Failed to load hot list');
     }
   }
-
 }
