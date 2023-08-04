@@ -5,6 +5,7 @@ class ClubPostResponse {
   final int person;
   final String category;
   final int pId;
+  final String description;
 
   ClubPostResponse(
       {required this.nickname,
@@ -12,6 +13,7 @@ class ClubPostResponse {
       required this.content,
       required this.person,
       required this.category,
+      required this.description,
       required this.pId});
 
   factory ClubPostResponse.fromJson(Map<String, dynamic> json) {
@@ -21,6 +23,7 @@ class ClubPostResponse {
         content: json['content'],
         person: json['person'],
         category: json['category'],
+        description: json['description'],
         pId: json['pid']);
   }
 
@@ -30,6 +33,7 @@ class ClubPostResponse {
         'content': content,
         'person': person,
         'category': category,
+        'description': description,
         'pid': pId
       };
 }
