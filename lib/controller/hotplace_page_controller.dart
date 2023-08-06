@@ -27,4 +27,14 @@ class HotPlacePageController extends GetxController {
       // 오류 처리
     }
   }
+
+  /// 찜 클릭 시 유저의 핫플 리스트에 저장
+
+  /// 찜 개수 1 증가
+
+
+
+  /// 테이블을 가져올 때 찜 테이블이면 하트 색깔이 빨강색이도록?
+
+
 }

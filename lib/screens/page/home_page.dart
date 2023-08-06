@@ -3,6 +3,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/club_page_controller.dart';
+import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/model/post_type.dart';
 import 'package:hae_mo/screens/page/posting_page.dart';
 import '../../controller/meeting_page_controller.dart';
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Get.put(MeetingPageController());
     Get.put(ClubPageController());
+    Get.put(HotPlacePageController());
     return Scaffold(
         body: SafeArea(
           child: _widgetOptions.elementAt(_selectedIndex),

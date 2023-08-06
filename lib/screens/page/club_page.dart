@@ -71,7 +71,7 @@ class _ClubPageState extends State<ClubPage> {
               return GestureDetector(
                   onTap: () {
                     Get.to(() =>
-                        ClubBoardDetailPage(pId: postList[index].pId, type: 2));
+                        BoardDetailPage(pId: postList[index].pId, type: 2));
                   },
                   child: Container(
                       margin: const EdgeInsets.symmetric(
@@ -95,13 +95,13 @@ class _ClubPageState extends State<ClubPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                postList[index].title,
+                                "상시 모집",
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                     fontSize: 9.0,
                                     fontWeight: FontWeight.w600,
-                                    color: AppTheme.mainPageHeadlineColor),
+                                    color: AppTheme.mainPagePersonColor),
                               ),
                               Text(
                                 postList[index].title,
@@ -119,7 +119,7 @@ class _ClubPageState extends State<ClubPage> {
                                   width: 169.0,
                                   height: 33.0,
                                   child: Text(
-                                    postList[index].content,
+                                    postList[index].description,
                                     maxLines: 3,
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
