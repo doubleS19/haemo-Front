@@ -7,6 +7,7 @@ import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/model/wish_model.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as dev;
@@ -232,11 +233,14 @@ class DBService {
   Future<List<HotPlacePostResponse>> getPopularHotPlacePosts() async {
     // final response = await http.get(Uri.parse("http://43.201.211.1:1004/post/24hours"));
     final response =
-    await http.get(Uri.parse("http://localhost:1004/post/24hours"));  ///   수정하기
+        await http.get(Uri.parse("http://localhost:1004/post/24hours"));
+
+    ///   수정하기
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
-          .map<HotPlacePostResponse>((json) => HotPlacePostResponse.fromJson(json))
+          .map<HotPlacePostResponse>(
+              (json) => HotPlacePostResponse.fromJson(json))
           .toList();
     } else {
       throw Exception('Failed to load popular hot place list');
@@ -244,9 +248,10 @@ class DBService {
   }
 
   ///유저의 wishList(찜한 핫플) 가져오기
-  Future<List<String>> getWishList() async{
-    final response =
-    await http.get(Uri.parse("http://localhost:1004/"));  ///   링크, 코드 수정 필요
+  Future<List<String>> getWishList() async {
+    final response = await http.get(Uri.parse("http://localhost:1004/"));
+
+    ///   링크, 코드 수정 필요
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       final List<String> wishList = data.cast<String>();
@@ -256,11 +261,13 @@ class DBService {
     }
   }
 
- /// 유저의 핫플 리스트 수정
-  Future<bool> updateHotPlaceToWishList(String hpId) async{
+  /// 유저의 핫플 리스트 수정
+  Future<bool> updateHotPlaceToWishList(String hpId) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/hot"),  ///   링크 수정 필요 -> wishList만 수정
+        Uri.parse("http://43.201.211.1:1004/hot"),
+
+        ///   링크 수정 필요 -> wishList만 수정
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -279,10 +286,12 @@ class DBService {
   }
 
   /// hpId로 핫플을 찾아서 찜 개수 1 증가 or 감소
-  Future<bool> updatePopularNum(String hpId) async{
+  Future<bool> updatePopularNum(String hpId) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/hot"),  ///   링크, 코드 수정 필요
+        Uri.parse("http://43.201.211.1:1004/hot"),
+
+        ///   링크, 코드 수정 필요
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -297,6 +306,39 @@ class DBService {
     } catch (e) {
       dev.log("Failed to send data: ${e}");
       return false;
+    }
+  }
+
+  Future<bool> addWishList(Wish wish) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://43.201.211.1:1004/wish"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(wish.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send data");
+      } else {
+        dev.log("Post Data sent successfully");
+        return true;
+      }
+    } catch (e) {
+      dev.log("Failed to send post data: ${e}");
+      return false;
+    }
+  }
+
+  Future<void> deleteWishList(int uId, int pId) async {
+    final response = await http.delete(
+      Uri.parse('http://localhost:1004/wish/$uId/$pId'),
+    );
+
+    if (response.statusCode == 204) {
+      print('WishList deleted successfully');
+    } else {
+      throw Exception('Failed to delete WishList');
     }
   }
 }
