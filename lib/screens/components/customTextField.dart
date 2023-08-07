@@ -19,7 +19,6 @@ Widget postingPageTitleTextField(
 
 Widget hashTagTextField(TextfieldTagsController controller) {
   return Container(
-      padding: const EdgeInsets.fromLTRB(20, 5, 20, 0),
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),

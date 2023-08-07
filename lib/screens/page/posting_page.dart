@@ -71,17 +71,22 @@ class _PostingPageState extends State<PostingPage> {
                   child: selectDropDownButtonListType(
                       widget.postType, context, postController),
                 ),
-                Container(
-                    child: hashTagTextField(hashTagController)),
+                if (widget.postType == PostType.club)
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: hashTagTextField(hashTagController))
+                else
+                  Container(),
                 Expanded(
                   child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.9,
                       child: postingPageDetailTextField(postUi.hintText,
                           postController.detailTextContext, context)),
                 ),
                 Container(
                   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  width: MediaQuery.of(context).size.width * 0.8,
+                  width: MediaQuery.of(context).size.width * 0.9,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(6.0)),
                   ),
@@ -101,7 +106,6 @@ class _PostingPageState extends State<PostingPage> {
                     }
                   }),
                 )
-
               ],
             ),
           ))
