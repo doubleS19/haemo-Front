@@ -125,8 +125,8 @@ Widget popularHotPlaceCard(BuildContext context,
 Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
     bool fillHeartColor) {
   DBService db = DBService();
-  UserResponse user =
-      db.getUserByNickname(hotPlaceData.nickname) as UserResponse;
+  // UserResponse user =
+  //     db.getUserByNickname(hotPlaceData.nickname) as UserResponse;
   return Container(
       width: MediaQuery.of(context).size.width / 2.3,
       height: MediaQuery.of(context).size.height / 8,
@@ -147,7 +147,7 @@ Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
           right: 0,
           child: IconButton(
               onPressed: () {
-                db.addWishList(Wish(uId: user.uId, pId: hotPlaceData.pId));
+                // db.addWishList(Wish(uId: user.uId, pId: hotPlaceData.pId));
               },
               icon: HeartButtonWidget(fillHeart: fillHeartColor)),
         )
