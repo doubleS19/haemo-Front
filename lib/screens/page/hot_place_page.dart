@@ -35,7 +35,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
                 flex: 4,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 4,
+                  itemCount: hotPlaceController.popularHotPlaceList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                         padding: const EdgeInsets.fromLTRB(0, 15, 15, 15),
@@ -43,7 +43,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
                         child: popularHotPlaceCard(
                             context,
                             hotPlaceController.popularHotPlaceList[index],
-                            false));
+                            hotPlaceController.hpWishList.contains(hotPlaceController.popularHotPlaceList[index].pId)));
                   },
                 )),
             Text("장소들..", style: CustomThemes.hotPlaceSubTitleTextStyle),
@@ -63,15 +63,17 @@ class _HotPlacePageState extends State<HotPlacePage> {
                           return Expanded(
                               child: hotPlaceCard(
                                   context,
-                                  HotPlacePostResponse(
-                                      pId: "pId",
-                                      title: "title",
-                                      content: "content",
-                                      nickname: "nickname",
-                                      date: "date",
-                                      photoList: [],
-                                      heartNum: 2),
-                                  false));
+                                HotPlacePostResponse(
+                                    pId: "pId",
+                                    title: "title",
+                                    content: "content",
+                                    nickname: "nickname",
+                                    date: "date",
+                                    photoList: [],
+                                    heartNum: 2),
+                                  false
+                                  /*hotPlaceController.hotPlacePostList[index],
+                                  hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/));
                         }))),
           ],
         ),
