@@ -332,7 +332,7 @@ class DBService {
 
   Future<void> deleteWishList(int uId, int pId) async {
     final response = await http.delete(
-      Uri.parse('http://localhost:1004/wish/$uId/$pId'),
+      Uri.parse('http://43.201.211.1:1004/wish/$uId/$pId'),
     );
 
     if (response.statusCode == 204) {

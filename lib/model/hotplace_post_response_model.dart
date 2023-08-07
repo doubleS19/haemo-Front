@@ -1,8 +1,10 @@
+import 'dart:ffi';
+
 import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
 import 'package:hae_mo/model/post_model.dart';
 
 class HotPlacePostResponse {
-  String pId;
+  int pId;
   String title;
   String content;
   String nickname;
@@ -28,6 +30,7 @@ class HotPlacePostResponse {
       date: json['date'],
       photoList: json['photolist'],
       heartNum: json['heartnum'],
+
       /// 멀티파트 이미지 리스트 DB로 전송
     );
   }
@@ -40,6 +43,7 @@ class HotPlacePostResponse {
         'date': date,
         'photoList': photoList,
         'heartnum': heartNum
+
         /// 멀티파트 이미지 리스트 변수 넣기
       };
 }
