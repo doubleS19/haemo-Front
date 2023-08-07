@@ -5,6 +5,7 @@ import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import '../../common/theme.dart';
 import '../../controller/hotplace_page_controller.dart';
 import '../components/customAppBar.dart';
+import '../components/heartButton.dart';
 
 class HotPlacePage extends StatefulWidget {
   const HotPlacePage({super.key});
@@ -41,15 +42,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
                         alignment: Alignment.center,
                         child: popularHotPlaceCard(
                             context,
-                            HotPlacePostResponse(
-                              pId: "pId",
-                              title: "title",
-                              content: "content",
-                              nickname: "nickname",
-                              date: "date",
-                              photoList: [],
-                              heartNum: 2,
-                            ),
+                            hotPlaceController.popularHotPlaceList[index],
                             false));
                   },
                 )),
@@ -77,7 +70,8 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                       nickname: "nickname",
                                       date: "date",
                                       photoList: [],
-                                      heartNum: 2)));
+                                      heartNum: 2),
+                                  false));
                         }))),
           ],
         ),
@@ -88,8 +82,6 @@ class _HotPlacePageState extends State<HotPlacePage> {
 
 Widget popularHotPlaceCard(BuildContext context,
     HotPlacePostResponse hotPlaceData, bool fillHeartColor) {
-  Color heartColor = fillHeartColor ? Colors.red : Colors.grey;
-
   return Container(
       width: MediaQuery.of(context).size.width / 2,
       //height: MediaQuery.of(context).size.width / 2 * 3,
@@ -113,10 +105,7 @@ Widget popularHotPlaceCard(BuildContext context,
             right: 0,
             child: IconButton(
                 onPressed: () {},
-                icon: const Icon(
-                  CupertinoIcons.heart_fill,
-                  color: Colors.red,
-                ))),
+                icon: HeartButtonWidget(fillHeart: fillHeartColor))),
         Positioned(
             bottom: 30,
             left: 10,
@@ -125,9 +114,8 @@ Widget popularHotPlaceCard(BuildContext context,
       ]));
 }
 
-Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData) {
-  bool isRed = false;
-
+Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
+    bool fillHeartColor) {
   return Container(
       width: MediaQuery.of(context).size.width / 2.3,
       height: MediaQuery.of(context).size.height / 8,
@@ -145,22 +133,10 @@ Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData) {
           child: Text("갯골생태공원", style: CustomThemes.hotPlaceTitleTextStyle),
         ),
         Positioned(
-            right: 0,
-            child: IconButton(
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.hovered)) {
-                        return Colors.redAccent; //<-- SEE HERE
-                      }
-                      return null; // Defer to the widget's default.
-                    },
-                  ),
-                ),
-                onPressed: () {},
-                icon: const Icon(
-                  CupertinoIcons.heart_fill,
-                  color: Colors.white,
-                ))),
+          right: 0,
+          child: IconButton(
+              onPressed: () {},
+              icon: HeartButtonWidget(fillHeart: fillHeartColor)),
+        )
       ]));
 }
