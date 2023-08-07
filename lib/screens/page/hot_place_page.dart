@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
+import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/service/db_service.dart';
 import '../../common/theme.dart';
 import '../../controller/hotplace_page_controller.dart';
+import '../../model/wish_model.dart';
 import '../components/customAppBar.dart';
 import '../components/heartButton.dart';
 
@@ -43,7 +46,9 @@ class _HotPlacePageState extends State<HotPlacePage> {
                         child: popularHotPlaceCard(
                             context,
                             hotPlaceController.popularHotPlaceList[index],
-                            hotPlaceController.hpWishList.contains(hotPlaceController.popularHotPlaceList[index].pId)));
+                            hotPlaceController.hpWishList.contains(
+                                hotPlaceController
+                                    .popularHotPlaceList[index].pId)));
                   },
                 )),
             Text("장소들..", style: CustomThemes.hotPlaceSubTitleTextStyle),
@@ -63,17 +68,18 @@ class _HotPlacePageState extends State<HotPlacePage> {
                           return Expanded(
                               child: hotPlaceCard(
                                   context,
-                                HotPlacePostResponse(
-                                    pId: "pId",
-                                    title: "title",
-                                    content: "content",
-                                    nickname: "nickname",
-                                    date: "date",
-                                    photoList: [],
-                                    heartNum: 2),
+                                  HotPlacePostResponse(
+                                      pId: 1,
+                                      title: "title",
+                                      content: "content",
+                                      nickname: "nickname",
+                                      date: "date",
+                                      photoList: [],
+                                      heartNum: 2),
                                   false
                                   /*hotPlaceController.hotPlacePostList[index],
-                                  hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/));
+                                  hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
+                                  ));
                         }))),
           ],
         ),
@@ -118,6 +124,9 @@ Widget popularHotPlaceCard(BuildContext context,
 
 Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
     bool fillHeartColor) {
+  DBService db = DBService();
+  UserResponse user =
+      db.getUserByNickname(hotPlaceData.nickname) as UserResponse;
   return Container(
       width: MediaQuery.of(context).size.width / 2.3,
       height: MediaQuery.of(context).size.height / 8,
@@ -137,7 +146,9 @@ Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
         Positioned(
           right: 0,
           child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                db.addWishList(Wish(uId: user.uId, pId: hotPlaceData.pId));
+              },
               icon: HeartButtonWidget(fillHeart: fillHeartColor)),
         )
       ]));
