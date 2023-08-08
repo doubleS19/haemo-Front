@@ -198,8 +198,6 @@ class DBService {
     try {
       final response = await http.post(
         Uri.parse("http://43.201.211.1:1004/hot"),
-
-        /// 링크 수정 필요(임의로 설정)
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -231,9 +229,7 @@ class DBService {
   }
 
   Future<List<HotPlacePostResponse>> getPopularHotPlacePosts() async {
-    // final response = await http.get(Uri.parse("http://43.201.211.1:1004/post/24hours"));
-    final response =
-        await http.get(Uri.parse("http://localhost:1004/post/24hours"));
+    final response = await http.get(Uri.parse("http://43.201.211.1:1004/hot"));
 
     ///   수정하기
     if (response.statusCode == 200) {
@@ -248,8 +244,9 @@ class DBService {
   }
 
   ///유저의 wishList(찜한 핫플) 가져오기
-  Future<List<String>> getWishList() async {
-    final response = await http.get(Uri.parse("http://localhost:1004/"));
+  Future<List<String>> getWishList(int uId) async {
+    final response =
+        await http.get(Uri.parse("http://43.201.211.1:1004/wish/hot/$uId"));
 
     ///   링크, 코드 수정 필요
     if (response.statusCode == 200) {
@@ -258,54 +255,6 @@ class DBService {
       return wishList;
     } else {
       throw Exception('Failed to load wish list');
-    }
-  }
-
-  /// 유저의 핫플 리스트 수정
-  Future<bool> updateHotPlaceToWishList(String hpId) async {
-    try {
-      final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/hot"),
-
-        ///   링크 수정 필요 -> wishList만 수정
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        //body: jsonEncode(post.toJson()),
-      );
-      if (response.statusCode != 201) {
-        throw Exception("Failed to send data");
-      } else {
-        dev.log("HotPlace WishList Data sent successfully");
-        return true;
-      }
-    } catch (e) {
-      dev.log("Failed to send data: ${e}");
-      return false;
-    }
-  }
-
-  /// hpId로 핫플을 찾아서 찜 개수 1 증가 or 감소
-  Future<bool> updatePopularNum(String hpId) async {
-    try {
-      final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/hot"),
-
-        ///   링크, 코드 수정 필요
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        //body: jsonEncode(post.toJson()),
-      );
-      if (response.statusCode != 201) {
-        throw Exception("Failed to send data");
-      } else {
-        dev.log("HotPlace PopularNum Data sent successfully");
-        return true;
-      }
-    } catch (e) {
-      dev.log("Failed to send data: ${e}");
-      return false;
     }
   }
 
