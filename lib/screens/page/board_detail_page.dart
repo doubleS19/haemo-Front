@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -10,6 +11,7 @@ import 'package:hae_mo/model/user_response_model.dart';
 import '../../model/comment_response_model.dart';
 import '../../model/post_model.dart';
 import '../../service/db_service.dart';
+import '../components/heartButton.dart';
 
 class BoardDetailPage extends StatefulWidget {
   const BoardDetailPage({super.key, required this.pId, required this.type});
@@ -23,6 +25,7 @@ class BoardDetailPage extends StatefulWidget {
 
 class _BoardDetailPageState extends State<BoardDetailPage> {
   MeetingPageController meetingController = MeetingPageController();
+  bool fillHeartColor = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +35,6 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
           elevation: 0.0,
-          title: Text(
-            "게시물 조회",
-            style: TextStyle(
-              color: AppTheme.mainAppBarColor,
-              fontSize: 19.0,
-            ),
-          ),
           automaticallyImplyLeading: true,
         ),
         body: SingleChildScrollView(
@@ -308,31 +304,28 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
             // 밑에 고정된 버튼
             width: double.infinity,
             height: 70.0,
-            color: Colors.grey, // 원하는 배경색상 설정
+            color: AppTheme.mainColor, // 원하는 배경색상 설정
             child: Align(
                 alignment: Alignment.center,
                 child: Row(children: [
                   Expanded(
                       flex: 1,
-                      child: ElevatedButton(
+                      child: IconButton(
                           onPressed: () {
-                            null;
+                            if (fillHeartColor) {
+                              fillHeartColor = false;
+                            }
                           },
-                          child: Container(
-                              width: double.infinity / 2,
-                              child: Text("고정된 버튼"),
-                              height: 70.0))),
+                          icon: HeartButtonWidget(fillHeart: fillHeartColor))),
                   Expanded(
-                    flex: 1,
-                    child: ElevatedButton(
-                        onPressed: () {
-                          null;
-                        },
-                        child: Container(
-                            width: double.infinity / 2,
-                            child: Text("고정된 버튼"),
-                            height: 70.0)),
-                  )
+                      flex: 1,
+                      child: IconButton(
+                          onPressed: () {
+                            if (fillHeartColor) {
+                              fillHeartColor = false;
+                            }
+                          },
+                          icon: HeartButtonWidget(fillHeart: fillHeartColor)))
                 ]))));
   }
 
