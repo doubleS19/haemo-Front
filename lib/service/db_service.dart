@@ -228,6 +228,20 @@ class DBService {
     }
   }
 
+  Future<List<HotPlacePostResponse>> getHotPlaceById(int pId) async {
+    final response =
+        await http.get(Uri.parse("http://43.201.211.1:1004/hot/$pId"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<HotPlacePostResponse>(
+              (json) => HotPlacePostResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load hot list');
+    }
+  }
+
   Future<List<HotPlacePostResponse>> getPopularHotPlacePosts() async {
     final response = await http.get(Uri.parse("http://43.201.211.1:1004/hot"));
 
@@ -246,7 +260,7 @@ class DBService {
   ///유저의 wishList(찜한 핫플) 가져오기
   Future<List<String>> getWishList(int uId) async {
     final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/wish/hot/$uId"));
+        await http.get(Uri.parse("http://43.201.211.1:1004/wish/myList/$uId"));
 
     ///   링크, 코드 수정 필요
     if (response.statusCode == 200) {
