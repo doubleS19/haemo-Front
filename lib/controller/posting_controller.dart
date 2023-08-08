@@ -34,9 +34,7 @@ class PostController extends GetxController {
    postType = type;
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  void deleteData(){
     textControllerList[0].clear();
     textControllerList[1].clear();
     detailTextContext.clear();

@@ -30,8 +30,6 @@ class PostingPage extends StatefulWidget {
 }
 
 class _PostingPageState extends State<PostingPage> {
-  //final detailTextContext = TextEditingController();
-  final TextEditingController selectedValueController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +40,8 @@ class _PostingPageState extends State<PostingPage> {
     ));*/
 
     PostController postController = Get.put(PostController(widget.postType));
+    postController.deleteData();
+
     TextfieldTagsController hashTagController = TextfieldTagsController();
     PostUi postUi = PostUi.fromType(widget.postType);
     double containerHeight = (postUi.title.length == 1)
@@ -100,6 +100,7 @@ class _PostingPageState extends State<PostingPage> {
                       if (isSuccess) {
                         /// 다이얼로그 안 됨ㅠㅠ
                         showMyAlertDialog(context, "확인요망!!", "게시물이 전송되었습니다. ");
+                        postController.deleteData();
                         Get.to(const HomePage());
                       } else {
                         showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
