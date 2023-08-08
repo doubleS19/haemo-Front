@@ -94,11 +94,12 @@ class _PostingPageState extends State<PostingPage> {
                     bool isSuccess = false;
                     if (postController.checkEmpty()) {
                       showMyAlertDialog(context, "경고!!!!!", "빈칸 안 채우면 못 지나감.");
-
                     } else {
                       postController.saveControllerData();
                       isSuccess = await postController.saveBoard();
                       if (isSuccess) {
+                        /// 다이얼로그 안 됨ㅠㅠ
+                        showMyAlertDialog(context, "확인요망!!", "게시물이 전송되었습니다. ");
                         Get.to(const HomePage());
                       } else {
                         showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
@@ -164,6 +165,7 @@ Widget selectDropDownButtonListType(
         children: [
           Row(
             children: [
+
               selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
                   DropDownType.person, postController),
               const Spacer(flex: 1),

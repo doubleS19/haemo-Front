@@ -1,20 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/service/db_service.dart';
-import "dart:developer" as dev;
-
-import 'package:intl/intl.dart';
-import 'package:textfield_tags/textfield_tags.dart';
-
 import '../model/club_post_model.dart';
 import '../model/post_model.dart';
 import '../model/post_type.dart';
 import '../model/shared_preference.dart';
-import '../screens/Page/home_page.dart';
 import '../service/date_service.dart';
 
 class PostController extends GetxController {
@@ -32,51 +25,62 @@ class PostController extends GetxController {
   final Rx<String> selectedDay = ''.obs;
   final RxList<MultipartFile?> selectedPhoto = [null].obs;
   final RxList<String?> hashTag = [null].obs;
-  late final Post post;
-  late final ClubPost clubPost;
-  late final HotPlacePost hotPlacePost;
+  late Rx<Post> post = Post(nickname: "", title: "", content: "", person: 0, category: "", deadline: "", date: "").obs;
+  late Rx<ClubPost> clubPost = ClubPost(nickname: "", date: "", title: "", description: "", content: "", person: 0).obs;
+  late Rx<HotPlacePost> hotPlacePost = HotPlacePost(nickname: "", date: "", title: "", description: "", content: "", photoList: []).obs;
 
   PostController(PostType type){
    postType = type;
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    textControllerList[0].clear();
+    textControllerList[1].clear();
+    detailTextContext.clear();
+  }
+
   void saveControllerData() {
     var nickname = PreferenceUtil.getString("nickname") ?? "a";
+
     switch (postType) {
       case PostType.meeting:
-        post = Post(
-          title: textControllerList[0].text,
-          content: detailTextContext.text,
-          nickname: nickname,
-          category: selectedCategory.value,
-          person: selectedPerson.value,
-          deadline: getDeadLineFormat(),
-          date: getNow(),
-        );
+        post.update((post) {
+          post?.title = textControllerList[0].text;
+          post?.content = detailTextContext.text;
+          post?.nickname = nickname;
+          post?.category = selectedCategory.value;
+          post?.person = selectedPerson.value;
+          post?.deadline = getDeadLineFormat();
+          post?.date = getNow();
+        });
         break;
       case PostType.club:
-        clubPost = ClubPost(
-          nickname: nickname,
-          date: getNow(),
-          title: textControllerList[0].text,
-          description: textControllerList[1].text,
-          content: detailTextContext.text,
-          person: selectedPerson.value,
-          logo: null,
-          hashTag: [''],
-        );
+        clubPost.update((clubPost) {
+          clubPost?.nickname = nickname;
+          clubPost?.date = getNow();
+          clubPost?.title = textControllerList[0].text;
+          clubPost?.description = textControllerList[1].text;
+          clubPost?.content = detailTextContext.text;
+          clubPost?.person = selectedPerson.value;
+          clubPost?.logo = null;
+          clubPost?.hashTag = [''];
+        });
         break;
       case PostType.hotPlace:
-        hotPlacePost = HotPlacePost(
-            nickname: nickname,
-            title: textControllerList[0].text,
-            description: textControllerList[1].text,
-            content: detailTextContext.text,
-            date: getNow(),
-            photoList: []);
+        hotPlacePost.update((hotPlacePost) {
+          hotPlacePost?.nickname = nickname;
+          hotPlacePost?.title = textControllerList[0].text;
+          hotPlacePost?.description = textControllerList[1].text;
+          hotPlacePost?.content = detailTextContext.text;
+          hotPlacePost?.date = getNow();
+          hotPlacePost?.photoList = [];
+        });
         break;
     }
   }
+
 
   String getDeadLineFormat() {
     String deadLine =
@@ -111,13 +115,13 @@ class PostController extends GetxController {
         bool isPostSaved = false;
         switch(postType){
           case PostType.meeting:
-            isPostSaved = await db.savePost(post);
+            isPostSaved = await db.savePost(post.value);
             break;
           case PostType.club:
-            isPostSaved = await db.saveClubPost(clubPost);
+            isPostSaved = await db.saveClubPost(clubPost.value);
             break;
           case PostType.hotPlace:
-            isPostSaved = await db.saveHotPlacePost(hotPlacePost);
+            isPostSaved = await db.saveHotPlacePost(hotPlacePost.value);
             break;
         }
         return isPostSaved;
