@@ -23,6 +23,7 @@ class PostController extends GetxController {
   final Rx<String> selectedYear = ''.obs;
   final Rx<String> selectedMonth = ''.obs;
   final Rx<String> selectedDay = ''.obs;
+  final Rx<String> selectedHour= ''.obs;
   final RxList<MultipartFile?> selectedPhoto = [null].obs;
   final RxList<String?> hashTag = [null].obs;
   late Rx<Post> post = Post(nickname: "", title: "", content: "", person: 0, category: "", deadline: "", date: "").obs;
@@ -84,7 +85,7 @@ class PostController extends GetxController {
 
   String getDeadLineFormat() {
     String deadLine =
-        "${selectedYear.value} ${selectedMonth.value} ${selectedDay.value}";
+        "${selectedYear.value} ${selectedMonth.value} ${selectedDay.value} ${selectedHour.value}";
 
     return deadLine;
   }

@@ -174,7 +174,7 @@ Widget selectDropDownButtonListType(
               const Spacer(flex: 2),
             ],
           ),
-          selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
+          selectDropdownButton(MediaQuery.of(context).size.width * 0.18,
               DropDownType.date, postController)
         ],
       );
@@ -212,10 +212,11 @@ Widget selectDropdownButton(
       var selectedYear = DateTime.now().year;
       var selectedMonth = DateTime.now().month;
       var selectedDay = DateTime.now().day;
+      var selectedHour = DateTime.now().hour;
 
       return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         dropDownButtonWidth(
-            width,
+            width*1.2,
             CustomDropDownButton(
                 list: setYearList(DateTime.now().year),
                 basicType: "$selectedYear년",
@@ -228,6 +229,7 @@ Widget selectDropdownButton(
                 list: setMonthList(),
                 basicType: "$selectedMonth월",
                 onChanged: (value) {
+                  value = value.toString().length < 2 ? "0$value" : value.toString();
                   postController.selectedMonth.value = value!;
                 })),
         dropDownButtonWidth(
@@ -236,7 +238,17 @@ Widget selectDropdownButton(
                 list: setDayList(),
                 basicType: "$selectedDay월",
                 onChanged: (value) {
+                  value = value.toString().length < 2 ? "0$value" : value.toString();
                   postController.selectedDay.value = value!;
+                })),
+        dropDownButtonWidth(
+            width,
+            CustomDropDownButton(
+                list: setHourList(),
+                basicType: "$selectedHour시",
+                onChanged: (value) {
+                  value = value.toString().length < 2 ? "0$value" : value.toString();
+                  postController.selectedHour.value = value!;
                 }))
       ]);
   }
@@ -266,68 +278,11 @@ List<String> setDayList() {
   return dayList;
 }
 
-// date 스피너
-/*
-Widget selectDate() {
-  DateTime selectDate = DateTime.now();
-  return Column(
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(
-              CupertinoIcons.back,
-              color: Colors.white,
-              size: 26,
-            ),
-          ),
-          IconButton(
-              onPressed: () {
-                selectDate = DateTime.now();
-                Get.back();
-              },
-              icon: const Icon(
-                CupertinoIcons.back,
-                color: Colors.white,
-                size: 26,
-              )),
-        ],
-      ),
-      const Divider(
-        height: 1,
-        color: Colors.blueGrey,
-      ),
-      const SizedBox(
-        height: 10,
-      ),
-      SizedBox(
-        height: 80,
-        child: CupertinoTheme(
-            data: const CupertinoThemeData(
-              textTheme: CupertinoTextThemeData(
-                dateTimePickerTextStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            child: CupertinoDatePicker(
-              backgroundColor: const Color(0xffffffff),
-              initialDateTime: selectDate,
-              maximumYear: DateTime.now().year + 1,
-              maximumDate: DateTime.now(),
-              minimumYear: DateTime.now().year,
-              mode: CupertinoDatePickerMode.date,
-              onDateTimeChanged: (dateTime) {
-                selectDate = dateTime;
-              },
-            )),
-      )
-    ],
-  );
+List<String> setHourList() {
+  List<String> dayList = [];
+  for (int i = 1; i < 25; i++) {
+    dayList.add("$i시");
+  }
+  return dayList;
 }
-*/
+
