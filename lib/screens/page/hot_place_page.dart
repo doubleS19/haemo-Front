@@ -36,21 +36,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
                 style: CustomThemes.hotPlaceSubTitleTextStyle),
             Expanded(
                 flex: 4,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: hotPlaceController.popularHotPlaceList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                        padding: const EdgeInsets.fromLTRB(0, 15, 15, 15),
-                        alignment: Alignment.center,
-                        child: popularHotPlaceCard(
-                            context,
-                            hotPlaceController.popularHotPlaceList[index],
-                            hotPlaceController.hpWishList.contains(
-                                hotPlaceController
-                                    .popularHotPlaceList[index].pId)));
-                  },
-                )),
+                child: popularHotPlaceCardList(hotPlaceController)),
             Text("장소들..", style: CustomThemes.hotPlaceSubTitleTextStyle),
             Expanded(
                 flex: 5,
@@ -86,6 +72,22 @@ class _HotPlacePageState extends State<HotPlacePage> {
       ),
     );
   }
+}
+Widget popularHotPlaceCardList(HotPlacePageController hotPlaceController){
+  return hotPlaceController.popularHotPlaceList.isNotEmpty?
+  ListView.builder(
+    scrollDirection: Axis.horizontal,
+    itemCount: hotPlaceController.popularHotPlaceList.length,
+    itemBuilder: (BuildContext context, int index) {
+      return Container(
+          padding: const EdgeInsets.fromLTRB(0, 15, 15, 15),
+          alignment: Alignment.center,
+          child: popularHotPlaceCard(
+              context,
+              hotPlaceController.popularHotPlaceList[index],
+              hotPlaceController.hpWishList.contains(hotPlaceController.popularHotPlaceList[index].pId)));
+    },
+  ):const Center(child: Text("인기 게시물이 존재하지 않습니다. "));
 }
 
 Widget popularHotPlaceCard(BuildContext context,
