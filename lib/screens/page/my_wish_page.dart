@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/model/post_response_model.dart';
-import 'package:hae_mo/model/shared_preference.dart';
+import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/model/wish_model.dart';
 import 'package:hae_mo/screens/page/board_detail_page.dart';

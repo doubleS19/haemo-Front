@@ -7,7 +7,7 @@ import 'package:hae_mo/screens/Page/loading_page.dart';
 import 'package:get/get.dart';
 
 import 'common/theme.dart';
-import 'model/shared_preference.dart';
+import 'utils/shared_preference.dart';
 import 'networks/http_override.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_storage/get_storage.dart';

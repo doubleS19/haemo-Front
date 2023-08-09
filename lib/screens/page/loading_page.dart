@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/screens/Page/register_page.dart';
-import 'package:hae_mo/model/shared_preference.dart';
+import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import "dart:developer" as dev;
 

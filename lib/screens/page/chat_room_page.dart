@@ -8,7 +8,7 @@ import 'package:hae_mo/controller/chat_controller.dart';
 import 'package:hae_mo/utils/chage_time_format.dart';
 import '../../model/chatlist_model.dart';
 import '../../model/chatmessage_model.dart';
-import '../../model/shared_preference.dart';
+import '../../utils/shared_preference.dart';
 
 class ChatRoom extends StatefulWidget {
   const ChatRoom({Key? key, required this.chatRoomId}) : super(key: key);

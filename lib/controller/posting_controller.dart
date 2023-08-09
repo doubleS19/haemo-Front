@@ -7,7 +7,7 @@ import 'package:hae_mo/service/db_service.dart';
 import '../model/club_post_model.dart';
 import '../model/post_model.dart';
 import '../model/post_type.dart';
-import '../model/shared_preference.dart';
+import '../utils/shared_preference.dart';
 import '../service/date_service.dart';
 
 class PostController extends GetxController {

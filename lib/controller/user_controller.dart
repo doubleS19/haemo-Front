@@ -1,6 +1,6 @@
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/model/shared_preference.dart';
+import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import "dart:developer" as dev;
 

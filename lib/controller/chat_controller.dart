@@ -9,7 +9,7 @@ import 'package:hae_mo/screens/page/chat_list_page.dart';
 import 'package:http/http.dart';
 
 import '../model/chatmessage_model.dart';
-import '../model/shared_preference.dart';
+import '../utils/shared_preference.dart';
 
 class ChatController extends GetxController {
   final firestore = FirebaseFirestore.instance;

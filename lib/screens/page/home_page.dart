@@ -7,7 +7,7 @@ import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/model/post_type.dart';
 import 'package:hae_mo/screens/page/posting_page.dart';
 import '../../controller/meeting_page_controller.dart';
-import '../../model/shared_preference.dart';
+import '../../utils/shared_preference.dart';
 import 'club_page.dart';
 import 'hot_place_page.dart';
 import 'meeting_page.dart';
