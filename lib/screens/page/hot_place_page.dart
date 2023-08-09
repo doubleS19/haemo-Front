@@ -22,8 +22,9 @@ class _HotPlacePageState extends State<HotPlacePage> {
       Get.find<HotPlacePageController>();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
+    hotPlaceController.fetchPopularHotPlaceList();
     hotPlaceController.fetchHotPlaceList();
   }
 
@@ -40,53 +41,52 @@ class _HotPlacePageState extends State<HotPlacePage> {
           children: [
             Text("현재, 가장 인기있는 핫플",
                 style: CustomThemes.hotPlaceSubTitleTextStyle),
-            Expanded(
-                flex: 4,
-                child: popularHotPlaceCardList(hotPlaceController)),
+
+            SizedBox(
+                height: MediaQuery.of(context).size.height / 3.5,
+                child: Obx(() =>hotPlaceController.popularHotPlaceList.isNotEmpty
+                    ?  ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount:
+                            hotPlaceController.popularHotPlaceList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                              padding: const EdgeInsets.fromLTRB(0, 15, 15, 15),
+                              alignment: Alignment.center,
+                              child: popularHotPlaceCard(
+                                  context,
+                                  hotPlaceController.popularHotPlaceList[index],
+                                  true));
+                        },
+                      )
+                    : Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
             Text("장소들..", style: CustomThemes.hotPlaceSubTitleTextStyle),
             Expanded(
-                flex: 5,
                 child: Container(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: Obx(()=> GridView.builder(
+                    child: Obx(() => GridView.builder(
                         itemCount: hotPlaceController.hotPlacePostList.length,
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 1.4,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 10),
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 1.4,
+                                mainAxisSpacing: 20,
+                                crossAxisSpacing: 10),
                         itemBuilder: (BuildContext context, int index) {
-                          return Expanded(
-                              child: hotPlaceCard(
-                                  context,
-                                  hotPlaceController.hotPlacePostList.value[index],
-                                  false
-                                /*hotPlaceController.hotPlacePostList[index],
+                          return hotPlaceCard(
+                              context,
+                              hotPlaceController
+                                  .hotPlacePostList.value[index],
+                              false
+                            /*hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
-                              ));
+                          );
                         })))),
           ],
         ),
       ),
     );
   }
-}
-Widget popularHotPlaceCardList(HotPlacePageController hotPlaceController){
-  return hotPlaceController.popularHotPlaceList.isNotEmpty?
-  ListView.builder(
-    scrollDirection: Axis.horizontal,
-    itemCount: hotPlaceController.popularHotPlaceList.length,
-    itemBuilder: (BuildContext context, int index) {
-      return Container(
-          padding: const EdgeInsets.fromLTRB(0, 15, 15, 15),
-          alignment: Alignment.center,
-          child: popularHotPlaceCard(
-              context,
-              hotPlaceController.popularHotPlaceList[index],
-              hotPlaceController.hpWishList.contains(hotPlaceController.popularHotPlaceList[index].pId)));
-    },
-  ):const Center(child: Text("인기 게시물이 존재하지 않습니다. "));
 }
 
 Widget popularHotPlaceCard(BuildContext context,
@@ -106,9 +106,8 @@ Widget popularHotPlaceCard(BuildContext context,
           bottom: 50,
           left: 10,
           child:
-
               /// 글자 제한 두고 디자인 신경쓰기
-              Text("갯골생태공원", style: CustomThemes.hotPlacePopularTitleTextStyle),
+              Text(hotPlaceData.title, style: CustomThemes.hotPlacePopularTitleTextStyle),
         ),
         Positioned(
             right: 0,
@@ -118,16 +117,14 @@ Widget popularHotPlaceCard(BuildContext context,
         Positioned(
             bottom: 30,
             left: 10,
-            child: Text("이색 데이터 어쩌고",
+            child: Text(hotPlaceData.content,
                 style: CustomThemes.hotPlacePopularSubtitleTextStyle)),
       ]));
 }
 
 Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
     bool fillHeartColor) {
-  DBService db = DBService();
-  // UserResponse user =
-  //     db.getUserByNickname(hotPlaceData.nickname) as UserResponse;
+
   return Container(
       width: MediaQuery.of(context).size.width / 2.3,
       height: MediaQuery.of(context).size.height / 8,
@@ -142,7 +139,8 @@ Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
         Positioned(
           bottom: 10,
           left: 10,
-          child: Text("갯골생태공원", style: CustomThemes.hotPlaceTitleTextStyle),
+          child: Text(hotPlaceData.title,
+              style: CustomThemes.hotPlaceTitleTextStyle),
         ),
         Positioned(
           right: 0,

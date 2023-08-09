@@ -21,9 +21,12 @@ class HotPlacePageController extends GetxController {
     try {
       final hotplacePosts = await dbService.getPopularHotPlacePosts();
       popularHotPlaceList.assignAll(hotplacePosts);
+      print("Success to get Popular HotPlaceList: ${hotPlacePostList.length}");
     } catch (error) {
-      // 오류 처리
+      print("Error to get Popular HotPlaceList: ${error}");
+
     }
+    update();
   }
 
   void fetchHotPlaceList() async {
