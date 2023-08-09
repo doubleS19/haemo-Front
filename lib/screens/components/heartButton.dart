@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class HeartButtonWidget extends StatefulWidget {
-  const HeartButtonWidget({super.key, required this.fillHeart});
+  const HeartButtonWidget({super.key, required this.fillHeart, required this.onClick});
 
   final bool fillHeart;
+  final void Function()? onClick;
   @override
   _HeartButtonWidgetState createState() => _HeartButtonWidgetState();
 }
@@ -24,6 +25,7 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
     return IconButton(
       onPressed: () {
         setState(() {
+          widget.onClick;
           fillHeartColor = !fillHeartColor; // Toggle the value
         });
       },
