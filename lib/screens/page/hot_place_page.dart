@@ -26,6 +26,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
     super.initState();
     hotPlaceController.fetchPopularHotPlaceList();
     hotPlaceController.fetchHotPlaceList();
+    hotPlaceController.tmp();
   }
 
   @override
@@ -41,25 +42,27 @@ class _HotPlacePageState extends State<HotPlacePage> {
           children: [
             Text("현재, 가장 인기있는 핫플",
                 style: CustomThemes.hotPlaceSubTitleTextStyle),
-
             SizedBox(
                 height: MediaQuery.of(context).size.height / 3.5,
-                child: Obx(() =>hotPlaceController.popularHotPlaceList.isNotEmpty
-                    ?  ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount:
-                            hotPlaceController.popularHotPlaceList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                              padding: const EdgeInsets.fromLTRB(0, 15, 15, 15),
-                              alignment: Alignment.center,
-                              child: popularHotPlaceCard(
-                                  context,
-                                  hotPlaceController.popularHotPlaceList[index],
-                                  true));
-                        },
-                      )
-                    : Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
+                child:
+                    Obx(() => hotPlaceController.popularHotPlaceList.isNotEmpty
+                        ? ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount:
+                                hotPlaceController.popularHotPlaceList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Container(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 15, 15, 15),
+                                  alignment: Alignment.center,
+                                  child: popularHotPlaceCard(
+                                      context,
+                                      hotPlaceController
+                                          .popularHotPlaceList[index],
+                                      hotPlaceController));
+                            },
+                          )
+                        : Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
             Text("장소들..", style: CustomThemes.hotPlaceSubTitleTextStyle),
             Expanded(
                 child: Container(
@@ -75,12 +78,11 @@ class _HotPlacePageState extends State<HotPlacePage> {
                         itemBuilder: (BuildContext context, int index) {
                           return hotPlaceCard(
                               context,
+                              hotPlaceController.hotPlacePostList.value[index],
                               hotPlaceController
-                                  .hotPlacePostList.value[index],
-                              false
-                            /*hotPlaceController.hotPlacePostList[index],
+                              /*hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
-                          );
+                              );
                         })))),
           ],
         ),
@@ -89,8 +91,11 @@ class _HotPlacePageState extends State<HotPlacePage> {
   }
 }
 
-Widget popularHotPlaceCard(BuildContext context,
-    HotPlacePostResponse hotPlaceData, bool fillHeartColor) {
+Widget popularHotPlaceCard(
+    BuildContext context,
+    HotPlacePostResponse hotPlaceData,
+    HotPlacePageController hotPlacePageController) {
+  bool fillHeartColor = hotPlacePageController.wishList.contains(hotPlaceData.pId);
   return Container(
       width: MediaQuery.of(context).size.width / 2,
       //height: MediaQuery.of(context).size.width / 2 * 3,
@@ -107,13 +112,18 @@ Widget popularHotPlaceCard(BuildContext context,
           left: 10,
           child:
               /// 글자 제한 두고 디자인 신경쓰기
-              Text(hotPlaceData.title, style: CustomThemes.hotPlacePopularTitleTextStyle),
+              Text(hotPlaceData.title,
+                  style: CustomThemes.hotPlacePopularTitleTextStyle),
         ),
         Positioned(
             right: 0,
-            child: IconButton(
-                onPressed: () {},
-                icon: HeartButtonWidget(fillHeart: fillHeartColor))),
+            child: HeartButtonWidget(
+                    fillHeart: fillHeartColor,
+                    onClick: () {
+                      hotPlacePageController.updateWishList(
+                          hotPlaceData.pId, fillHeartColor);
+                      print("클림됨: ${fillHeartColor}");
+                    })),
         Positioned(
             bottom: 30,
             left: 10,
@@ -123,7 +133,8 @@ Widget popularHotPlaceCard(BuildContext context,
 }
 
 Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
-    bool fillHeartColor) {
+    HotPlacePageController hotPlacePageController) {
+  bool fillHeartColor = hotPlacePageController.wishList.contains(hotPlaceData.pId);
 
   return Container(
       width: MediaQuery.of(context).size.width / 2.3,
@@ -148,7 +159,13 @@ Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
               onPressed: () {
                 // db.addWishList(Wish(uId: user.uId, pId: hotPlaceData.pId));
               },
-              icon: HeartButtonWidget(fillHeart: fillHeartColor)),
+              icon: HeartButtonWidget(
+                  fillHeart: fillHeartColor,
+                  onClick: () {
+                    hotPlacePageController.updateWishList(
+                        hotPlaceData.pId, fillHeartColor);
+                    print("클림됨: ${fillHeartColor}");
+                  })),
         )
       ]));
 }

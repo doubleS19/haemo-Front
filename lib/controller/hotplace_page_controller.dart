@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
+import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/model/wish_model.dart';
 import 'package:hae_mo/service/db_service.dart';
 import '../model/post_response_model.dart';
+import '../utils/shared_preference.dart';
 
 class HotPlacePageController extends GetxController {
   final DBService dbService = DBService();
@@ -11,10 +14,19 @@ class HotPlacePageController extends GetxController {
   final RxList<HotPlacePostResponse> hotPlacePostList =
       <HotPlacePostResponse>[].obs;
   final RxList<CommentResponse> commentList = <CommentResponse>[].obs;
-  late List<String> hpWishList = <String>[];
+  late List<int> wishList = <int>[];
+  late int uId;
 
   HotPlacePageController() {
+    //uId = PreferenceUtil.getInt("uid")!;
+
     //dbService.getWishList().then((value) => hpWishList = value);
+  }
+
+  void tmp()async{
+    UserResponse userResponse = await dbService.getUserByNickname(PreferenceUtil.getString("nickname")!);
+    PreferenceUtil.setInt("uid", userResponse.uId);
+    uId = PreferenceUtil.getInt("uid")!;
   }
 
   void fetchPopularHotPlaceList() async {
@@ -24,7 +36,6 @@ class HotPlacePageController extends GetxController {
       print("Success to get Popular HotPlaceList: ${hotPlacePostList.length}");
     } catch (error) {
       print("Error to get Popular HotPlaceList: ${error}");
-
     }
     update();
   }
@@ -40,20 +51,15 @@ class HotPlacePageController extends GetxController {
   }
 
   /// 찜 클릭 시 유저의 핫플 리스트에 핫플 추가 & 삭제
-  void updateWishList(String hpId) {
-    if (hpWishList.contains(hpId)) {
+  void updateWishList(int pId, bool checkWishList) {
+    if (checkWishList) {
       /// 찜 목록에 이미 핫플이 존재할 때 -> 찜 취소 -> 핫플 삭제
-      hpWishList.remove(hpId);
-      //dbService.updateHotPlaceToWishList(hpId);
+      dbService.deleteWishList(uId, pId);
     } else {
       /// 찜 목록에 핫플 추가
-      hpWishList.add(hpId);
-      //dbService.updateHotPlaceToWishList(hpId);
+      dbService.addWishList(Wish(pId: pId, uId: uId));
     }
+    /// 위시리스트 업데이트
   }
-
-
-  /// 찜 개수 1 증가
-
   /// 테이블을 가져올 때 찜 테이블이면 하트 색깔이 빨강색이도록?
 }
