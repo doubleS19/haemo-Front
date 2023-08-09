@@ -18,9 +18,14 @@ class HotPlacePageController extends GetxController {
   late int uId;
 
   HotPlacePageController() {
-    //uId = PreferenceUtil.getInt("uid")!;
+    uId = PreferenceUtil.getInt("uid")!;
 
-    //dbService.getWishList().then((value) => hpWishList = value);
+    dbService.getWishList(uId).then((value) => wishList = value);
+  }
+
+  void updateHotPlaceList(){
+    fetchPopularHotPlaceList();
+    fetchPopularHotPlaceList();
   }
 
   void tmp()async{
