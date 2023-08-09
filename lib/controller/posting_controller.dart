@@ -74,7 +74,7 @@ class PostController extends GetxController {
           hotPlacePost?.description = textControllerList[1].text;
           hotPlacePost?.content = detailTextContext.text;
           hotPlacePost?.date = getNow();
-          hotPlacePost?.photoList = [];
+          //hotPlacePost?.photoList = [];
         });
         break;
     }

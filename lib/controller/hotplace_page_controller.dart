@@ -14,7 +14,7 @@ class HotPlacePageController extends GetxController {
   late List<String> hpWishList = <String>[];
 
   HotPlacePageController() {
-    dbService.getWishList().then((value) => hpWishList = value);
+    //dbService.getWishList().then((value) => hpWishList = value);
   }
 
   void fetchPopularHotPlaceList() async {
@@ -30,8 +30,9 @@ class HotPlacePageController extends GetxController {
     try {
       final posts = await dbService.getAllHotPlacePost();
       hotPlacePostList.assignAll(posts);
+      print("Success to get HotPlaceList: ${hotPlacePostList.length}");
     } catch (error) {
-      // 오류 처리
+      print("Error to get HotPlaceList: ${error}");
     }
   }
 
@@ -40,11 +41,11 @@ class HotPlacePageController extends GetxController {
     if (hpWishList.contains(hpId)) {
       /// 찜 목록에 이미 핫플이 존재할 때 -> 찜 취소 -> 핫플 삭제
       hpWishList.remove(hpId);
-      dbService.updateHotPlaceToWishList(hpId);
+      //dbService.updateHotPlaceToWishList(hpId);
     } else {
       /// 찜 목록에 핫플 추가
       hpWishList.add(hpId);
-      dbService.updateHotPlaceToWishList(hpId);
+      //dbService.updateHotPlaceToWishList(hpId);
     }
   }
 

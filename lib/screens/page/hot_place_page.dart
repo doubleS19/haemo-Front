@@ -22,6 +22,12 @@ class _HotPlacePageState extends State<HotPlacePage> {
       Get.find<HotPlacePageController>();
 
   @override
+  void initState(){
+    super.initState();
+    hotPlaceController.fetchHotPlaceList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customMainAppbar("핫플", "공지 24시간"),
@@ -42,31 +48,24 @@ class _HotPlacePageState extends State<HotPlacePage> {
                 flex: 5,
                 child: Container(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: GridView.builder(
-                        itemCount: 5,
+                    child: Obx(()=> GridView.builder(
+                        itemCount: hotPlaceController.hotPlacePostList.length,
                         gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 1.4,
-                                mainAxisSpacing: 20,
-                                crossAxisSpacing: 10),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 1.4,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 10),
                         itemBuilder: (BuildContext context, int index) {
                           return Expanded(
                               child: hotPlaceCard(
                                   context,
-                                  HotPlacePostResponse(
-                                      pId: 1,
-                                      title: "title",
-                                      content: "content",
-                                      nickname: "nickname",
-                                      date: "date",
-                                      photoList: [],
-                                      heartNum: 2),
+                                  hotPlaceController.hotPlacePostList.value[index],
                                   false
-                                  /*hotPlaceController.hotPlacePostList[index],
+                                /*hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
-                                  ));
-                        }))),
+                              ));
+                        })))),
           ],
         ),
       ),
