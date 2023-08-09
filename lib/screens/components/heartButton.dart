@@ -25,6 +25,7 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
     return IconButton(
       onPressed: () {
         setState(() {
+          print("여긴 클릭이 되거든? 근데..");
           widget.onClick;
           fillHeartColor = !fillHeartColor; // Toggle the value
         });

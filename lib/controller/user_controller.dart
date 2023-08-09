@@ -1,5 +1,6 @@
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import "dart:developer" as dev;
@@ -27,6 +28,8 @@ class UserController extends GetxController {
   }
 
   Future saveInfo(String nickname, String major, String gender) async {
+    DBService dbService = DBService();
+
     if (_registerState == RegisterState.okay) {
       User user = User(
           studentId: "00000000",
@@ -35,9 +38,10 @@ class UserController extends GetxController {
           gender: gender);
       _registerState = RegisterState.success;
       PreferenceUtil.saveUser(user);
-      DBService dbService = DBService();
       bool isUserSaved = await dbService.saveUser(user);
       if (isUserSaved) {
+        UserResponse userResponse = await dbService.getUserByNickname(nickname);
+        PreferenceUtil.setInt("uid", userResponse.uId);
         Get.to(const HomePage());
       } else {}
       dev.log(PreferenceUtil.getString("nickname")!);

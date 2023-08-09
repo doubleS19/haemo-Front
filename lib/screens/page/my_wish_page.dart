@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
@@ -99,8 +100,8 @@ class _MyWishPageState extends State<MyWishPage> {
                                           address: postList[index].address,
                                           nickname: postList[index].nickname,
                                           date: postList[index].date,
-                                          photoList: [],),
-                                      true
+                                          photoList: []),
+                                      HotPlacePageController()
                                       /*hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
                                       )))
