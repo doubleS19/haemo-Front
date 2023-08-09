@@ -25,7 +25,7 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
       onPressed: () {
         setState(() {
           print("여긴 클릭이 되거든? 근데..");
-          widget.onClick;
+          widget.onClick; /// 클릭 후 디비에 반영되면 색이 바뀌도록 바꿔야 될지도..?
           fillHeartColor = !fillHeartColor; // Toggle the value
         });
       },

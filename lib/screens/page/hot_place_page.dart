@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/screens/page/hotplace_board_detail_page.dart';
 import 'package:hae_mo/service/db_service.dart';
 import '../../common/theme.dart';
 import '../../controller/hotplace_page_controller.dart';
@@ -25,7 +26,6 @@ class _HotPlacePageState extends State<HotPlacePage> {
   void initState() {
     super.initState();
     hotPlaceController.updateHotPlaceList();
-    hotPlaceController.tmp();
   }
 
   @override
@@ -94,77 +94,84 @@ Widget popularHotPlaceCard(
     BuildContext context,
     HotPlacePostResponse hotPlaceData,
     HotPlacePageController hotPlacePageController) {
-  bool fillHeartColor = hotPlacePageController.wishList.contains(hotPlaceData.pId);
-  return Container(
-      width: MediaQuery.of(context).size.width / 2,
-      //height: MediaQuery.of(context).size.width / 2 * 3,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.4), BlendMode.darken),
-              image: const AssetImage("assets/images/sunset.jpg"),
-              fit: BoxFit.cover),
-          borderRadius: BorderRadius.circular(12.0)),
-      child: Stack(children: [
-        Positioned(
-          bottom: 50,
-          left: 10,
-          child:
-              /// 글자 제한 두고 디자인 신경쓰기
-              Text(hotPlaceData.title,
-                  style: CustomThemes.hotPlacePopularTitleTextStyle),
-        ),
-        Positioned(
-            right: 0,
-            child: HeartButtonWidget(
+  bool fillHeartColor =
+      hotPlacePageController.wishList.contains(hotPlaceData.pId);
+  return GestureDetector(
+      onTap: () {
+        Get.to(() => HotPlaceDetailPage(hotPlacePost: hotPlaceData));
+      },
+      child: Container(
+          width: MediaQuery.of(context).size.width / 2,
+          //height: MediaQuery.of(context).size.width / 2 * 3,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.4), BlendMode.darken),
+                  image: const AssetImage("assets/images/sunset.jpg"),
+                  fit: BoxFit.cover),
+              borderRadius: BorderRadius.circular(12.0)),
+          child: Stack(children: [
+            Positioned(
+              bottom: 50,
+              left: 10,
+              child:
+
+                  /// 글자 제한 두고 디자인 신경쓰기
+                  Text(hotPlaceData.title,
+                      style: CustomThemes.hotPlacePopularTitleTextStyle),
+            ),
+            Positioned(
+                right: 0,
+                child: HeartButtonWidget(
                     fillHeart: fillHeartColor,
                     onClick: () {
                       hotPlacePageController.updateWishList(
                           hotPlaceData.pId, fillHeartColor);
                       print("클림됨: ${fillHeartColor}");
                     })),
-        Positioned(
-            bottom: 30,
-            left: 10,
-            child: Text(hotPlaceData.content,
-                style: CustomThemes.hotPlacePopularSubtitleTextStyle)),
-      ]));
+            Positioned(
+                bottom: 30,
+                left: 10,
+                child: Text(hotPlaceData.content,
+                    style: CustomThemes.hotPlacePopularSubtitleTextStyle)),
+          ])));
 }
 
 Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
     HotPlacePageController hotPlacePageController) {
-  bool fillHeartColor = hotPlacePageController.wishList.contains(hotPlaceData.pId);
+  bool fillHeartColor =
+      hotPlacePageController.wishList.contains(hotPlaceData.pId);
 
-  return Container(
-      width: MediaQuery.of(context).size.width / 2.3,
-      height: MediaQuery.of(context).size.height / 8,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.4), BlendMode.darken),
-              image: AssetImage("assets/images/sunset.jpg"),
-              fit: BoxFit.cover),
-          borderRadius: BorderRadius.circular(12.0)),
-      child: Stack(children: [
-        Positioned(
-          bottom: 10,
-          left: 10,
-          child: Text(hotPlaceData.title,
-              style: CustomThemes.hotPlaceTitleTextStyle),
-        ),
-        Positioned(
-          right: 0,
-          child: IconButton(
-              onPressed: () {
-                // db.addWishList(Wish(uId: user.uId, pId: hotPlaceData.pId));
-              },
-              icon: HeartButtonWidget(
+  return GestureDetector(
+      onTap: () {
+        Get.to(() => HotPlaceDetailPage(hotPlacePost: hotPlaceData));
+      },
+      child: Container(
+          width: MediaQuery.of(context).size.width / 2.3,
+          height: MediaQuery.of(context).size.height / 8,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.4), BlendMode.darken),
+                  image: AssetImage("assets/images/sunset.jpg"),
+                  fit: BoxFit.cover),
+              borderRadius: BorderRadius.circular(12.0)),
+          child: Stack(children: [
+            Positioned(
+              bottom: 10,
+              left: 10,
+              child: Text(hotPlaceData.title,
+                  style: CustomThemes.hotPlaceTitleTextStyle),
+            ),
+            Positioned(
+              right: 0,
+              child: HeartButtonWidget(
                   fillHeart: fillHeartColor,
                   onClick: () {
                     hotPlacePageController.updateWishList(
                         hotPlaceData.pId, fillHeartColor);
                     print("클림됨: ${fillHeartColor}");
-                  })),
-        )
-      ]));
+                  }),
+            )
+          ])));
 }
