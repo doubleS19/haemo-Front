@@ -96,10 +96,10 @@ class _MyWishPageState extends State<MyWishPage> {
                                           pId: 1,
                                           title: postList[index].title,
                                           content: postList[index].content,
+                                          address: postList[index].address,
                                           nickname: postList[index].nickname,
                                           date: postList[index].date,
-                                          photoList: [],
-                                          heartNum: 2),
+                                          photoList: [],),
                                       true
                                       /*hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/

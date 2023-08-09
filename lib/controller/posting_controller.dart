@@ -28,7 +28,7 @@ class PostController extends GetxController {
   final RxList<String?> hashTag = [null].obs;
   late Rx<Post> post = Post(nickname: "", title: "", content: "", person: 0, category: "", deadline: "", date: "").obs;
   late Rx<ClubPost> clubPost = ClubPost(nickname: "", date: "", title: "", description: "", content: "", person: 0).obs;
-  late Rx<HotPlacePost> hotPlacePost = HotPlacePost(nickname: "", date: "", title: "", description: "", content: "", photoList: []).obs;
+  late Rx<HotPlacePost> hotPlacePost = HotPlacePost(nickname: "", date: "", title: "", address: "", description: "", content: "", photoList: []).obs;
 
   PostController(PostType type){
    postType = type;

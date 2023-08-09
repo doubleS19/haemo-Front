@@ -9,27 +9,28 @@ class HotPlacePostResponse {
   String content;
   String nickname;
   String date;
-  List<MultipartFile> photoList;
-  int heartNum;
+  String? address;
+  late List<MultipartFile>? photoList = [];
+  int? heartNum = 0;
 
   HotPlacePostResponse(
       {required this.pId,
       required this.title,
       required this.content,
+        required this.address,
       required this.nickname,
-      required this.date,
-      required this.photoList,
-      required this.heartNum});
+      required this.date, this.photoList});
 
   factory HotPlacePostResponse.fromJson(Map<String, dynamic> json) {
     return HotPlacePostResponse(
-      pId: json['pid'],
       title: json['title'],
       content: json['content'],
       nickname: json['nickname'],
+      address: json['address'],
       date: json['date'],
-      photoList: json['photolist'],
-      heartNum: json['heartnum'],
+      pId: json['pid'],
+      //photoList: json['photolist'],
+      //heartNum: json['heartnum'],
 
       /// 멀티파트 이미지 리스트 DB로 전송
     );
@@ -41,8 +42,9 @@ class HotPlacePostResponse {
         'content': content,
         'nickname': nickname,
         'date': date,
-        'photoList': photoList,
-        'heartnum': heartNum
+        'address': address
+        //'photoList': photoList,
+        //'heartnum': heartNum
 
         /// 멀티파트 이미지 리스트 변수 넣기
       };
