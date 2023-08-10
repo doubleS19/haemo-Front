@@ -17,20 +17,19 @@ class HotPlacePageController extends GetxController {
   late List<int> wishList = <int>[];
   late int uId;
 
-  HotPlacePageController() {
-  }
+  HotPlacePageController() {}
 
-  void tmp()async{
+  void tmp() async {
     PreferenceUtil.setString("nickname", "서연이당");
 
-    UserResponse userResponse = await dbService.getUserByNickname(PreferenceUtil.getString("nickname")!);
+    UserResponse userResponse = await dbService
+        .getUserByNickname(PreferenceUtil.getString("nickname")!);
     PreferenceUtil.setInt("uid", userResponse.uId);
     uId = PreferenceUtil.getInt("uid")!;
     dbService.getWishList(uId).then((value) => wishList = value);
-
   }
 
-  void updateHotPlaceList(){
+  void updateHotPlaceList() {
     fetchPopularHotPlaceList();
     fetchHotPlaceList();
   }
@@ -65,7 +64,9 @@ class HotPlacePageController extends GetxController {
       /// 찜 목록에 핫플 추가
       dbService.addWishList(Wish(pId: pId, uId: uId));
     }
+
     /// 위시리스트 업데이트
   }
+
   /// 테이블을 가져올 때 찜 테이블이면 하트 색깔이 빨강색이도록?
 }
