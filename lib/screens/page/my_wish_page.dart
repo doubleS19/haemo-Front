@@ -4,6 +4,7 @@ import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/model/post_response_model.dart';
+import 'package:hae_mo/model/wish_response_model.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/model/wish_model.dart';
@@ -54,14 +55,16 @@ class _MyWishPageState extends State<MyWishPage> {
   Widget myWishList() {
     DBService db = DBService();
     return FutureBuilder(
-        future: db.getWishList(1),
+        future: db.getWishListByUser(1),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final List<Wish> wishList = snapshot.data as List<Wish>;
-            UserResponse user =
-                db.getUserByNickname(PreferenceUtil.getString("nickname")!)
-                    as UserResponse;
-            wishList.removeWhere((element) => element.uId != user.uId);
+            final List<WishResponse> wishList =
+                snapshot.data as List<WishResponse>;
+            // UserResponse user =
+            //     db.getUserByNickname(PreferenceUtil.getString("nickname")!)
+            //         as UserResponse;
+            wishList.removeWhere((element) => element.uId != 2);
+            // wishList.removeWhere((element) => element.uId != user.uId);
             List<HotPlacePost> postList =
                 db.getHotPlaceById(1) as List<HotPlacePost>;
 
