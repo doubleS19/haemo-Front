@@ -26,6 +26,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
   void initState() {
     super.initState();
     print("initState");
+    hotPlaceController.tmp();
     hotPlaceController.updateHotPlaceList();
   }
 

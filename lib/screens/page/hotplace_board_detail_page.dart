@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
+import 'package:hae_mo/model/post_type.dart';
 import 'package:hae_mo/model/user_model.dart';
 
 import '../../common/color.dart';
 import '../../common/theme.dart';
+import '../components/commentWidget.dart';
 import '../components/customAppBar.dart';
 
 class HotPlaceDetailPage extends StatefulWidget {
@@ -23,20 +25,38 @@ class _HotPlaceDetailPageState extends State<HotPlaceDetailPage> {
     return Scaffold(
       appBar: backAppBar(),
       body: Container(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+        padding: const EdgeInsets.all(15),
         child: Column(
           children: [
-            Text(
-                widget.hotPlacePost.title,
-              style: CustomThemes.mainTheme.textTheme.headlineMedium,
-            ),
             profile(widget.hotPlacePost.nickname),
-            const Image(
-              image: AssetImage('assets/images/sunset.jpg'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.hotPlacePost.title,
+                  style: CustomThemes.hotPlacePopularTitleTextStyle,
+                ),
+                Text("정왕동", style: CustomThemes.mainTheme.textTheme.bodySmall)
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 50, 0, 20),
+              height: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppTheme.mainTextColor,
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/sunset.jpg'),
+                ),
+              ),
             ),
             Text(
                 widget.hotPlacePost.content
-            )
+            ),
+            Divider(color: CustomThemes.mainTheme.dividerColor),
+            Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: commentWidget(2, 1))
           ],
         ),
       ),
