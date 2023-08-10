@@ -30,17 +30,14 @@ class PostingPage extends StatefulWidget {
 }
 
 class _PostingPageState extends State<PostingPage> {
-
   @override
   Widget build(BuildContext context) {
-
     /// 상태바 설정하기
 /*    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.white, // 회색
     ));*/
 
     PostController postController = Get.put(PostController(widget.postType));
-    postController.deleteData();
 
     TextfieldTagsController hashTagController = TextfieldTagsController();
     PostUi postUi = PostUi.fromType(widget.postType);
@@ -48,70 +45,72 @@ class _PostingPageState extends State<PostingPage> {
         ? MediaQuery.of(context).size.height / 16
         : MediaQuery.of(context).size.height / 8;
     return GestureDetector(
-      onTap: ()=> FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-          appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(kToolbarHeight),
-              child:
-              Builder(builder: (context) => customPostingAppbar(context, postUi.appBarText))),
-          body: Container(
-            padding: const EdgeInsets.all(30),
-            child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(
-                  //color: Colors.blue,
-                    height: containerHeight,
-                    child: enterTitleTextField(
-                        postUi, postController.textControllerList)),
-                SizedBox(
-                  //color: Colors.yellow,
-                  height: MediaQuery.of(context).size.height / 6,
-                  child: selectDropDownButtonListType(
-                      widget.postType, context, postController),
-                ),
-                if (widget.postType == PostType.club)
-                  Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: hashTagTextField(hashTagController))
-                else
-                  Container(),
-                Expanded(
-                  child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      child: postingPageDetailTextField(postUi.hintText,
-                          postController.detailTextContext, context)),
-                ),
-                Container(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(6.0)),
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(kToolbarHeight),
+                child: Builder(
+                    builder: (context) =>
+                        customPostingAppbar(context, postUi.appBarText))),
+            body: Container(
+              padding: const EdgeInsets.all(30),
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                      //color: Colors.blue,
+                      height: containerHeight,
+                      child: enterTitleTextField(
+                          postUi, postController.textControllerList)),
+                  SizedBox(
+                    //color: Colors.yellow,
+                    height: MediaQuery.of(context).size.height / 6,
+                    child: selectDropDownButtonListType(
+                        widget.postType, context, postController),
                   ),
-                  child: postingButton(context, () async {
-                    bool isSuccess = false;
-                    if (postController.checkEmpty()) {
-                      showMyAlertDialog(context, "경고!!!!!", "빈칸 안 채우면 못 지나감.");
-                    } else {
-                      postController.saveControllerData();
-                      isSuccess = await postController.saveBoard();
-                      if (isSuccess) {
-                        /// 다이얼로그 안 됨ㅠㅠ
-                        showMyAlertDialog(context, "확인요망!!", "게시물이 전송되었습니다. ");
-                        postController.deleteData();
-                        Get.to(const HomePage());
+                  if (widget.postType == PostType.club)
+                    Container(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        child: hashTagTextField(hashTagController))
+                  else
+                    Container(),
+                  Flexible(
+                      fit: FlexFit.loose,
+                      child: postingPageDetailTextField(postUi.hintText,
+                            postController.detailTextContext, context),
+                      ),
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                    ),
+                    child: postingButton(context, () async {
+                      bool isSuccess = false;
+                      if (postController.checkEmpty()) {
+                        showMyAlertDialog(
+                            context, "경고!!!!!", "빈칸 안 채우면 못 지나감.");
                       } else {
-                        showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
+                        postController.saveControllerData();
+                        isSuccess = await postController.saveBoard();
+                        if (isSuccess) {
+                          /// 다이얼로그 안 됨ㅠㅠ
+                          showMyAlertDialog(
+                              context, "확인요망!!", "게시물이 전송되었습니다. ");
+                          postController.deleteData();
+                          Get.to(const HomePage());
+                        } else {
+                          showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
+                        }
                       }
-                    }
-                  }),
-                )
-              ],
-            ),
-          ))
-    );
+                    }),
+                  )
+                ],
+              ),
+            )));
   }
 }
 
@@ -166,7 +165,6 @@ Widget selectDropDownButtonListType(
         children: [
           Row(
             children: [
-
               selectDropdownButton(MediaQuery.of(context).size.width * 0.25,
                   DropDownType.person, postController),
               const Spacer(flex: 1),
@@ -217,7 +215,7 @@ Widget selectDropdownButton(
 
       return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         dropDownButtonWidth(
-            width*1.2,
+            width * 1.2,
             CustomDropDownButton(
                 list: setYearList(DateTime.now().year),
                 basicType: "$selectedYear년",
@@ -230,7 +228,9 @@ Widget selectDropdownButton(
                 list: setMonthList(),
                 basicType: "$selectedMonth월",
                 onChanged: (value) {
-                  value = value.toString().length < 2 ? "0$value" : value.toString();
+                  value = value.toString().length < 2
+                      ? "0$value"
+                      : value.toString();
                   postController.selectedMonth.value = value!;
                 })),
         dropDownButtonWidth(
@@ -239,7 +239,9 @@ Widget selectDropdownButton(
                 list: setDayList(),
                 basicType: "$selectedDay월",
                 onChanged: (value) {
-                  value = value.toString().length < 2 ? "0$value" : value.toString();
+                  value = value.toString().length < 2
+                      ? "0$value"
+                      : value.toString();
                   postController.selectedDay.value = value!;
                 })),
         dropDownButtonWidth(
@@ -248,7 +250,9 @@ Widget selectDropdownButton(
                 list: setHourList(),
                 basicType: "$selectedHour시",
                 onChanged: (value) {
-                  value = value.toString().length < 2 ? "0$value" : value.toString();
+                  value = value.toString().length < 2
+                      ? "0$value"
+                      : value.toString();
                   postController.selectedHour.value = value!;
                 }))
       ]);
@@ -286,4 +290,3 @@ List<String> setHourList() {
   }
   return dayList;
 }
-

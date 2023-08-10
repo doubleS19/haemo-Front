@@ -21,6 +21,8 @@ class HotPlacePageController extends GetxController {
   }
 
   void tmp()async{
+    PreferenceUtil.setString("nickname", "서연이당");
+
     UserResponse userResponse = await dbService.getUserByNickname(PreferenceUtil.getString("nickname")!);
     PreferenceUtil.setInt("uid", userResponse.uId);
     uId = PreferenceUtil.getInt("uid")!;

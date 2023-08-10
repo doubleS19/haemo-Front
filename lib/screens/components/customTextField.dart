@@ -10,6 +10,9 @@ Widget postingPageTitleTextField(
   return TextFormField(
     enabled: true,
     decoration: InputDecoration(
+      focusedBorder: UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey)
+      ),
         hintText: hintText,
         hintStyle: Theme.of(context).textTheme.bodySmall,
         isDense: true),
@@ -18,12 +21,9 @@ Widget postingPageTitleTextField(
 }
 
 Widget hashTagTextField(TextfieldTagsController controller) {
+
   return Container(
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: AppTheme.postingPageDetailTextFieldColor,
-      ),
       child: TextFieldTags(
         textfieldTagsController: controller,
         initialTags: const [],
@@ -41,37 +41,19 @@ Widget hashTagTextField(TextfieldTagsController controller) {
           return ((context, sc, tags, onTagDelete) {
             return Padding(
               padding: const EdgeInsets.all(10.0),
-              child: TextField(
+              child: TextFormField(
                 controller: tec,
                 focusNode: fn,
+
                 decoration: InputDecoration(
-                  focusedBorder: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  border: InputBorder.none,
-                  isDense: true,
-                  // border: const OutlineInputBorder(
-                  //   borderSide: BorderSide(
-                  //     color: Color.fromARGB(255, 74, 137, 92),
-                  //     width: 3.0,
-                  //   ),
-                  // ),
-                  // focusedBorder: const OutlineInputBorder(
-                  //   borderSide: BorderSide(
-                  //     color: Color.fromARGB(255, 74, 137, 92),
-                  //     width: 3.0,
-                  //   ),
-                  // ),
-                  //helperText: 'Enter language...',
-                  helperStyle: TextStyle(
-                    fontFamily:
-                        Theme.of(context).textTheme.bodySmall?.fontFamily,
-                    fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
-                    color: Theme.of(context).primaryColor,
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey)
                   ),
-                  hintText: controller.hasTags ? '' : "#해시태그를 입력해주세요",
+                  hintText: tags.isNotEmpty ? '' : "#해시태그를 입력해주세요",
                   hintStyle: TextStyle(
                       fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
-                      fontFamily: Theme.of(context).textTheme.bodySmall?.fontFamily,
+                      fontFamily:
+                          Theme.of(context).textTheme.bodySmall?.fontFamily,
                       color: AppTheme.postingPageDetailHintTextColor),
                   errorText: error,
                   prefixIconConstraints: BoxConstraints(
@@ -84,10 +66,9 @@ Widget hashTagTextField(TextfieldTagsController controller) {
                               children: tags.map((String tag) {
                             return Container(
                               decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                                color: Theme.of(context).primaryColor,
+                                border: Border.all(color: Theme.of(context).primaryColor,),
+                                borderRadius: const BorderRadius.all(Radius.circular(10.0),),
+                                color: Colors.white,
                               ),
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 5.0),
@@ -101,7 +82,7 @@ Widget hashTagTextField(TextfieldTagsController controller) {
                                     child: Text(
                                       '#$tag',
                                       style:
-                                          const TextStyle(color: Colors.white),
+                                          TextStyle(color: AppTheme.mainColor),
                                     ),
                                     onTap: () {
                                       print("$tag selected");
@@ -109,10 +90,10 @@ Widget hashTagTextField(TextfieldTagsController controller) {
                                   ),
                                   const SizedBox(width: 4.0),
                                   InkWell(
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.cancel,
                                       size: 14.0,
-                                      color: Color.fromARGB(255, 233, 233, 233),
+                                      color: AppTheme.mainColor,
                                     ),
                                     onTap: () {
                                       onTagDelete(tag);
@@ -126,7 +107,7 @@ Widget hashTagTextField(TextfieldTagsController controller) {
                       : null,
                 ),
                 onChanged: onChanged,
-                onSubmitted: onSubmitted,
+                //onSubmitted: onSubmitted,
               ),
             );
           });
