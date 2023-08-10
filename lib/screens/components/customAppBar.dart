@@ -6,14 +6,12 @@ import '../../common/color.dart';
 import '../Page/chat_list_page.dart';
 
 Widget customPostingAppbar(BuildContext context, String appBarText) {
-
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white, // 회색
   ));
 
   return AppBar(
-    title: Text(appBarText,
-        style: Theme.of(context).textTheme.headlineMedium),
+    title: Text(appBarText, style: Theme.of(context).textTheme.headlineMedium),
     centerTitle: true,
     leading: IconButton(
       onPressed: () {
@@ -27,9 +25,7 @@ Widget customPostingAppbar(BuildContext context, String appBarText) {
   );
 }
 
-
-
-PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle){
+PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle) {
   return AppBar(
     backgroundColor: Colors.white,
     title: Container(
@@ -76,5 +72,26 @@ PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle){
     ],
     elevation: 0.0,
     automaticallyImplyLeading: false,
+  );
+}
+
+AppBar backAppBar() {
+  return AppBar(
+    backgroundColor: Colors.white,
+    leading: IconButton(
+      onPressed: () {
+        Get.back();
+      },
+      color: AppTheme.dividerColor,
+      icon: const Icon(Icons.arrow_back_ios_new_sharp),
+    ),
+    elevation: 0.0,
+    automaticallyImplyLeading: false,
+    shape: Border(
+      bottom: BorderSide(
+        color: AppTheme.mainColor,
+        width: 0.5,
+      ),
+    ),
   );
 }

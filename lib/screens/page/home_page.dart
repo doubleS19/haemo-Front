@@ -64,13 +64,32 @@ class _HomePageState extends State<HomePage> {
               child: BottomNavigationBar(
                 backgroundColor: Colors.white,
                 type: BottomNavigationBarType.fixed,
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(icon: Icon(Icons.person), label: ""),
-                  BottomNavigationBarItem(icon: Icon(Icons.group), label: ""),
+                items: <BottomNavigationBarItem>[
+                  BottomNavigationBarItem(icon: Image.asset("assets/circle3.png"), label: "",
+                    activeIcon: Image.asset("assets/circle3.png", color: AppTheme.mainColor)
+                  ),
+                  BottomNavigationBarItem(icon: Image.asset("assets/circle4.png"), label: "",
+                      activeIcon: Image.asset("assets/circle4.png", color: AppTheme.mainColor)
+                  ),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.location_on), label: ""),
+                      icon: Container(
+                          width: 30,
+                          height: 30,
+                          child: Image.asset("assets/hotplace5.png")), label: "",
+                      activeIcon: Image.asset("assets/hotplace5.png", color: AppTheme.mainColor)
+                  ),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.settings), label: ""),
+                      icon: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppTheme.mainTextColor,
+                          image: const DecorationImage(
+                            image: AssetImage('assets/f.png'),
+                          ),
+                        ),
+                      ), label: ""),
                 ],
                 currentIndex: _selectedIndex,
                 unselectedItemColor: const Color(0xffadadad),
