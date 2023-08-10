@@ -262,7 +262,6 @@ class DBService {
     final response =
         await http.get(Uri.parse("http://43.201.211.1:1004/wish/myList/$uId"));
 
-    ///   링크, 코드 수정 필요
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       final List<int> wishList = data.cast<int>();
@@ -284,18 +283,18 @@ class DBService {
       if (response.statusCode != 201) {
         throw Exception("Failed to send data");
       } else {
-        dev.log("Post Data sent successfully");
+        dev.log("WishList Data sent successfully");
         return true;
       }
     } catch (e) {
-      dev.log("Failed to send post data: ${e}");
+      dev.log("Failed to send WishList: ${e}");
       return false;
     }
   }
 
   Future<void> deleteWishList(int uId, int pId) async {
     final response = await http.delete(
-      Uri.parse('http://43.201.211.1:1004/wish/$uId/$pId'),
+      Uri.parse('http://43.201.211.1:1004/wish/delete/$uId/$pId'),
     );
 
     if (response.statusCode == 204) {
