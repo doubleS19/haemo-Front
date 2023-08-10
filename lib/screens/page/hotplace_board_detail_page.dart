@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/user_model.dart';
 
 import '../../common/color.dart';
+import '../../common/theme.dart';
+import '../components/customAppBar.dart';
 
 class HotPlaceDetailPage extends StatefulWidget {
   const HotPlaceDetailPage({Key? key, required this.hotPlacePost})
@@ -17,18 +20,25 @@ class HotPlaceDetailPage extends StatefulWidget {
 class _HotPlaceDetailPageState extends State<HotPlaceDetailPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          profile(widget.hotPlacePost.nickname),
-          const Image(
-            image: AssetImage('assets/images/sunset.jpg'),
-          ),
-          Text(
-            widget.hotPlacePost.content
-          )
-        ],
+    return Scaffold(
+      appBar: backAppBar(),
+      body: Container(
+        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+        child: Column(
+          children: [
+            Text(
+                widget.hotPlacePost.title,
+              style: CustomThemes.mainTheme.textTheme.headlineMedium,
+            ),
+            profile(widget.hotPlacePost.nickname),
+            const Image(
+              image: AssetImage('assets/images/sunset.jpg'),
+            ),
+            Text(
+                widget.hotPlacePost.content
+            )
+          ],
+        ),
       ),
     );
   }
