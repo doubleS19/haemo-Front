@@ -73,7 +73,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                             fillColor: Colors.transparent,
                                             shape: CircleBorder(),
                                             onPressed: (() {
-                                              userBottomSheet(context);
+                                              userBottomSheet(context, user);
                                             }),
                                             child: Container(
                                               width: 41,
