@@ -13,6 +13,7 @@ import '../../model/comment_response_model.dart';
 import '../../model/post_model.dart';
 import '../../service/db_service.dart';
 import '../components/heartButton.dart';
+import '../components/userBottomSheet.dart';
 
 class BoardDetailPage extends StatefulWidget {
   const BoardDetailPage({super.key, required this.pId, required this.type});
@@ -72,7 +73,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                             fillColor: Colors.transparent,
                                             shape: CircleBorder(),
                                             onPressed: (() {
-                                              userBottomSheet();
+                                              userBottomSheet(context);
                                             }),
                                             child: Container(
                                               width: 41,
@@ -343,38 +344,5 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                             onClick: () {},
                           )))
                 ]))));
-  }
-
-  void userBottomSheet() {
-    showModalBottomSheet<void>(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: double.infinity * 0.4,
-          child: Column(
-            children: <Widget>[
-              Row(
-                children: [
-                  Expanded(child: Container()),
-                  IconButton(
-                    icon: Icon(
-                      Icons.close_rounded,
-                      color: Color(0xff393939),
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-              Expanded(child: Text("텍스트")),
-            ],
-          ),
-        );
-      },
-    ).then((value) {
-      setState(() {});
-    });
   }
 }
