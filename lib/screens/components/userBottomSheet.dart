@@ -4,8 +4,6 @@ import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/service/db_service.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 
-import '../../model/user_model.dart';
-
 void userBottomSheet(BuildContext context, UserResponse user) {
   DBService db = DBService();
   var nick = db.getUserByNickname(PreferenceUtil.getString("nickname")!);

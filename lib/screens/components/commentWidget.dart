@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/screens/components/userBottomSheet.dart';
 
 import '../../model/comment_response_model.dart';
 import '../../service/db_service.dart';
@@ -55,51 +57,82 @@ Widget commentWidget(int pId, int type) {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: commentList.length,
             itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  Container(
-                    height: 50.0,
-                    width: double.infinity,
-                    margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                    child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Row(children: [
-                          Container(
-                            width: 41,
-                            height: 41,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppTheme.mainTextColor,
-                              image: const DecorationImage(
-                                image: AssetImage('assets/images/sunset.jpg'),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10.0),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                commentList[index].nickname,
-                                style: TextStyle(
-                                  color: AppTheme.mainTextColor,
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w600,
+              return FutureBuilder<UserResponse>(
+                future: db.getUserByNickname(commentList[index].nickname),
+                builder: (context, userSnapshot) {
+                  if (userSnapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (userSnapshot.hasError) {
+                    return const Text("유저 정보를 불러오는 중 오류가 발생했습니다.");
+                  } else if (userSnapshot.hasData) {
+                    final user = userSnapshot.data!;
+                    return Column(
+                      children: [
+                        Container(
+                          height: 50.0,
+                          width: double.infinity,
+                          margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Row(children: [
+                                SizedBox(
+                                    width: 41.0,
+                                    height: 41.0,
+                                    child: RawMaterialButton(
+                                        elevation: 0.0,
+                                        fillColor: Colors.transparent,
+                                        shape: const CircleBorder(),
+                                        onPressed: (() {
+                                          UserResponse user =
+                                              db.getUserByNickname(
+                                                      commentList[index]
+                                                          .nickname)
+                                                  as UserResponse;
+                                          print(user);
+                                          userBottomSheet(context, user);
+                                        }),
+                                        child: Container(
+                                          width: 41,
+                                          height: 41,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: AppTheme.mainTextColor,
+                                            image: const DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/sunset.jpg'),
+                                            ),
+                                          ),
+                                        ))),
+                                const SizedBox(width: 10.0),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      commentList[index].nickname,
+                                      style: TextStyle(
+                                        color: AppTheme.mainTextColor,
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      commentList[index].content,
+                                      style: TextStyle(
+                                          fontSize: 12.0,
+                                          color: AppTheme.mainTextColor,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                commentList[index].content,
-                                style: TextStyle(
-                                    fontSize: 12.0,
-                                    color: AppTheme.mainTextColor,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                        ])),
-                  ),
-                ],
+                              ])),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
               );
             },
           )
