@@ -64,18 +64,28 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                               children: [
                                 Row(
                                   children: [
-                                    Container(
-                                      width: 41,
-                                      height: 41,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: AppTheme.mainTextColor,
-                                        image: const DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/sunset.jpg'),
-                                        ),
-                                      ),
-                                    ),
+                                    SizedBox(
+                                        width: 41.0,
+                                        height: 41.0,
+                                        child: RawMaterialButton(
+                                            elevation: 0.0,
+                                            fillColor: Colors.transparent,
+                                            shape: CircleBorder(),
+                                            onPressed: (() {
+                                              userBottomSheet();
+                                            }),
+                                            child: Container(
+                                              width: 41,
+                                              height: 41,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: AppTheme.mainTextColor,
+                                                image: const DecorationImage(
+                                                  image: AssetImage(
+                                                      'assets/images/sunset.jpg'),
+                                                ),
+                                              ),
+                                            ))),
                                     const SizedBox(width: 10.0),
                                     Column(
                                       crossAxisAlignment:
@@ -302,10 +312,9 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
           ]),
         ),
         bottomNavigationBar: Container(
-            // 밑에 고정된 버튼
             width: double.infinity,
             height: 70.0,
-            color: AppTheme.mainColor, // 원하는 배경색상 설정
+            color: AppTheme.mainColor,
             child: Align(
                 alignment: Alignment.center,
                 child: Row(children: [
@@ -317,7 +326,10 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                               fillHeartColor = false;
                             }
                           },
-                          icon: HeartButtonWidget(fillHeart: fillHeartColor, onClick: () {  },))),
+                          icon: HeartButtonWidget(
+                            fillHeart: fillHeartColor,
+                            onClick: () {},
+                          ))),
                   Expanded(
                       flex: 1,
                       child: IconButton(
@@ -326,7 +338,43 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                               fillHeartColor = false;
                             }
                           },
-                          icon: HeartButtonWidget(fillHeart: fillHeartColor, onClick: () {  },)))
+                          icon: HeartButtonWidget(
+                            fillHeart: fillHeartColor,
+                            onClick: () {},
+                          )))
                 ]))));
+  }
+
+  void userBottomSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: double.infinity * 0.4,
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: [
+                  Expanded(child: Container()),
+                  IconButton(
+                    icon: Icon(
+                      Icons.close_rounded,
+                      color: Color(0xff393939),
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              Expanded(child: Text("텍스트")),
+            ],
+          ),
+        );
+      },
+    ).then((value) {
+      setState(() {});
+    });
   }
 }
