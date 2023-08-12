@@ -26,7 +26,7 @@ class HotPlacePageController extends GetxController {
         .getUserByNickname(PreferenceUtil.getString("nickname")!);
     PreferenceUtil.setInt("uid", userResponse.uId);
     uId = PreferenceUtil.getInt("uid")!;
-    dbService.getWishList(uId).then((value) => wishList = value);
+가    //dbService.getWishList(uId).then((value) => wishList = value);
   }
 
   void updateHotPlaceList() {

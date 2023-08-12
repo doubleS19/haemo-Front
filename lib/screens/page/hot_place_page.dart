@@ -2,12 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
-import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/page/hotplace_board_detail_page.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import '../../common/theme.dart';
 import '../../controller/hotplace_page_controller.dart';
-import '../../model/wish_model.dart';
 import '../components/customAppBar.dart';
 import '../components/heartButton.dart';
 
@@ -66,25 +64,39 @@ class _HotPlacePageState extends State<HotPlacePage> {
                         : Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
             Text("장소들..", style: CustomThemes.hotPlaceSubTitleTextStyle),
             Expanded(
-                child: Container(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: Obx(() => GridView.builder(
-                        itemCount: hotPlaceController.hotPlacePostList.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 1.4,
-                                mainAxisSpacing: 20,
-                                crossAxisSpacing: 10),
-                        itemBuilder: (BuildContext context, int index) {
-                          return hotPlaceCard(
-                              context,
-                              hotPlaceController.hotPlacePostList.value[index],
-                              hotPlaceController
-                              /*hotPlaceController.hotPlacePostList[index],
+                child: hotPlaceController.hotPlacePostList.value.isNotEmpty
+                    ? CustomRefreshIndicator(
+                        onRefresh: () async {
+                          hotPlaceController.updateHotPlaceList();
+                          Future.delayed(const Duration(milliseconds: 1000));
+                        },
+                        builder: (BuildContext context, Widget child, IndicatorController controller) {
+                          return child;
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Obx(() => GridView.builder(
+                                itemCount:
+                                    hotPlaceController.hotPlacePostList.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 1.4,
+                                        mainAxisSpacing: 20,
+                                        crossAxisSpacing: 10),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return hotPlaceCard(
+                                      context,
+                                      hotPlaceController
+                                          .hotPlacePostList.value[index],
+                                      hotPlaceController
+                                      /*hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
-                              );
-                        })))),
+                                      );
+                                }))))
+                    : const Center(
+                        child: Text("핫플이 존재하지 않습니다. "),
+                      )),
           ],
         ),
       ),
