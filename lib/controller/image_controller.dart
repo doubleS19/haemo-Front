@@ -37,8 +37,9 @@ class ImageController extends GetxController {
         print('이미지 리스트 개수: ${pickedImgs.length}');
       } on PlatformException catch (e) {
         print('Failed to pick image: $e');
+      }finally{
+        update();
       }
-      update();
     } else {
       try {
         XFile? images = await _picker.pickImage(source: ImageSource.gallery);
@@ -49,15 +50,17 @@ class ImageController extends GetxController {
         _pickedImg.value = images;
       } on PlatformException catch (e) {
         print('Failed to pick image: $e');
+      } finally{
+        update();
       }
-      update();
+
     }
   }
 
   deleteImages(int index) {
-    if (imgType == ImageType.hotPlaceImgList){
+    if (imgType == ImageType.hotPlaceImgList) {
       _pickedImgs.removeAt(index); // 삭제되면 true, 실패하면 false
-    }else{
+    } else {
       _pickedImg == null;
     }
   }

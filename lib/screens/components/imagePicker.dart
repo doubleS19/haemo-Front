@@ -21,15 +21,13 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
     return GetBuilder<ImageController>(
         init: ImageController(widget.imgType),
         builder: (_) {
-          if(widget.imgType == ImageType.hotPlaceImgList){
+          if (widget.imgType == ImageType.hotPlaceImgList) {
             return SizedBox(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.8,
                 height: 80,
                 child: ListView.builder(
-                  scrollDirection: Axis.horizontal, // Enable horizontal scrolling
+                  scrollDirection: Axis.horizontal,
+                  // Enable horizontal scrolling
                   itemCount: _.pickedImgs.length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
@@ -38,16 +36,15 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                     //galleryButton(context, index, _)
                   },
                 ));
-          }else {
+          } else {
             return changeButtonToLogo(context, _);
           }
         });
   }
 }
 
-Widget changeButtonToImage(dynamic context,
-    int index,
-    ImageController imgController) {
+Widget changeButtonToImage(
+    dynamic context, int index, ImageController imgController) {
   if (index >= 4) {
     return Container();
   }
@@ -62,7 +59,7 @@ Widget changeButtonToImage(dynamic context,
   }
 }
 
-Widget changeButtonToLogo(dynamic context, ImageController imgController){
+Widget changeButtonToLogo(dynamic context, ImageController imgController) {
   if (imgController.pickedImg == null) {
     return SizedBox(
         width: 80,
@@ -112,8 +109,8 @@ Widget changeButtonToLogo(dynamic context, ImageController imgController){
   }
 }
 
-Widget galleryButton(BuildContext context, String buttonText,
-    ImageController imgController) {
+Widget galleryButton(
+    BuildContext context, String buttonText, ImageController imgController) {
   return OutlinedButton(
     onPressed: () {
       imgController.pickImageGallery();
@@ -136,10 +133,7 @@ Widget galleryButton(BuildContext context, String buttonText,
           ),
           Text(
             buttonText,
-            style: Theme
-                .of(context)
-                .textTheme
-                .bodySmall,
+            style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
       ),
@@ -147,45 +141,66 @@ Widget galleryButton(BuildContext context, String buttonText,
   );
 }
 
-Widget pickedImageContainer(int index, ImageController imgController){
-  return Stack(
-    children: [
-      Container(
-        width: 80,
-        height: 80,
-        padding: const EdgeInsets.all(5),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(13),
-          image: DecorationImage(
-            image: FileImage(File(imgController.pickedImgs[index].path)),
-            fit: BoxFit.cover,
-          ),
-        ),
-      ),
-      Positioned(
-        top: 0,
-        right: 0,
-        child: InkWell(
-          onTap: () {
-            imgController.deleteImages(index);
-            imgController.update();
-          },
-          child: Container(
-            width: 24,
-            height: 24,
-            decoration: BoxDecoration(
-              color: Colors.grey.withOpacity(0.7),
-              shape: BoxShape.circle,
+Widget pickedImageContainer(int index, ImageController imgController) {
+  final imageFile = File(imgController.pickedImgs[index].path);
+
+  return FutureBuilder<void>(
+    future: Future.delayed(const Duration(seconds: 1)), // Wait for 2 seconds
+    builder: (context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return
+        Container(
+          width: 80,
+          height: 80,
+          padding: const EdgeInsets.all(5),
+          alignment: Alignment.center,
+            child: const Center(
+              child: SizedBox(
+                  height: 30, width: 30, child: CircularProgressIndicator()),
             ),
-            child: const Icon(
-              Icons.close,
-              size: 16,
-              color: Colors.white,
+        );
+      } else {
+        return Stack(
+          children: [
+            Container(
+              width: 80,
+              height: 80,
+              padding: const EdgeInsets.all(5),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(13),
+                image: DecorationImage(
+                  image: FileImage(imageFile),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
-    ],
+            Positioned(
+              top: 0,
+              right: 0,
+              child: InkWell(
+                onTap: () {
+                  imgController.deleteImages(index);
+                  imgController.update();
+                },
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.7),
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.close,
+                    size: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      }
+    },
   );
 }
