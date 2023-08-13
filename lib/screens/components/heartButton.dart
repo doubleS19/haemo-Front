@@ -6,10 +6,11 @@ import '../../model/wish_model.dart';
 
 class HeartButtonWidget extends StatefulWidget {
   const HeartButtonWidget(
-      {super.key, required this.fillHeart, required this.onClick});
+      {super.key, required this.fillHeart, required this.uId, required this.pId});
 
   final bool fillHeart;
-  final void Function()? onClick;
+  final int uId;
+  final int pId;
   @override
   _HeartButtonWidgetState createState() => _HeartButtonWidgetState();
 }
@@ -27,12 +28,13 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
     return IconButton(
       onPressed: () {
         DBService db = DBService();
-        Wish wish = Wish(uId: 42, pId: 1);
-        db.addWishList(wish);
+        if (!fillHeartColor){
+          Wish wish = Wish(uId: widget.uId, pId: widget.pId);
+          db.addWishList(wish);
+        } else{
+          db.deleteWishList(widget.uId, widget.pId);
+        }
         setState(() {
-          print("여긴 클릭이 되거든? 근데..");
-          widget.onClick;
-
           /// 클릭 후 디비에 반영되면 색이 바뀌도록 바꿔야 될지도..?
           fillHeartColor = !fillHeartColor; // Toggle the value
         });

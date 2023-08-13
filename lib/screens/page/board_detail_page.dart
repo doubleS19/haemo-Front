@@ -329,7 +329,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                           },
                           icon: HeartButtonWidget(
                             fillHeart: fillHeartColor,
-                            onClick: () {},
+                            uId: 42, pId: 1,
                           ))),
                   Expanded(
                       flex: 1,
@@ -341,7 +341,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                           },
                           icon: HeartButtonWidget(
                             fillHeart: fillHeartColor,
-                            onClick: () {},
+                            uId: 42, pId: 1,
                           )))
                 ]))));
   }
