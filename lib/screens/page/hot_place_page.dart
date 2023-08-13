@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
+import 'package:hae_mo/screens/components/customIndicator.dart';
 import 'package:hae_mo/screens/page/hotplace_board_detail_page.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import '../../common/theme.dart';
@@ -23,7 +25,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
   @override
   void initState() {
     super.initState();
-    print("initState");
+    print("hotPlace initState");
     hotPlaceController.tmp();
     hotPlaceController.updateHotPlaceList();
   }
@@ -58,21 +60,36 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                       context,
                                       hotPlaceController
                                           .popularHotPlaceList[index],
-                                      hotPlaceController));
+                                      hotPlaceController.checkHotPlaceList(index),
+                                      hotPlaceController.updateWishList(
+                                          hotPlaceController
+                                              .popularHotPlaceList[index].pId, hotPlaceController.checkHotPlaceList(index)))
+                                  );
                             },
                           )
                         : Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
             Text("장소들..", style: CustomThemes.hotPlaceSubTitleTextStyle),
+/*            SpinKitFadingCircle(
+                color: Colors.redAccent,
+                size: 200,
+                duration: Duration(milliseconds: 3000))*/
+/*            CustomRefreshIndicator(
+                onRefresh: () async {
+                  hotPlaceController.updateHotPlaceList();
+                  Future.delayed(const Duration(milliseconds: 1000));
+                },
+                builder: (BuildContext context, Widget child,
+                    IndicatorController controller) {
+                  return Stack(
+                    children: <Widget>[
+                    ],
+                  );
+                },
+                child: )*/
             Expanded(
                 child: hotPlaceController.hotPlacePostList.value.isNotEmpty
-                    ? CustomRefreshIndicator(
-                        onRefresh: () async {
-                          hotPlaceController.updateHotPlaceList();
-                          Future.delayed(const Duration(milliseconds: 1000));
-                        },
-                        builder: (BuildContext context, Widget child, IndicatorController controller) {
-                          return child;
-                        },
+                    ? CheckMarkIndicator(
+                        onRefresh: {hotPlaceController.updateHotPlaceList()},
                         child: Container(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Obx(() => GridView.builder(
@@ -104,12 +121,8 @@ class _HotPlacePageState extends State<HotPlacePage> {
   }
 }
 
-Widget popularHotPlaceCard(
-    BuildContext context,
-    HotPlacePostResponse hotPlaceData,
-    HotPlacePageController hotPlacePageController) {
-  bool fillHeartColor =
-      hotPlacePageController.wishList.contains(hotPlaceData.pId);
+Widget popularHotPlaceCard(BuildContext context,
+    HotPlacePostResponse hotPlaceData, bool fillHeartColor, void onClick) {
   return GestureDetector(
       onTap: () {
         Get.to(() => HotPlaceDetailPage(hotPlacePost: hotPlaceData));
@@ -139,9 +152,7 @@ Widget popularHotPlaceCard(
                 child: HeartButtonWidget(
                     fillHeart: fillHeartColor,
                     onClick: () {
-                      hotPlacePageController.updateWishList(
-                          hotPlaceData.pId, fillHeartColor);
-                      print("클림됨: ${fillHeartColor}");
+                      onClick;
                     })),
             Positioned(
                 bottom: 30,

@@ -17,6 +17,8 @@ class HotPlacePageController extends GetxController {
   late List<int> wishList = <int>[];
   late int uId;
 
+  final Rx<bool> hotPlaceListisLoading = false.obs;
+
   HotPlacePageController() {}
 
   void tmp() async {
@@ -26,12 +28,14 @@ class HotPlacePageController extends GetxController {
         .getUserByNickname(PreferenceUtil.getString("nickname")!);
     PreferenceUtil.setInt("uid", userResponse.uId);
     uId = PreferenceUtil.getInt("uid")!;
-가    //dbService.getWishList(uId).then((value) => wishList = value);
+   //dbService.getWishList(uId).then((value) => wishList = value);
   }
 
   void updateHotPlaceList() {
+    hotPlaceListisLoading.value = false;
     fetchPopularHotPlaceList();
     fetchHotPlaceList();
+    hotPlaceListisLoading.value = true;
   }
 
   void fetchPopularHotPlaceList() async {
@@ -53,6 +57,11 @@ class HotPlacePageController extends GetxController {
     } catch (error) {
       print("Error to get HotPlaceList: ${error}");
     }
+  }
+
+  bool checkHotPlaceList(int index){
+    return wishList.contains(
+            popularHotPlaceList[index].pId);
   }
 
   /// 찜 클릭 시 유저의 핫플 리스트에 핫플 추가 & 삭제
