@@ -1,8 +1,10 @@
 import 'package:get/get.dart';
+import 'package:hae_mo/controller/wishlist_controller.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/model/wish_model.dart';
+import 'package:hae_mo/model/wish_response_model.dart';
 import 'package:hae_mo/service/db_service.dart';
 import '../model/post_response_model.dart';
 import '../utils/shared_preference.dart';
@@ -14,12 +16,11 @@ class HotPlacePageController extends GetxController {
   final RxList<HotPlacePostResponse> hotPlacePostList =
       <HotPlacePostResponse>[].obs;
   final RxList<CommentResponse> commentList = <CommentResponse>[].obs;
-  late List<int> wishList = <int>[];
+  late List<int> wishList = <int>[].obs;
   late int uId;
+  late final WishListController wishListController;
 
   final Rx<bool> hotPlaceListisLoading = false.obs;
-
-  HotPlacePageController() {}
 
   void tmp() async {
     PreferenceUtil.setString("nickname", "서연이당");
@@ -27,8 +28,12 @@ class HotPlacePageController extends GetxController {
     UserResponse userResponse = await dbService
         .getUserByNickname(PreferenceUtil.getString("nickname")!);
     PreferenceUtil.setInt("uid", userResponse.uId);
+
     uId = PreferenceUtil.getInt("uid")!;
-   //dbService.getWishList(uId).then((value) => wishList = value);
+    wishListController = WishListController(uId);
+    ever(wishListController.wishList, (callback) => {
+      wishList.assignAll(callback)
+    });
   }
 
   void updateHotPlaceList() {
@@ -36,6 +41,8 @@ class HotPlacePageController extends GetxController {
     fetchPopularHotPlaceList();
     fetchHotPlaceList();
     hotPlaceListisLoading.value = true;
+    update();
+    print("hotPlacePostList Length: ${hotPlacePostList.length}");
   }
 
   void fetchPopularHotPlaceList() async {
@@ -59,9 +66,8 @@ class HotPlacePageController extends GetxController {
     }
   }
 
-  bool checkHotPlaceList(int index){
-    return wishList.contains(
-            popularHotPlaceList[index].pId);
+  bool checkHotPlaceList(int pId) {
+    return wishList.contains(pId);
   }
 
   /// 찜 클릭 시 유저의 핫플 리스트에 핫플 추가 & 삭제
@@ -77,5 +83,5 @@ class HotPlacePageController extends GetxController {
     /// 위시리스트 업데이트
   }
 
-  /// 테이블을 가져올 때 찜 테이블이면 하트 색깔이 빨강색이도록?
+/// 테이블을 가져올 때 찜 테이블이면 하트 색깔이 빨강색이도록?
 }

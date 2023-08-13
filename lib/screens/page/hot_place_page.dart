@@ -26,6 +26,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
   void initState() {
     super.initState();
     print("hotPlace initState");
+
     hotPlaceController.tmp();
     hotPlaceController.updateHotPlaceList();
   }
@@ -60,11 +61,10 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                       context,
                                       hotPlaceController
                                           .popularHotPlaceList[index],
-                                      hotPlaceController.checkHotPlaceList(index),
-                                      hotPlaceController.updateWishList(
+                                      hotPlaceController.checkHotPlaceList(
                                           hotPlaceController
-                                              .popularHotPlaceList[index].pId, hotPlaceController.checkHotPlaceList(index)))
-                                  );
+                                              .popularHotPlaceList[index]
+                                              .pId)));
                             },
                           )
                         : Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
@@ -106,7 +106,10 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                       context,
                                       hotPlaceController
                                           .hotPlacePostList.value[index],
-                                      hotPlaceController
+                                      hotPlaceController.checkHotPlaceList(
+                                          hotPlaceController
+                                              .hotPlacePostList[index]
+                                              .pId)
                                       /*hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
                                       );
@@ -121,8 +124,8 @@ class _HotPlacePageState extends State<HotPlacePage> {
   }
 }
 
-Widget popularHotPlaceCard(BuildContext context,
-    HotPlacePostResponse hotPlaceData, bool fillHeartColor, void onClick) {
+Widget popularHotPlaceCard(
+    BuildContext context, HotPlacePostResponse hotPlaceData, bool isFilled) {
   return GestureDetector(
       onTap: () {
         Get.to(() => HotPlaceDetailPage(hotPlacePost: hotPlaceData));
@@ -142,7 +145,6 @@ Widget popularHotPlaceCard(BuildContext context,
               bottom: 50,
               left: 10,
               child:
-
                   /// 글자 제한 두고 디자인 신경쓰기
                   Text(hotPlaceData.title,
                       style: CustomThemes.hotPlacePopularTitleTextStyle),
@@ -150,10 +152,10 @@ Widget popularHotPlaceCard(BuildContext context,
             Positioned(
                 right: 0,
                 child: HeartButtonWidget(
-                    fillHeart: fillHeartColor,
-                    onClick: () {
-                      onClick;
-                    })),
+                  fillHeart: isFilled,
+                  uId: 42,
+                  pId: 1,
+                )),
             Positioned(
                 bottom: 30,
                 left: 10,
@@ -163,9 +165,7 @@ Widget popularHotPlaceCard(BuildContext context,
 }
 
 Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
-    HotPlacePageController hotPlacePageController) {
-  bool fillHeartColor =
-      hotPlacePageController.wishList.contains(hotPlaceData.pId);
+    bool fillHeartColor) {
 
   return GestureDetector(
       onTap: () {
@@ -190,13 +190,8 @@ Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
             ),
             Positioned(
               right: 0,
-              child: HeartButtonWidget(
-                  fillHeart: fillHeartColor,
-                  onClick: () {
-                    hotPlacePageController.updateWishList(
-                        hotPlaceData.pId, fillHeartColor);
-                    print("클림됨: ${fillHeartColor}");
-                  }),
+              child:
+                  HeartButtonWidget(uId: 42, pId: 1, fillHeart: fillHeartColor),
             )
           ])));
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hae_mo/model/wish_response_model.dart';
 import 'package:hae_mo/service/db_service.dart';
 
 import '../../model/wish_model.dart';
@@ -17,6 +18,8 @@ class HeartButtonWidget extends StatefulWidget {
 
 class _HeartButtonWidgetState extends State<HeartButtonWidget> {
   late bool fillHeartColor;
+  DBService db = DBService();
+
   @override
   void initState() {
     super.initState();
@@ -27,7 +30,6 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        DBService db = DBService();
         if (!fillHeartColor){
           Wish wish = Wish(uId: widget.uId, pId: widget.pId);
           db.addWishList(wish);
