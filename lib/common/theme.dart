@@ -8,21 +8,24 @@ class CustomThemes {
     fontFamily: myFont,
     fontSize: 14,
   );
-  static var hotPlacePopularTitleTextStyle = TextStyle(
+  static var hotPlacePopularPostTitleTextStyle = TextStyle(
       color: AppTheme.postingPageHeadlineColor,
       fontFamily: myFont,
       fontSize: 15,
-      fontWeight: FontWeight.bold
-  );
-  static var hotPlacePopularSubtitleTextStyle = TextStyle(
+      fontWeight: FontWeight.bold);
+  static var hotPlacePopularPostSubtitleTextStyle = TextStyle(
       color: AppTheme.postingPageHeadlineColor,
       fontFamily: myFont,
-      fontSize: 11
-  );
-  static var hotPlaceTitleTextStyle = TextStyle(
+      fontSize: 11);
+  static var hotPlacePostTitleTextStyle = TextStyle(
       color: AppTheme.postingPageHeadlineColor,
       fontFamily: myFont,
-      fontSize: 13
+      fontSize: 13);
+
+  static var hotPlaceBoardTitleTextStyle = TextStyle(
+    fontSize: 18.0,
+    color: AppTheme.mainTextColor,
+    fontWeight: FontWeight.w500
   );
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',

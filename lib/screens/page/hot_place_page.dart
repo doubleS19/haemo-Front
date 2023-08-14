@@ -147,7 +147,7 @@ Widget popularHotPlaceCard(
               child:
                   /// 글자 제한 두고 디자인 신경쓰기
                   Text(hotPlaceData.title,
-                      style: CustomThemes.hotPlacePopularTitleTextStyle),
+                      style: CustomThemes.hotPlacePopularPostTitleTextStyle),
             ),
             Positioned(
                 right: 0,
@@ -160,7 +160,7 @@ Widget popularHotPlaceCard(
                 bottom: 30,
                 left: 10,
                 child: Text(hotPlaceData.content,
-                    style: CustomThemes.hotPlacePopularSubtitleTextStyle)),
+                    style: CustomThemes.hotPlacePopularPostSubtitleTextStyle)),
           ])));
 }
 
@@ -186,7 +186,7 @@ Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
               bottom: 10,
               left: 10,
               child: Text(hotPlaceData.title,
-                  style: CustomThemes.hotPlaceTitleTextStyle),
+                  style: CustomThemes.hotPlacePostTitleTextStyle),
             ),
             Positioned(
               right: 0,
