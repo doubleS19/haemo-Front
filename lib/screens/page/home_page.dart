@@ -65,19 +65,27 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.white,
                 type: BottomNavigationBarType.fixed,
                 items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(icon: Image.asset("assets/circle3.png"), label: "",
-                    activeIcon: Image.asset("assets/circle3.png", color: AppTheme.mainColor)
-                  ),
-                  BottomNavigationBarItem(icon: Image.asset("assets/circle4.png"), label: "",
-                      activeIcon: Image.asset("assets/circle4.png", color: AppTheme.mainColor)
-                  ),
+                  BottomNavigationBarItem(
+                      icon: Image.asset("assets/circle3.png"),
+                      label: "",
+                      activeIcon: Image.asset("assets/circle3.png",
+                          color: AppTheme.mainColor)),
+                  BottomNavigationBarItem(
+                      icon: Image.asset("assets/circle4.png"),
+                      label: "",
+                      activeIcon: Image.asset("assets/circle4.png",
+                          color: AppTheme.mainColor)),
                   BottomNavigationBarItem(
                       icon: Container(
                           width: 30,
                           height: 30,
-                          child: Image.asset("assets/hotplace5.png")), label: "",
-                      activeIcon: Image.asset("assets/hotplace5.png", color: AppTheme.mainColor)
-                  ),
+                          child: Image.asset("assets/hotplace5.png")),
+                      label: "",
+                      activeIcon: Container(
+                          width: 30,
+                          height: 30,
+                          child: Image.asset("assets/hotplace5.png",
+                              color: AppTheme.mainColor))),
                   BottomNavigationBarItem(
                       icon: Container(
                         width: 30,
@@ -89,7 +97,8 @@ class _HomePageState extends State<HomePage> {
                             image: AssetImage('assets/f.png'),
                           ),
                         ),
-                      ), label: ""),
+                      ),
+                      label: ""),
                 ],
                 currentIndex: _selectedIndex,
                 unselectedItemColor: const Color(0xffadadad),
@@ -97,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: _onItemTapped,
               )),
         ),
-        floatingActionButton: floatingButton());
+        floatingActionButton: _selectedIndex!=3?floatingButton():null);
   }
 
   @override
