@@ -78,10 +78,10 @@ class _PostingPageState extends State<PostingPage> {
                   else
                     Container(),
                   Flexible(
-                      fit: FlexFit.loose,
-                      child: postingPageDetailTextField(postUi.hintText,
-                            postController.detailTextContext, context),
-                      ),
+                    fit: FlexFit.loose,
+                    child: postingPageDetailTextField(postUi.hintText,
+                        postController.detailTextContext, context),
+                  ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                     width: MediaQuery.of(context).size.width * 0.9,
@@ -231,7 +231,7 @@ Widget selectDropdownButton(
                   value = value.toString().length < 2
                       ? "0$value"
                       : value.toString();
-                  postController.selectedMonth.value = value!;
+                  postController.selectedMonth.value = value;
                 })),
         dropDownButtonWidth(
             width,
@@ -242,7 +242,7 @@ Widget selectDropdownButton(
                   value = value.toString().length < 2
                       ? "0$value"
                       : value.toString();
-                  postController.selectedDay.value = value!;
+                  postController.selectedDay.value = value;
                 })),
         dropDownButtonWidth(
             width,
@@ -253,7 +253,7 @@ Widget selectDropdownButton(
                   value = value.toString().length < 2
                       ? "0$value"
                       : value.toString();
-                  postController.selectedHour.value = value!;
+                  postController.selectedHour.value = value;
                 }))
       ]);
   }
