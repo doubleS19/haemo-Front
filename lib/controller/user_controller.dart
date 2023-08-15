@@ -35,7 +35,8 @@ class UserController extends GetxController {
           studentId: "00000000",
           nickname: nickname,
           major: major,
-          gender: gender);
+          gender: gender,
+          userImage: "assets/user_dog.png");
       _registerState = RegisterState.success;
       PreferenceUtil.saveUser(user);
       bool isUserSaved = await dbService.saveUser(user);
