@@ -7,6 +7,7 @@ import 'package:hae_mo/screens/page/board_detail_page.dart';
 import 'package:hae_mo/screens/page/chat_list_page.dart';
 import '../../service/db_service.dart';
 import '../components/customAppBar.dart';
+import '../components/customIndicator.dart';
 
 class MeetingPage extends StatefulWidget {
   const MeetingPage({super.key});
@@ -177,7 +178,9 @@ class _MeetingPageState extends State<MeetingPage> {
             ),
           );
         } else {
-          return ListView.builder(
+          return CheckMarkIndicator(
+              onRefresh: {meetingController.fetchBoardList()},
+              child: ListView.builder(
             itemCount: postList.length,
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
@@ -255,7 +258,7 @@ class _MeetingPageState extends State<MeetingPage> {
                 ),
               );
             },
-          );
+          ));
         }
       },
     );

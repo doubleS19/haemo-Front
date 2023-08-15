@@ -22,7 +22,6 @@ class _CheckMarkIndicatorState extends State<CheckMarkIndicator>
     with SingleTickerProviderStateMixin {
   static const _indicatorSize = 150.0;
 
-  /// Whether to render check mark instead of spinner
   bool _renderCompleteState = false;
 
   ScrollDirection prevScrollDirection = ScrollDirection.idle;
