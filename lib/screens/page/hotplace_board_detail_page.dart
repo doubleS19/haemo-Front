@@ -25,20 +25,27 @@ class _HotPlaceDetailPageState extends State<HotPlaceDetailPage> {
     return Scaffold(
       appBar: backAppBar(),
       body: Container(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            profile(widget.hotPlacePost.nickname),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Padding(padding: EdgeInsets.fromLTRB(10, 5, 10, 5), child: Column(
               children: [
-                Text(
-                  widget.hotPlacePost.title,
-                  style: CustomThemes.hotPlacePopularTitleTextStyle,
-                ),
-                Text("정왕동", style: CustomThemes.mainTheme.textTheme.bodySmall)
+                profile(widget.hotPlacePost.nickname),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.hotPlacePost.title,
+                          style: CustomThemes.hotPlaceBoardTitleTextStyle,
+                        ),
+                        Text("정왕동",
+                            style: CustomThemes.mainTheme.textTheme.bodySmall)
+                      ],
+                    )),
               ],
-            ),
+            )),
             Container(
               padding: EdgeInsets.fromLTRB(0, 50, 0, 20),
               height: 300,
@@ -50,9 +57,9 @@ class _HotPlaceDetailPageState extends State<HotPlaceDetailPage> {
                 ),
               ),
             ),
-            Text(
-                widget.hotPlacePost.content
-            ),
+            Padding(
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                child: Text(widget.hotPlacePost.content)),
             Divider(color: CustomThemes.mainTheme.dividerColor),
             Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),

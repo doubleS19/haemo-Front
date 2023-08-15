@@ -23,7 +23,7 @@ class CustomThemes {
       fontSize: 13);
 
   static var hotPlaceBoardTitleTextStyle = TextStyle(
-    fontSize: 18.0,
+    fontSize: 20.0,
     color: AppTheme.mainTextColor,
     fontWeight: FontWeight.w500
   );
