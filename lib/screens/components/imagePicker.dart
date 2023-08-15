@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../common/color.dart';
+import '../../common/theme.dart';
 import '../../controller/image_controller.dart';
 
 class CustomImagePicker extends StatefulWidget {
@@ -15,9 +18,15 @@ class CustomImagePicker extends StatefulWidget {
   State<CustomImagePicker> createState() => _CustomImagePickerState();
 }
 
-class _CustomImagePickerState extends State<CustomImagePicker> {
+class _CustomImagePickerState extends State<CustomImagePicker>
+    with AutomaticKeepAliveClientMixin<CustomImagePicker> {
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return GetBuilder<ImageController>(
         init: ImageController(widget.imgType),
         builder: (_) {
@@ -30,32 +39,26 @@ class _CustomImagePickerState extends State<CustomImagePicker> {
                   // Enable horizontal scrolling
                   itemCount: _.pickedImgs.length + 1,
                   itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: changeButtonToImage(context, index, _));
-                    //galleryButton(context, index, _)
+                    if (index == _.pickedImgs.length) {
+                      if (index == 4) {
+                        return Container();
+                      } else {
+                        return SizedBox(
+                            width: 80,
+                            height: 80,
+                            child: galleryButton(context, index.toString(), _));
+                      }
+                    } else {
+                      return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: pickedImageContainer(index, _));
+                    }
                   },
                 ));
           } else {
             return changeButtonToLogo(context, _);
           }
         });
-  }
-}
-
-Widget changeButtonToImage(
-    dynamic context, int index, ImageController imgController) {
-  if (index >= 4) {
-    return Container();
-  }
-  if (index >= imgController.pickedImgs.length) {
-    return SizedBox(
-        width: 80,
-        height: 80,
-        child: galleryButton(context, "$index/4", imgController));
-  } else {
-    // 선택된 이미지
-    return pickedImageContainer(index, imgController);
   }
 }
 
@@ -132,7 +135,7 @@ Widget galleryButton(
             color: AppTheme.postingPageDetailHintTextColor,
           ),
           Text(
-            buttonText,
+            "$buttonText/4",
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
@@ -145,21 +148,9 @@ Widget pickedImageContainer(int index, ImageController imgController) {
   final imageFile = File(imgController.pickedImgs[index].path);
 
   return FutureBuilder<void>(
-    future: Future.delayed(const Duration(seconds: 1)), // Wait for 2 seconds
+    future: imgController.pickedImgs == null ? Future.value() : Future.delayed(Duration(milliseconds: 500)),
     builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return
-        Container(
-          width: 80,
-          height: 80,
-          padding: const EdgeInsets.all(5),
-          alignment: Alignment.center,
-            child: const Center(
-              child: SizedBox(
-                  height: 30, width: 30, child: CircularProgressIndicator()),
-            ),
-        );
-      } else {
+      if (snapshot.connectionState == ConnectionState.done) {
         return Stack(
           children: [
             Container(
@@ -199,6 +190,17 @@ Widget pickedImageContainer(int index, ImageController imgController) {
               ),
             ),
           ],
+        );
+      } else {
+        return Container(
+          width: 80,
+          height: 80,
+          padding: const EdgeInsets.all(5),
+          alignment: Alignment.center,
+          child: SpinKitFadingCircle(
+            color: CustomThemes.mainTheme.primaryColor,
+            size: 30,
+          ),
         );
       }
     },
