@@ -81,9 +81,9 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: AppTheme.mainTextColor,
-                                                image: const DecorationImage(
+                                                image: DecorationImage(
                                                   image: AssetImage(
-                                                      'assets/images/sunset.jpg'),
+                                                      user.userImage),
                                                 ),
                                               ),
                                             ))),
@@ -205,10 +205,10 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                     Container(
                                       width: 41,
                                       height: 41,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: AppTheme.mainTextColor,
-                                        image: const DecorationImage(
+                                        color: Colors.transparent,
+                                        image: DecorationImage(
                                           image: AssetImage(
                                               'assets/images/sunset.jpg'),
                                         ),
@@ -329,7 +329,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                           },
                           icon: HeartButtonWidget(
                             fillHeart: fillHeartColor,
-                            uId: 42, pId: 1,
+                            uId: 42,
+                            pId: 1,
                           ))),
                   Expanded(
                       flex: 1,
@@ -341,7 +342,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                           },
                           icon: HeartButtonWidget(
                             fillHeart: fillHeartColor,
-                            uId: 42, pId: 1,
+                            uId: 42,
+                            pId: 1,
                           )))
                 ]))));
   }
