@@ -57,9 +57,7 @@ class _MyPageState extends State<MyPage> {
                       Container(
                         width: 200,
                         height: 200,
-                        decoration: BoxDecoration(
-                            color: AppTheme.registerPageFormColor,
-                            borderRadius: BorderRadius.circular(15.0)),
+                        child: Image(image: AssetImage(user.userImage)),
                         alignment: Alignment.center,
                       ),
                       const SizedBox(

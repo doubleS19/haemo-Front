@@ -22,7 +22,7 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                 width: 97.0,
                 height: 127.0,
                 child: Image(
-                  image: AssetImage('assets/user_dog.png'),
+                  image: AssetImage('assets/user/user_dog.png'),
                 )),
             const SizedBox(
               height: 10.0,
