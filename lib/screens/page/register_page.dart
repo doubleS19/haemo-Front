@@ -1,6 +1,8 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/utils/user_image.dart';
 import '../../controller/user_controller.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -16,6 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _genderList = ["성별", "남자", "여자"];
   var _selectedGender = "성별";
+  var _index = 0;
 
   final TextEditingController _textController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -23,6 +26,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final UserController _userController = Get.put(UserController());
 
   late RegisterState _registerState;
+
+  final CarouselController _carouselController = CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,14 +72,51 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(
                     height: 10.0,
                   ),
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        color: AppTheme.registerPageFormColor,
-                        borderRadius: BorderRadius.circular(15.0)),
-                    alignment: Alignment.center,
-                  ),
+                  SizedBox(
+                      height: 200.0,
+                      width: double.infinity,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                _carouselController.previousPage();
+                              },
+                              icon: Icon(
+                                Icons.arrow_back_ios,
+                                color: AppTheme.mainColor,
+                              ),
+                            ),
+                            SizedBox(
+                                width: 200,
+                                height: 200,
+                                child: CarouselSlider.builder(
+                                  carouselController: _carouselController,
+                                  itemCount: userImage.length,
+                                  itemBuilder: (context, index, realIndex) {
+                                    final path = userImage[index];
+                                    return imageSlider(path, index);
+                                  },
+                                  options: CarouselOptions(
+                                    initialPage: 0,
+                                    viewportFraction: 1,
+                                    enlargeCenterPage: true,
+                                    onPageChanged: (index, reason) =>
+                                        setState(() {
+                                      _index = index;
+                                    }),
+                                  ),
+                                )),
+                            IconButton(
+                              onPressed: () {
+                                _carouselController.nextPage();
+                              },
+                              icon: Icon(
+                                Icons.arrow_forward_ios,
+                                color: AppTheme.mainColor,
+                              ),
+                            ),
+                          ])),
                   const SizedBox(
                     height: 10.0,
                   ),
@@ -247,7 +289,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     onPressed: () {
                       _userController.saveInfo(_textController.text,
-                          _selectedMajor, _selectedGender);
+                          _selectedMajor, _selectedGender, userImage[_index]);
                     },
                     child: const Text(
                       "등록",
@@ -261,4 +303,11 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
+
+  Widget imageSlider(path, index) => Container(
+        width: 100,
+        height: 200,
+        color: Colors.transparent,
+        child: Image.asset(path),
+      );
 }

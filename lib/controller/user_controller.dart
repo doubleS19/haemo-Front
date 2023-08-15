@@ -27,7 +27,8 @@ class UserController extends GetxController {
     update();
   }
 
-  Future saveInfo(String nickname, String major, String gender) async {
+  Future saveInfo(
+      String nickname, String major, String gender, String image) async {
     DBService dbService = DBService();
 
     if (_registerState == RegisterState.okay) {
@@ -36,7 +37,7 @@ class UserController extends GetxController {
           nickname: nickname,
           major: major,
           gender: gender,
-          userImage: "assets/user_dog.png");
+          userImage: image);
       _registerState = RegisterState.success;
       PreferenceUtil.saveUser(user);
       bool isUserSaved = await dbService.saveUser(user);
