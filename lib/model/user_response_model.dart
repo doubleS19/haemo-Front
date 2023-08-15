@@ -7,12 +7,14 @@ class UserResponse {
   final String nickname;
   final String major;
   final String gender;
+  final String userImage;
 
   UserResponse(
       {required this.uId,
       required this.studentId,
       required this.nickname,
       required this.major,
+      required this.userImage,
       required this.gender});
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
@@ -21,6 +23,7 @@ class UserResponse {
         studentId: json['studentId'],
         nickname: json['nickname'],
         major: json['major'],
+        userImage: json['user_image'],
         gender: json['gender']);
   }
   Map<String, dynamic> toJson() => {
@@ -28,6 +31,7 @@ class UserResponse {
         'studentId': studentId,
         'nickname': nickname,
         'major': major,
+        'user_image': userImage,
         'gender': gender,
       };
 }
