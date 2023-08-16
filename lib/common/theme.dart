@@ -27,6 +27,16 @@ class CustomThemes {
     color: AppTheme.mainTextColor,
     fontWeight: FontWeight.w500
   );
+  static var settingPageMenuTextStyle = TextStyle(
+    fontSize: 14.0,
+    color: AppTheme.settingPageMenuTextColor,
+    fontWeight: FontWeight.w500
+  );
+  static var settingPageMenuListTextStyle = TextStyle(
+      fontSize: 16.0,
+      color: AppTheme.settingPageMenuListTextColor,
+      fontWeight: FontWeight.w300
+  );
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',
       primaryColor: AppTheme.mainColor,

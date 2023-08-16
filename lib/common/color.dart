@@ -34,4 +34,9 @@ class AppTheme {
 
 /// 핫플 페이지
   static var hotPlacePageSubTitleColor = const Color(0xFF414141);
+
+  /// 설정 페이지
+  static var settingPageMenuTextColor = const Color(0xFF7F7E7E);
+  static var settingPageMenuListTextColor = const Color(0xFF515151);
+  static var settingPageDividerColor = const Color(0xFFF4F4F4);
 }

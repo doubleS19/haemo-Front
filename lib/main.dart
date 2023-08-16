@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
 import 'package:hae_mo/screens/Page/loading_page.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/screens/page/delete_account_page.dart';
 
 import 'common/theme.dart';
 import 'utils/shared_preference.dart';
@@ -46,6 +47,10 @@ class MyApp extends StatelessWidget {
       title: '헤쳐모여 TUK',
       theme: CustomThemes.mainTheme,
       home: const LoadingPage(title: 'TUK'),
+      getPages: [
+        GetPage(name: '/delete-account', page: () => DeleteAccountPage()),
+        GetPage(name: '/notification-settings', page: () => DeleteAccountPage()),
+      ],
     );
   }
 }
