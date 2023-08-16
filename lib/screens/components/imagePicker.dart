@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../common/color.dart';
 import '../../common/theme.dart';
 import '../../controller/image_controller.dart';
+import 'customIndicator.dart';
 
 class CustomImagePicker extends StatefulWidget {
   const CustomImagePicker({Key? key, required this.imgType}) : super(key: key);
@@ -197,10 +198,7 @@ Widget pickedImageContainer(int index, ImageController imgController) {
           height: 80,
           padding: const EdgeInsets.all(5),
           alignment: Alignment.center,
-          child: SpinKitFadingCircle(
-            color: CustomThemes.mainTheme.primaryColor,
-            size: 30,
-          ),
+          child: customIndicator(30, 0),
         );
       }
     },

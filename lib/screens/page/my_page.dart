@@ -33,6 +33,13 @@ class _MyPageState extends State<MyPage> {
               fontSize: 19.0,
             ),
           ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.settings),
+              onPressed: () {
+                Get.to(() => const SettingsPage());
+              },
+            ),          ],
           automaticallyImplyLeading: false,
         ),
         body: FutureBuilder(
