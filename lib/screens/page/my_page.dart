@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/screens/page/settings_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/page/chat_list_page.dart';
@@ -37,7 +38,7 @@ class _MyPageState extends State<MyPage> {
             IconButton(
               icon: Icon(Icons.settings),
               onPressed: () {
-                Get.to(() => const SettingsPage());
+                Get.to(() => SettingsPage());
               },
             ),          ],
           automaticallyImplyLeading: false,

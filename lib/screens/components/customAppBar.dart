@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import '../../common/color.dart';
 import '../Page/chat_list_page.dart';
 
-Widget customPostingAppbar(BuildContext context, String appBarText) {
+Widget customColorAppbar(BuildContext context, String appBarText) {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white, // 회색
   ));
