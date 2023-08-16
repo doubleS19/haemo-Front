@@ -10,22 +10,6 @@ import 'club_page.dart';
 import 'meeting_page.dart';
 import 'my_page.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '헤쳐모여 TUK',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const ChatListPage(),
-    );
-  }
-}
-
 class ChatListPage extends StatefulWidget {
   const ChatListPage({super.key});
 
