@@ -23,18 +23,35 @@ class PostController extends GetxController {
   final Rx<String> selectedYear = ''.obs;
   final Rx<String> selectedMonth = ''.obs;
   final Rx<String> selectedDay = ''.obs;
-  final Rx<String> selectedHour= ''.obs;
+  final Rx<String> selectedHour = ''.obs;
   final RxList<MultipartFile?> selectedPhoto = [null].obs;
   final RxList<String?> hashTag = [null].obs;
-  late Rx<Post> post = Post(nickname: "", title: "", content: "", person: 0, category: "", deadline: "", date: "").obs;
-  late Rx<ClubPost> clubPost = ClubPost(nickname: "", date: "", title: "", description: "", content: "", person: 0).obs;
-  late Rx<HotPlacePost> hotPlacePost = HotPlacePost(nickname: "", date: "", title: "", address: "", description: "", content: "", photoList: []).obs;
+  late Rx<Post> post = Post(
+          nickname: "",
+          title: "",
+          content: "",
+          person: 0,
+          category: "",
+          deadline: "",
+          date: "")
+      .obs;
+  late Rx<ClubPost> clubPost =
+      ClubPost(nickname: "", title: "", description: "", content: "", person: 0)
+          .obs;
+  late Rx<HotPlacePost> hotPlacePost = HotPlacePost(
+      nickname: "",
+      date: "",
+      title: "",
+      address: "",
+      description: "",
+      content: "",
+      photoList: []).obs;
 
-  PostController(PostType type){
-   postType = type;
+  PostController(PostType type) {
+    postType = type;
   }
 
-  void deleteData(){
+  void deleteData() {
     textControllerList[0].clear();
     textControllerList[1].clear();
     detailTextContext.clear();
@@ -58,7 +75,6 @@ class PostController extends GetxController {
       case PostType.club:
         clubPost.update((clubPost) {
           clubPost?.nickname = nickname;
-          clubPost?.date = getNow();
           clubPost?.title = textControllerList[0].text;
           clubPost?.description = textControllerList[1].text;
           clubPost?.content = detailTextContext.text;
@@ -80,7 +96,6 @@ class PostController extends GetxController {
     }
   }
 
-
   String getDeadLineFormat() {
     String deadLine =
         "${selectedYear.value} ${selectedMonth.value} ${selectedDay.value} ${selectedHour.value}";
@@ -89,9 +104,9 @@ class PostController extends GetxController {
   }
 
   /// Empty라면 true 아니면 false
-  bool checkEmpty(){
+  bool checkEmpty() {
     bool isEmpty = true;
-    switch(postType){
+    switch (postType) {
       case PostType.meeting:
         isEmpty = textControllerList[0].text.isEmpty;
         isEmpty = detailTextContext.text.isEmpty;
@@ -109,22 +124,22 @@ class PostController extends GetxController {
     }
   }
 
-    Future<bool> saveBoard() async {
-        DBService db = DBService();
-        bool isPostSaved = false;
-        switch(postType){
-          case PostType.meeting:
-            isPostSaved = await db.savePost(post.value);
-            break;
-          case PostType.club:
-            isPostSaved = await db.saveClubPost(clubPost.value);
-            break;
-          case PostType.hotPlace:
-            isPostSaved = await db.saveHotPlacePost(hotPlacePost.value);
-            break;
-        }
-        return isPostSaved;
-        // Fluttertoast.showToast(msg: "회원 정보를 저장할 수 없습니다.\n잠시 후 다시 시도해주세요.");
-      update();
+  Future<bool> saveBoard() async {
+    DBService db = DBService();
+    bool isPostSaved = false;
+    switch (postType) {
+      case PostType.meeting:
+        isPostSaved = await db.savePost(post.value);
+        break;
+      case PostType.club:
+        isPostSaved = await db.saveClubPost(clubPost.value);
+        break;
+      case PostType.hotPlace:
+        isPostSaved = await db.saveHotPlacePost(hotPlacePost.value);
+        break;
     }
+    return isPostSaved;
+    // Fluttertoast.showToast(msg: "회원 정보를 저장할 수 없습니다.\n잠시 후 다시 시도해주세요.");
+    update();
+  }
 }

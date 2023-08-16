@@ -2,13 +2,11 @@ class PostBase {
   String nickname;
   String title;
   String content;
-  String date;
 
   PostBase({
     required this.nickname,
     required this.title,
     required this.content,
-    required this.date,
   });
 }
 
@@ -16,6 +14,7 @@ class Post extends PostBase {
   late int person;
   late String category;
   late String deadline;
+  late String date;
 
   Post(
       {required String nickname,
@@ -25,7 +24,11 @@ class Post extends PostBase {
       required String category,
       required String deadline,
       required String date})
-      : super(nickname: nickname, title: title, content: content, date: date);
+      : super(
+          nickname: nickname,
+          title: title,
+          content: content,
+        );
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
