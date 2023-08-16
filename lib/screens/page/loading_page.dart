@@ -16,31 +16,40 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-          child: Text(
-        "헤쳐모여 TUK",
-        style: TextStyle(
-            fontSize: 30.0,
-            color: Colors.blueGrey,
-            fontWeight: FontWeight.w700),
-      )),
-    );
-  }
+  final Duration duration = const Duration(milliseconds: 500);
+  bool selected = false;
 
   @override
   void initState() {
     super.initState();
+
     String? id = PreferenceUtil.getString("id");
     dev.log("id: ${PreferenceUtil.getString("nickname")}");
-    Timer(const Duration(milliseconds: 1500), () {
+    Timer(const Duration(milliseconds: 2000), () {
       if (id != null || id?.isNotEmpty == true || id != "") {
         Get.to(const HomePage());
       } else {
         Get.to(const RegisterPage());
       }
     });
+    Future.delayed(duration, () {
+      setState(() {
+        selected = true;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Center(
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      AnimatedOpacity(
+          opacity: selected ? 1.0 : 0.0,
+          duration: duration,
+          child: Image.asset("assets/icons/wont_icon.png")),
+      Image.asset("assets/icons/wont.png")
+    ])));
   }
 }
