@@ -46,6 +46,7 @@ class CustomThemes {
       const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w300);
   static var deleteAccountPageButtonTextStyle = const TextStyle(
       color: Color(0XFFFFFFFF), fontSize: 15.0, fontWeight: FontWeight.bold);
+  static var alarmBoxColor = AppTheme.settingPageAlarmBoxColor;
 
   /// customDialog
   static var customDialogContentTextStyle = TextStyle(

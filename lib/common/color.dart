@@ -39,4 +39,5 @@ class AppTheme {
   static var settingPageMenuTextColor = const Color(0xFF7F7E7E);
   static var settingPageMenuListTextColor = const Color(0xFF515151);
   static var settingPageDividerColor = const Color(0xFFF4F4F4);
+  static var settingPageAlarmBoxColor = const Color(0xFFF8FFDC).withOpacity(0.62);
 }

@@ -4,6 +4,7 @@ import 'package:hae_mo/common/theme.dart';
 import 'package:hae_mo/screens/page/settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../common/color.dart';
 import '../../utils/shared_preference.dart';
 import '../components/customAppBar.dart';
 
@@ -38,22 +39,33 @@ class DeleteAccountPage extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(padding: const EdgeInsets.only(bottom: 5.0), child: Text("${PreferenceUtil.getString("nickname")}님",
-                        style: CustomThemes.deleteAccountPageTitleTextStyle)),
-                    Padding(padding: const EdgeInsets.only(bottom: 5.0), child: Text("탈퇴하시기전에 확인해주세요!",
-                        style: CustomThemes.deleteAccountPageTitleTextStyle)),
+                    Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: Text("${PreferenceUtil.getString("nickname")}님",
+                            style:
+                                CustomThemes.deleteAccountPageTitleTextStyle)),
+                    Padding(
+                        padding: const EdgeInsets.only(bottom: 5.0),
+                        child: Text("탈퇴하시기전에 확인해주세요!",
+                            style:
+                                CustomThemes.deleteAccountPageTitleTextStyle)),
                   ],
                 ),
                 Container(
-                    decoration: BoxDecoration(
-                        color: Color(0xFFFF9B9B).withOpacity(0.15)),
+                    width: MediaQuery.of(context).size.width / 1.2,
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    decoration:
+                        BoxDecoration(color: CustomThemes.alarmBoxColor),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         for (var text in deleteAccountAlarm)
-                          Padding(padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20), child: Text(text,
-                              style: CustomThemes
-                                  .deleteAccountPageContentTextStyle)),
+                          Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 10),
+                              child: Text("$text",
+                                  style: CustomThemes
+                                      .deleteAccountPageContentTextStyle)),
                       ],
                     )),
                 Row(children: [
@@ -66,7 +78,6 @@ class DeleteAccountPage extends StatelessWidget {
                       style: CustomThemes.deleteAccountPageContentTextStyle),
                 ]),
                 const SizedBox(height: 20),
-
                 GestureDetector(
                   onTap: () {},
                   child: Container(
