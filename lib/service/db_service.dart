@@ -333,4 +333,7 @@ class DBService {
       throw Exception('Failed to delete WishList');
     }
   }
+
+  /// 계정 삭제(상의 필요)
+  /// 로그아웃 기능 구현 필(
 }

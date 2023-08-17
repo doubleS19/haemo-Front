@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:hae_mo/screens/components/customDialog.dart';
 
 import '../../common/color.dart';
 import '../../common/theme.dart';
@@ -75,7 +76,15 @@ Widget menuTitle(BuildContext context, String text) {
 Widget menuItem(BuildContext context, String text, int sectionIndex, int itemIndex) {
   return GestureDetector(
       onTap: () {
-        Get.toNamed(menuItemRoutes[sectionIndex][itemIndex]);
+        if (menuItemRoutes[sectionIndex][itemIndex] == ''){
+          showYesOrNoDialog(context, "로그아웃 하시겠습니까?", '아니요','예', (){
+            /// 로그아웃 기능 추가
+            Navigator.of(context).pop();
+          });
+        }else{
+          Get.toNamed(menuItemRoutes[sectionIndex][itemIndex]);
+        }
+
       },
       child: Container(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
