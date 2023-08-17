@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/controller/setting_alarm_controller.dart';
+import 'package:hae_mo/screens/page/setting/settings_page.dart';
 
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
@@ -30,7 +31,7 @@ class _SettingAlarmPageState extends State<SettingAlarmPage> {
             child: Column(
               children: [
                 switchMenuItem(context, "푸시 알림 받기",-1, {}),
-                alarmMenuTitle(context, "알람"),
+                menuTitle(context, "알람"),
                 for (var i =0;i<3;i++ )
                   switchMenuItem(context, alarmList[i], i, {})
               ],
@@ -65,13 +66,3 @@ class _SettingAlarmPageState extends State<SettingAlarmPage> {
   }
 }
 
-Widget alarmMenuTitle(BuildContext context, String text) {
-  return Container(
-      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-      height: MediaQuery.of(context).size.height / 17,
-      width: MediaQuery.of(context).size.width,
-      color: AppTheme.settingPageDividerColor,
-      child: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(text, style: CustomThemes.settingPageMenuTextStyle)));
-}
