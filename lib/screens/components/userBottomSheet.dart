@@ -6,7 +6,6 @@ import 'package:hae_mo/utils/shared_preference.dart';
 
 void userBottomSheet(BuildContext context, UserResponse user) {
   DBService db = DBService();
-  var nick = db.getUserByNickname(PreferenceUtil.getString("nickname")!);
   showModalBottomSheet<void>(
     context: context,
     shape: RoundedRectangleBorder(
@@ -18,11 +17,11 @@ void userBottomSheet(BuildContext context, UserResponse user) {
         padding: const EdgeInsets.all(30.0),
         child: Column(
           children: [
-            const SizedBox(
+            SizedBox(
                 width: 97.0,
                 height: 127.0,
                 child: Image(
-                  image: AssetImage('assets/user/user_dog.png'),
+                  image: AssetImage(user.userImage),
                 )),
             const SizedBox(
               height: 10.0,
@@ -69,7 +68,8 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                     child: Container(
                       height: 42.0,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20.0)),
                           color: AppTheme.mainColor),
                       child: RawMaterialButton(
                           onPressed: (() {}),

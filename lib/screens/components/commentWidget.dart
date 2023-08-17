@@ -83,12 +83,6 @@ Widget commentWidget(int pId, int type) {
                                         fillColor: Colors.transparent,
                                         shape: const CircleBorder(),
                                         onPressed: (() {
-                                          UserResponse user =
-                                              db.getUserByNickname(
-                                                      commentList[index]
-                                                          .nickname)
-                                                  as UserResponse;
-                                          print(user);
                                           userBottomSheet(context, user);
                                         }),
                                         child: Container(
@@ -97,9 +91,8 @@ Widget commentWidget(int pId, int type) {
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: AppTheme.mainTextColor,
-                                            image: const DecorationImage(
-                                              image: AssetImage(
-                                                  'assets/images/sunset.jpg'),
+                                            image: DecorationImage(
+                                              image: AssetImage(user.userImage),
                                             ),
                                           ),
                                         ))),

@@ -202,18 +202,28 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                               children: [
                                 Row(
                                   children: [
-                                    Container(
-                                      width: 41,
-                                      height: 41,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.transparent,
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/sunset.jpg'),
-                                        ),
-                                      ),
-                                    ),
+                                    SizedBox(
+                                        width: 41.0,
+                                        height: 41.0,
+                                        child: RawMaterialButton(
+                                            elevation: 0.0,
+                                            fillColor: Colors.transparent,
+                                            shape: CircleBorder(),
+                                            onPressed: (() {
+                                              userBottomSheet(context, user);
+                                            }),
+                                            child: Container(
+                                              width: 41,
+                                              height: 41,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: AppTheme.mainTextColor,
+                                                image: DecorationImage(
+                                                  image: AssetImage(
+                                                      user.userImage),
+                                                ),
+                                              ),
+                                            ))),
                                     const SizedBox(width: 10.0),
                                     Column(
                                       crossAxisAlignment:
