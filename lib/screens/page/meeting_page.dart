@@ -181,84 +181,86 @@ class _MeetingPageState extends State<MeetingPage> {
           return CheckMarkIndicator(
               onRefresh: {meetingController.fetchBoardList()},
               child: ListView.builder(
-            itemCount: postList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  Get.to(
-                      () => BoardDetailPage(pId: postList[index].pId, type: 1));
-                },
-                child: Column(
-                  children: [
-                    Container(
-                      height: 50.0,
-                      width: double.infinity,
-                      margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                itemCount: postList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Get.to(() =>
+                          BoardDetailPage(pId: postList[index].pId, type: 1));
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 50.0,
+                          width: double.infinity,
+                          margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
+                          padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Column(
                               children: [
-                                Expanded(
-                                  flex: 8,
-                                  child: Text(
-                                    postList[index].title,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: AppTheme.mainPageTextColor,
-                                      fontSize: 13.5,
-                                      fontWeight: FontWeight.w600,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      flex: 8,
+                                      child: Text(
+                                        postList[index].title,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          color: AppTheme.mainPageTextColor,
+                                          fontSize: 13.5,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    SizedBox(width: 10.0),
+                                    Expanded(
+                                      child: Text(
+                                        "3/${postList[index].person}",
+                                        style: TextStyle(
+                                          fontSize: 12.0,
+                                          color: AppTheme.mainColor,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: 10.0),
-                                Expanded(
-                                  child: Text(
-                                    "3/${postList[index].person}",
-                                    style: TextStyle(
-                                      fontSize: 12.0,
-                                      color: AppTheme.mainPagePersonColor,
-                                      fontWeight: FontWeight.w600,
+                                const SizedBox(height: 13.0),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "${postList[index].person}명",
+                                      style: const TextStyle(
+                                        color: Color(0xff999999),
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w300,
+                                      ),
                                     ),
-                                  ),
+                                    Text(
+                                      postList[index].deadline,
+                                      style: TextStyle(
+                                        fontSize: 12.0,
+                                        color: AppTheme.mainPageTextColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 13.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${postList[index].person}명",
-                                  style: const TextStyle(
-                                    color: Color(0xff999999),
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                                Text(
-                                  postList[index].deadline,
-                                  style: TextStyle(
-                                    fontSize: 12.0,
-                                    color: AppTheme.mainPageTextColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        Divider(thickness: 1.0, color: AppTheme.dividerColor),
+                      ],
                     ),
-                    Divider(thickness: 1.0, color: AppTheme.dividerColor),
-                  ],
-                ),
-              );
-            },
-          ));
+                  );
+                },
+              ));
         }
       },
     );
