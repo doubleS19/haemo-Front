@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:hae_mo/model/club_comment_response_model.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
+import 'package:hae_mo/model/hotplace_comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
@@ -190,6 +192,33 @@ class DBService {
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse.map((e) => CommentResponse.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load comments');
+    }
+  }
+
+  Future<List<ClubCommentResponse>> getClubCommentsByCpId(int cpId) async {
+    final response = await http.get(
+        Uri.parse('http://43.201.211.1:1004/clubComment/commentPost/$cpId'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse.map((e) => ClubCommentResponse.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load comments');
+    }
+  }
+
+  Future<List<HotPlaceCommentResponse>> getHotPlaceCommentsByHpId(
+      int hpId) async {
+    final response = await http.get(
+        Uri.parse('http://43.201.211.1:1004/hotComment/commentPost/$hpId'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse
+          .map((e) => HotPlaceCommentResponse.fromJson(e))
+          .toList();
     } else {
       throw Exception('Failed to load comments');
     }
