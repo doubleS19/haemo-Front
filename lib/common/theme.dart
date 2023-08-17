@@ -3,6 +3,8 @@ import 'package:hae_mo/common/color.dart';
 
 class CustomThemes {
   static String myFont = 'SCDream';
+
+  /// hotPlacePage
   static var hotPlaceSubTitleTextStyle = TextStyle(
     color: AppTheme.hotPlacePageSubTitleColor,
     fontFamily: myFont,
@@ -23,20 +25,43 @@ class CustomThemes {
       fontSize: 13);
 
   static var hotPlaceBoardTitleTextStyle = TextStyle(
-    fontSize: 20.0,
-    color: AppTheme.mainTextColor,
-    fontWeight: FontWeight.w500
-  );
+      fontSize: 20.0,
+      color: AppTheme.mainTextColor,
+      fontWeight: FontWeight.w500);
+
+  /// settingPage
   static var settingPageMenuTextStyle = TextStyle(
-    fontSize: 14.0,
-    color: AppTheme.settingPageMenuTextColor,
-    fontWeight: FontWeight.w500
-  );
+      fontSize: 14.0,
+      color: AppTheme.settingPageMenuTextColor,
+      fontWeight: FontWeight.w500);
   static var settingPageMenuListTextStyle = TextStyle(
       fontSize: 16.0,
       color: AppTheme.settingPageMenuListTextColor,
-      fontWeight: FontWeight.w300
-  );
+      fontWeight: FontWeight.w300);
+
+  /// deleteAccountPage
+  static var deleteAccountPageTitleTextStyle = TextStyle(
+      fontSize: 18.0, color: AppTheme.mainColor, fontWeight: FontWeight.bold);
+  static var deleteAccountPageContentTextStyle =
+      const TextStyle(fontSize: 13.0, fontWeight: FontWeight.w300);
+  static var deleteAccountPageButtonTextStyle = const TextStyle(
+      color: Color(0XFFFFFFFF), fontSize: 15.0, fontWeight: FontWeight.bold);
+
+  /// customDialog
+  static var customDialogContentTextStyle = TextStyle(
+      fontSize: 16.0,
+      color: AppTheme.settingPageMenuListTextColor,
+      fontWeight: FontWeight.w500);
+  static var customDialogConfirmButtonTextStyle = TextStyle(
+      fontSize: 15.0,
+      color: AppTheme.postingPageHeadlineColor,
+      fontWeight: FontWeight.w400);
+  static var customDialogCancelButtonTextStyle = const TextStyle(
+      fontSize: 15.0,
+      color: Color(0xFF969696),
+      fontWeight: FontWeight.w300);
+
+
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',
       primaryColor: AppTheme.mainColor,
