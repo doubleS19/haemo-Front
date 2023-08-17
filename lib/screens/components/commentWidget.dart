@@ -28,20 +28,23 @@ Widget commentWidget(int pId, int type) {
           );
         } else if (snapshot.hasData && snapshot.data!.isEmpty) {
           // 댓글이 없는 경우
-          return Column(children: const [
-            Text("댓글 0",
-                style: TextStyle(
-                    color: Color(0xff040404), fontWeight: FontWeight.w500)),
-            Center(
-              child: Text(
-                "댓글이 없어요!",
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  color: Colors.black,
-                ),
-              ),
-            )
-          ]);
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text("댓글 0",
+                    style: TextStyle(
+                        color: Color(0xff040404), fontWeight: FontWeight.w500)),
+                SizedBox(height: 30.0),
+                Center(
+                  child: Text(
+                    "댓글이 없어요!",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+              ]);
         } else {
           // 댓글 목록
           final commentList = snapshot.data!;
@@ -156,20 +159,23 @@ Widget commentWidget(int pId, int type) {
           );
         } else if (snapshot.hasData && snapshot.data!.isEmpty) {
           // 댓글이 없는 경우
-          return Column(children: const [
-            Text("댓글 0",
-                style: TextStyle(
-                    color: Color(0xff040404), fontWeight: FontWeight.w500)),
-            Center(
-              child: Text(
-                "댓글이 없어요!",
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  color: Colors.black,
-                ),
-              ),
-            )
-          ]);
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text("댓글 0",
+                    style: TextStyle(
+                        color: Color(0xff040404), fontWeight: FontWeight.w500)),
+                SizedBox(height: 30.0),
+                Center(
+                  child: Text(
+                    "댓글이 없어요!",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+              ]);
         } else {
           // 댓글 목록
           final commentList = snapshot.data!;
@@ -284,20 +290,23 @@ Widget commentWidget(int pId, int type) {
           );
         } else if (snapshot.hasData && snapshot.data!.isEmpty) {
           // 댓글이 없는 경우
-          return Column(children: const [
-            Text("댓글 0",
-                style: TextStyle(
-                    color: Color(0xff040404), fontWeight: FontWeight.w500)),
-            Center(
-              child: Text(
-                "댓글이 없어요!",
-                style: TextStyle(
-                  fontWeight: FontWeight.w300,
-                  color: Colors.black,
-                ),
-              ),
-            )
-          ]);
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text("댓글 0",
+                    style: TextStyle(
+                        color: Color(0xff040404), fontWeight: FontWeight.w500)),
+                SizedBox(height: 30.0),
+                Center(
+                  child: Text(
+                    "댓글이 없어요!",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+                      color: Colors.black,
+                    ),
+                  ),
+                )
+              ]);
         } else {
           // 댓글 목록
           final commentList = snapshot.data!;

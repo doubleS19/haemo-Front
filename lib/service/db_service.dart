@@ -186,8 +186,8 @@ class DBService {
   }
 
   Future<List<CommentResponse>> getCommentsByPId(int pId) async {
-    final response = await http
-        .get(Uri.parse('http://43.201.211.1:1004/comment/commentPost/$pId'));
+    final response = await http.get(
+        Uri.parse('http://43.201.211.1:1004/postComment/commentPost/$pId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
