@@ -1,7 +1,33 @@
 import 'dart:ui';
 
+enum ThemeType { Pink, Blue, Beige, LightGreen }
+
 class AppTheme {
-  static var mainColor = const Color(0xFFAAD200);
+  static ThemeType themeType = ThemeType.Blue;
+
+  static changeThemeType(ThemeType themeType){
+    themeType = themeType;
+  }
+
+  static Color get mainColor {
+    switch (themeType) {
+      case ThemeType.Pink:
+        return pinkColor;
+      case ThemeType.Blue:
+        return blueColor;
+      case ThemeType.Beige:
+        return beigeColor;
+      case ThemeType.LightGreen:
+        return lightGreenColor;
+      default:
+        return blueColor; // Default to blue if themeType is not recognized
+    }
+  }
+
+  static var lightGreenColor = const Color(0xFFAAD200);
+  static var blueColor = const Color(0xFF82C0EA);
+  static var pinkColor = const Color(0xFFFF9B9B);
+  static var beigeColor = const Color(0xFFCFB67B);
   static var dividerColor = const Color(0xFFBBBBBB);
   static var mainTextColor = const Color(0xFF393939);
   static var mainAppBarColor = const Color(0xFF595959);
@@ -32,7 +58,7 @@ class AppTheme {
   static var receiverText = const Color(0xFFDEDEDE);
   static var senderText = const Color(0xFFC6EFF9);
 
-/// 핫플 페이지
+  /// 핫플 페이지
   static var hotPlacePageSubTitleColor = const Color(0xFF414141);
 
   /// 설정 페이지
