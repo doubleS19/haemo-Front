@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/screens/components/customDialog.dart';
 
-import '../../common/color.dart';
-import '../../common/theme.dart';
-import '../components/customAppBar.dart';
+import '../../../common/color.dart';
+import '../../../common/theme.dart';
+import '../../components/customAppBar.dart';
 
 List<String> menuTitleList = ["설정", "앱 설정", "앱 정보", "우리를 소개합니당~~^^*"];
 List<List<String>> menuItemList = [

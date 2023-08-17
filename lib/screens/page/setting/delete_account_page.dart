@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/theme.dart';
-import 'package:hae_mo/screens/page/settings_page.dart';
+import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../common/color.dart';
-import '../../utils/shared_preference.dart';
-import '../components/customAppBar.dart';
+import '../../../common/color.dart';
+import '../../../utils/shared_preference.dart';
+import '../../components/customAppBar.dart';
 
 List<String> deleteAccountAlarm = [
   "지금 탈퇴하시면 서비스 악용 방지를 위해 재가입이 3일간 제한됩니다.",

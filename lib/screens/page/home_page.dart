@@ -11,7 +11,7 @@ import '../../utils/shared_preference.dart';
 import 'club_page.dart';
 import 'hot_place_page.dart';
 import 'meeting_page.dart';
-import 'my_page.dart';
+import 'setting/my_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

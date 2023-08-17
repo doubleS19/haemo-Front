@@ -5,7 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
 import 'package:hae_mo/screens/Page/loading_page.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/screens/page/delete_account_page.dart';
+import 'package:hae_mo/screens/page/setting/delete_account_page.dart';
 
 import 'common/theme.dart';
 import 'utils/shared_preference.dart';
@@ -36,6 +36,13 @@ Future<void> initializeDefault() async {
     await Firebase.initializeApp();
   }
 }
+
+List<List<String>> menuItemRoutes = [
+  ['', '/delete-account'],
+  ['/notification-settings', '/screen-settings'],
+  ['/app-version', '/contact-us', '/notice'],
+  ['/hemo-user-guide', '/we-made-hemo'],
+];
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
