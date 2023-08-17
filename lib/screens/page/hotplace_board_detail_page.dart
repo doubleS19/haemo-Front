@@ -63,7 +63,7 @@ class _HotPlaceDetailPageState extends State<HotPlaceDetailPage> {
             Divider(color: CustomThemes.mainTheme.dividerColor),
             Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                child: commentWidget(2, 1))
+                child: commentWidget(2, 3))
           ],
         ),
       ),

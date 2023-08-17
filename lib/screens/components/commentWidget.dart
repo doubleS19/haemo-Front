@@ -9,6 +9,8 @@ import '../../model/comment_response_model.dart';
 import '../../model/hotplace_comment_response_model.dart';
 import '../../service/db_service.dart';
 
+
+/// Type: 1 - metting, 2 - club, 3 - hotplace
 Widget commentWidget(int pId, int type) {
   DBService db = DBService();
   if (type == 1) {
