@@ -66,25 +66,25 @@ class _HomePageState extends State<HomePage> {
                 type: BottomNavigationBarType.fixed,
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                      icon: Image.asset("assets/circle3.png"),
+                      icon: Image.asset("assets/icons/postingpage_bottomnav_icon.png"),
                       label: "",
-                      activeIcon: Image.asset("assets/circle3.png",
+                      activeIcon: Image.asset("assets/icons/postingpage_bottomnav_icon.png",
                           color: AppTheme.mainColor)),
                   BottomNavigationBarItem(
-                      icon: Image.asset("assets/circle4.png"),
+                      icon: Image.asset("assets/icons/clubpage_bottomnav_icon.png"),
                       label: "",
-                      activeIcon: Image.asset("assets/circle4.png",
+                      activeIcon: Image.asset("assets/icons/clubpage_bottomnav_icon.png",
                           color: AppTheme.mainColor)),
                   BottomNavigationBarItem(
                       icon: Container(
                           width: 30,
                           height: 30,
-                          child: Image.asset("assets/hotplace5.png")),
+                          child: Image.asset("assets/icons/hotplace_bottomnav_icon.png")),
                       label: "",
                       activeIcon: Container(
                           width: 30,
                           height: 30,
-                          child: Image.asset("assets/hotplace5.png",
+                          child: Image.asset("assets/icons/hotplace_bottomnav_icon.png",
                               color: AppTheme.mainColor))),
                   BottomNavigationBarItem(
                       icon: Container(
@@ -94,7 +94,8 @@ class _HomePageState extends State<HomePage> {
                           shape: BoxShape.circle,
                           color: AppTheme.mainTextColor,
                           image: const DecorationImage(
-                            image: AssetImage('assets/f.png'),
+                            ///임시
+                            image: AssetImage('assets/user/user_cat.png'),
                           ),
                         ),
                       ),
