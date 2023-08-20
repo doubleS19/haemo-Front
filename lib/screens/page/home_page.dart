@@ -77,24 +77,28 @@ class _HomePageState extends State<HomePage> {
                         items: <BottomNavigationBarItem>[
                           BottomNavigationBarItem(
                               icon: Image.asset(
-                                  "assets/icons/meeting_bottom_icon.png"),
+                                  "assets/icons/meeting_bottom_icon.png",
+                                  color: Colors.black),
                               label: "",
                               activeIcon: Image.asset(
                                   "assets/icons/meeting_bottom_icon.png",
                                   color: AppTheme.mainColor)),
                           BottomNavigationBarItem(
                               icon: Image.asset(
-                                  "assets/icons/club_bottom_icon.png"),
+                                  "assets/icons/club_bottom_icon.png",
+                                  color: Colors.black),
                               label: "",
                               activeIcon: Image.asset(
                                   "assets/icons/club_bottom_icon.png",
                                   color: AppTheme.mainColor)),
                           BottomNavigationBarItem(
                               icon: Container(
-                                  width: 30,
-                                  height: 30,
-                                  child: Image.asset(
-                                      "assets/icons/hotplace_bottom_icon.png")),
+                                width: 30,
+                                height: 30,
+                                child: Image.asset(
+                                    "assets/icons/hotplace_bottom_icon.png",
+                                    color: Colors.black),
+                              ),
                               label: "",
                               activeIcon: Container(
                                   width: 30,
@@ -103,24 +107,40 @@ class _HomePageState extends State<HomePage> {
                                       "assets/icons/hotplace_bottom_icon.png",
                                       color: AppTheme.mainColor))),
                           BottomNavigationBarItem(
-                              icon: Container(
-                                width: 35.0,
-                                height: 35.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: AppTheme.mainColor,
-                                    width: 0.8,
-                                  ),
-                                  color: Colors.transparent,
-                                  image: const DecorationImage(
-                                    ///임시
-                                    image:
-                                        AssetImage('assets/user/user_cat.png'),
-                                  ),
+                            icon: Container(
+                              width: 35.0,
+                              height: 35.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 0.8,
+                                ),
+                                color: Colors.transparent,
+                                image: const DecorationImage(
+                                  ///임시
+                                  image: AssetImage('assets/user/user_cat.png'),
                                 ),
                               ),
-                              label: ""),
+                            ),
+                            label: "",
+                            activeIcon: Container(
+                              width: 35.0,
+                              height: 35.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppTheme.mainColor,
+                                  width: 0.8,
+                                ),
+                                color: Colors.transparent,
+                                image: const DecorationImage(
+                                  ///임시
+                                  image: AssetImage('assets/user/user_cat.png'),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                         currentIndex: _selectedIndex,
                         unselectedItemColor: const Color(0xffadadad),
