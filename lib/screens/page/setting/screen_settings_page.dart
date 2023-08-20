@@ -57,6 +57,8 @@ class _SettingScreenThemePageState extends State<SettingScreenThemePage> {
             onChanged: (bool? value) {
               setState(() {
                 settingScreenThemeController.isCheckedList[index] = value ?? false;
+                settingScreenThemeController.selectOneSwitch(index);
+                settingScreenThemeController.changeTheme(index);
               });
             },
           )

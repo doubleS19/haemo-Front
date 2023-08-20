@@ -3,13 +3,19 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../common/color.dart';
 
-class SettingScreenThemeController extends GetxController{
+Map<int, ThemeType> colorTheme = {
+  0: ThemeType.Blue,
+  1: ThemeType.Beige,
+  2: ThemeType.Pink,
+  3: ThemeType.LightGreen
+};
+
+class SettingScreenThemeController extends GetxController {
   final RxList<bool> isCheckedList = [true, false, false, false].obs;
-  ThemeType themeType = AppTheme.themeType;
+  ThemeType themeType = AppTheme.themeType.value;
 
-
-  void changeTheme(){
-    AppTheme.changeThemeType(themeType);
+  void changeTheme(int selectedIndex) {
+    AppTheme.changeThemeType(colorTheme[selectedIndex]??ThemeType.Blue);
   }
 
   void selectOneSwitch(int selectedIndex) {
@@ -17,5 +23,4 @@ class SettingScreenThemeController extends GetxController{
       isCheckedList[i] = (i == selectedIndex);
     }
   }
-
 }

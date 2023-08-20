@@ -21,7 +21,7 @@ Widget customColorAppbar(BuildContext context, String appBarText) {
       icon: const Icon(Icons.arrow_back),
     ),
     elevation: 0.0,
-    backgroundColor: Theme.of(context).primaryColor,
+    backgroundColor: AppTheme.mainColor,
   );
 }
 

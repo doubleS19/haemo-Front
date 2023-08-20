@@ -1,16 +1,20 @@
 import 'dart:ui';
 
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
 enum ThemeType { Pink, Blue, Beige, LightGreen }
 
 class AppTheme {
-  static ThemeType themeType = ThemeType.Blue;
+  static Rx<ThemeType> themeType = ThemeType.Blue.obs;
 
-  static changeThemeType(ThemeType themeType){
-    themeType = themeType;
+  static void changeThemeType(ThemeType newThemeType){
+    themeType.value = newThemeType;
+    print("New themeType: $newThemeType");
+    print("Main color: ${mainColor.toString()}");
   }
 
   static Color get mainColor {
-    switch (themeType) {
+    switch (themeType.value) {
       case ThemeType.Pink:
         return pinkColor;
       case ThemeType.Blue:
