@@ -54,70 +54,65 @@ class _MyWishPageState extends State<MyWishPage> {
   Widget myWishList() {
     DBService db = DBService();
     return FutureBuilder(
-        future: db.getWishListByUser(1),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final List<WishResponse> wishList =
-                snapshot.data as List<WishResponse>;
-            // UserResponse user =
-            //     db.getUserByNickname(PreferenceUtil.getString("nickname")!)
-            //         as UserResponse;
-            wishList.removeWhere((element) => element.uId != 2);
-            // wishList.removeWhere((element) => element.uId != user.uId);
-            List<HotPlacePost> postList =
-                db.getHotPlaceById(1) as List<HotPlacePost>;
-
-            if (wishList.isEmpty) {
-              return Center(
-                  child: Text(
-                "아직 찜한 장소가 없어요!",
-                style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    color: AppTheme.mainPageTextColor),
-              ));
-            } else {
-              return ListView.builder(
-                  itemCount: postList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () {
-                          Get.to(() => const HomePage());
-                        },
-                        child: Column(children: [
-                          Container(
-                              height: 50.0,
-                              width: double.infinity,
-                              margin:
-                                  const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                              padding:
-                                  const EdgeInsets.only(left: 5.0, right: 5.0),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: hotPlaceCard(
-                                      context,
-                                      HotPlacePostResponse(
-                                          pId: 1,
-                                          title: postList[index].title,
-                                          content: postList[index].content,
-                                          address: postList[index].address,
-                                          nickname: postList[index].nickname,
-                                          date: postList[index].date,
-                                          photoList: []),
-                                      true
-                                      /*hotPlaceController.hotPlacePostList[index],
+      future: db.getWishListHpIdsByUser(PreferenceUtil.getInt("uId")!),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Center(child: Text("${snapshot.error}"));
+        } else if (snapshot.hasData) {
+          final List<int> pIdList = snapshot.data!;
+          return FutureBuilder(
+            future: db.getHotPlaceById(pIdList[0]),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return Center(child: Text("${snapshot.error}"));
+              } else if (snapshot.hasData) {
+                final List<HotPlacePostResponse> postList = snapshot.data!;
+                return ListView.builder(
+                    itemCount: postList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                          onTap: () {
+                            Get.to(() => const HomePage());
+                          },
+                          child: Column(children: [
+                            Container(
+                                height: 50.0,
+                                width: double.infinity,
+                                margin: const EdgeInsets.fromLTRB(
+                                    8.0, 8.0, 8.0, 0.0),
+                                padding: const EdgeInsets.only(
+                                    left: 5.0, right: 5.0),
+                                child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: hotPlaceCard(
+                                        context,
+                                        HotPlacePostResponse(
+                                            pId: postList[index].pId,
+                                            title: postList[index].title,
+                                            content: postList[index].content,
+                                            address: postList[index].address,
+                                            nickname: postList[index].nickname,
+                                            date: postList[index].date,
+                                            photoList: []),
+                                        true
+                                        /*hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
-                                      )))
-                        ]));
-                  });
-            }
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text("${snapshot.error}"),
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
+                                        )))
+                          ]));
+                    });
+              } else {
+                return Center(child: Text("No data available"));
+              }
+            },
           );
-        });
+        } else {
+          return const Center(child: Text("No data available"));
+        }
+      },
+    );
   }
 }

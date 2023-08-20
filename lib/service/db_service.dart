@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:hae_mo/model/club_comment_response_model.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
@@ -11,7 +10,6 @@ import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/model/wish_model.dart';
 import 'package:hae_mo/model/wish_response_model.dart';
-import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:http/http.dart' as http;
 import 'dart:developer' as dev;
 import '../model/post_response_model.dart';
@@ -296,7 +294,7 @@ class DBService {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse.map((e) => WishResponse.fromJson(e)).toList();
     } else {
-      throw Exception('Failed to load comments');
+      throw Exception('Failed to load wish list');
     }
   }
 
@@ -331,6 +329,19 @@ class DBService {
       print('WishList deleted successfully');
     } else {
       throw Exception('Failed to delete WishList');
+    }
+  }
+
+  Future<List<int>> getWishListHpIdsByUser(int uId) async {
+    final response =
+        await http.get(Uri.parse('http://43.201.211.1:1004/wish/myList/$uId'));
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      final List<int> pIdList =
+          data.map((item) => item['hpId'] as int).toList();
+      return pIdList;
+    } else {
+      throw Exception('Failed to load wish list');
     }
   }
 
