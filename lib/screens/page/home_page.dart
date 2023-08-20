@@ -66,33 +66,43 @@ class _HomePageState extends State<HomePage> {
                 type: BottomNavigationBarType.fixed,
                 items: <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
-                      icon: Image.asset("assets/icons/postingpage_bottomnav_icon.png"),
+                      icon: Image.asset(
+                          "assets/icons/postingpage_bottomnav_icon.png"),
                       label: "",
-                      activeIcon: Image.asset("assets/icons/postingpage_bottomnav_icon.png",
+                      activeIcon: Image.asset(
+                          "assets/icons/postingpage_bottomnav_icon.png",
                           color: AppTheme.mainColor)),
                   BottomNavigationBarItem(
-                      icon: Image.asset("assets/icons/clubpage_bottomnav_icon.png"),
+                      icon: Image.asset(
+                          "assets/icons/clubpage_bottomnav_icon.png"),
                       label: "",
-                      activeIcon: Image.asset("assets/icons/clubpage_bottomnav_icon.png",
+                      activeIcon: Image.asset(
+                          "assets/icons/clubpage_bottomnav_icon.png",
                           color: AppTheme.mainColor)),
                   BottomNavigationBarItem(
                       icon: Container(
                           width: 30,
                           height: 30,
-                          child: Image.asset("assets/icons/hotplace_bottomnav_icon.png")),
+                          child: Image.asset(
+                              "assets/icons/hotplace_bottomnav_icon.png")),
                       label: "",
                       activeIcon: Container(
                           width: 30,
                           height: 30,
-                          child: Image.asset("assets/icons/hotplace_bottomnav_icon.png",
+                          child: Image.asset(
+                              "assets/icons/hotplace_bottomnav_icon.png",
                               color: AppTheme.mainColor))),
                   BottomNavigationBarItem(
                       icon: Container(
-                        width: 30,
-                        height: 30,
+                        width: 35.0,
+                        height: 35.0,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppTheme.mainTextColor,
+                          border: Border.all(
+                            color: AppTheme.mainColor,
+                            width: 0.8,
+                          ),
+                          color: Colors.transparent,
                           image: const DecorationImage(
                             ///임시
                             image: AssetImage('assets/user/user_cat.png'),
@@ -107,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                 onTap: _onItemTapped,
               )),
         ),
-        floatingActionButton: _selectedIndex!=3?floatingButton():null);
+        floatingActionButton: _selectedIndex != 3 ? floatingButton() : null);
   }
 
   @override
