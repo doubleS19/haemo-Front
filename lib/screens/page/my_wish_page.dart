@@ -8,13 +8,12 @@ import 'package:hae_mo/model/wish_response_model.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/model/wish_model.dart';
-import 'package:hae_mo/screens/page/board_detail_page.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:http/http.dart';
 import '../../model/hotplace_post_response_model.dart';
 import '../../model/user_model.dart';
 import '../../service/db_service.dart';
-import '../Page/hot_place_page.dart';
+import '../Page/board/hot_place_page.dart';
 
 class MyWishPage extends StatefulWidget {
   const MyWishPage({super.key});
@@ -82,7 +81,7 @@ class _MyWishPageState extends State<MyWishPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () {
-                          Get.to(() => HomePage());
+                          Get.to(() => const HomePage());
                         },
                         child: Column(children: [
                           Container(

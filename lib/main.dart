@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
-import 'package:hae_mo/screens/Page/loading_page.dart';
+import 'package:hae_mo/screens/Page/intro/loading_page.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/screens/page/setting/delete_account_page.dart';
 import 'package:hae_mo/screens/page/setting/alarm_setting_page.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../common/color.dart';
-import '../Page/chat_list_page.dart';
+import '../Page/chat/chat_list_page.dart';
 
 Widget customColorAppbar(BuildContext context, String appBarText) {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

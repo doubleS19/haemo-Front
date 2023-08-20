@@ -7,15 +7,15 @@ import 'package:get/get.dart';
 import 'package:hae_mo/controller/image_controller.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
 import 'package:textfield_tags/textfield_tags.dart';
-import '../../model/dropdown_type.dart';
-import '../../model/post_type.dart';
-import '../Page/home_page.dart';
-import '../components/customAppBar.dart';
-import '../components/customButton.dart';
-import '../components/customDialog.dart';
-import '../components/customDropDownButton.dart';
-import '../components/customTextField.dart';
-import '../components/imagePicker.dart';
+import '../../../model/dropdown_type.dart';
+import '../../../model/post_type.dart';
+import '../../Page/home_page.dart';
+import '../../components/customAppBar.dart';
+import '../../components/customButton.dart';
+import '../../components/customDialog.dart';
+import '../../components/customDropDownButton.dart';
+import '../../components/customTextField.dart';
+import '../../components/imagePicker.dart';
 
 /// imagePicker 생성하기
 /// dropdownButton 값 controller에 저장하기

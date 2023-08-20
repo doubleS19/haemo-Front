@@ -4,10 +4,10 @@ import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/post_type.dart';
 import 'package:hae_mo/model/user_model.dart';
 
-import '../../common/color.dart';
-import '../../common/theme.dart';
-import '../components/commentWidget.dart';
-import '../components/customAppBar.dart';
+import '../../../common/color.dart';
+import '../../../common/theme.dart';
+import '../../components/commentWidget.dart';
+import '../../components/customAppBar.dart';
 
 class HotPlaceDetailPage extends StatefulWidget {
   const HotPlaceDetailPage({Key? key, required this.hotPlacePost})
@@ -28,24 +28,27 @@ class _HotPlaceDetailPageState extends State<HotPlaceDetailPage> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            Padding(padding: EdgeInsets.fromLTRB(10, 5, 10, 5), child: Column(
-              children: [
-                profile(widget.hotPlacePost.nickname),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.hotPlacePost.title,
-                          style: CustomThemes.hotPlaceBoardTitleTextStyle,
-                        ),
-                        Text("정왕동",
-                            style: CustomThemes.mainTheme.textTheme.bodySmall)
-                      ],
-                    )),
-              ],
-            )),
+            Padding(
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                child: Column(
+                  children: [
+                    profile(widget.hotPlacePost.nickname),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              widget.hotPlacePost.title,
+                              style: CustomThemes.hotPlaceBoardTitleTextStyle,
+                            ),
+                            Text("정왕동",
+                                style:
+                                    CustomThemes.mainTheme.textTheme.bodySmall)
+                          ],
+                        )),
+                  ],
+                )),
             Container(
               padding: EdgeInsets.fromLTRB(0, 50, 0, 20),
               height: 300,

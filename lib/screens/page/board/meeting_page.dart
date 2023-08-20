@@ -3,11 +3,9 @@ import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/post_response_model.dart';
-import 'package:hae_mo/screens/page/board_detail_page.dart';
-import 'package:hae_mo/screens/page/chat_list_page.dart';
-import '../../service/db_service.dart';
-import '../components/customAppBar.dart';
-import '../components/customIndicator.dart';
+import '../../Page/board/board_detail_page.dart';
+import '../../components/customAppBar.dart';
+import '../../components/customIndicator.dart';
 
 class MeetingPage extends StatefulWidget {
   const MeetingPage({super.key});

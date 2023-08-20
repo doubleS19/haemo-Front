@@ -5,14 +5,15 @@ import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/club_page_controller.dart';
 import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/model/post_type.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/page/posting_page.dart';
+import 'package:hae_mo/screens/page/board/posting_page.dart';
+import 'package:hae_mo/screens/page/board/posting_page.dart';
 import '../../controller/meeting_page_controller.dart';
+import '../../model/user_response_model.dart';
 import '../../service/db_service.dart';
 import '../../utils/shared_preference.dart';
-import 'club_page.dart';
-import 'hot_place_page.dart';
-import 'meeting_page.dart';
+import '../Page/board/club_page.dart';
+import '../Page/board/hot_place_page.dart';
+import '../Page/board/meeting_page.dart';
 import 'setting/my_page.dart';
 
 class HomePage extends StatefulWidget {

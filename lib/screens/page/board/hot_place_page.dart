@@ -3,14 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/page/hotplace_board_detail_page.dart';
 import 'package:hae_mo/service/db_service.dart';
-import '../../common/theme.dart';
-import '../../controller/hotplace_page_controller.dart';
-import '../../model/wish_model.dart';
-import '../components/customAppBar.dart';
-import '../components/customIndicator.dart';
-import '../components/heartButton.dart';
+import '../../../common/theme.dart';
+import '../../../controller/hotplace_page_controller.dart';
+import '../../components/customAppBar.dart';
+import '../../components/customIndicator.dart';
+import '../../components/heartButton.dart';
+import 'hotplace_board_detail_page.dart';
 
 class HotPlacePage extends StatefulWidget {
   const HotPlacePage({super.key});

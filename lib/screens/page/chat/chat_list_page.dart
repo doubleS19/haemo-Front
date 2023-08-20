@@ -5,10 +5,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/chatlist_model.dart';
 
-import '../../controller/chatlist_controller.dart';
-import 'club_page.dart';
-import 'meeting_page.dart';
-import 'setting/my_page.dart';
+import '../../../controller/chatlist_controller.dart';
 
 class ChatListPage extends StatefulWidget {
   const ChatListPage({super.key});

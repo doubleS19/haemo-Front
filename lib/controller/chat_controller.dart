@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:hae_mo/screens/page/chat_list_page.dart';
+import 'package:hae_mo/screens/page/chat/chat_list_page.dart';
 import 'package:http/http.dart';
 
 import '../model/chatmessage_model.dart';
@@ -21,16 +21,14 @@ class ChatController extends GetxController {
   get text => _text;
   get sender => _sender;
 
-  StreamController<List<ChatMessage>> streamController = StreamController<List<ChatMessage>>();
+  StreamController<List<ChatMessage>> streamController =
+      StreamController<List<ChatMessage>>();
 
-  void startStream(){
-
-  }
+  void startStream() {}
 
   @override
   void onInit() {
     super.onInit();
-
   }
 
   /// Firestore doc에 새로운 체탱창 생성
@@ -42,26 +40,22 @@ class ChatController extends GetxController {
   /// @ 테스트 후 studentId를 sharedPreference에서 가져오도록 변경하기
   void createChatroom(ChatUser otherUser, ChatMessage chatMessage) {
     // me, other 사이에 생성된 채팅방이 있는지 확인 - 게시물에서 채팅으로 넘어갈 때 필요할 듯?
-    var chatRoomId = "${PreferenceUtil.getString("studentId") != null ? PreferenceUtil.getString("studentId")! : "seoyeon"}_${otherUser.studentId}";
+    var chatRoomId =
+        "${PreferenceUtil.getString("studentId") != null ? PreferenceUtil.getString("studentId")! : "seoyeon"}_${otherUser.studentId}";
 
     var chatroom = ChatData(
-      chatRoomId: chatRoomId,
-      chatUser1: ChatUser(
+        chatRoomId: chatRoomId,
+        chatUser1: ChatUser(
 /*          studentId:
 PreferenceUtil.getString("studentId")!,
           profileImage: PreferenceUtil.getInt("profileImage") != null? PreferenceUtil.getInt("profileImage")! : 1*/
-        studentId: "seoyeon",
-        profileImage: 1
-      ),
-      chatUser2: otherUser,
-      chatMessageList: [chatMessage]
-    );
+            studentId: "seoyeon",
+            profileImage: 1),
+        chatUser2: otherUser,
+        chatMessageList: [chatMessage]);
 
-    firestore.collection('haemo').doc(chatRoomId)
-        .set(chatroom.toJson());
-
+    firestore.collection('haemo').doc(chatRoomId).set(chatroom.toJson());
   }
-
 
   /// 메세지 전송 클릭 시 FireStore로 전송되어 chatMessageList에 저장됨
   /// @param String chatRoomId 고유 채팅방 Id
@@ -69,12 +63,13 @@ PreferenceUtil.getString("studentId")!,
   /// @return void
   /// @success - 채팅창 메세지 저장 성공
   /// @author: seoyeon
-  void sendData(String chatRoomId, ChatMessage chatMessage) async{
+  void sendData(String chatRoomId, ChatMessage chatMessage) async {
     try {
-      final snapshot = await firestore.collection('haemo').doc(chatRoomId).get();
+      final snapshot =
+          await firestore.collection('haemo').doc(chatRoomId).get();
       print(snapshot.data());
 
-      if(snapshot.exists) {
+      if (snapshot.exists) {
         final chatData = ChatData.fromDocumentSnapshot(snapshot);
         print("chatData: $chatData");
         final messages = chatData.chatMessageList;
@@ -82,10 +77,7 @@ PreferenceUtil.getString("studentId")!,
 
         print(messages);
 
-        firestore
-            .collection('haemo')
-            .doc(chatRoomId)
-            .update(
+        firestore.collection('haemo').doc(chatRoomId).update(
             {'chatMessageList': messages?.map((e) => e.toJson()).toList()});
       }
     } catch (ex) {
@@ -94,7 +86,6 @@ PreferenceUtil.getString("studentId")!,
   }
 
   /// 메세지 읽었을 때 false -> true
-
 
   /// Firestore에서 새로운 메시지 가져오기 - stream
   /// @param String chatRoomId 고유 채팅방 Id

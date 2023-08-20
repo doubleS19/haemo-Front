@@ -9,11 +9,11 @@ import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/commentWidget.dart';
-import '../../model/comment_response_model.dart';
-import '../../model/post_model.dart';
-import '../../service/db_service.dart';
-import '../components/heartButton.dart';
-import '../components/userBottomSheet.dart';
+import '../../../model/comment_response_model.dart';
+import '../../../model/post_model.dart';
+import '../../../service/db_service.dart';
+import '../../components/heartButton.dart';
+import '../../components/userBottomSheet.dart';
 
 class BoardDetailPage extends StatefulWidget {
   const BoardDetailPage({super.key, required this.pId, required this.type});

@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/screens/Page/register_page.dart';
+import 'package:hae_mo/screens/Page/intro/register_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import "dart:developer" as dev;
 
-import '../../common/color.dart';
+import '../../../common/color.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key, required this.title});
@@ -50,7 +50,8 @@ class _LoadingPageState extends State<LoadingPage> {
       AnimatedOpacity(
           opacity: selected ? 1.0 : 0.0,
           duration: duration,
-          child: Image.asset("assets/icons/wont_icon.png", color: AppTheme.mainColor)),
+          child: Image.asset("assets/icons/wont_icon.png",
+              color: AppTheme.mainColor)),
       Image.asset("assets/icons/wont.png", color: AppTheme.mainColor)
     ])));
   }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
-import '../../controller/club_page_controller.dart';
-import '../components/customAppBar.dart';
+import '../../../controller/club_page_controller.dart';
+import '../../components/customAppBar.dart';
 import 'board_detail_page.dart';
-import 'chat_list_page.dart';
 import 'club_board_detail_page.dart';
 
 class ClubPage extends StatefulWidget {
