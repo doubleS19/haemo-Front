@@ -6,7 +6,6 @@ import 'package:hae_mo/controller/club_page_controller.dart';
 import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/model/post_type.dart';
 import 'package:hae_mo/screens/page/board/posting_page.dart';
-import 'package:hae_mo/screens/page/board/posting_page.dart';
 import '../../controller/meeting_page_controller.dart';
 import '../../model/user_response_model.dart';
 import '../../service/db_service.dart';
@@ -78,30 +77,30 @@ class _HomePageState extends State<HomePage> {
                         items: <BottomNavigationBarItem>[
                           BottomNavigationBarItem(
                               icon: Image.asset(
-                                  "assets/icons/postingpage_bottomnav_icon.png"),
+                                  "assets/icons/meeting_bottom_icon.png"),
                               label: "",
                               activeIcon: Image.asset(
-                                  "assets/icons/postingpage_bottomnav_icon.png",
+                                  "assets/icons/meeting_bottom_icon.png",
                                   color: AppTheme.mainColor)),
                           BottomNavigationBarItem(
                               icon: Image.asset(
-                                  "assets/icons/clubpage_bottomnav_icon.png"),
+                                  "assets/icons/club_bottom_icon.png"),
                               label: "",
                               activeIcon: Image.asset(
-                                  "assets/icons/clubpage_bottomnav_icon.png",
+                                  "assets/icons/club_bottom_icon.png",
                                   color: AppTheme.mainColor)),
                           BottomNavigationBarItem(
                               icon: Container(
                                   width: 30,
                                   height: 30,
                                   child: Image.asset(
-                                      "assets/icons/hotplace_bottomnav_icon.png")),
+                                      "assets/icons/hotplace_bottom_icon.png")),
                               label: "",
                               activeIcon: Container(
                                   width: 30,
                                   height: 30,
                                   child: Image.asset(
-                                      "assets/icons/hotplace_bottomnav_icon.png",
+                                      "assets/icons/hotplace_bottom_icon.png",
                                       color: AppTheme.mainColor))),
                           BottomNavigationBarItem(
                               icon: Container(
