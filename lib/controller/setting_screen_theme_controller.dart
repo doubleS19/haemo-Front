@@ -1,5 +1,6 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:hae_mo/utils/shared_preference.dart';
 
 import '../common/color.dart';
 
@@ -16,11 +17,15 @@ class SettingScreenThemeController extends GetxController {
 
   void changeTheme(int selectedIndex) {
     AppTheme.changeThemeType(colorTheme[selectedIndex]??ThemeType.Blue);
+    PreferenceUtil.setInt("colorTheme", selectedIndex);
   }
 
   void selectOneSwitch(int selectedIndex) {
     for (int i = 0; i < isCheckedList.length; i++) {
       isCheckedList[i] = (i == selectedIndex);
     }
+  }
+  void rollBackColor(){
+
   }
 }

@@ -98,7 +98,7 @@ AppBar backAppBar() {
 }
 
 
-Widget 성(BuildContext context, String appBarText) {
+Widget customColorSettingPageAppbar(BuildContext context, String appBarText) {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white, // 회색
   ));
