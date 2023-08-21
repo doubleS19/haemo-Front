@@ -73,7 +73,7 @@ class HotPlacePageController extends GetxController {
   void updateWishList(int pId, bool checkWishList) {
     if (checkWishList) {
       /// 찜 목록에 이미 핫플이 존재할 때 -> 찜 취소 -> 핫플 삭제
-      dbService.deleteWishList(Wish(pId: pId, uId: uId));
+      dbService.deleteWishList(uId, pId);
     } else {
       /// 찜 목록에 핫플 추가
       dbService.addWishList(Wish(pId: pId, uId: uId));

@@ -37,8 +37,7 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
           Wish wish = Wish(uId: widget.uId, pId: widget.pId);
           db.addWishList(wish);
         } else {
-          Wish wish = Wish(uId: widget.uId, pId: widget.pId);
-          db.deleteWishList(wish);
+          db.deleteWishList(widget.uId, widget.pId);
         }
         setState(() {
           /// 클릭 후 디비에 반영되면 색이 바뀌도록 바꿔야 될지도..?
