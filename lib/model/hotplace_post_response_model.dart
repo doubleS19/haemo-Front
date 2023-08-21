@@ -17,9 +17,10 @@ class HotPlacePostResponse {
       {required this.pId,
       required this.title,
       required this.content,
-        required this.address,
+      required this.address,
       required this.nickname,
-      required this.date, this.photoList});
+      required this.date,
+      this.photoList});
 
   factory HotPlacePostResponse.fromJson(Map<String, dynamic> json) {
     return HotPlacePostResponse(
@@ -28,7 +29,7 @@ class HotPlacePostResponse {
       nickname: json['nickname'],
       address: json['address'],
       date: json['date'],
-      pId: json['pid'],
+      pId: json['hpId'],
       //photoList: json['photolist'],
       //heartNum: json['heartnum'],
 
@@ -37,7 +38,7 @@ class HotPlacePostResponse {
   }
 
   Map<String, dynamic> toJson() => {
-        'pid': pId,
+        'hpId': pId,
         'title': title,
         'content': content,
         'nickname': nickname,

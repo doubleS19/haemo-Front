@@ -54,65 +54,45 @@ class _MyWishPageState extends State<MyWishPage> {
   Widget myWishList() {
     DBService db = DBService();
     return FutureBuilder(
-      future: db.getWishListHpIdsByUser(PreferenceUtil.getInt("uId")!),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          return Center(child: Text("${snapshot.error}"));
-        } else if (snapshot.hasData) {
-          final List<int> pIdList = snapshot.data!;
-          return FutureBuilder(
-            future: db.getHotPlaceById(pIdList[0]),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator();
-              } else if (snapshot.hasError) {
-                return Center(child: Text("${snapshot.error}"));
-              } else if (snapshot.hasData) {
-                final List<HotPlacePostResponse> postList = snapshot.data!;
-                return ListView.builder(
-                    itemCount: postList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                          onTap: () {
-                            Get.to(() => const HomePage());
-                          },
-                          child: Column(children: [
-                            Container(
-                                height: 50.0,
-                                width: double.infinity,
-                                margin: const EdgeInsets.fromLTRB(
-                                    8.0, 8.0, 8.0, 0.0),
-                                padding: const EdgeInsets.only(
-                                    left: 5.0, right: 5.0),
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: hotPlaceCard(
-                                        context,
-                                        HotPlacePostResponse(
-                                            pId: postList[index].pId,
-                                            title: postList[index].title,
-                                            content: postList[index].content,
-                                            address: postList[index].address,
-                                            nickname: postList[index].nickname,
-                                            date: postList[index].date,
-                                            photoList: []),
-                                        true
-                                        /*hotPlaceController.hotPlacePostList[index],
+        future: db.getWishListHpIdsByUser(PreferenceUtil.getInt("uId")!),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Center(child: Text("${snapshot.error}"));
+          } else if (snapshot.hasData) {
+            final List<HotPlacePostResponse> postList = snapshot.data!;
+            return GridView.builder(
+                itemCount: postList.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 1.4,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 10),
+                itemBuilder: (BuildContext context, int index) {
+                  return hotPlaceCard(
+                      context,
+                      HotPlacePostResponse(
+                          pId: postList[index].pId,
+                          title: postList[index].title,
+                          content: postList[index].content,
+                          address: postList[index].address,
+                          nickname: postList[index].nickname,
+                          date: postList[index].date,
+                          photoList: []),
+                      true
+                      /*hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
-                                        )))
-                          ]));
-                    });
-              } else {
-                return Center(child: Text("No data available"));
-              }
-            },
+                      );
+                });
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text("${snapshot.error}"),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
           );
-        } else {
-          return const Center(child: Text("No data available"));
-        }
-      },
-    );
+        });
   }
 }
