@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/screens/page/chat/chat_room_page.dart';
+import 'package:hae_mo/screens/page/report/reporting_page.dart';
 import 'package:hae_mo/service/db_service.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 
@@ -72,7 +75,9 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                               const BorderRadius.all(Radius.circular(20.0)),
                           color: AppTheme.mainColor),
                       child: RawMaterialButton(
-                          onPressed: (() {}),
+                          onPressed: (() {
+                            Get.to(ChatRoom(chatRoomId: "3"));
+                          }),
                           child: const Text(
                             "채팅하기",
                             style: TextStyle(
@@ -92,7 +97,9 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                           color: Color(0xfff65a64)),
                       child: RawMaterialButton(
-                          onPressed: (() {}),
+                          onPressed: (() {
+                            Get.to(ReportingPage(nickname: user.nickname));
+                          }),
                           child: const Text(
                             "신고하기",
                             style: TextStyle(

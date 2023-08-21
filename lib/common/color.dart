@@ -13,16 +13,16 @@ Map<int, ThemeType> colorTheme = {
   3: ThemeType.LightGreen
 };
 
-
 class AppTheme {
-  AppTheme(){
+  AppTheme() {
     var themeColor = PreferenceUtil.getInt("themeColor");
-    themeType.value = (themeColor == null?ThemeType.Blue: colorTheme[themeColor])!;
+    themeType.value =
+        (themeColor == null ? ThemeType.Blue : colorTheme[themeColor])!;
   }
 
   static Rx<ThemeType> themeType = ThemeType.Blue.obs;
 
-  static void changeThemeType(ThemeType newThemeType){
+  static void changeThemeType(ThemeType newThemeType) {
     themeType.value = newThemeType;
     print("New themeType: $newThemeType");
     print("Main color: ${mainColor.toString()}");
@@ -84,5 +84,9 @@ class AppTheme {
   static var settingPageMenuTextColor = const Color(0xFF7F7E7E);
   static var settingPageMenuListTextColor = const Color(0xFF515151);
   static var settingPageDividerColor = const Color(0xFFF4F4F4);
-  static var settingPageAlarmBoxColor = const Color(0xFFF8FFDC).withOpacity(0.62);
+  static var settingPageAlarmBoxColor =
+      const Color(0xFFF8FFDC).withOpacity(0.62);
+
+  /// 신고 페이지
+  static var reportingPageTextColor = const Color(0xff686868);
 }
