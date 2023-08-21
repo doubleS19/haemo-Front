@@ -19,7 +19,7 @@ Widget customColorAppbar(BuildContext context, String appBarText) {
         Get.back();
       },
       color: Theme.of(context).iconTheme.color,
-      icon: const Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back_ios),
     ),
     elevation: 0.0,
     backgroundColor: AppTheme.mainColor,
@@ -97,7 +97,6 @@ AppBar backAppBar() {
   );
 }
 
-
 Widget customColorSettingPageAppbar(BuildContext context, String appBarText) {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white, // 회색
@@ -108,11 +107,11 @@ Widget customColorSettingPageAppbar(BuildContext context, String appBarText) {
     centerTitle: true,
     leading: IconButton(
       onPressed: () {
-        restartAppDialog(context, "테마 설정을 위해 앱이 재시작됩니다.","아니요", "예", (){
+        restartAppDialog(context, "테마 설정을 위해 앱이 재시작됩니다.", "아니요", "예", () {
           print("click Yes");
           Get.back();
           //Get.back();
-        }, (){
+        }, () {
           Navigator.of(context).popUntil((route) => route.isFirst);
           print("click Yes");
         });
