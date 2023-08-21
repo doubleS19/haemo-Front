@@ -80,9 +80,8 @@ class _MyWishPageState extends State<MyWishPage> {
                           nickname: postList[index].nickname,
                           date: postList[index].date,
                           photoList: []),
-                      true
-                      /*hotPlaceController.hotPlacePostList[index],
-                                  hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
+                      true,
+                      PreferenceUtil.getInt("uid")!
                       );
                 });
           } else if (snapshot.hasError) {

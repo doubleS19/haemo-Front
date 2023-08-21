@@ -89,9 +89,8 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                         .hotPlacePostList.value[index],
                                     hotPlaceController.checkHotPlaceList(
                                         hotPlaceController
-                                            .hotPlacePostList[index].pId)
-                                    /*hotPlaceController.hotPlacePostList[index],
-                                  hotPlaceController.hpWishList.contains(hotPlaceController.hotPlacePostList[index].pId)*/
+                                            .hotPlacePostList[index].pId),
+                                    hotPlaceController.uId
                                     );
                               }))))),
             ],
@@ -142,7 +141,7 @@ Widget popularHotPlaceCard(
 }
 
 Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
-    bool fillHeartColor) {
+    bool fillHeartColor, int uId) {
   return GestureDetector(
       onTap: () {
         Get.to(() => HotPlaceDetailPage(hotPlacePost: hotPlaceData));
@@ -167,7 +166,7 @@ Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
             Positioned(
               right: 0,
               child:
-                  HeartButtonWidget(uId: 42, pId: 1, fillHeart: fillHeartColor),
+                  HeartButtonWidget(uId: uId, pId: hotPlaceData.pId, fillHeart: fillHeartColor),
             )
           ])));
 }
