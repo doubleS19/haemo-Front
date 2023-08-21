@@ -125,9 +125,14 @@ class _ReportingPageState extends State<ReportingPage> {
                               color: AppTheme.postingPageDetailTextFieldColor,
                             ),
                             child: TextFormField(
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.0,
+                                  color: AppTheme.mainTextColor),
                               cursorColor: AppTheme.mainPageTextColor,
-                              minLines: 6,
-                              maxLines: null,
+                              minLines: 12,
+                              maxLines: 12,
+                              maxLength: 500,
                               keyboardType: TextInputType.multiline,
                               controller: textEditingController,
                               decoration: InputDecoration(
@@ -136,10 +141,7 @@ class _ReportingPageState extends State<ReportingPage> {
                                   border: InputBorder.none,
                                   hintText: "신고 사유를 자세히 작성해 주세요.",
                                   hintStyle: TextStyle(
-                                      fontSize: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall
-                                          ?.fontSize,
+                                      fontSize: 14.0,
                                       fontFamily: Theme.of(context)
                                           .textTheme
                                           .bodySmall
