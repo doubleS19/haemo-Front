@@ -321,7 +321,7 @@ class DBService {
 
   Future<void> deleteWishList(int uId, int pId) async {
     final response = await http.delete(
-      Uri.parse('http://43.201.211.1:1004/wish/delete'),
+      Uri.parse('http://43.201.211.1:1004/wish/delete/$uId/$pId'),
     );
     if (response.statusCode == 204) {
       print('WishList deleted successfully');
