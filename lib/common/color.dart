@@ -2,9 +2,24 @@ import 'dart:ui';
 
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
+import '../utils/shared_preference.dart';
+
 enum ThemeType { Pink, Blue, Beige, LightGreen }
 
+Map<int, ThemeType> colorTheme = {
+  0: ThemeType.Blue,
+  1: ThemeType.Beige,
+  2: ThemeType.Pink,
+  3: ThemeType.LightGreen
+};
+
+
 class AppTheme {
+  AppTheme(){
+    var themeColor = PreferenceUtil.getInt("themeColor");
+    themeType.value = (themeColor == null?ThemeType.Blue: colorTheme[themeColor])!;
+  }
+
   static Rx<ThemeType> themeType = ThemeType.Blue.obs;
 
   static void changeThemeType(ThemeType newThemeType){
