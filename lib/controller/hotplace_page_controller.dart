@@ -31,9 +31,8 @@ class HotPlacePageController extends GetxController {
 
     uId = PreferenceUtil.getInt("uid")!;
     wishListController = WishListController(uId);
-    ever(wishListController.wishList, (callback) => {
-      wishList.assignAll(callback)
-    });
+    ever(wishListController.wishList,
+        (callback) => {wishList.assignAll(callback)});
   }
 
   void updateHotPlaceList() {
@@ -74,7 +73,7 @@ class HotPlacePageController extends GetxController {
   void updateWishList(int pId, bool checkWishList) {
     if (checkWishList) {
       /// 찜 목록에 이미 핫플이 존재할 때 -> 찜 취소 -> 핫플 삭제
-      dbService.deleteWishList(uId, pId);
+      dbService.deleteWishList(Wish(pId: pId, uId: uId));
     } else {
       /// 찜 목록에 핫플 추가
       dbService.addWishList(Wish(pId: pId, uId: uId));
@@ -83,5 +82,5 @@ class HotPlacePageController extends GetxController {
     /// 위시리스트 업데이트
   }
 
-/// 테이블을 가져올 때 찜 테이블이면 하트 색깔이 빨강색이도록?
+  /// 테이블을 가져올 때 찜 테이블이면 하트 색깔이 빨강색이도록?
 }

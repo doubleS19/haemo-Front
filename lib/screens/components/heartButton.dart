@@ -7,7 +7,10 @@ import '../../model/wish_model.dart';
 
 class HeartButtonWidget extends StatefulWidget {
   const HeartButtonWidget(
-      {super.key, required this.fillHeart, required this.uId, required this.pId});
+      {super.key,
+      required this.fillHeart,
+      required this.uId,
+      required this.pId});
 
   final bool fillHeart;
   final int uId;
@@ -30,11 +33,12 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        if (!fillHeartColor){
+        if (!fillHeartColor) {
           Wish wish = Wish(uId: widget.uId, pId: widget.pId);
           db.addWishList(wish);
-        } else{
-          db.deleteWishList(widget.uId, widget.pId);
+        } else {
+          Wish wish = Wish(uId: widget.uId, pId: widget.pId);
+          db.deleteWishList(wish);
         }
         setState(() {
           /// 클릭 후 디비에 반영되면 색이 바뀌도록 바꿔야 될지도..?
