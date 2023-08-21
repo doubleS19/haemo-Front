@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../common/color.dart';
 import '../Page/chat/chat_list_page.dart';
+import 'customDialog.dart';
 
 Widget customColorAppbar(BuildContext context, String appBarText) {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -93,5 +94,33 @@ AppBar backAppBar() {
         width: 0.5,
       ),
     ),
+  );
+}
+
+
+Widget 성(BuildContext context, String appBarText) {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.white, // 회색
+  ));
+
+  return AppBar(
+    title: Text(appBarText, style: Theme.of(context).textTheme.headlineMedium),
+    centerTitle: true,
+    leading: IconButton(
+      onPressed: () {
+        restartAppDialog(context, "테마 설정을 위해 앱이 재시작됩니다.","아니요", "예", (){
+          print("click Yes");
+          Get.back();
+          //Get.back();
+        }, (){
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          print("click Yes");
+        });
+      },
+      color: Theme.of(context).iconTheme.color,
+      icon: const Icon(Icons.arrow_back),
+    ),
+    elevation: 0.0,
+    backgroundColor: AppTheme.mainColor,
   );
 }
