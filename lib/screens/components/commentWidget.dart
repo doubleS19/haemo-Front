@@ -9,8 +9,6 @@ import '../../model/comment_response_model.dart';
 import '../../model/hotplace_comment_response_model.dart';
 import '../../service/db_service.dart';
 
-
-/// Type: 1 - metting, 2 - club, 3 - hotplace
 Widget commentWidget(int pId, int type) {
   DBService db = DBService();
   if (type == 1) {
@@ -99,7 +97,7 @@ Widget commentWidget(int pId, int type) {
                                             height: 41,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              color: AppTheme.mainTextColor,
+                                              color: Colors.transparent,
                                               image: DecorationImage(
                                                 image:
                                                     AssetImage(user.userImage),
@@ -148,7 +146,6 @@ Widget commentWidget(int pId, int type) {
     return FutureBuilder<List<ClubCommentResponse>>(
       future: db.getClubCommentsByCpId(pId),
       builder: (context, snapshot) {
-        print(snapshot.data);
         if (snapshot.connectionState == ConnectionState.waiting) {
           // 데이터 로딩
           return const Center(
@@ -230,7 +227,7 @@ Widget commentWidget(int pId, int type) {
                                             height: 41,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              color: AppTheme.mainTextColor,
+                                              color: Colors.transparent,
                                               image: DecorationImage(
                                                 image:
                                                     AssetImage(user.userImage),
@@ -361,7 +358,7 @@ Widget commentWidget(int pId, int type) {
                                             height: 41,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              color: AppTheme.mainTextColor,
+                                              color: Colors.transparent,
                                               image: DecorationImage(
                                                 image:
                                                     AssetImage(user.userImage),

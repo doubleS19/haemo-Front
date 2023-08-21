@@ -80,7 +80,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               height: 41,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: AppTheme.mainTextColor,
+                                                color: Colors.transparent,
                                                 image: DecorationImage(
                                                   image: AssetImage(
                                                       user.userImage),
@@ -217,7 +217,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               height: 41,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: AppTheme.mainTextColor,
+                                                color: Colors.transparent,
                                                 image: DecorationImage(
                                                   image: AssetImage(
                                                       user.userImage),
