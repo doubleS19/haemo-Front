@@ -71,12 +71,16 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                         },
                         child: Column(children: [
                           Container(
-                              height: 50.0,
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: AppTheme.borderColor, width: 0.8),
+                                  borderRadius: BorderRadius.circular(15.0)),
+                              height: 68.0,
                               width: double.infinity,
                               margin:
                                   const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                              padding:
-                                  const EdgeInsets.only(left: 5.0, right: 5.0),
+                              padding: const EdgeInsets.fromLTRB(
+                                  10.0, 10.0, 10.0, 10.0),
                               child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Column(
@@ -93,14 +97,22 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                                 fontSize: 13.5,
                                                 fontWeight: FontWeight.w600),
                                           ),
-                                          Text(
-                                            "3/${postList[index].person}",
-                                            style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: AppTheme
-                                                    .mainPagePersonColor,
-                                                fontWeight: FontWeight.w600),
-                                          ),
+                                          Row(children: [
+                                            Text(
+                                              "3/${postList[index].person}",
+                                              style: TextStyle(
+                                                  fontSize: 12.0,
+                                                  color: AppTheme.mainColor,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            SizedBox(
+                                                width: 18.0,
+                                                height: 18.0,
+                                                child: Image.asset(
+                                                  "assets/icons/meeting_bottom_icon.png",
+                                                  color: AppTheme.mainColor,
+                                                ))
+                                          ])
                                         ],
                                       ),
                                       const SizedBox(
@@ -113,8 +125,8 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                           Text(
                                             "${postList[index].person}명",
                                             style: TextStyle(
-                                                color: AppTheme
-                                                    .mainPageSubTextColor,
+                                                color:
+                                                    AppTheme.mainPageTextColor,
                                                 fontSize: 12.0,
                                                 fontWeight: FontWeight.w300),
                                           ),
@@ -129,8 +141,6 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                       )
                                     ],
                                   ))),
-                          const Divider(
-                              thickness: 1.0, color: Color(0xffbbbbbb))
                         ]));
                   });
             }
