@@ -2,8 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/service/db_service.dart';
 import 'package:hae_mo/utils/user_image.dart';
 import '../../../controller/user_controller.dart';
+import '../../Page/intro/register_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -28,6 +30,8 @@ class _RegisterPageState extends State<RegisterPage> {
   late RegisterState _registerState;
 
   final CarouselController _carouselController = CarouselController();
+
+  DBService db = DBService();
 
   @override
   Widget build(BuildContext context) {
@@ -287,9 +291,20 @@ class _RegisterPageState extends State<RegisterPage> {
                           borderRadius: BorderRadius.circular(20.0)),
                       backgroundColor: AppTheme.mainColor,
                     ),
-                    onPressed: () {
-                      _userController.saveInfo(_textController.text,
-                          _selectedMajor, _selectedGender, userImage[_index]);
+                    onPressed: () async {
+                      bool isAvailableNickname = await _userController
+                          .checkNickname(_textController.text);
+                      if (isAvailableNickname) {
+                        _userController.saveInfo(
+                          _textController.text,
+                          _selectedMajor,
+                          _selectedGender,
+                          userImage[_index],
+                        );
+                      } else {
+                        showNicknameUnavailable(
+                            context, "닉네임 사용 불가", "이미 사용 중인 닉네임입니다.");
+                      }
                     },
                     child: const Text(
                       "등록",
