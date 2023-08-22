@@ -344,6 +344,18 @@ class DBService {
     }
   }
 
+  Future<bool> checkNicknameDuplicate(String nickname) async {
+    final response = await http
+        .get(Uri.parse("http://43.201.211.1:1004/user/isDuplicate/$nickname"));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as bool;
+      return data;
+    } else {
+      throw Exception('Failed to check nickname availability');
+    }
+  }
+
   /// 계정 삭제(상의 필요)
   /// 로그아웃 기능 구현 필(
 }

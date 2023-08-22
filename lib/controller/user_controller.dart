@@ -1,4 +1,6 @@
 // import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:ffi';
+
 import 'package:get/get.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
@@ -53,5 +55,15 @@ class UserController extends GetxController {
       // Fluttertoast.showToast(msg: "회원 정보를 저장할 수 없습니다.\n잠시 후 다시 시도해주세요.");
     }
     update();
+  }
+
+  Future<bool> checkNickname(String nickname) async {
+    DBService db = DBService();
+    bool isUsed = await db.checkNicknameDuplicate(nickname);
+    if (isUsed == false) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
