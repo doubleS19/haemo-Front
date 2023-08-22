@@ -1,24 +1,11 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/controller/image_controller.dart';
-import 'package:hae_mo/controller/posting_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:hae_mo/service/db_service.dart';
-import 'package:textfield_tags/textfield_tags.dart';
-import '../../../model/dropdown_type.dart';
-import '../../../model/post_type.dart';
-import '../../Page/home_page.dart';
+import '../../Page/home_page.dart' as fix;
 import '../../components/customAppBar.dart';
-import '../../components/customButton.dart';
-import '../../components/customDialog.dart';
-import '../../components/customDropDownButton.dart';
-import '../../components/customTextField.dart';
-import '../../components/imagePicker.dart';
 
 /// imagePicker 생성하기
 /// dropdownButton 값 controller에 저장하기
@@ -81,7 +68,7 @@ class _ReportingPageState extends State<ReportingPage> {
                                 fontSize: 22.0)),
                         const SizedBox(height: 30.0),
                         Container(
-                            height: 35,
+                            height: 40,
                             decoration: BoxDecoration(
                                 border: Border.all(
                                     width: 1,
@@ -160,7 +147,10 @@ class _ReportingPageState extends State<ReportingPage> {
                                     Radius.circular(20.0)),
                                 color: AppTheme.mainColor),
                             child: RawMaterialButton(
-                                onPressed: (() {}),
+                                onPressed: (() {
+                                  HomePage homePage = HomePage();
+                                  Get.offAll(() => homePage);
+                                }),
                                 child: const Text(
                                   "신고하기",
                                   style: TextStyle(
