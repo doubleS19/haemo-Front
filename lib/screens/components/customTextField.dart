@@ -10,7 +10,7 @@ Widget postingPageTitleTextField(
   return TextFormField(
     enabled: true,
     decoration: InputDecoration(
-      focusedBorder: UnderlineInputBorder(
+      focusedBorder: const UnderlineInputBorder(
         borderSide: BorderSide(color: Colors.grey)
       ),
         hintText: hintText,
@@ -117,6 +117,8 @@ Widget hashTagTextField(TextfieldTagsController controller) {
 
 Widget postingPageDetailTextField(
     String hintText, TextEditingController textEdController, dynamic context) {
+  ScrollController scrollController = ScrollController();
+
   return Container(
       padding: const EdgeInsets.all(30),
       alignment: Alignment.topLeft,
@@ -124,22 +126,25 @@ Widget postingPageDetailTextField(
         borderRadius: BorderRadius.circular(10),
         color: AppTheme.postingPageDetailTextFieldColor,
       ),
-      child: TextFormField(
-        cursorColor: AppTheme.mainPageTextColor,
-        minLines: 6,
-        maxLines: null,
-        keyboardType: TextInputType.multiline,
-        controller: textEdController,
-        decoration: InputDecoration(
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            border: InputBorder.none,
-            //filled: true,
-            //fillColor: AppTheme.postingPageDetailTextFieldColor,
-            hintText: hintText,
-            hintStyle: TextStyle(
-                fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
-                fontFamily: Theme.of(context).textTheme.bodySmall?.fontFamily,
-                color: AppTheme.postingPageDetailHintTextColor)),
+      child: Scrollbar(
+          controller: scrollController,
+          child: TextFormField(
+          cursorColor: AppTheme.mainPageTextColor,
+          maxLines: 20,
+          maxLength: 500,
+          keyboardType: TextInputType.multiline,
+          controller: textEdController,
+          decoration: InputDecoration(
+              focusedBorder: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              border: InputBorder.none,
+              //filled: true,
+              //fillColor: AppTheme.postingPageDetailTextFieldColor,
+              hintText: hintText,
+              hintStyle: TextStyle(
+                  fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
+                  fontFamily: Theme.of(context).textTheme.bodySmall?.fontFamily,
+                  color: AppTheme.postingPageDetailHintTextColor)),
+        )
       ));
 }
