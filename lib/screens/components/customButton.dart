@@ -20,18 +20,20 @@ Widget postingButton(BuildContext context, void Function()? onPressed) {
 
 Widget settingPageCustomButton(String content, Function onClick){
   return GestureDetector(
-    onTap: () {
-      onClick();
-    },
-    child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(
-            color: AppTheme.mainColor,
-            borderRadius: BorderRadius.circular(50)),
-        child: Center(
-          child: Text(content,
-              style:
-              CustomThemes.deleteAccountPageButtonTextStyle),
-        )),
+      onTap: () {
+        onClick();
+      },
+      child: Container(
+          height: 45,
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+              color: AppTheme.mainColor,
+              borderRadius: BorderRadius.circular(50)),
+          child: Center(
+            child: Text(content,
+                style:
+                CustomThemes.deleteAccountPageButtonTextStyle),
+          )),
+
   );
 }
