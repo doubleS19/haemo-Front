@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
 import 'package:hae_mo/screens/Page/intro/loading_page.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/screens/page/setting/contact_page.dart';
 import 'package:hae_mo/screens/page/setting/delete_account_page.dart';
 import 'package:hae_mo/screens/page/setting/alarm_setting_page.dart';
 import 'package:hae_mo/screens/page/setting/screen_settings_page.dart';
@@ -42,7 +43,7 @@ Future<void> initializeDefault() async {
 List<List<String>> menuItemRoutes = [
   ['', '/delete-account'],
   ['/notification-settings', '/screen-settings'],
-  ['/app-version', '/contact-us', '/notice'],
+  ['/app-version', '/contact', '/notice'],
   ['/hemo-user-guide', '/we-made-hemo'],
 ];
 
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/delete-account', page: () => DeleteAccountPage()),
         GetPage(name: '/notification-settings', page: () => SettingAlarmPage()),
         GetPage(name: '/screen-settings', page: () => SettingScreenThemePage()),
+        GetPage(name: '/contact', page: () => ContactPage()),
       ],
     );
   }

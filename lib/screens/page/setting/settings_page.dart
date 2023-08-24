@@ -19,7 +19,7 @@ List<List<String>> menuItemList = [
 List<List<String>> menuItemRoutes = [
   ['', '/delete-account'],
   ['/notification-settings', '/screen-settings'],
-  ['/app-version', '/contact-us', '/notice'],
+  ['/app-version', '/contact', '/notice'],
   ['/hemo-user-guide', '/we-made-hemo'],
 ];
 

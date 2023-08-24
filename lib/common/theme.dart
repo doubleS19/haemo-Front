@@ -29,6 +29,11 @@ class CustomThemes {
       color: AppTheme.mainTextColor,
       fontWeight: FontWeight.w500);
 
+  static var postingPageTextfieldTypeTitleTextSTyle = const TextStyle(
+    fontSize: 15.0,
+    fontWeight: FontWeight.w500
+  );
+
   /// settingPage
   static var settingPageMenuTextStyle = TextStyle(
       fontSize: 14.0,
