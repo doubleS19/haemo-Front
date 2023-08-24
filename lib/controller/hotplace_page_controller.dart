@@ -18,7 +18,6 @@ class HotPlacePageController extends GetxController {
   final RxList<CommentResponse> commentList = <CommentResponse>[].obs;
   late List<int> wishList = <int>[].obs;
   late int uId;
-  late final WishListController wishListController;
 
   final Rx<bool> hotPlaceListisLoading = false.obs;
 
@@ -27,10 +26,10 @@ class HotPlacePageController extends GetxController {
 
     UserResponse userResponse = await dbService
         .getUserByNickname(PreferenceUtil.getString("nickname")!);
-    PreferenceUtil.setInt("uid", userResponse.uId);
-
     uId = PreferenceUtil.getInt("uid")!;
-    wishListController = WishListController(uId);
+  }
+
+  void fetchWishList(WishListController wishListController) {
     ever(wishListController.wishList,
         (callback) => {wishList.assignAll(callback)});
   }
