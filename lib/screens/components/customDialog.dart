@@ -130,3 +130,32 @@ void restartAppDialog(BuildContext context, String content, String cancel,
     ),
   );
 }
+
+
+
+Future<String?> selectListDialog(BuildContext context, List<String> list) async {
+  return await showDialog<String>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13.0)),
+        title: Text('문의 유형을 선택해주세요.',style: CustomThemes.customSelectListDialoglTitleTextStyle),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: list.map((item) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop(item);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(item, style: CustomThemes.customSelectListDialoglContentTextStyle),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      );
+    },
+  );
+}

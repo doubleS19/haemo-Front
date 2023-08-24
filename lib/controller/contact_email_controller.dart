@@ -6,7 +6,8 @@ import '../service/db_service.dart';
 
 class ContactEmailController extends GetxController {
   final DBService dbService = DBService();
-  TextEditingController textEditingController = TextEditingController();
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController contentTextEditingController = TextEditingController();
 
   Rx<String> contactType = "".obs;
 

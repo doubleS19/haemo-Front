@@ -36,11 +36,13 @@ class ContactPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Text("문의 유형",
-                style: CustomThemes.postingPageTextfieldTypeTitleTextSTyle),
+                style: CustomThemes.customSelectListDialoglContentTextStyle),
             Obx(() {
               return TextField(
                 readOnly: true, // 값을 변경하지 못하게 설정
                 decoration: InputDecoration(
+                  hintText: "카테고리 선택",
+                  hintStyle: Theme.of(context).textTheme.bodySmall,
                   focusedBorder: const UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.grey),
                   ),
@@ -52,7 +54,7 @@ class ContactPage extends StatelessWidget {
                         contactEmailController.contactType.value = result;
                       }
                     },
-                    icon: Icon(Icons.keyboard_arrow_down_rounded),
+                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
                   ),
                 ),
                 controller: TextEditingController(
@@ -61,12 +63,18 @@ class ContactPage extends StatelessWidget {
               );
             }),
             Text("답변받을 이메일",
-                style: CustomThemes.postingPageTextfieldTypeTitleTextSTyle),
+                style: CustomThemes.customSelectListDialoglContentTextStyle),
             SizedBox(
-              height: MediaQuery.of(context).size.height/2.5,
-              child: postingPageTitleTextField("내용을 입력하세요.", contactEmailController.textEditingController, context),
+              child: postingPageTitleTextField("what'sOnTUK@example.com", contactEmailController.emailTextEditingController, context),
             ),
-            settingPageCustomButton("문의하기", (){})
+            Text("문의 내용",
+                style: CustomThemes.customSelectListDialoglContentTextStyle),
+            SizedBox(
+              height: MediaQuery.of(context).size.height/3,
+              child: postingPageDetailTextField("내용을 입력하세요.", contactEmailController.emailTextEditingController, context),
+            ),
+            settingPageCustomButton("문의하기", (){}),
+            SizedBox(height: 50)
           ],
         ),
       ),

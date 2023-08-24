@@ -66,7 +66,14 @@ class CustomThemes {
       fontSize: 15.0,
       color: Color(0xFF969696),
       fontWeight: FontWeight.w300);
-
+  static var customSelectListDialoglTitleTextStyle = TextStyle(
+      fontSize: 16.0,
+      color: AppTheme.contactPageListDialogTitleTextColor,
+      fontWeight: FontWeight.w600);
+  static var customSelectListDialoglContentTextStyle = TextStyle(
+      color: AppTheme.contactPageListDialogContentTextColor,
+      fontWeight: FontWeight.bold
+  );
 
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',
