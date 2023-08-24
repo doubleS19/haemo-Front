@@ -12,8 +12,16 @@ Map<int, ThemeType> colorTheme = {
 };
 
 class SettingScreenThemeController extends GetxController {
-  final RxList<bool> isCheckedList = [true, false, false, false].obs;
+  final RxList<bool> isCheckedList = [false, false, false, false].obs;
   ThemeType themeType = AppTheme.themeType.value;
+
+  SettingScreenThemeController(){
+    getTheme();
+  }
+
+  void getTheme(){
+    isCheckedList[colorTheme.keys.firstWhere((key)=> colorTheme[key] == AppTheme.themeType.value)] = true;
+  }
 
   void changeTheme(int selectedIndex) {
     AppTheme.changeThemeType(colorTheme[selectedIndex]??ThemeType.Blue);
