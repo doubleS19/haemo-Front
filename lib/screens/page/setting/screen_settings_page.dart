@@ -4,7 +4,7 @@ import 'package:hae_mo/screens/page/setting/settings_page.dart';
 
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
-import '../../../controller/setting_screen_theme_controller.dart';
+import '../../../controller/setting/setting_screen_theme_controller.dart';
 import '../../components/customAppBar.dart';
 
 /*Map<ThemeType, String> colorTheme = {

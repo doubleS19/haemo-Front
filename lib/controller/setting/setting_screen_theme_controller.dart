@@ -2,7 +2,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 
-import '../common/color.dart';
+import '../../common/color.dart';
 
 Map<int, ThemeType> colorTheme = {
   0: ThemeType.Blue,

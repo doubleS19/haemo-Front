@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hae_mo/controller/setting_alarm_controller.dart';
+import 'package:hae_mo/controller/setting/setting_alarm_controller.dart';
 import 'package:hae_mo/screens/page/setting/settings_page.dart';
 
 import '../../../common/color.dart';
