@@ -14,18 +14,16 @@ Map<int, ThemeType> colorTheme = {
 };
 
 class AppTheme {
-  AppTheme() {
-    var themeColor = PreferenceUtil.getInt("themeColor");
-    themeType.value =
-        (themeColor == null ? ThemeType.Blue : colorTheme[themeColor])!;
-  }
-
   static Rx<ThemeType> themeType = ThemeType.Blue.obs;
+
+  static void getThemeType(){
+    var themeColor = PreferenceUtil.getInt("colorTheme");
+
+    themeType.value = (themeColor == null ? ThemeType.Blue : colorTheme[themeColor])!;
+  }
 
   static void changeThemeType(ThemeType newThemeType) {
     themeType.value = newThemeType;
-    print("New themeType: $newThemeType");
-    print("Main color: ${mainColor.toString()}");
   }
 
   static Color get mainColor {

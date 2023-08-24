@@ -26,7 +26,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();
-
+    AppTheme.getThemeType();
     id = PreferenceUtil.getString("id");
     dev.log("id: ${PreferenceUtil.getString("nickname")}");
     changePage(id);
