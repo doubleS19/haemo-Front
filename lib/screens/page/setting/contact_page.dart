@@ -35,49 +35,77 @@ class ContactPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text("문의 유형",
-                style: CustomThemes.customSelectListDialoglContentTextStyle),
-            Obx(() {
-              return TextField(
-                readOnly: true, // 값을 변경하지 못하게 설정
-                decoration: InputDecoration(
-                  hintText: "카테고리 선택",
-                  hintStyle: Theme.of(context).textTheme.bodySmall,
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                  ),
-                  suffixIcon: IconButton(
-                    onPressed: () async {
-                      String? result =
-                      await selectListDialog(context, contactTypeList);
-                      if (result != null) {
-                        contactEmailController.contactType.value = result;
-                      }
-                    },
-                    icon: const Icon(Icons.keyboard_arrow_down_rounded),
-                  ),
-                ),
-                controller: TextEditingController(
-                  text: contactEmailController.contactType.value,
-                ),
-              );
-            }),
-            Text("답변받을 이메일",
-                style: CustomThemes.customSelectListDialoglContentTextStyle),
-            SizedBox(
-              child: postingPageTitleTextField("what'sOnTUK@example.com", contactEmailController.emailTextEditingController, context),
-            ),
-            Text("문의 내용",
-                style: CustomThemes.customSelectListDialoglContentTextStyle),
-            SizedBox(
-              height: MediaQuery.of(context).size.height/3,
-              child: postingPageDetailTextField("내용을 입력하세요.", contactEmailController.emailTextEditingController, context),
-            ),
+            contactType(context, contactEmailController),
+            enterEmail(context, contactEmailController),
+            contactContent(context, contactEmailController),
             settingPageCustomButton("문의하기", (){}),
-            SizedBox(height: 50)
+            const SizedBox(height: 50)
           ],
         ),
       ),
     );
   }
+}
+
+Widget contactType(BuildContext context, ContactEmailController contactEmailController){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text("문의 유형",
+          style: CustomThemes.customSelectListDialoglContentTextStyle),
+      Obx(() {
+        return TextField(
+          readOnly: true, // 값을 변경하지 못하게 설정
+          decoration: InputDecoration(
+            hintText: "카테고리 선택",
+            hintStyle: Theme.of(context).textTheme.bodySmall,
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            suffixIcon: IconButton(
+              onPressed: () async {
+                String? result =
+                await selectListDialog(context, contactTypeList);
+                if (result != null) {
+                  contactEmailController.contactType.value = result;
+                }
+              },
+              icon: const Icon(Icons.keyboard_arrow_down_rounded),
+            ),
+          ),
+          controller: TextEditingController(
+            text: contactEmailController.contactType.value,
+          ),
+        );
+      }),
+    ],
+  );
+}
+
+Widget enterEmail(BuildContext context, ContactEmailController contactEmailController){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text("답변받을 이메일",
+          style: CustomThemes.customSelectListDialoglContentTextStyle),
+      SizedBox(
+        child: postingPageTitleTextField("what'sOnTUK@example.com", contactEmailController.emailTextEditingController, context),
+      ),
+    ],
+  );
+}
+
+Widget contactContent(BuildContext context, ContactEmailController contactEmailController){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text("문의 내용",
+          style: CustomThemes.customSelectListDialoglContentTextStyle),
+      Container(
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        height: MediaQuery.of(context).size.height/3,
+        child: postingPageDetailTextField("내용을 입력하세요.", contactEmailController.emailTextEditingController, context),
+      ),
+    ],
+  );
 }
