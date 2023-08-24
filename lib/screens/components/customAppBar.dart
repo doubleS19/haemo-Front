@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../common/color.dart';
+import '../Page/board/meeting_page.dart';
 import '../Page/chat/chat_list_page.dart';
 import 'customDialog.dart';
 
@@ -97,7 +98,7 @@ AppBar backAppBar() {
   );
 }
 
-Widget customColorSettingPageAppbar(BuildContext context, String appBarText) {
+Widget customColorSettingPageAppbar(BuildContext context, String appBarText, Function onClickNo) {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white, // 회색
   ));
@@ -107,14 +108,7 @@ Widget customColorSettingPageAppbar(BuildContext context, String appBarText) {
     centerTitle: true,
     leading: IconButton(
       onPressed: () {
-        restartAppDialog(context, "테마 설정을 위해 앱이 재시작됩니다.", "아니요", "예", () {
-          print("click Yes");
-          Get.back();
-          //Get.back();
-        }, () {
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          print("click Yes");
-        });
+        restartAppDialog(context, "테마 설정을 위해 앱이 재시작됩니다.", "아니요", "예", onClickNo);
       },
       color: Theme.of(context).iconTheme.color,
       icon: const Icon(Icons.arrow_back),

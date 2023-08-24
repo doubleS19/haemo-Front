@@ -28,7 +28,9 @@ class _SettingScreenThemePageState extends State<SettingScreenThemePage> {
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: Builder(
-              builder: (context) => customColorSettingPageAppbar(context, "화면 설정"))),
+              builder: (context) => customColorSettingPageAppbar(context, "화면 설정", (){
+                settingScreenThemeController.rollBackColor();
+              }))),
       body: Column(
         children: [menuTitle(context, "컬러 모드"),
           for(var i = 0;i<4;i++)

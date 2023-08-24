@@ -34,6 +34,8 @@ class SettingScreenThemeController extends GetxController {
     }
   }
   void rollBackColor(){
-
+    AppTheme.changeThemeType(themeType);
+    print("RollBack Color 적용");
+    PreferenceUtil.setInt("colorTheme", colorTheme.keys.firstWhere((key)=> colorTheme[key] == themeType));
   }
 }

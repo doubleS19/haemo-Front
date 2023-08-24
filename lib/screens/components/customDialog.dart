@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/common/theme.dart';
+import 'package:hae_mo/screens/Page/home_page.dart';
 
 import '../../common/color.dart';
+import '../Page/board/meeting_page.dart';
 
 void showMyAlertDialog(BuildContext context, String title, String content) {
   showDialog<String>(
@@ -73,9 +75,7 @@ void showYesOrNoDialog(BuildContext context, String content, String cancel,
 }
 
 void restartAppDialog(BuildContext context, String content, String cancel,
-    String confirm, Function onClickYes, Function? cancelFunction) {
-  var onClickCalcel =
-      (cancelFunction == null) ? Navigator.of(context).pop() : cancelFunction;
+    String confirm, Function onClickNo) {
 
   showDialog<String>(
     context: context,
@@ -98,7 +98,8 @@ void restartAppDialog(BuildContext context, String content, String cancel,
                         borderRadius: BorderRadius.circular(8.0)),
                     child: TextButton(
                       onPressed: () {
-                        print("click Yes");
+                        onClickNo();
+                        print("click No");
                         Get.back();
                         Get.back();
                       },
@@ -115,7 +116,8 @@ void restartAppDialog(BuildContext context, String content, String cancel,
                   borderRadius: BorderRadius.circular(10.0)),
               child: TextButton(
                 onPressed: () {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  //Navigator.of(context).popUntil((route) => route.isFirst);
+                  Get.to(() => HomePage());
                   print("click Yes");
                 },
                 child: Text(confirm,
