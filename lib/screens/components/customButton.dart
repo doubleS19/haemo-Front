@@ -3,6 +3,7 @@ import 'package:hae_mo/controller/image_controller.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
 
 import '../../common/color.dart';
+import '../../common/theme.dart';
 
 
 /// PostingPage 등록 버튼
@@ -14,4 +15,23 @@ Widget postingButton(BuildContext context, void Function()? onPressed) {
           fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize,
 
           color: AppTheme.postingPageHeadlineColor)));
+}
+
+
+Widget settingPageCustomButton(String content, Function onClick){
+  return GestureDetector(
+    onTap: () {
+      onClick();
+    },
+    child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(
+            color: CustomThemes.mainTheme.primaryColor,
+            borderRadius: BorderRadius.circular(50)),
+        child: Center(
+          child: Text(content,
+              style:
+              CustomThemes.deleteAccountPageButtonTextStyle),
+        )),
+  );
 }

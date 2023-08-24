@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/theme.dart';
+import 'package:hae_mo/screens/components/customButton.dart';
 import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -78,19 +79,7 @@ class DeleteAccountPage extends StatelessWidget {
                       style: CustomThemes.deleteAccountPageContentTextStyle),
                 ]),
                 const SizedBox(height: 20),
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: BoxDecoration(
-                          color: CustomThemes.mainTheme.primaryColor,
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Center(
-                        child: Text("회원 탈퇴",
-                            style:
-                                CustomThemes.deleteAccountPageButtonTextStyle),
-                      )),
-                )
+              settingPageCustomButton("회원 탈퇴", (){})
               ],
             ),
           ),
