@@ -20,13 +20,19 @@ class LoadingPage extends StatefulWidget {
 class _LoadingPageState extends State<LoadingPage> {
   final Duration duration = const Duration(milliseconds: 500);
   bool selected = false;
+  String? id;
+
 
   @override
   void initState() {
     super.initState();
 
-    String? id = PreferenceUtil.getString("id");
+    id = PreferenceUtil.getString("id");
     dev.log("id: ${PreferenceUtil.getString("nickname")}");
+    changePage(id);
+  }
+
+  void changePage(String? id){
     Timer(const Duration(milliseconds: 2000), () {
       if (id != null || id?.isNotEmpty == true || id != "") {
         Get.to(const HomePage());
