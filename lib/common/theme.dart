@@ -89,22 +89,5 @@ class CustomThemes {
       dividerColor: AppTheme.dividerColor,
       indicatorColor: AppTheme.mainPageBottomNavItemColor);
 
-  static final ThemeData dartTheme = ThemeData();
-
-  static final ThemeData pinkTheme = ThemeData();
 }
 
-/*
-Widget a() {
-  return Scaffold(
-      body: Center(
-          child: Column(children: [
-    Builder(builder: (context) {
-      return Text(
-        '내 동네 설정하고 시작하기',
-        style: Theme.of(context).textTheme.button,
-      );
-    })
-  ])));
-}
-*/
