@@ -52,6 +52,7 @@ dependencies:
   custom_refresh_indicator: ^2.2.1
   carousel_slider: ^4.2.1
   restart_app: ^1.2.1
+  flutter_email_sender: ^6.0.1
 
 dev_dependencies:
   flutter_test:

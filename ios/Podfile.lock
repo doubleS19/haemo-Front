@@ -667,6 +667,8 @@ PODS:
     - leveldb-library (~> 1.22)
     - nanopb (< 2.30910.0, >= 2.30908.0)
   - Flutter (1.0.0)
+  - flutter_email_sender (0.0.1):
+    - Flutter
   - GoogleUtilities/Environment (7.11.5):
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.11.5):
@@ -755,6 +757,7 @@ DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
+  - flutter_email_sender (from `.symlinks/plugins/flutter_email_sender/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - restart_app (from `.symlinks/plugins/restart_app/ios`)
@@ -782,6 +785,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
     :path: Flutter
+  flutter_email_sender:
+    :path: ".symlinks/plugins/flutter_email_sender/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
@@ -801,6 +806,7 @@ SPEC CHECKSUMS:
   FirebaseCoreInternal: b342e37cd4f5b4454ec34308f073420e7920858e
   FirebaseFirestore: f94c9541515fa4a49af52269bbc50349009424b4
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  flutter_email_sender: 02d7443217d8c41483223627972bfdc09f74276b
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   "gRPC-C++": 0968bace703459fd3e5dcb0b2bed4c573dbff046
   gRPC-Core: 17108291d84332196d3c8466b48f016fc17d816d
