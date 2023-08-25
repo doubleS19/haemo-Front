@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/screens/page/setting/contact_page.dart';
 import 'package:hae_mo/screens/page/setting/delete_account_page.dart';
 import 'package:hae_mo/screens/page/setting/alarm_setting_page.dart';
+import 'package:hae_mo/screens/page/setting/notice_list_page.dart';
 import 'package:hae_mo/screens/page/setting/screen_settings_page.dart';
 
 import 'common/theme.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/notification-settings', page: () => SettingAlarmPage()),
         GetPage(name: '/screen-settings', page: () => SettingScreenThemePage()),
         GetPage(name: '/contact', page: () => ContactPage()),
+        GetPage(name: '/notice', page: () => NoticePage()),
       ],
     );
   }

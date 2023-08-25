@@ -86,6 +86,7 @@ class AppTheme {
       const Color(0xFFF8FFDC).withOpacity(0.62);
   static var contactPageListDialogTitleTextColor = const Color(0xFF515151).withOpacity(0.5);
   static var contactPageListDialogContentTextColor = const Color(0xFF686868);
+  static var noticePageIconColor = const Color(0xFFC0C0C0);
 
 
   /// 신고 페이지

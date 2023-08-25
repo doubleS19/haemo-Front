@@ -29,10 +29,8 @@ class CustomThemes {
       color: AppTheme.mainTextColor,
       fontWeight: FontWeight.w500);
 
-  static var postingPageTextfieldTypeTitleTextSTyle = const TextStyle(
-    fontSize: 15.0,
-    fontWeight: FontWeight.w500
-  );
+  static var postingPageTextfieldTypeTitleTextSTyle =
+      const TextStyle(fontSize: 15.0, fontWeight: FontWeight.w500);
 
   /// settingPage
   static var settingPageMenuTextStyle = TextStyle(
@@ -43,6 +41,12 @@ class CustomThemes {
       fontSize: 16.0,
       color: AppTheme.settingPageMenuListTextColor,
       fontWeight: FontWeight.w300);
+  static var noticePageMenuListTextStyle = TextStyle(
+      fontSize: 16.0,
+      color: AppTheme.settingPageMenuListTextColor,
+      fontWeight: FontWeight.w400);
+  static var noticePageDateTextStyle =
+      TextStyle(fontSize: 12.0, color: AppTheme.noticePageIconColor);
 
   /// deleteAccountPage
   static var deleteAccountPageTitleTextStyle = TextStyle(
@@ -63,17 +67,14 @@ class CustomThemes {
       color: AppTheme.postingPageHeadlineColor,
       fontWeight: FontWeight.w400);
   static var customDialogCancelButtonTextStyle = const TextStyle(
-      fontSize: 15.0,
-      color: Color(0xFF969696),
-      fontWeight: FontWeight.w300);
+      fontSize: 15.0, color: Color(0xFF969696), fontWeight: FontWeight.w300);
   static var customSelectListDialoglTitleTextStyle = TextStyle(
       fontSize: 16.0,
       color: AppTheme.contactPageListDialogTitleTextColor,
       fontWeight: FontWeight.w600);
   static var customSelectListDialoglContentTextStyle = TextStyle(
       color: AppTheme.contactPageListDialogContentTextColor,
-      fontWeight: FontWeight.bold
-  );
+      fontWeight: FontWeight.bold);
 
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',
@@ -100,6 +101,4 @@ class CustomThemes {
               TextStyle(color: AppTheme.mainPageSubTextColor, fontSize: 13)),
       dividerColor: AppTheme.dividerColor,
       indicatorColor: AppTheme.mainPageBottomNavItemColor);
-
 }
-
