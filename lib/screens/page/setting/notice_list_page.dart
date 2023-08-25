@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:hae_mo/controller/setting/notice_controller.dart';
 import 'package:hae_mo/model/notice_model.dart';
@@ -9,6 +11,7 @@ import 'package:hae_mo/model/notice_model.dart';
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
 import '../../components/customAppBar.dart';
+import 'notice_detail_page.dart';
 
 class NoticePage extends StatelessWidget {
   NoticePage({Key? key}) : super(key: key);
@@ -50,7 +53,9 @@ class NoticePage extends StatelessWidget {
 
 Widget noticeCard(BuildContext context, NoticeModel notice){
   return GestureDetector(
-    onTap: (){},
+    onTap: (){
+      Get.to(()=> NoticeDetailPage(notice: notice, isAdmin: true));
+    },
     child: Container(
       decoration: BoxDecoration(
         color: AppTheme.postingPageHeadlineColor,
