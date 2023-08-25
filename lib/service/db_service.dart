@@ -5,6 +5,7 @@ import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
+import 'package:hae_mo/model/notice_model.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
@@ -357,5 +358,20 @@ class DBService {
   }
 
   /// 계정 삭제(상의 필요)
-  /// 로그아웃 기능 구현 필(
+  /// 로그아웃 기능 구현 필요
+
+  /// 전체 Notice 받아오기 - visible이 true인 것만?
+/*  Future<List<NoticeModel>> getNotice() {
+
+  }*/
+
+  /// Notice 전송하기
+  void postNotice() async {
+    try {
+
+
+    } catch (error) {
+      print("Controller Error sending email: $error");
+    }
+  }
 }
