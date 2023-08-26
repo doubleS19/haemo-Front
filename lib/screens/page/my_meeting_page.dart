@@ -109,7 +109,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                                 width: 18.0,
                                                 height: 18.0,
                                                 child: Image.asset(
-                                                  "assets/icons/meeting_bottom_icon.png",
+                                                  "assets/icons/icon.png",
                                                   color: AppTheme.mainColor,
                                                 ))
                                           ])
