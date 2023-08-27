@@ -6,6 +6,7 @@ import 'package:hae_mo/model/hotplace_comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/notice_model.dart';
+import 'package:hae_mo/model/notice_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
@@ -402,6 +403,32 @@ class DBService {
       }
     } catch (e) {
       dev.log("Failed to change visibility data: ${e}");
+    }
+  }
+
+  Future<List<NoticeResponse>> getAllNotice() async {
+    final response =
+        await http.get(Uri.parse("http://43.201.211.1:1004/notice"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<NoticeResponse>((json) => NoticeResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load hot list');
+    }
+  }
+
+  Future<List<NoticeResponse>> getNoticeById(int nId) async {
+    final response =
+        await http.get(Uri.parse("http://43.201.211.1:1004/notice/$nId"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<NoticeResponse>((json) => NoticeResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load hot list');
     }
   }
 }
