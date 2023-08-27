@@ -11,21 +11,34 @@ class NoticeController extends GetxController {
   TextEditingController noticeTitleController = TextEditingController();
   TextEditingController noticeContentController = TextEditingController();
   TextEditingController mdController = TextEditingController();
-  final RxList<NoticeModel> noticeList = [NoticeModel(title: "title", content: "content", MD: "MD", date: "2023년 2월 25일", noticeType: "공지", visible: true),
-    NoticeModel(title: "title", content: "content", MD: "MD", date: "2023년 2월 25일", noticeType: "공지", visible: true),
-    NoticeModel(title: "title", content: "content", MD: "MD", date: "2023년 2월 25일", noticeType: "공지", visible: true)
+  final RxList<Notice> noticeList = [
+    Notice(
+        title: "title",
+        content: "content",
+        MD: "MD",
+        date: "2023년 2월 25일",
+        noticeType: "공지",
+        visible: true),
+    Notice(
+        title: "title",
+        content: "content",
+        MD: "MD",
+        date: "2023년 2월 25일",
+        noticeType: "공지",
+        visible: true),
+    Notice(
+        title: "title",
+        content: "content",
+        MD: "MD",
+        date: "2023년 2월 25일",
+        noticeType: "공지",
+        visible: true)
   ].obs;
-
-
-
 
   void getNotice() {}
 
   void postNotice() async {
-    try {
-
-
-    } catch (error) {
+    try {} catch (error) {
       print("Controller Error sending email: $error");
     }
   }

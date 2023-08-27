@@ -365,7 +365,7 @@ class DBService {
 
   }*/
 
-  Future<bool> saveNotice(NoticeModel notice) async {
+  Future<bool> saveNotice(Notice notice) async {
     try {
       final response = await http.post(
         Uri.parse("http://43.201.211.1:1004/notice"),
@@ -386,7 +386,7 @@ class DBService {
     }
   }
 
-  Future<void> changeNoticeVisibility(NoticeModel notice) async {
+  Future<void> changeNoticeVisibility(Notice notice) async {
     try {
       final response = await http.post(
         Uri.parse("http://43.201.211.1:1004/notice/visibility"),
