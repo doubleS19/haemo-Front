@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/controller/setting/contact_email_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:hae_mo/service/db_service.dart';
@@ -13,7 +14,6 @@ import '../../components/customButton.dart';
 
 class ReportingPage extends StatefulWidget {
   const ReportingPage({super.key, required this.nickname});
-
   final String nickname;
 
   @override
@@ -21,6 +21,7 @@ class ReportingPage extends StatefulWidget {
 }
 
 class _ReportingPageState extends State<ReportingPage> {
+  ContactEmailController contactEmailController = ContactEmailController();
   List<String?> reportList = [
     "신고 사유를 선택해주세요",
     "부적절한 말(욕설/혐오/음란)",
@@ -162,7 +163,7 @@ class _ReportingPageState extends State<ReportingPage> {
             bottomNavigationBar: Container(
               height: 150,
               padding: const EdgeInsets.fromLTRB(30, 40, 30, 70),
-              child: reportingPageCustomBottn("신고하기"),
+              child: reportingPageCustomBotton("신고하기"),
             )));
   }
 }

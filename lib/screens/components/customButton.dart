@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/controller/image_controller.dart';
 import 'package:hae_mo/controller/posting_controller.dart';
+import 'package:hae_mo/controller/setting/contact_email_controller.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 
 import '../../common/color.dart';
@@ -37,7 +38,8 @@ Widget settingPageCustomButton(String content, Function onClick) {
   );
 }
 
-Widget reportingPageCustomBottn(String content) {
+Widget reportingPageCustomBotton(String content) {
+  ContactEmailController contactEmailController = ContactEmailController();
   return Container(
       height: 42.0,
       width: double.infinity,
@@ -47,6 +49,7 @@ Widget reportingPageCustomBottn(String content) {
       child: RawMaterialButton(
           onPressed: (() {
             HomePage homePage = HomePage();
+            contactEmailController.sendEmail();
             Get.offAll(() => homePage);
           }),
           child: const Text(
