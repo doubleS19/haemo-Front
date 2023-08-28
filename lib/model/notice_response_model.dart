@@ -1,4 +1,4 @@
-class Notice {
+class NoticeResponse {
   String title;
   String content;
   String MD;
@@ -6,7 +6,7 @@ class Notice {
   String noticeType;
   bool visible;
 
-  Notice(
+  NoticeResponse(
       {required this.title,
       required this.content,
       required this.MD,
@@ -27,8 +27,8 @@ class Notice {
     return data;
   }
 
-  factory Notice.fromJson(Map<String, dynamic> json) {
-    return Notice(
+  factory NoticeResponse.fromJson(Map<String, dynamic> json) {
+    return NoticeResponse(
         title: json['title'] as String,
         content: json['content'] as String,
         MD: json['md'] as String,

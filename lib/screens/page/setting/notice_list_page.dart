@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -19,7 +18,15 @@ class NoticePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    noticeController.noticeList.value = [NoticeModel(title: "title", content: "content", MD: "MD", date: "2023년 2월 25일", noticeType: "공지", visible: true)];
+    noticeController.noticeList.value = [
+      Notice(
+          title: "title",
+          content: "content",
+          MD: "MD",
+          date: "2023년 2월 25일",
+          noticeType: "공지",
+          visible: true)
+    ];
 
     return Scaffold(
       appBar: PreferredSize(
@@ -27,56 +34,51 @@ class NoticePage extends StatelessWidget {
           child: Builder(
               builder: (context) => customColorAppbar(context, "공지사항"))),
       body: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.settingPageDividerColor
-        ),
-        child: Obx(
-                () => noticeController.noticeList.value.isNotEmpty
-                ? ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: noticeController.noticeList.value.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15),
-                    alignment: Alignment.center,
-                    child: noticeCard(
-                        context,
-                        noticeController.noticeList.value[index]));
-              },
-            )
-                : const Center(child: Text("공지사항이 존재하지 않습니다. ")))
-      ),
+          decoration: BoxDecoration(color: AppTheme.settingPageDividerColor),
+          child: Obx(() => noticeController.noticeList.value.isNotEmpty
+              ? ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: noticeController.noticeList.value.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        alignment: Alignment.center,
+                        child: noticeCard(
+                            context, noticeController.noticeList.value[index]));
+                  },
+                )
+              : const Center(child: Text("공지사항이 존재하지 않습니다. ")))),
     );
   }
 }
 
-Widget noticeCard(BuildContext context, NoticeModel notice){
+Widget noticeCard(BuildContext context, Notice notice) {
   return GestureDetector(
-    onTap: (){
-      Get.to(()=> NoticeDetailPage(notice: notice, isAdmin: true));
-    },
-    child: Container(
-      decoration: BoxDecoration(
-        color: AppTheme.postingPageHeadlineColor,
-      ),
-      height: /*MediaQuery.of(context).size.height*/100,
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("[${notice.noticeType}] ${notice.title}", style: CustomThemes.noticePageMenuListTextStyle),
-              Text(notice.date, style: CustomThemes.noticePageDateTextStyle)
-            ],
-          ), 
-          Icon(Icons.keyboard_arrow_right_outlined, color: AppTheme.noticePageIconColor)
-        ],
-      ),
-    )
-  );
+      onTap: () {
+        Get.to(() => NoticeDetailPage(notice: notice, isAdmin: true));
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppTheme.postingPageHeadlineColor,
+        ),
+        height: /*MediaQuery.of(context).size.height*/ 100,
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("[${notice.noticeType}] ${notice.title}",
+                    style: CustomThemes.noticePageMenuListTextStyle),
+                Text(notice.date, style: CustomThemes.noticePageDateTextStyle)
+              ],
+            ),
+            Icon(Icons.keyboard_arrow_right_outlined,
+                color: AppTheme.noticePageIconColor)
+          ],
+        ),
+      ));
 }

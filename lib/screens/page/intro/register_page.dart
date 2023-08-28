@@ -2,11 +2,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/screens/components/customDialog.dart' as prefix;
 import 'package:hae_mo/service/db_service.dart';
 import 'package:hae_mo/utils/user_image.dart';
 import '../../../controller/user_controller.dart';
-import '../../Page/intro/register_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

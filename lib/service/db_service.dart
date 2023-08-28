@@ -6,6 +6,7 @@ import 'package:hae_mo/model/hotplace_comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/notice_model.dart';
+import 'package:hae_mo/model/notice_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
@@ -365,13 +366,69 @@ class DBService {
 
   }*/
 
-  /// Notice 전송하기
-  void postNotice() async {
+  Future<bool> saveNotice(Notice notice) async {
     try {
+      final response = await http.post(
+        Uri.parse("http://43.201.211.1:1004/notice"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(notice.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to notice data");
+      } else {
+        dev.log("Notice Data sent successfully");
+        return true;
+      }
+    } catch (e) {
+      dev.log("Failed to send notice data: ${e}");
+      return false;
+    }
+  }
 
+  Future<void> changeNoticeVisibility(Notice notice) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://43.201.211.1:1004/notice/visibility"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(notice.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to change visible data");
+      } else {
+        dev.log("visibility is changed successfully");
+      }
+    } catch (e) {
+      dev.log("Failed to change visibility data: ${e}");
+    }
+  }
 
-    } catch (error) {
-      print("Controller Error sending email: $error");
+  Future<List<NoticeResponse>> getAllNotice() async {
+    final response =
+        await http.get(Uri.parse("http://43.201.211.1:1004/notice"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<NoticeResponse>((json) => NoticeResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load hot list');
+    }
+  }
+
+  Future<List<NoticeResponse>> getNoticeById(int nId) async {
+    final response =
+        await http.get(Uri.parse("http://43.201.211.1:1004/notice/$nId"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<NoticeResponse>((json) => NoticeResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load hot list');
     }
   }
 }
