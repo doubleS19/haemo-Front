@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:hae_mo/controller/setting/notice_controller.dart';
+import 'package:hae_mo/model/notice_response_model.dart';
 
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
@@ -18,15 +19,6 @@ class NoticePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    noticeController.noticeList.value = [
-      Notice(
-          title: "title",
-          content: "content",
-          MD: "MD",
-          date: "2023년 2월 25일",
-          noticeType: "공지",
-          visible: true)
-    ];
 
     return Scaffold(
       appBar: PreferredSize(
@@ -44,7 +36,7 @@ class NoticePage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 15),
                         alignment: Alignment.center,
                         child: noticeCard(
-                            context, noticeController.noticeList.value[index]));
+                            context, noticeController.noticeList.value[index], noticeController));
                   },
                 )
               : const Center(child: Text("공지사항이 존재하지 않습니다. ")))),
@@ -52,10 +44,10 @@ class NoticePage extends StatelessWidget {
   }
 }
 
-Widget noticeCard(BuildContext context, Notice notice) {
+Widget noticeCard(BuildContext context, Notice notice, NoticeController noticeController) {
   return GestureDetector(
       onTap: () {
-        Get.to(() => NoticeDetailPage(notice: notice, isAdmin: true));
+        Get.to(() => NoticeDetailPage(notice: notice, isAdmin: true, noticeController: noticeController));
       },
       child: Container(
         decoration: BoxDecoration(

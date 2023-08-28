@@ -1,4 +1,5 @@
 class Notice {
+  int? nId; // Nullable nId field
   String title;
   String content;
   String MD;
@@ -6,13 +7,15 @@ class Notice {
   String noticeType;
   bool visible;
 
-  Notice(
-      {required this.title,
-      required this.content,
-      required this.MD,
-      required this.date,
-      required this.noticeType,
-      required this.visible});
+  Notice({
+    this.nId, // Nullable nId parameter
+    required this.title,
+    required this.content,
+    required this.MD,
+    required this.date,
+    required this.noticeType,
+    required this.visible,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{
@@ -24,16 +27,22 @@ class Notice {
       'visible': visible,
     };
 
+    if (nId != null) {
+      data['nId'] = nId; // Add nId if it has a value
+    }
+
     return data;
   }
 
   factory Notice.fromJson(Map<String, dynamic> json) {
     return Notice(
-        title: json['title'] as String,
-        content: json['content'] as String,
-        MD: json['md'] as String,
-        date: json['date'] as String,
-        noticeType: json['type'] as String,
-        visible: json['visible'] as bool);
+      nId: json['nId'] as int?,
+      title: json['title'] as String,
+      content: json['content'] as String,
+      MD: json['md'] as String,
+      date: json['date'] as String,
+      noticeType: json['type'] as String,
+      visible: json['visible'] as bool,
+    );
   }
 }
