@@ -117,3 +117,25 @@ Widget customColorSettingPageAppbar(BuildContext context, String appBarText, Fun
     backgroundColor: AppTheme.mainColor,
   );
 }
+
+
+Widget noticePageAdminAppbar(BuildContext context, String appBarText, Function onClick){
+  return AppBar(
+    title: Text(appBarText, style: Theme.of(context).textTheme.headlineMedium),
+    centerTitle: true,
+    leading: IconButton(
+      onPressed: () {
+        Get.back();
+      },
+      color: Theme.of(context).iconTheme.color,
+      icon: const Icon(Icons.arrow_back_ios),
+    ),
+    actions: [
+      IconButton(onPressed: (){
+        onClick;
+      }, icon: const Icon(Icons.create_outlined))
+    ],
+    elevation: 0.0,
+    backgroundColor: AppTheme.mainColor,
+  );
+}
