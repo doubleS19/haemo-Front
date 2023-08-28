@@ -8,13 +8,16 @@ import '../../common/theme.dart';
 
 /// PostingPage 등록 버튼
 Widget postingButton(BuildContext context, void Function()? onPressed) {
-  return ElevatedButton(onPressed: onPressed,
-      style: OutlinedButton.styleFrom(backgroundColor: AppTheme.mainColor),
-      child: Text("등록하기", style: TextStyle(
-        fontFamily: Theme.of(context).textTheme.headlineSmall?.fontFamily,
-          fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize,
+  return Container(
+    height: MediaQuery.of(context).size.height/20,
+    child: ElevatedButton(onPressed: onPressed,
+        style: OutlinedButton.styleFrom(backgroundColor: AppTheme.mainColor),
+        child: Text("등록하기", style: TextStyle(
+            fontFamily: Theme.of(context).textTheme.headlineSmall?.fontFamily,
+            fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize,
 
-          color: AppTheme.postingPageHeadlineColor)));
+            color: AppTheme.postingPageHeadlineColor)))
+  );
 }
 
 

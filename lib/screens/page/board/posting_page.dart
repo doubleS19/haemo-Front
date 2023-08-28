@@ -47,13 +47,15 @@ class _PostingPageState extends State<PostingPage> {
     return GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
+            //resizeToAvoidBottomInset: false,
             appBar: PreferredSize(
                 preferredSize: const Size.fromHeight(kToolbarHeight),
                 child: Builder(
                     builder: (context) =>
                         customColorAppbar(context, postUi.appBarText))),
-            body: Container(
+            body: SingleChildScrollView(
+                child: Container(
+              height: MediaQuery.of(context).size.height * 0.8,
               padding: const EdgeInsets.all(30),
               child: Column(
                 //crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,35 +83,34 @@ class _PostingPageState extends State<PostingPage> {
                     fit: FlexFit.loose,
                     child: postingPageDetailTextField(postUi.hintText,
                         postController.detailTextContext, context),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                    ),
-                    child: postingButton(context, () async {
-                      bool isSuccess = false;
-                      if (postController.checkEmpty()) {
-                        showMyAlertDialog(
-                            context, "경고!!!!!", "빈칸 안 채우면 못 지나감.");
-                      } else {
-                        postController.saveControllerData();
-                        isSuccess = await postController.saveBoard();
-                        if (isSuccess) {
-                          /// 다이얼로그 안 됨ㅠㅠ
-                          showMyAlertDialog(
-                              context, "확인요망!!", "게시물이 전송되었습니다. ");
-                          postController.deleteData();
-                          Get.to(const HomePage());
-                        } else {
-                          showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
-                        }
-                      }
-                    }),
                   )
                 ],
               ),
+            )),
+            bottomNavigationBar: Container(
+              height: MediaQuery.of(context).size.width *0.9,
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(6.0)),
+              ),
+              child: postingButton(context, () async {
+                bool isSuccess = false;
+                if (postController.checkEmpty()) {
+                  showMyAlertDialog(context, "경고!!!!!", "빈칸 안 채우면 못 지나감.");
+                } else {
+                  postController.saveControllerData();
+                  isSuccess = await postController.saveBoard();
+                  if (isSuccess) {
+                    /// 다이얼로그 안 됨ㅠㅠ
+                    showMyAlertDialog(context, "확인요망!!", "게시물이 전송되었습니다. ");
+                    postController.deleteData();
+                    Get.to(const HomePage());
+                  } else {
+                    showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
+                  }
+                }
+              }),
             )));
   }
 }
