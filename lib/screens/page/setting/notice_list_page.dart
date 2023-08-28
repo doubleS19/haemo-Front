@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:hae_mo/controller/setting/notice_controller.dart';
-import 'package:hae_mo/model/notice_model.dart';
 
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
+import '../../../model/notice_model.dart';
 import '../../components/customAppBar.dart';
 import 'notice_detail_page.dart';
 

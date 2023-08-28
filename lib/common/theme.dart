@@ -47,6 +47,11 @@ class CustomThemes {
       fontWeight: FontWeight.w400);
   static var noticePageDateTextStyle =
       TextStyle(fontSize: 12.0, color: AppTheme.noticePageIconColor);
+  static var noticeDetailPageTitleTextStyle = TextStyle(
+      fontSize: 14.0, color: AppTheme.mainColor, fontWeight: FontWeight.bold);
+  static var noticeDetailPageDateTextStyle =
+      TextStyle(fontSize: 14.0, color: AppTheme.noticePageIconColor);
+  static var noticeDetailPageContentTextStyle = noticePageMenuListTextStyle;
 
   /// deleteAccountPage
   static var deleteAccountPageTitleTextStyle = TextStyle(
