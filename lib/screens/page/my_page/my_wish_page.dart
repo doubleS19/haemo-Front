@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/controller/hotplace_page_controller.dart';
-import 'package:hae_mo/model/hotplace_post_model.dart';
-import 'package:hae_mo/model/post_response_model.dart';
-import 'package:hae_mo/model/wish_response_model.dart';
+import 'package:hae_mo/model/hotplace_post_response_model.dart';
+import 'package:hae_mo/screens/Page/board/hot_place_page.dart';
+import 'package:hae_mo/service/db_service.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/model/wish_model.dart';
-import 'package:hae_mo/screens/page/home_page.dart';
-import 'package:http/http.dart';
-import '../../model/hotplace_post_response_model.dart';
-import '../../model/user_model.dart';
-import '../../service/db_service.dart';
-import '../Page/board/hot_place_page.dart';
 
 class MyWishPage extends StatefulWidget {
   const MyWishPage({super.key});
@@ -81,8 +71,7 @@ class _MyWishPageState extends State<MyWishPage> {
                           date: postList[index].date,
                           photoList: []),
                       true,
-                      PreferenceUtil.getInt("uid")!
-                      );
+                      PreferenceUtil.getInt("uid")!);
                 });
           } else if (snapshot.hasError) {
             return Center(
