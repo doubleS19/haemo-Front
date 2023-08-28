@@ -48,7 +48,7 @@ class CustomThemes {
   static var noticePageDateTextStyle =
       TextStyle(fontSize: 12.0, color: AppTheme.noticePageIconColor);
   static var noticeDetailPageTitleTextStyle = TextStyle(
-      fontSize: 14.0, color: AppTheme.mainColor, fontWeight: FontWeight.bold);
+      fontSize: 17.0, color: AppTheme.mainColor, fontWeight: FontWeight.bold);  /// 왜 폰트 크기 적용이 안 될꺼?
   static var noticeDetailPageDateTextStyle =
       TextStyle(fontSize: 14.0, color: AppTheme.noticePageIconColor);
   static var noticeDetailPageContentTextStyle = noticePageMenuListTextStyle;
