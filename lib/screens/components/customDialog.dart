@@ -59,7 +59,7 @@ void showYesOrNoDialog(BuildContext context, String content, String cancel,
               height: 35,
               margin: EdgeInsets.fromLTRB(6, 0, 6, 6),
               decoration: BoxDecoration(
-                  color: CustomThemes.mainTheme.primaryColor,
+                  color: AppTheme.mainColor,
                   borderRadius: BorderRadius.circular(10.0)),
               child: TextButton(
                 onPressed: () => onClick,
@@ -76,7 +76,6 @@ void showYesOrNoDialog(BuildContext context, String content, String cancel,
 
 void restartAppDialog(BuildContext context, String content, String cancel,
     String confirm, Function onClickNo) {
-
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
@@ -131,15 +130,16 @@ void restartAppDialog(BuildContext context, String content, String cancel,
   );
 }
 
-
-
-Future<String?> selectListDialog(BuildContext context, List<String> list) async {
+Future<String?> selectListDialog(
+    BuildContext context, List<String> list) async {
   return await showDialog<String>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13.0)),
-        title: Text('문의 유형을 선택해주세요.',style: CustomThemes.customSelectListDialoglTitleTextStyle),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(13.0)),
+        title: Text('문의 유형을 선택해주세요.',
+            style: CustomThemes.customSelectListDialoglTitleTextStyle),
         content: SingleChildScrollView(
           child: ListBody(
             children: list.map((item) {
@@ -149,7 +149,9 @@ Future<String?> selectListDialog(BuildContext context, List<String> list) async 
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(item, style: CustomThemes.customSelectListDialoglContentTextStyle),
+                  child: Text(item,
+                      style:
+                          CustomThemes.customSelectListDialoglContentTextStyle),
                 ),
               );
             }).toList(),
@@ -157,5 +159,38 @@ Future<String?> selectListDialog(BuildContext context, List<String> list) async 
         ),
       );
     },
+  );
+}
+
+void showReportSuccessDialog(
+    BuildContext context, String content, String confirm, Function onClick) {
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      content: Container(
+        height: 80,
+        alignment: Alignment.center,
+        child: Text(content, style: CustomThemes.customDialogContentTextStyle),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      actions: <Widget>[
+        Expanded(
+            child: Container(
+          height: 35,
+          margin: EdgeInsets.fromLTRB(6, 0, 6, 6),
+          decoration: BoxDecoration(
+              color: AppTheme.mainColor,
+              borderRadius: BorderRadius.circular(10.0)),
+          child: TextButton(
+            onPressed: () => onClick,
+            child: Text(confirm,
+                style: const TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w400)),
+          ),
+        )),
+      ],
+    ),
   );
 }
