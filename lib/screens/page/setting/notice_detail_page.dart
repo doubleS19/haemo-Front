@@ -1,16 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hae_mo/controller/setting/notice_controller.dart';
 import 'package:hae_mo/model/notice_model.dart';
 
 import '../../../common/theme.dart';
+import '../../../model/notice_response_model.dart';
 import '../../components/customAppBar.dart';
 
 class NoticeDetailPage extends StatelessWidget {
-  NoticeDetailPage({Key? key, required this.notice, required this.isAdmin})
+  NoticeDetailPage({Key? key, required this.notice, required this.isAdmin, required this.noticeController})
       : super(key: key);
 
   final Notice notice;
   final bool isAdmin;
+  final NoticeController noticeController;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,9 @@ class NoticeDetailPage extends StatelessWidget {
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: Builder(
-                builder: (context) => customColorAppbar(context, "공지사항"))),
+                builder: (context) => isAdmin?customColorAppbar(context, "공지사항"):noticePageAdminAppbar(context, "공지사항", (){
+
+                }))),
         body: SingleChildScrollView(
             child: Container(
           alignment: Alignment.centerLeft,
