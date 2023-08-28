@@ -163,7 +163,7 @@ Future<String?> selectListDialog(
 }
 
 void showReportSuccessDialog(
-    BuildContext context, String content, String confirm, Function onClick) {
+    BuildContext context, String content, String confirm) {
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
@@ -182,7 +182,7 @@ void showReportSuccessDialog(
               color: AppTheme.mainColor,
               borderRadius: BorderRadius.circular(10.0)),
           child: TextButton(
-            onPressed: () => onClick,
+            onPressed: () => {Get.offAll(() => const HomePage())},
             child: Text(confirm,
                 style: const TextStyle(
                     fontSize: 15.0,

@@ -166,11 +166,8 @@ class _ReportingPageState extends State<ReportingPage> {
               padding: const EdgeInsets.fromLTRB(30, 40, 30, 70),
               child: reportingPageCustomBotton("신고하기", widget.nickname, context,
                   () {
-                showReportSuccessDialog(context, "신고가 완료되었습니다.", "확인", () {
-                  HomePage homePage = HomePage();
-                  contactEmailController.sendEmail();
-                  Get.offAll(() => homePage);
-                });
+                contactEmailController.sendEmail();
+                return showReportSuccessDialog(context, "신고가 완료되었습니다.", "확인");
               }),
             )));
   }
