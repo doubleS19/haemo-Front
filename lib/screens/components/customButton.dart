@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/controller/setting/contact_email_controller.dart';
+import 'package:hae_mo/screens/components/customDialog.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 
 import '../../common/color.dart';
 import '../../common/theme.dart';
-
 
 /// PostingPage 등록 버튼
 Widget postingButton(BuildContext context, void Function()? onPressed) {
@@ -37,7 +37,8 @@ Widget settingPageCustomButton(String content, Function onClick) {
   );
 }
 
-Widget reportingPageCustomBotton(String content) {
+Widget reportingPageCustomBotton(
+    String content, String nickname, BuildContext context, Function onClick) {
   ContactEmailController contactEmailController = ContactEmailController();
   return Container(
       height: 42.0,
@@ -47,9 +48,8 @@ Widget reportingPageCustomBotton(String content) {
           color: AppTheme.mainColor),
       child: RawMaterialButton(
           onPressed: (() {
-            HomePage homePage = HomePage();
-            contactEmailController.sendEmail();
-            Get.offAll(() => homePage);
+            showYesOrNoDialog(
+                context, "$nickname님을 신고하시겠습니까?", "취소", "확인", onClick);
           }),
           child: const Text(
             "신고하기",

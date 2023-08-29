@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/setting/contact_email_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/screens/components/customDialog.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import 'package:hae_mo/service/db_service.dart';
 import '../../Page/home_page.dart' as fix;
@@ -163,7 +164,11 @@ class _ReportingPageState extends State<ReportingPage> {
             bottomNavigationBar: Container(
               height: 150,
               padding: const EdgeInsets.fromLTRB(30, 40, 30, 70),
-              child: reportingPageCustomBotton("신고하기"),
+              child: reportingPageCustomBotton("신고하기", widget.nickname, context,
+                  () {
+                contactEmailController.sendEmail();
+                return showReportSuccessDialog(context, "신고가 완료되었습니다.", "확인");
+              }),
             )));
   }
 }
