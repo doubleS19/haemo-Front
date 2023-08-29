@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:developer' as dev;
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/board/attend_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
@@ -31,12 +32,16 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   MeetingPageController meetingController = MeetingPageController();
   bool fillWishColor = false;
   TextEditingController commentController = TextEditingController();
-  AttendController attendController = AttendController();
+  final AttendController _attendController = Get.put(AttendController());
+  late AcceptionState _acceptionState;
+
+  DBService db = DBService();
 
   @override
   Widget build(BuildContext context) {
-    DBService db = DBService();
-    attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
+    _attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
+    _acceptionState = _attendController.acceptionState;
+    dev.log(_acceptionState.toString());
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -206,7 +211,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                 color: Colors.white),
                                           ),
                                           onPressed: () {
-                                            attendController
+                                            _attendController
                                                 .requestParticipation(
                                                     context,
                                                     PreferenceUtil.getInt(

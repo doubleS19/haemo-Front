@@ -20,6 +20,7 @@ class AttendController extends GetxController {
   AcceptionState get acceptionState => _acceptionState;
 
   Future requestParticipation(BuildContext context, int uId, int pId) async {
+    checkState(uId, pId);
     if (_acceptionState == AcceptionState.nonParticipation) {
       bool isSuccess = await dbService
           .requestJoin(Acceptation(pId: pId, uId: uId, isAccepted: false));
@@ -53,12 +54,14 @@ class AttendController extends GetxController {
   }
 
   Future checkState(int uId, int pId) async {
-    if (_acceptionState == AcceptionState.request) {
+    bool isExist = await dbService.checkRequestExist(uId, pId);
+    if (isExist) {
       AcceptationResponse acceptation =
           await dbService.getRequestById(uId, pId);
-      if (_acceptionState == AcceptionState.request &&
-          acceptation.isAccepted == true) {
+      if (acceptation.isAccepted == true) {
         _acceptionState = AcceptionState.join;
+      } else {
+        _acceptionState = AcceptionState.request;
       }
     }
     update();
