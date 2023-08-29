@@ -4,6 +4,7 @@ import 'package:hae_mo/common/color.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../controller/posting_controller.dart';
+import 'customDialog.dart';
 
 Widget postingPageTitleTextField(
     String hintText, TextEditingController textEdController, dynamic context) {
@@ -149,7 +150,7 @@ Widget postingPageDetailTextField(
       ));
 }
 
-Widget pickerDialogTextField(BuildContext context, String hintText, void Function() onPressed, String? value){
+Widget iconTextField(BuildContext context, String hintText, void Function() onPressed, String? value){
   return TextField(
     readOnly: true, // 값을 변경하지 못하게 설정
     decoration: InputDecoration(

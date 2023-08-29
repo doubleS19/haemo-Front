@@ -28,18 +28,15 @@ class ContactPage extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height * 0.7,
+            height: MediaQuery.of(context).size.height * 0.7,
             padding: EdgeInsets.fromLTRB(20, 40, 20, 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 contactType(context, contactEmailController),
-                enterEmail(context, contactEmailController),
-                contactContent(context, contactEmailController),
+                enterEmail(context, contactEmailController.emailTextEditingController),
+                contactContent(context, contactEmailController.contentTextEditingController),
               ],
             ),
           ),
@@ -65,7 +62,7 @@ Widget contactType(BuildContext context,
       Text("문의 유형",
           style: CustomThemes.customSelectListDialoglContentTextStyle),
       Obx(() {
-        return pickerDialogTextField(context, "카테고리 선택",
+        return iconTextField(context, "카테고리 선택",
               () async {
             String? result =
             await selectListDialog(context, contactTypeList);
@@ -79,8 +76,8 @@ Widget contactType(BuildContext context,
   );
 }
 
-Widget enterEmail(BuildContext context,
-    ContactEmailController contactEmailController) {
+Widget enterEmail(
+    BuildContext context, TextEditingController textEditingController) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -88,14 +85,14 @@ Widget enterEmail(BuildContext context,
           style: CustomThemes.customSelectListDialoglContentTextStyle),
       SizedBox(
         child: postingPageTitleTextField("what'sOnTUK@example.com",
-            contactEmailController.emailTextEditingController, context),
+            textEditingController, context),
       ),
     ],
   );
 }
 
-Widget contactContent(BuildContext context,
-    ContactEmailController contactEmailController) {
+Widget contactContent(
+    BuildContext context,  TextEditingController textEditingController) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -103,12 +100,9 @@ Widget contactContent(BuildContext context,
           style: CustomThemes.customSelectListDialoglContentTextStyle),
       Container(
         padding: const EdgeInsets.symmetric(vertical: 15.0),
-        height: MediaQuery
-            .of(context)
-            .size
-            .height / 2.5,
+        height: MediaQuery.of(context).size.height / 2.5,
         child: postingPageDetailTextField("내용을 입력하세요.",
-            contactEmailController.contentTextEditingController, context),
+            textEditingController, context),
       ),
     ],
   );
