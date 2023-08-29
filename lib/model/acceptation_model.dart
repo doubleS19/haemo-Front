@@ -7,9 +7,9 @@ class Acceptation {
 
   factory Acceptation.fromJson(Map<String, dynamic> json) {
     return Acceptation(
-        uId: json['uid'], pId: json['pId'], isAccepted: json['accept']);
+        uId: json['uid'], pId: json['pid'], isAccepted: json['accept']);
   }
 
   Map<String, dynamic> toJson() =>
-      {'uid': uId, 'pId': pId, 'accept': isAccepted};
+      {'uid': uId, 'pid': pId, 'accept': isAccepted};
 }
