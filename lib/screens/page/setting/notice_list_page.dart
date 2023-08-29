@@ -32,7 +32,7 @@ class NoticePage extends StatelessWidget {
                       "공지사항",
                       IconButton(
                           onPressed: () {
-                            Get.to(() => NoticePostingPage(noticeController: noticeController));
+                            Get.to(() => NoticePostingPage());
                           },
                           icon: const Icon(Icons.create_outlined))):customColorAppbar(context, "공지사항"))),
       body: FutureBuilder(

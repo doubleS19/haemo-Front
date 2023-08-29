@@ -25,20 +25,12 @@ class NoticeController extends GetxController {
     List<Notice> fetchedNotices = [];
     try {
       fetchedNotices = await dbService.getAllNotice();
-
     } catch (error) {
       print("Error getting notices: $error");
     }
-    return fetchedNotices;
-  }
+    fetchedNotices = fetchedNotices.where((e) => e.visible == true).toList();
 
-  void postNotice(Notice notice) async {
-    try {
-      await dbService.saveNotice(notice);
-      getNotice();
-    } catch (error) {
-      print("Controller Error sending email: $error");
-    }
+    return fetchedNotices;
   }
 
   void changeVisibility(Notice notice) async {
