@@ -16,7 +16,7 @@ import 'package:hae_mo/service/db_service.dart';
 
 enum AcceptionState { join, nonParticipation, request }
 
-class UserController extends GetxController {
+class AttendController extends GetxController {
   DBService dbService = DBService();
   AcceptionState _acceptionState = AcceptionState.nonParticipation;
 
