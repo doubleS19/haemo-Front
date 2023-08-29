@@ -5,9 +5,10 @@ import 'package:hae_mo/common/theme.dart';
 import 'package:hae_mo/screens/Page/home_page.dart';
 
 import '../../common/color.dart';
-import '../Page/board/meeting_page.dart';
 
-void showMyAlertDialog(BuildContext context, String title, String content) {
+void showMyAlertDialog(
+    BuildContext context, String title, String content, Function? onClick) {
+  Function? onPressed = (onClick != null) ? onClick : () {Navigator.of(context).pop();};
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
@@ -16,7 +17,7 @@ void showMyAlertDialog(BuildContext context, String title, String content) {
       actions: <Widget>[
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            onPressed.call();
           },
           child: const Text('닫기'),
         ),

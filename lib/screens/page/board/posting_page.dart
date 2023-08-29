@@ -97,17 +97,17 @@ class _PostingPageState extends State<PostingPage> {
               child: postingButton(context, () async {
                 bool isSuccess = false;
                 if (postController.checkEmpty()) {
-                  showMyAlertDialog(context, "경고!!!!!", "빈칸 안 채우면 못 지나감.");
+                  showMyAlertDialog(context, "경고!!!!!", "빈칸 안 채우면 못 지나감.", null);
                 } else {
                   postController.saveControllerData();
                   isSuccess = await postController.saveBoard();
                   if (isSuccess) {
                     /// 다이얼로그 안 됨ㅠㅠ
-                    showMyAlertDialog(context, "확인요망!!", "게시물이 전송되었습니다. ");
+                    showMyAlertDialog(context, "확인요망!!", "게시물이 전송되었습니다. ", null);
                     postController.deleteData();
                     Get.to(const HomePage());
                   } else {
-                    showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..");
+                    showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..", null);
                   }
                 }
               }),

@@ -11,14 +11,13 @@ class NoticePostingController extends GetxController {
       TextEditingController();
   TextEditingController noticeContentTextEditingController =
       TextEditingController();
-  TextEditingController noticeTypeTextEditingController =
-  TextEditingController();
 
   Rx<String> noticeType = "".obs;
 
-  void postNotice() async {
+  Future<bool> postNotice() async {
+    bool isSuccess = false;
     try {
-      await dbService.saveNotice(Notice(
+      isSuccess = await dbService.saveNotice(Notice(
           title: noticeTitleTextEditingController.text,
           content: noticeContentTextEditingController.text,
           MD: "MD",
@@ -28,5 +27,6 @@ class NoticePostingController extends GetxController {
     } catch (error) {
       print("Controller Error sending notice: $error");
     }
+    return isSuccess;
   }
 }
