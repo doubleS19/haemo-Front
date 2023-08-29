@@ -361,7 +361,6 @@ class DBService {
   /// 계정 삭제(상의 필요)
   /// 로그아웃 기능 구현 필요
 
-
   Future<bool> saveNotice(Notice notice) async {
     try {
       final response = await http.post(
@@ -384,49 +383,38 @@ class DBService {
   }
 
   /// 이건 visible을 not visible로 바구는 거만 되는거야? 아니면 not visible을 다시 vidible로 바꿀수도 있는거야?
-  Future<void> changeNoticeVisibility(Notice notice) async {
-    try {
-      final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/notice/visibility"),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(notice.toJson()),
-      );
-      if (response.statusCode != 201) {
-        throw Exception("Failed to change visible data");
-      } else {
-        dev.log("visibility is changed successfully");
-      }
-    } catch (e) {
-      dev.log("Failed to change visibility data: ${e}");
+  Future<void> changeNoticeVisibility(int nId) async {
+    final response = await http
+        .put(Uri.parse("http://43.201.211.1:1004/notice/visible/$nId"));
+
+    if (response.statusCode == 200) {
+      print('Notice visibility toggled successfully');
+    } else {
+      throw Exception('Failed to toggle notice visibility');
     }
   }
+}
 
-  Future<List<Notice>> getAllNotice() async {
-    final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/notice"));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body) as List<dynamic>;
-      return data
-          .map<Notice>((json) => Notice.fromJson(json))
-          .toList();
-    } else {
-      throw Exception('Failed to load hot list');
-    }
+Future<List<Notice>> getAllNotice() async {
+  final response = await http.get(Uri.parse("http://43.201.211.1:1004/notice"));
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body) as List<dynamic>;
+    return data.map<Notice>((json) => Notice.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to load hot list');
   }
+}
 
-  /// 이건 어떤 용도?
-  Future<List<NoticeResponse>> getNoticeById(int nId) async {
-    final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/notice/$nId"));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body) as List<dynamic>;
-      return data
-          .map<NoticeResponse>((json) => NoticeResponse.fromJson(json))
-          .toList();
-    } else {
-      throw Exception('Failed to load hot list');
-    }
+/// 이건 어떤 용도?
+Future<List<NoticeResponse>> getNoticeById(int nId) async {
+  final response =
+      await http.get(Uri.parse("http://43.201.211.1:1004/notice/$nId"));
+  if (response.statusCode == 200) {
+    final data = json.decode(response.body) as List<dynamic>;
+    return data
+        .map<NoticeResponse>((json) => NoticeResponse.fromJson(json))
+        .toList();
+  } else {
+    throw Exception('Failed to load hot list');
   }
 }
