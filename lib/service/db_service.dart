@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:hae_mo/model/acceptation_model.dart';
+import 'package:hae_mo/model/acceptation_response_model.dart';
 import 'package:hae_mo/model/club_comment_response_model.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
@@ -382,7 +384,6 @@ class DBService {
     }
   }
 
-  /// 이건 visible을 not visible로 바구는 거만 되는거야? 아니면 not visible을 다시 vidible로 바꿀수도 있는거야?
   Future<void> changeNoticeVisibility(int nId) async {
     try {
       final response = await http
@@ -421,6 +422,67 @@ class DBService {
       return data
           .map<NoticeResponse>((json) => NoticeResponse.fromJson(json))
           .toList();
+    } else {
+      throw Exception('Failed to load hot list');
+    }
+  }
+
+  Future<bool> requestJoin(Acceptation acceptation) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://43.201.211.1:1004/accept"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(acceptation.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to notice data");
+      } else {
+        dev.log("Notice Data sent successfully");
+        return true;
+      }
+    } catch (e) {
+      dev.log("Failed to send notice data: ${e}");
+      return false;
+    }
+  }
+
+  Future<void> acceptUserToJoin(int uId) async {
+    try {
+      final response = await http
+          .get(Uri.parse("http://43.201.211.1:1004/accept/accept/$uId"));
+
+      if (response.statusCode == 200) {
+        // API 호출 성공
+        print('Notice visibility changed successfully.');
+      } else {
+        // API 호출 실패
+        print('Failed to change notice visibility.');
+      }
+    } catch (error) {
+      // 에러 처리
+      print('Error occurred while calling the API: $error');
+    }
+  }
+
+  Future<void> cancleJoinRequest(int uId, int pId) async {
+    final response = await http.delete(
+      Uri.parse('http://43.201.211.1:1004/accept/delete/$uId/$pId'),
+    );
+    if (response.statusCode == 204) {
+      print('Request deleted successfully');
+    } else {
+      throw Exception('Failed to delete Request');
+    }
+  }
+
+  Future<AcceptationResponse> getRequestById(int uId) async {
+    final response =
+        await http.get(Uri.parse("http://43.201.211.1:1004/accept/$uId"));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body) as Map<String, dynamic>;
+      return AcceptationResponse.fromJson(jsonData);
     } else {
       throw Exception('Failed to load hot list');
     }
