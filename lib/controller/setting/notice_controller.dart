@@ -34,14 +34,10 @@ class NoticeController extends GetxController {
   }
 
   void changeVisibility(Notice notice) async {
-    try{
-      await dbService.changeNoticeVisibility(notice);
-    } catch(error){
+    try {
+      await dbService.changeNoticeVisibility(notice.nId!);
+    } catch (error) {
       print("Controller Error change not Visible: $error");
-
     }
   }
 }
-
-
-
