@@ -8,7 +8,11 @@ import '../../common/color.dart';
 
 void showMyAlertDialog(
     BuildContext context, String title, String content, Function? onClick) {
-  Function? onPressed = (onClick != null) ? onClick : () {Navigator.of(context).pop();};
+  Function? onPressed = (onClick != null)
+      ? onClick
+      : () {
+          Navigator.of(context).pop();
+        };
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
@@ -63,7 +67,10 @@ void showYesOrNoDialog(BuildContext context, String content, String cancel,
                   color: AppTheme.mainColor,
                   borderRadius: BorderRadius.circular(10.0)),
               child: TextButton(
-                onPressed: () => onClick,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  onClick();
+                },
                 child: Text(confirm,
                     style: CustomThemes.customDialogConfirmButtonTextStyle),
               ),
@@ -164,7 +171,7 @@ Future<String?> selectListDialog(
 }
 
 void showReportSuccessDialog(
-    BuildContext context, String content, String confirm) {
+    BuildContext context, String content, String confirm, Function onPressed) {
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
@@ -183,7 +190,10 @@ void showReportSuccessDialog(
               color: AppTheme.mainColor,
               borderRadius: BorderRadius.circular(10.0)),
           child: TextButton(
-            onPressed: () => {Get.offAll(() => const HomePage())},
+            onPressed: () {
+              Navigator.of(context).pop();
+              onPressed();
+            },
             child: Text(confirm,
                 style: const TextStyle(
                     fontSize: 15.0,

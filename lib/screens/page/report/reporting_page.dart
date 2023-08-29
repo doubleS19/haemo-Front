@@ -167,7 +167,12 @@ class _ReportingPageState extends State<ReportingPage> {
               child: reportingPageCustomBotton("신고하기", widget.nickname, context,
                   () {
                 contactEmailController.sendEmail();
-                return showReportSuccessDialog(context, "신고가 완료되었습니다.", "확인");
+                return showReportSuccessDialog(context, "신고가 완료되었습니다.", "확인",
+                    () {
+                  {
+                    Get.offAll(() => const HomePage());
+                  }
+                });
               }),
             )));
   }

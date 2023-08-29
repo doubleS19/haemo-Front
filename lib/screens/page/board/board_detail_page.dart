@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/controller/board/attend_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
@@ -29,10 +31,12 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   MeetingPageController meetingController = MeetingPageController();
   bool fillWishColor = false;
   TextEditingController commentController = TextEditingController();
+  AttendController attendController = AttendController();
 
   @override
   Widget build(BuildContext context) {
     DBService db = DBService();
+    attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -201,7 +205,14 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.white),
                                           ),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            attendController
+                                                .requestParticipation(
+                                                    context,
+                                                    PreferenceUtil.getInt(
+                                                        "uId")!,
+                                                    widget.pId);
+                                          },
                                         ))),
                                 Divider(color: AppTheme.mainTextColor),
                                 commentWidget(widget.pId, widget.type),
