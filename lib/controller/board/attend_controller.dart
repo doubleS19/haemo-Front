@@ -1,9 +1,11 @@
 // import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:ffi';
+import 'dart:html';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/acceptation_model.dart';
+import 'package:hae_mo/model/acceptation_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/customDialog.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
@@ -47,6 +49,17 @@ class UserController extends GetxController {
       dbService.cancleJoinRequest(uId, pId);
     }
 
+    update();
+  }
+
+  Future checkState(int uId) async {
+    if (_acceptionState == AcceptionState.request) {
+      AcceptationResponse acceptation = await dbService.getRequestById(uId);
+      if (_acceptionState == AcceptionState.request &&
+          acceptation.isAccepted == true) {
+        _acceptionState = AcceptionState.join;
+      }
+    }
     update();
   }
 }
