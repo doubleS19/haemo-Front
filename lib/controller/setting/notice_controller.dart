@@ -21,11 +21,11 @@ class NoticeController extends GetxController {
     getNotice();
   }
 
-
   Future<List<Notice>> getNotice() async {
     List<Notice> fetchedNotices = [];
     try {
       fetchedNotices = await dbService.getAllNotice();
+
     } catch (error) {
       print("Error getting notices: $error");
     }
@@ -38,6 +38,15 @@ class NoticeController extends GetxController {
       getNotice();
     } catch (error) {
       print("Controller Error sending email: $error");
+    }
+  }
+
+  void changeVisibility(Notice notice) async {
+    try{
+      await dbService.changeNoticeVisibility(notice);
+    } catch(error){
+      print("Controller Error change not Visible: $error");
+
     }
   }
 }

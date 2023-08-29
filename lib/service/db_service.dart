@@ -361,10 +361,6 @@ class DBService {
   /// 계정 삭제(상의 필요)
   /// 로그아웃 기능 구현 필요
 
-  /// 전체 Notice 받아오기 - visible이 true인 것만?
-/*  Future<List<NoticeModel>> getNotice() {
-
-  }*/
 
   Future<bool> saveNotice(Notice notice) async {
     try {
@@ -387,6 +383,7 @@ class DBService {
     }
   }
 
+  /// 이건 visible을 not visible로 바구는 거만 되는거야? 아니면 not visible을 다시 vidible로 바꿀수도 있는거야?
   Future<void> changeNoticeVisibility(Notice notice) async {
     try {
       final response = await http.post(
@@ -419,6 +416,7 @@ class DBService {
     }
   }
 
+  /// 이건 어떤 용도?
   Future<List<NoticeResponse>> getNoticeById(int nId) async {
     final response =
         await http.get(Uri.parse("http://43.201.211.1:1004/notice/$nId"));
