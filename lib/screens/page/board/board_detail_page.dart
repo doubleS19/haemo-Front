@@ -164,6 +164,45 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                     ],
                                   ),
                                 ),
+                                Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                        margin: EdgeInsets.only(right: 10.0),
+                                        child: Text(
+                                          "3/3",
+                                          style: TextStyle(
+                                              color: AppTheme.mainColor,
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.w700),
+                                        ))),
+                                const SizedBox(
+                                  height: 10.0,
+                                ),
+                                Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(23.0),
+                                            color: AppTheme.mainColor),
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                5,
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                31,
+                                        child: MaterialButton(
+                                          color: Colors.transparent,
+                                          elevation: 0.0,
+                                          child: Text(
+                                            "참여하기",
+                                            style: TextStyle(
+                                                fontSize: 10.8,
+                                                fontWeight: FontWeight.w500,
+                                                color: Colors.white),
+                                          ),
+                                          onPressed: () {},
+                                        ))),
                                 Divider(color: AppTheme.mainTextColor),
                                 commentWidget(widget.pId, widget.type),
                               ],
