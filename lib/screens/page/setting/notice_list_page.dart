@@ -12,26 +12,38 @@ import '../../../common/theme.dart';
 import '../../../model/notice_model.dart';
 import '../../components/customAppBar.dart';
 import 'notice_detail_page.dart';
+import 'notice_posting_page.dart';
+
 class NoticePage extends StatelessWidget {
   NoticePage({Key? key}) : super(key: key);
   NoticeController noticeController = NoticeController();
+
+  bool isAdmin = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight),
-        child: Builder(
-          builder: (context) => customColorAppbar(context, "공지사항"),
-        ),
-      ),
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Builder(
+              builder: (context) => isAdmin
+                  ? noticePageAdminAppbar(
+                      context,
+                      "공지사항",
+                      IconButton(
+                          onPressed: () {
+                            Get.to(() => NoticePostingPage(noticeController: noticeController));
+                          },
+                          icon: const Icon(Icons.create_outlined))):customColorAppbar(context, "공지사항"))),
       body: FutureBuilder(
         future: noticeController.getNotice(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator(); // Show loading indicator while waiting
           } else if (snapshot.hasError) {
-            return Center(child: Text("Error fetching notices")); // Show error message if there's an error
+            return const Center(
+                child: Text(
+                    "공지사항을 받아오는데 실패했습니다. 다시 시도해주세요."));
           } else {
             snapshot.data;
             if (snapshot.hasData) {
@@ -47,7 +59,7 @@ class NoticePage extends StatelessWidget {
                 },
               );
             } else {
-              return Center(child: Text("공지사항이 존재하지 않습니다. "));
+              return const Center(child: Text("공지사항이 존재하지 않습니다. "));
             }
           }
         },
@@ -55,8 +67,6 @@ class NoticePage extends StatelessWidget {
     );
   }
 }
-
-// ... rest of your code ...
 
 
 Widget noticeCard(BuildContext context, Notice notice, NoticeController noticeController) {
