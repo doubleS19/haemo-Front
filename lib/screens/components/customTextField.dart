@@ -148,3 +148,23 @@ Widget postingPageDetailTextField(
         )
       ));
 }
+
+Widget pickerDialogTextField(BuildContext context, String hintText, void Function() onPressed, String? value){
+  return TextField(
+    readOnly: true, // 값을 변경하지 못하게 설정
+    decoration: InputDecoration(
+      hintText: hintText,
+      hintStyle: Theme.of(context).textTheme.bodySmall,
+      focusedBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(color: Colors.grey),
+      ),
+      suffixIcon: IconButton(
+        onPressed: onPressed,
+        icon: const Icon(Icons.keyboard_arrow_down_rounded),
+      ),
+    ),
+    controller: TextEditingController(
+      text: value
+    ),
+  );
+}
