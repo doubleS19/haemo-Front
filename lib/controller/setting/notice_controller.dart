@@ -7,6 +7,13 @@ import '../../model/notice_model.dart';
 import '../../service/db_service.dart';
 
 List<String> noticeType = ["안내", "공지", "업데이트"];
+enum NoticeState {
+  Before,
+  Loading,
+  Error,
+  Empty,
+  Success
+}
 
 class NoticeController extends GetxController {
   DBService dbService = DBService();
@@ -14,6 +21,7 @@ class NoticeController extends GetxController {
   TextEditingController noticeContentController = TextEditingController();
   TextEditingController mdController = TextEditingController();
   late RxList<Notice>? noticeList = RxList<Notice>([]);
+  Rx<NoticeState> noticeState = NoticeState.Before.obs;
 
   @override
   void onInit() {
@@ -21,23 +29,29 @@ class NoticeController extends GetxController {
     getNotice();
   }
 
-  Future<List<Notice>> getNotice() async {
+  Future<void> getNotice() async {
     List<Notice> fetchedNotices = [];
+    noticeState.value = NoticeState.Loading;
     try {
       fetchedNotices = await dbService.getAllNotice();
+      if(fetchedNotices.isEmpty) noticeState.value = NoticeState.Empty;
     } catch (error) {
       print("Error getting notices: $error");
+      noticeState.value = NoticeState.Error;
     }
     fetchedNotices = fetchedNotices.where((e) => e.visible == true).toList();
-
-    return fetchedNotices;
+    noticeState.value = NoticeState.Success;
   }
 
   void changeVisibility(Notice notice) async {
-    try {
+    try{
       await dbService.changeNoticeVisibility(notice.nId!);
-    } catch (error) {
+    } catch(error){
       print("Controller Error change not Visible: $error");
+
     }
   }
 }
+
+
+
