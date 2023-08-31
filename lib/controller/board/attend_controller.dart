@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import "dart:developer" as dev;
 import 'package:hae_mo/model/acceptation_model.dart';
 import 'package:hae_mo/model/acceptation_response_model.dart';
-import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/customDialog.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
-import 'package:hae_mo/screens/page/home_page.dart';
-import "dart:developer" as dev;
 
 import 'package:hae_mo/service/db_service.dart';
 
@@ -18,16 +13,16 @@ enum AcceptionState { join, nonParticipation, request }
 class AttendController extends GetxController {
   DBService dbService = DBService();
   AcceptionState _acceptionState = AcceptionState.nonParticipation;
-  late var _buttonText;
-  late var _buttonColor;
-  late var _buttonBorderColor;
-  late var _buttonTextColor;
+  var _buttonText = "참여하기".obs;
+  var _buttonColor = Colors.white.obs;
+  var _buttonBorderColor = AppTheme.mainColor.obs;
+  var _buttonTextColor = AppTheme.mainColor.obs;
 
   AcceptionState get acceptionState => _acceptionState;
-  String get buttonText => _buttonText;
-  Color get buttonColor => _buttonColor;
-  Color get borderColor => _buttonBorderColor;
-  Color get textColor => _buttonTextColor;
+  Rx<String> get buttonText => _buttonText;
+  Rx<Color> get buttonColor => _buttonColor;
+  Rx<Color> get borderColor => _buttonBorderColor;
+  Rx<Color> get textColor => _buttonTextColor;
 
   Future requestParticipation(BuildContext context, int uId, int pId) async {
     checkState(uId, pId);
@@ -83,6 +78,7 @@ class AttendController extends GetxController {
         _buttonColor = AppTheme.mainColor.obs;
       }
     } else {
+      _acceptionState = AcceptionState.nonParticipation;
       _buttonText = "참여하기".obs;
       _buttonBorderColor = AppTheme.mainColor.obs;
       _buttonTextColor = AppTheme.mainColor.obs;
