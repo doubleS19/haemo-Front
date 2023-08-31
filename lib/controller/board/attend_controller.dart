@@ -43,6 +43,7 @@ class AttendController extends GetxController {
       });
     } else {
       showYesOrNoDialog(context, "참가를 취소하시겠습니까?", "취소", "확인", () {
+        dbService.cancleJoinRequest(uId, pId);
         _acceptionState = AcceptionState.nonParticipation;
         update();
         showReportSuccessDialog(context, "취소가 완료되었습니다.", "확인", () {});

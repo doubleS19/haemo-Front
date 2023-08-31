@@ -38,9 +38,14 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   DBService db = DBService();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     _attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
     _acceptionState = _attendController.acceptionState;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     dev.log(_acceptionState.toString());
     return Scaffold(
         appBar: AppBar(

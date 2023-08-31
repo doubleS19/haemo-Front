@@ -14,10 +14,10 @@ class AcceptationResponse {
     return AcceptationResponse(
         aId: json['aid'],
         uId: json['uid'],
-        pId: json['pId'],
+        pId: json['pid'],
         isAccepted: json['accept']);
   }
 
   Map<String, dynamic> toJson() =>
-      {'aid': aId, 'uid': uId, 'pId': pId, 'accept': isAccepted};
+      {'aid': aId, 'uid': uId, 'pid': pId, 'accept': isAccepted};
 }
