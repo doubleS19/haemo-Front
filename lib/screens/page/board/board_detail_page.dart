@@ -10,6 +10,7 @@ import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/commentWidget.dart';
+import 'package:hae_mo/screens/components/userProfileWidget.dart';
 import 'package:hae_mo/screens/components/wishStarButton.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import '../../../model/post_model.dart';
@@ -34,6 +35,10 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   TextEditingController commentController = TextEditingController();
   final AttendController _attendController = Get.put(AttendController());
   late AcceptionState _acceptionState;
+  late String buttonText;
+  late Color borderColor;
+  late Color textColor;
+  late Color buttonColor;
 
   DBService db = DBService();
 
@@ -41,12 +46,16 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   void initState() {
     _attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
     _acceptionState = _attendController.acceptionState;
+    borderColor = _attendController.borderColor;
+    buttonText = _attendController.buttonText;
+    textColor = _attendController.textColor;
+    buttonColor = _attendController.buttonColor;
+    dev.log(_acceptionState.toString());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    dev.log(_acceptionState.toString());
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -84,67 +93,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                        width: 41.0,
-                                        height: 41.0,
-                                        child: RawMaterialButton(
-                                            elevation: 0.0,
-                                            fillColor: Colors.transparent,
-                                            shape: CircleBorder(),
-                                            onPressed: (() {
-                                              userBottomSheet(context, user);
-                                            }),
-                                            child: Container(
-                                              width: 41,
-                                              height: 41,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.transparent,
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      user.userImage),
-                                                ),
-                                              ),
-                                            ))),
-                                    const SizedBox(width: 10.0),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          user.nickname,
-                                          style: TextStyle(
-                                            fontSize: 12.0,
-                                            color: AppTheme.mainTextColor,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${user.major}  /  ',
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: AppTheme.mainTextColor,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                            Text(
-                                              user.gender,
-                                              style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: AppTheme.mainTextColor,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                userProfile(context, user),
                                 const SizedBox(height: 30.0),
                                 Text(
                                   post.title,
@@ -196,9 +145,11 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                     alignment: Alignment.centerRight,
                                     child: Container(
                                         decoration: BoxDecoration(
+                                            border: Border.all(
+                                                width: 0.5, color: borderColor),
                                             borderRadius:
                                                 BorderRadius.circular(23.0),
-                                            color: AppTheme.mainColor),
+                                            color: buttonColor),
                                         width:
                                             MediaQuery.of(context).size.width /
                                                 5,
@@ -209,11 +160,11 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                           color: Colors.transparent,
                                           elevation: 0.0,
                                           child: Text(
-                                            "참여하기",
+                                            buttonText,
                                             style: TextStyle(
                                                 fontSize: 10.8,
                                                 fontWeight: FontWeight.w500,
-                                                color: Colors.white),
+                                                color: textColor),
                                           ),
                                           onPressed: () {
                                             _attendController
