@@ -177,7 +177,9 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                 return showAttendUserDialog(
                                                     context,
                                                     userList,
-                                                    userList.length);
+                                                    userList.length,
+                                                    _attendController,
+                                                    widget.pId);
                                               } else {
                                                 _attendController
                                                     .requestParticipation(

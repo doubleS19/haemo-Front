@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/common/theme.dart';
+import 'package:hae_mo/controller/board/attend_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/Page/home_page.dart';
 
@@ -208,8 +209,8 @@ void showReportSuccessDialog(
   );
 }
 
-showAttendUserDialog(
-    BuildContext context, List<UserResponse> user, int person) {
+showAttendUserDialog(BuildContext context, List<UserResponse> user, int person,
+    AttendController controller, int pId) {
   return showGeneralDialog(
     context: context,
     barrierDismissible: true, // 다이얼로그 외부를 탭하면 닫히도록 설정
@@ -220,59 +221,69 @@ showAttendUserDialog(
       return Center(
         child: Container(
             width: 300,
-            height: 200,
+            height: 350,
             color: Colors.transparent,
             child: Expanded(
               child: ListView.builder(
                   itemCount: person,
                   itemBuilder: (context, index) {
                     final attendUser = user[index];
-                    return Container(
-                        height: 60.0,
-                        width: 205.0,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30.0)),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                flex: 1,
-                                child: SizedBox(
-                                    height: 41.0,
-                                    width: 41.0,
-                                    child: Container(
-                                      width: 41,
-                                      height: 41,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.transparent,
-                                        image: DecorationImage(
-                                          image:
-                                              AssetImage(attendUser.userImage),
-                                        ),
-                                      ),
-                                    ))),
-                            Expanded(
-                                flex: 3,
-                                child: Center(
-                                  child: Text(attendUser.nickname,
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          color: AppTheme.mainTextColor)),
-                                )),
-                            Expanded(
-                                flex: 1,
-                                child: SizedBox(
-                                    height: 14,
-                                    width: 14.0,
-                                    child: Image(
-                                      image: AssetImage(
-                                        "assets/icons/accept_user_icon.png",
-                                      ),
-                                      color: Color(0xffb3b3b3),
-                                    )))
-                          ],
-                        ));
+                    return GestureDetector(
+                        onTap: () {
+                          controller.setUserList(attendUser.uId, pId);
+                        },
+                        child: Column(children: [
+                          Container(
+                              height: 60.0,
+                              width: 250.0,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                      flex: 1,
+                                      child: SizedBox(
+                                          height: 41.0,
+                                          width: 41.0,
+                                          child: Container(
+                                            width: 41,
+                                            height: 41,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.transparent,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    attendUser.userImage),
+                                              ),
+                                            ),
+                                          ))),
+                                  Expanded(
+                                      flex: 3,
+                                      child: Center(
+                                        child: Text(attendUser.nickname,
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                color: AppTheme.mainTextColor)),
+                                      )),
+                                  Obx(() => Expanded(
+                                      flex: 1,
+                                      child: SizedBox(
+                                          height: 14,
+                                          width: 14.0,
+                                          child: Image(
+                                            image: AssetImage(
+                                              "assets/icons/accept_user_icon.png",
+                                            ),
+                                            color: controller
+                                                .userListButtonColor.value,
+                                          ))))
+                                ],
+                              )),
+                          const SizedBox(
+                            height: 20.0,
+                          )
+                        ]));
                   }),
             )),
       );

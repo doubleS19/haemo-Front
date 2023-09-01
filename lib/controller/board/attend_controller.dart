@@ -18,12 +18,16 @@ class AttendController extends GetxController {
   var _buttonColor = Colors.white.obs;
   var _buttonBorderColor = AppTheme.mainColor.obs;
   var _buttonTextColor = AppTheme.mainColor.obs;
+  var _userListButtonColor = Color(0xffb3b3b3).obs;
+  var _isAccepted = false.obs;
 
   AcceptionState get acceptionState => _acceptionState;
   Rx<String> get buttonText => _buttonText;
   Rx<Color> get buttonColor => _buttonColor;
   Rx<Color> get borderColor => _buttonBorderColor;
   Rx<Color> get textColor => _buttonTextColor;
+  Rx<Color> get userListButtonColor => _userListButtonColor;
+  Rx<bool> get isAccepted => _isAccepted;
 
   Future requestParticipation(BuildContext context, int uId, int pId) async {
     checkState(uId, pId);
@@ -92,6 +96,18 @@ class AttendController extends GetxController {
       _buttonTextColor = AppTheme.mainColor.obs;
       _buttonColor = Colors.white.obs;
     }
+    update();
+  }
+
+  Future setUserList(int uId, int pId) async {
+    AcceptationResponse accept = await dbService.getRequestById(uId, pId);
+    bool acceptResult = accept.isAccepted;
+    if (acceptResult) {
+      _userListButtonColor = Color(0xffb3b3b3).obs;
+    } else {
+      _userListButtonColor = AppTheme.mainColor.obs;
+    }
+    dbService.acceptUserToJoin(uId, pId);
     update();
   }
 }
