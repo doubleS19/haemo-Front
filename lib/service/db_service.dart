@@ -499,4 +499,17 @@ class DBService {
       throw Exception('Failed to check nickname availability');
     }
   }
+
+  Future<List<UserResponse>> getAttendUserList(int pId) async {
+    final response = await http
+        .get(Uri.parse("http://43.201.211.1:1004/accept/userList/$pId"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<UserResponse>((json) => UserResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load hot list');
+    }
+  }
 }
