@@ -35,7 +35,6 @@ class AttendController extends GetxController {
         showReportSuccessDialog(
             context, "참가 요청이 완료되었습니다.\n작성자의 승인 후 참가가 확정됩니다.", "확인", () {
           Get.back();
-          Get.to(BoardDetailPage(pId: pId, type: 1));
         });
         _acceptionState = AcceptionState.request;
       } else {
@@ -43,7 +42,6 @@ class AttendController extends GetxController {
         showReportSuccessDialog(
             context, "참가 요청에 실패했습니다.\n잠시 후 다시 시도해 주세요.", "확인", () {
           Get.back();
-          Get.to(BoardDetailPage(pId: pId, type: 1));
         });
       }
     } else if (_acceptionState == AcceptionState.request) {
@@ -53,7 +51,6 @@ class AttendController extends GetxController {
         update();
         showReportSuccessDialog(context, "취소가 완료되었습니다.", "확인", () {
           Get.back();
-          Get.to(BoardDetailPage(pId: pId, type: 1));
         });
       });
     } else {
@@ -63,7 +60,6 @@ class AttendController extends GetxController {
         update();
         showReportSuccessDialog(context, "취소가 완료되었습니다.", "확인", () {
           Get.back();
-          Get.to(BoardDetailPage(pId: pId, type: 1));
         });
       });
     }

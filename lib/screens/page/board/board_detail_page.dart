@@ -10,6 +10,7 @@ import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/commentWidget.dart';
+import 'package:hae_mo/screens/components/customDialog.dart';
 import 'package:hae_mo/screens/components/userProfileWidget.dart';
 import 'package:hae_mo/screens/components/wishStarButton.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
@@ -166,13 +167,25 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                   color: _attendController
                                                       .textColor.value),
                                             ),
-                                            onPressed: () {
-                                              _attendController
-                                                  .requestParticipation(
-                                                      context,
-                                                      PreferenceUtil.getInt(
-                                                          "uId")!,
-                                                      widget.pId);
+                                            onPressed: () async {
+                                              if (user.uId ==
+                                                  PreferenceUtil.getInt(
+                                                      "uId")) {
+                                                List<UserResponse> userList =
+                                                    await db.getAttendUserList(
+                                                        widget.pId);
+                                                return showAttendUserDialog(
+                                                    context,
+                                                    userList,
+                                                    userList.length);
+                                              } else {
+                                                _attendController
+                                                    .requestParticipation(
+                                                        context,
+                                                        PreferenceUtil.getInt(
+                                                            "uId")!,
+                                                        widget.pId);
+                                              }
                                             },
                                           ))),
                                   Divider(color: AppTheme.mainTextColor),
