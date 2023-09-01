@@ -448,10 +448,10 @@ class DBService {
     }
   }
 
-  Future<void> acceptUserToJoin(int uId) async {
+  Future<void> acceptUserToJoin(int uId, int pId) async {
     try {
       final response = await http
-          .get(Uri.parse("http://43.201.211.1:1004/accept/accept/$uId"));
+          .get(Uri.parse("http://43.201.211.1:1004/accept/accept/$uId/$pId"));
 
       if (response.statusCode == 200) {
         // API 호출 성공
