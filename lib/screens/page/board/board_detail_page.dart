@@ -7,6 +7,7 @@ import 'dart:developer' as dev;
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/board/attend_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
+import 'package:hae_mo/controller/wish_meeting_controller.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/commentWidget.dart';
@@ -32,9 +33,10 @@ class BoardDetailPage extends StatefulWidget {
 class _BoardDetailPageState extends State<BoardDetailPage> {
   double _textFieldHeight = 35.0;
   MeetingPageController meetingController = MeetingPageController();
-  bool fillWishColor = false;
   TextEditingController commentController = TextEditingController();
   final AttendController _attendController = Get.put(AttendController());
+  final WishMeetingController wishMeetingController =
+      Get.find<WishMeetingController>();
   late AcceptionState _acceptionState;
 
   DBService db = DBService();
@@ -57,10 +59,32 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
             elevation: 0.0,
             automaticallyImplyLeading: true,
             actions: [
-              WishStarButton(
-                  fillHeart: fillWishColor,
-                  uId: PreferenceUtil.getInt("uId")!,
-                  pId: widget.pId)
+              FutureBuilder<bool>(
+                future: meetingController.checkIsWished(
+                  PreferenceUtil.getInt("uId")!,
+                  widget.pId,
+                ),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    // 데이터가 로딩 중일 때 표시할 위젯
+                    return CircularProgressIndicator(); // 예시로 로딩 스피너를 사용했습니다.
+                  } else if (snapshot.hasError) {
+                    // 에러가 발생한 경우 표시할 위젯
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data == null) {
+                    // 데이터가 없는 경우나 null인 경우 표시할 위젯
+                    return Text('Data not available');
+                  } else {
+                    // 데이터가 정상적으로 로드된 경우 표시할 위젯
+                    final bool fillHeartColor = snapshot.data!;
+                    return WishStarButton(
+                      fillHeart: fillHeartColor,
+                      uId: PreferenceUtil.getInt("uId")!,
+                      pId: widget.pId,
+                    );
+                  }
+                },
+              )
             ],
           ),
           body: SingleChildScrollView(

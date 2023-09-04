@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/model/wish_meeting_model.dart';
 import 'package:hae_mo/service/db_service.dart';
-
-import '../../model/wish_model.dart';
 
 class WishStarButton extends StatefulWidget {
   const WishStarButton(
@@ -34,10 +33,10 @@ class _WishStarButtonState extends State<WishStarButton> {
     return IconButton(
       onPressed: () {
         if (!fillHeartColor) {
-          Wish wish = Wish(uId: widget.uId, pId: widget.pId);
-          // db.addWishList(wish);
+          WishMeeting wish = WishMeeting(uId: widget.uId, pId: widget.pId);
+          db.addWishMeetingList(wish);
         } else {
-          // db.deleteWishList(widget.uId, widget.pId);
+          db.deleteWishMeetingList(widget.uId, widget.pId);
         }
         setState(() {
           fillHeartColor = !fillHeartColor;

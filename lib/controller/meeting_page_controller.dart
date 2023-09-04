@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:hae_mo/controller/wish_meeting_controller.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
+import 'package:hae_mo/model/wish_meeting_response_model.dart';
+import 'package:hae_mo/model/wish_response_model.dart';
 import 'package:hae_mo/service/db_service.dart';
 import '../model/post_response_model.dart';
 
@@ -8,6 +11,8 @@ class MeetingPageController extends GetxController {
   final RxList<PostResponse> todayNoticeList = <PostResponse>[].obs;
   final RxList<PostResponse> postList = <PostResponse>[].obs;
   final RxList<CommentResponse> commentList = <CommentResponse>[].obs;
+  late List<int> wishMeetingListPId = <int>[].obs;
+  late List<WishMeetingResponse> wishMeetingList = <WishMeetingResponse>[].obs;
 
   void fetchTodayNotice() async {
     try {
@@ -25,5 +30,9 @@ class MeetingPageController extends GetxController {
     } catch (error) {
       // 오류 처리
     }
+  }
+
+  Future<bool> checkIsWished(int uId, int pId) {
+    return dbService.checkWishMeetingExist(uId, pId);
   }
 }
