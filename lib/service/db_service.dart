@@ -12,6 +12,8 @@ import 'package:hae_mo/model/notice_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/model/wish_meeting_model.dart';
+import 'package:hae_mo/model/wish_meeting_response_model.dart';
 import 'package:hae_mo/model/wish_model.dart';
 import 'package:hae_mo/model/wish_response_model.dart';
 import 'package:http/http.dart' as http;
@@ -453,12 +455,14 @@ class DBService {
       final response = await http
           .get(Uri.parse("http://43.201.211.1:1004/accept/accept/$uId/$pId"));
 
-      if (response.statusCode == 200) {
+      if (response.statusCode != 201) {
         // API 호출 성공
-        print('Notice visibility changed successfully.');
+        print('Failed to accetp user.');
+        dev.log(response.statusCode.toString());
       } else {
         // API 호출 실패
-        print('Failed to change notice visibility.');
+
+        print('Accept User to join successfully.');
       }
     } catch (error) {
       // 에러 처리
@@ -510,6 +514,78 @@ class DBService {
           .toList();
     } else {
       throw Exception('Failed to load hot list');
+    }
+  }
+
+  ///유저의 찜한 게시물 가져오기
+  Future<List<WishMeetingResponse>> getWishMeetingListByUser(int uId) async {
+    final response = await http
+        .get(Uri.parse("http://43.201.211.1:1004/wishMeeting/myList/$uId"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<WishMeetingResponse>(
+              (json) => WishMeetingResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load post llist');
+    }
+  }
+
+  Future<bool> checkWishMeetingExist(int uId, int pId) async {
+    final response = await http.get(
+        Uri.parse("http://43.201.211.1:1004/wishMeeting/isExist/$uId/$pId"));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as bool;
+      return data;
+    } else {
+      throw Exception('Failed to check wish Meeting exist.');
+    }
+  }
+
+  Future<bool> addWishMeetingList(WishMeeting wish) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://43.201.211.1:1004/wishMeeting"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(wish.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send data");
+      } else {
+        dev.log("Wish Meeting List Data sent successfully");
+        return true;
+      }
+    } catch (e) {
+      dev.log("Failed to send Wish Meeting List: ${e}");
+      return false;
+    }
+  }
+
+  Future<void> deleteWishMeetingList(int uId, int pId) async {
+    final response = await http.delete(
+      Uri.parse('http://43.201.211.1:1004/wishMeeting/delete/$uId/$pId'),
+    );
+    if (response.statusCode == 204) {
+      print('WishList deleted successfully');
+    } else {
+      throw Exception('Failed to delete Wish Meeting List');
+    }
+  }
+
+  Future<List<PostResponse>> getWishListPIdsByUser(int uId) async {
+    final response = await http
+        .get(Uri.parse('http://43.201.211.1:1004/wishMeeting/myList/$uId'));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<PostResponse>((json) => PostResponse.fromJson(json))
+          .toList();
+    } else {
+      throw Exception('Failed to load post list');
     }
   }
 }
