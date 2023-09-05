@@ -7,7 +7,6 @@ import 'dart:developer' as dev;
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/board/attend_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
-import 'package:hae_mo/controller/wish_meeting_controller.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/commentWidget.dart';
@@ -35,8 +34,6 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   MeetingPageController meetingController = MeetingPageController();
   TextEditingController commentController = TextEditingController();
   final AttendController _attendController = Get.put(AttendController());
-  final WishMeetingController wishMeetingController =
-      Get.find<WishMeetingController>();
   late AcceptionState _acceptionState;
 
   DBService db = DBService();

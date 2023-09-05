@@ -3,17 +3,18 @@ import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/screens/Page/board/board_detail_page.dart';
+import 'package:hae_mo/screens/components/wishStarButton.dart';
 import 'package:hae_mo/service/db_service.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 
-class MyMeetingPage extends StatefulWidget {
-  const MyMeetingPage({super.key});
+class MyWishMeetingPage extends StatefulWidget {
+  const MyWishMeetingPage({super.key});
 
   @override
-  State<MyMeetingPage> createState() => _MyMeetingPageState();
+  State<MyWishMeetingPage> createState() => _MyWishMeetingPageState();
 }
 
-class _MyMeetingPageState extends State<MyMeetingPage> {
+class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +23,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
           foregroundColor: Colors.black,
           elevation: 0.0,
           title: const Text(
-            "내가 작성한 글",
+            "가고 싶은 모임",
             style: TextStyle(
               color: Color(0xff595959),
               fontSize: 19.0,
@@ -38,24 +39,22 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                 color: AppTheme.dividerColor,
                 thickness: 0.5,
               ),
-              Expanded(flex: 3, child: myBoardList())
+              Expanded(flex: 3, child: myWishMeetingList())
             ])));
   }
 
-  Widget myBoardList() {
+  Widget myWishMeetingList() {
     DBService db = DBService();
     return FutureBuilder(
-        future: db.getAllPost(),
+        future: db.getWishMeetingListByUser(PreferenceUtil.getInt("uId")!),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final List<PostResponse> postList =
                 snapshot.data as List<PostResponse>;
-            postList.removeWhere((element) =>
-                element.nickname != PreferenceUtil.getString("nickname"));
             if (postList.isEmpty) {
               return Center(
                   child: Text(
-                "아직 작성한 게시물이 없어요!",
+                "아직 찜한 게시물이 없어요!",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
                     color: AppTheme.mainPageTextColor),
@@ -76,7 +75,6 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                   border: Border.all(
                                       color: AppTheme.borderColor, width: 0.8),
                                   borderRadius: BorderRadius.circular(15.0)),
-                              height: 68.0,
                               width: double.infinity,
                               margin:
                                   const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
@@ -91,7 +89,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Expanded(
-                                              flex: 7,
+                                              flex: 5,
                                               child: Text(
                                                 postList[index].title,
                                                 maxLines: 1,
@@ -115,11 +113,14 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                                           FontWeight.w600),
                                                 ),
                                                 SizedBox(
-                                                    width: 18.0,
-                                                    height: 18.0,
-                                                    child: Image.asset(
-                                                      "assets/icons/icon.png",
-                                                      color: AppTheme.mainColor,
+                                                    width: 30.0,
+                                                    height: 30.0,
+                                                    child: WishStarButton(
+                                                      fillHeart: true,
+                                                      uId:
+                                                          PreferenceUtil.getInt(
+                                                              "uId")!,
+                                                      pId: postList[index].pId,
                                                     ))
                                               ]))
                                         ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/screens/page/my_page/my_meeting_page.dart';
+import 'package:hae_mo/screens/page/my_page/my_wish_meeting_page.dart';
 import 'package:hae_mo/screens/page/my_page/my_wish_page.dart';
 import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
@@ -131,9 +132,7 @@ class _MyPageState extends State<MyPage> {
                       Divider(color: AppTheme.mainPageTextColor),
                       InkWell(
                           onTap: () {
-                            Get.to(() => const ChatRoom(
-                                  chatRoomId: '3',
-                                ));
+                            Get.to(const MyWishMeetingPage());
                           },
                           child: Container(
                             width: double.infinity,

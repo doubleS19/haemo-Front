@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:hae_mo/controller/wish_meeting_controller.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/wish_meeting_response_model.dart';
 import 'package:hae_mo/model/wish_response_model.dart';
