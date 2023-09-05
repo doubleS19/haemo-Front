@@ -24,7 +24,7 @@ class ClubPostResponse {
         person: json['person'],
         category: json['category'],
         description: json['description'],
-        pId: json['pid']);
+        pId: json['cpId']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -34,6 +34,6 @@ class ClubPostResponse {
         'person': person,
         'category': category,
         'description': description,
-        'pid': pId
+        'cpId': pId
       };
 }
