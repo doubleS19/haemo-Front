@@ -15,9 +15,9 @@ import 'notice_detail_page.dart';
 import 'notice_posting_page.dart';
 
 class NoticePage extends StatelessWidget {
-  NoticePage({Key? key}) : super(key: key);
+  NoticePage({Key? key, required this.isAdmin}) : super(key: key);
   NoticeController noticeController = NoticeController();
-  bool isAdmin = true;
+  final bool isAdmin;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,6 @@ class NoticePage extends StatelessWidget {
                           icon: const Icon(Icons.create_outlined)))
                   : customColorAppbar(context, "공지사항"))),
       body: Obx(() {
-        print("Notice State: ${noticeController.noticeState.value}");
-
         if (noticeController.noticeState.value == NoticeState.Before) {
           return Center(child: SpinKitFadingCircle(
               color: AppTheme.mainColor,
@@ -65,37 +63,39 @@ class NoticePage extends StatelessWidget {
       }),
     );
   }
+  Widget noticeCard(
+      BuildContext context, Notice notice, NoticeController noticeController) {
+
+    return GestureDetector(
+        onTap: () {
+          Get.to(() => NoticeDetailPage(
+              notice: notice, isAdmin: isAdmin, noticeController: noticeController));
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppTheme.postingPageHeadlineColor,
+          ),
+          height: /*MediaQuery.of(context).size.height*/ 80,
+          alignment: Alignment.centerLeft,
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("[${notice.noticeType}] ${notice.title}",
+                      style: CustomThemes.noticePageMenuListTextStyle),
+                  Text(notice.date, style: CustomThemes.noticePageDateTextStyle)
+                ],
+              ),
+              Icon(Icons.keyboard_arrow_right_outlined,
+                  color: AppTheme.noticePageIconColor)
+            ],
+          ),
+        ));
+  }
+
 }
 
-Widget noticeCard(
-    BuildContext context, Notice notice, NoticeController noticeController) {
-  return GestureDetector(
-      onTap: () {
-        Get.to(() => NoticeDetailPage(
-            notice: notice, isAdmin: true, noticeController: noticeController));
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.postingPageHeadlineColor,
-        ),
-        height: /*MediaQuery.of(context).size.height*/ 80,
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("[${notice.noticeType}] ${notice.title}",
-                    style: CustomThemes.noticePageMenuListTextStyle),
-                Text(notice.date, style: CustomThemes.noticePageDateTextStyle)
-              ],
-            ),
-            Icon(Icons.keyboard_arrow_right_outlined,
-                color: AppTheme.noticePageIconColor)
-          ],
-        ),
-      ));
-}

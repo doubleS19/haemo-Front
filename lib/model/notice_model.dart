@@ -36,7 +36,7 @@ class Notice {
 
   factory Notice.fromJson(Map<String, dynamic> json) {
     return Notice(
-      nId: json['nId'] as int?,
+      nId: json['nid'] as int?,
       title: json['title'] as String,
       content: json['content'] as String,
       MD: json['md'] as String,

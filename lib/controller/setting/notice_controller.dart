@@ -31,28 +31,28 @@ class NoticeController extends GetxController {
   Future<void> getNotice() async {
     List<Notice> fetchedNotices = [];
     try {
-      print("Notice Controller State: ${noticeState.value}");
-
       fetchedNotices = await dbService.getAllNotice();
-      if(fetchedNotices.isEmpty) noticeState.value = NoticeState.Empty;
-      else{
+
+      if(fetchedNotices.isEmpty) {
+        noticeState.value = NoticeState.Empty;
+      } else{
         noticeState.value = NoticeState.Success;
         noticeList?.value = fetchedNotices.where((e) => e.visible == true).toList();
-        print("Notice Controller State: ${noticeState.value}");
       }
+      print("print nId: ${noticeList?.value[0].nId.toString()}");
+
     } catch (error) {
       print("Error getting notices: $error");
       noticeState.value = NoticeState.Error;
     }
-
   }
 
   void changeVisibility(Notice notice) async {
     try{
+      print("print nId: ${notice.nId}");
       await dbService.changeNoticeVisibility(notice.nId!);
     } catch(error){
       print("Controller Error change not Visible: $error");
-
     }
   }
 }
