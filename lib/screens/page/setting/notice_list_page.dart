@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -37,14 +38,15 @@ class NoticePage extends StatelessWidget {
                           icon: const Icon(Icons.create_outlined)))
                   : customColorAppbar(context, "공지사항"))),
       body: Obx(() {
-        noticeController.getNotice();
-
         print("Notice State: ${noticeController.noticeState.value}");
 
-        if (noticeController.noticeState.value == NoticeState.Empty) {
+        if (noticeController.noticeState.value == NoticeState.Before) {
+          return Center(child: SpinKitFadingCircle(
+              color: AppTheme.mainColor,
+              size: 40,
+              duration: const Duration(milliseconds: 500)));
+        } else if (noticeController.noticeState.value == NoticeState.Empty) {
           return const Center(child: Text("공지사항이 존재하지 않습니다. "));
-        } else if (noticeController.noticeState.value == NoticeState.Loading) {
-          return Center(child: CircularProgressIndicator());
         } else if (noticeController.noticeState.value == NoticeState.Error) {
           return const Center(child: Text("공지사항을 불러오는데 실패했습니다. 다시 시도해주세요."));
         }

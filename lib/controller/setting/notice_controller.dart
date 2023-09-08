@@ -9,7 +9,6 @@ import '../../service/db_service.dart';
 List<String> noticeType = ["안내", "공지", "업데이트"];
 enum NoticeState {
   Before,
-  Loading,
   Error,
   Empty,
   Success
@@ -31,16 +30,21 @@ class NoticeController extends GetxController {
 
   Future<void> getNotice() async {
     List<Notice> fetchedNotices = [];
-    noticeState.value = NoticeState.Loading;
     try {
+      print("Notice Controller State: ${noticeState.value}");
+
       fetchedNotices = await dbService.getAllNotice();
       if(fetchedNotices.isEmpty) noticeState.value = NoticeState.Empty;
+      else{
+        noticeState.value = NoticeState.Success;
+        noticeList?.value = fetchedNotices.where((e) => e.visible == true).toList();
+        print("Notice Controller State: ${noticeState.value}");
+      }
     } catch (error) {
       print("Error getting notices: $error");
       noticeState.value = NoticeState.Error;
     }
-    fetchedNotices = fetchedNotices.where((e) => e.visible == true).toList();
-    noticeState.value = NoticeState.Success;
+
   }
 
   void changeVisibility(Notice notice) async {

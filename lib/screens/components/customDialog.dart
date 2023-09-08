@@ -19,7 +19,10 @@ void showMyAlertDialog(
   showDialog<String>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
-      content: Center(child: Text(content)),
+      content: Container(
+        height: 100,
+        child: Center(child: Text(content)),
+      ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       actions: <Widget>[
         TextButton(
