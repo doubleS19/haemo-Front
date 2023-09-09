@@ -21,4 +21,8 @@ class ClubPageController extends GetxController {
       // 오류 처리
     }
   }
+
+  Future<bool> checkIsWished(int uId, int pId) {
+    return dbService.checkWishClubExist(uId, pId);
+  }
 }
