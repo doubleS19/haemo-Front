@@ -25,13 +25,11 @@ class HotPlacePageController extends GetxController {
 
 
   void updateHotPlaceList() {
-    print("updateHotPlaceList 실행");
     hotPlaceListisLoading.value = false;
     fetchPopularHotPlaceList();
     fetchHotPlaceList();
     hotPlaceListisLoading.value = true;
     update();
-    print("hotPlacePostList Length: ${hotPlacePostList.length}");
   }
 
   void fetchPopularHotPlaceList() async {

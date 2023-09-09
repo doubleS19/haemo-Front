@@ -299,7 +299,6 @@ class DBService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
-      print("wishResonse: ${jsonResponse}");
       return jsonResponse.map((e) => HotPlacePostResponse.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load wish list');
