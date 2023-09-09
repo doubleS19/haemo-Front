@@ -20,6 +20,7 @@ import 'package:http/http.dart' as http;
 import 'dart:developer' as dev;
 import '../model/post_response_model.dart';
 import '../model/user_model.dart';
+import '../model/wish_club_model.dart';
 
 class DBService {
   Future<bool> saveUser(User user) async {
@@ -604,24 +605,20 @@ class DBService {
     }
   }
 
-  Future<bool> addWishClubList(WishMeeting wish) async {
-    try {
-      final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/wishClub"),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(wish.toJson()),
-      );
-      if (response.statusCode != 201) {
-        throw Exception("Failed to send data");
-      } else {
-        dev.log("Wish Meeting List Data sent successfully");
-        return true;
-      }
-    } catch (e) {
-      dev.log("Failed to send Wish Meeting List: ${e}");
-      return false;
+  Future<bool> addWishClubList(WishClub wish) async {
+    final response = await http.post(
+      Uri.parse("http://43.201.211.1:1004/wishClub"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(wish.toJson()),
+    );
+    if (response.statusCode != 201) {
+      print("에드 클럽 스테이터스: ${response.statusCode}");
+      throw Exception("Failed to send wish club data");
+    } else {
+      dev.log("Wish club List Data sent successfully");
+      return true;
     }
   }
 
@@ -632,6 +629,7 @@ class DBService {
     if (response.statusCode == 204) {
       print('WishList deleted successfully');
     } else {
+      print("딜리트 클럽 스테이터스: ${response.statusCode}");
       throw Exception('Failed to delete Wish Meeting List');
     }
   }
