@@ -20,6 +20,7 @@ import 'package:http/http.dart' as http;
 import 'dart:developer' as dev;
 import '../model/post_response_model.dart';
 import '../model/user_model.dart';
+import '../model/wish_club_model.dart';
 
 class DBService {
   Future<bool> saveUser(User user) async {
