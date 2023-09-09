@@ -116,12 +116,12 @@ class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
                                                     width: 30.0,
                                                     height: 30.0,
                                                     child: WishStarButton(
-                                                      fillHeart: true,
-                                                      uId:
-                                                          PreferenceUtil.getInt(
-                                                              "uId")!,
-                                                      pId: postList[index].pId,
-                                                    ))
+                                                        fillHeart: true,
+                                                        uId: PreferenceUtil
+                                                            .getInt("uId")!,
+                                                        pId:
+                                                            postList[index].pId,
+                                                        type: 1))
                                               ]))
                                         ],
                                       ),
