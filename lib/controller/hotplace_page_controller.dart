@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:hae_mo/controller/wishlist_controller.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/wish_model.dart';
@@ -13,23 +12,33 @@ class HotPlacePageController extends GetxController {
   final RxList<HotPlacePostResponse> hotPlacePostList =
       <HotPlacePostResponse>[].obs;
   final RxList<CommentResponse> commentList = <CommentResponse>[].obs;
-  late List<HotPlacePostResponse> wishList = <HotPlacePostResponse>[].obs;
+  late RxList<HotPlacePostResponse> wishList = <HotPlacePostResponse>[].obs;
   late int uId;
 
   final Rx<bool> hotPlaceListisLoading = false.obs;
 
-  void getUid() async {
+  @override
+  void onInit() {
+    super.onInit();
+
+    // 여기에서 uId를 초기화합니다.
     uId = PreferenceUtil.getInt("uid")!;
+
+    updateWishList();
   }
 
-  Future<void>fetchWishList(WishListController wishListController) async {
-    wishList = await wishListController.getWishList();
+  Future<void> updateWishList() async {
+    var wishResponseList = await dbService.getWishListByUser(uId);
+
+    wishList.assignAll(wishResponseList);
   }
 
   void updateHotPlaceList() {
+    print("updateHotPlaceList 실행");
     hotPlaceListisLoading.value = false;
     fetchPopularHotPlaceList();
     fetchHotPlaceList();
+    updateWishList();
     hotPlaceListisLoading.value = true;
     update();
     print("hotPlacePostList Length: ${hotPlacePostList.length}");
@@ -63,15 +72,5 @@ class HotPlacePageController extends GetxController {
       }
     }
     return false;
-  }
-
-
-  /// 찜 클릭 시 유저의 핫플 리스트에 핫플 추가 & 삭제
-  void updateWishList(int pId, bool checkWishList) {
-    if (checkWishList) {
-      dbService.deleteWishList(uId, pId);
-    } else {
-      dbService.addWishList(Wish(pId: pId, uId: uId));
-    }
   }
 }

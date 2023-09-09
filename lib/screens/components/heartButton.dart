@@ -35,12 +35,13 @@ class _HeartButtonWidgetState extends State<HeartButtonWidget> {
       onPressed: () {
         if (!fillHeartColor) {
           Wish wish = Wish(uId: widget.uId, pId: widget.pId);
+          print("heartButton add");
           db.addWishList(wish);
         } else {
           db.deleteWishList(widget.uId, widget.pId);
+          print("heartButton delete");
         }
         setState(() {
-          /// 클릭 후 디비에 반영되면 색이 바뀌도록 바꿔야 될지도..?
           fillHeartColor = !fillHeartColor; // Toggle the value
         });
       },
