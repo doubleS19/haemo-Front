@@ -6,10 +6,10 @@ import 'package:hae_mo/common/theme.dart';
 
 class CheckMarkIndicator extends StatefulWidget {
   final Widget child;
-  final Set<void> onRefresh;
+  final Set<void> onClick;
 
   const CheckMarkIndicator(
-      {Key? key, required this.child, required this.onRefresh})
+      {Key? key, required this.child, required this.onClick})
       : super(key: key);
 
   @override
@@ -28,8 +28,23 @@ class _CheckMarkIndicatorState extends State<CheckMarkIndicator>
   Widget build(BuildContext context) {
     return CustomRefreshIndicator(
       offsetToArmed: _indicatorSize,
-      onRefresh: () async => widget.onRefresh,
+      onRefresh: () async => {
+        widget.onClick,
+        Future.delayed(const Duration(seconds: 2))
+      },
       child: widget.child,
+      onStateChanged: (change) {
+        if (change.didChange(to: IndicatorState.complete)) {
+          setState(() {
+            _renderCompleteState = true;
+          });
+
+        } else if (change.didChange(to: IndicatorState.idle)) {
+          setState(() {
+            _renderCompleteState = false;
+          });
+        }
+      },
       builder: (
         BuildContext context,
         Widget child,
@@ -43,7 +58,9 @@ class _CheckMarkIndicatorState extends State<CheckMarkIndicator>
                   if (controller.scrollingDirection ==
                           ScrollDirection.reverse &&
                       prevScrollDirection == ScrollDirection.forward) {
-                    controller.stopDrag();
+                    if (controller.state == IndicatorState.armed) {
+                      controller.stopDrag();
+                    }
                   }
                   prevScrollDirection = controller.scrollingDirection;
 

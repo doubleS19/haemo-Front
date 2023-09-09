@@ -22,17 +22,12 @@ class HotPlacePage extends StatefulWidget {
 class _HotPlacePageState extends State<HotPlacePage> {
   final HotPlacePageController hotPlaceController =
       Get.find<HotPlacePageController>();
-  final WishListController wishListController = Get.find<WishListController>();
 
   @override
   void initState() {
     super.initState();
-    print("initState");
 
-    hotPlaceController.getUid();
     hotPlaceController.updateHotPlaceList();
-    wishListController.getWishList();
-    hotPlaceController.fetchWishList(wishListController);
   }
 
   @override
@@ -77,7 +72,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
                   child: Container(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: CheckMarkIndicator(
-                          onRefresh: {hotPlaceController.updateHotPlaceList()},
+                          onClick: {hotPlaceController.updateHotPlaceList()},
                           child: Obx(() => GridView.builder(
                               itemCount:
                                   hotPlaceController.hotPlacePostList.length,

@@ -177,7 +177,7 @@ class _MeetingPageState extends State<MeetingPage> {
           );
         } else {
           return CheckMarkIndicator(
-              onRefresh: {meetingController.fetchBoardList()},
+              onClick:{ meetingController.fetchBoardList()},
               child: ListView.builder(
                 itemCount: postList.length,
                 itemBuilder: (BuildContext context, int index) {
