@@ -29,8 +29,9 @@ class _HotPlacePageState extends State<HotPlacePage> {
     super.initState();
     print("initState");
 
-    hotPlaceController.tmp();
+    hotPlaceController.getUid();
     hotPlaceController.updateHotPlaceList();
+    wishListController.getWishList();
     hotPlaceController.fetchWishList(wishListController);
   }
 

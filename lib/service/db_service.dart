@@ -292,14 +292,14 @@ class DBService {
   }
 
   ///유저의 wishList(찜한 핫플) 가져오기
-  Future<List<WishResponse>> getWishListByUser(int uId) async {
+  Future<List<HotPlacePostResponse>> getWishListByUser(int uId) async {
     final response =
         await http.get(Uri.parse('http://43.201.211.1:1004/wish/myList/$uId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       print("wishResonse: ${jsonResponse}");
-      return jsonResponse.map((e) => WishResponse.fromJson(e)).toList();
+      return jsonResponse.map((e) => HotPlacePostResponse.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load wish list');
     }
