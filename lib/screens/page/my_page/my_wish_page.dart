@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/screens/Page/board/hot_place_page.dart';
 import 'package:hae_mo/service/db_service.dart';
@@ -70,7 +71,6 @@ class _MyWishPageState extends State<MyWishPage> {
                           nickname: postList[index].nickname,
                           date: postList[index].date,
                           photoList: []),
-                      true,
                       PreferenceUtil.getInt("uid")!);
                 });
           } else if (snapshot.hasError) {

@@ -26,7 +26,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
   void initState() {
     super.initState();
 
-    hotPlaceController.updateHotPlaceList();
+    //hotPlaceController.updateHotPlaceList();
   }
 
   @override
@@ -58,11 +58,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                     child: popularHotPlaceCard(
                                         context,
                                         hotPlaceController
-                                            .popularHotPlaceList[index],
-                                        hotPlaceController.checkHotPlaceList(
-                                            hotPlaceController
-                                                .popularHotPlaceList[index]
-                                                .pId)));
+                                            .popularHotPlaceList[index], hotPlaceController.uId));
                               },
                             )
                           : Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
@@ -71,7 +67,9 @@ class _HotPlacePageState extends State<HotPlacePage> {
                   child: Container(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: CheckMarkIndicator(
-                          onClick: {hotPlaceController.updateHotPlaceList()},
+                          onClick: {
+                            hotPlaceController.updateHotPlaceList(),
+                          },
                           child: Obx(() => GridView.builder(
                               itemCount:
                                   hotPlaceController.hotPlacePostList.length,
@@ -86,11 +84,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                     context,
                                     hotPlaceController
                                         .hotPlacePostList.value[index],
-                                    hotPlaceController.checkHotPlaceList(
-                                        hotPlaceController
-                                            .hotPlacePostList[index].pId),
-                                    hotPlaceController.uId
-                                    );
+                                    hotPlaceController.uId,);
                               }))))),
             ],
           )),
@@ -99,7 +93,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
 }
 
 Widget popularHotPlaceCard(
-    BuildContext context, HotPlacePostResponse hotPlaceData, bool isFilled) {
+    BuildContext context, HotPlacePostResponse hotPlaceData, int uId) {
   return GestureDetector(
       onTap: () {
         Get.to(() => HotPlaceDetailPage(hotPlacePost: hotPlaceData));
@@ -126,11 +120,7 @@ Widget popularHotPlaceCard(
             ),
             Positioned(
                 right: 0,
-                child: HeartButtonWidget(
-                  fillHeart: isFilled,
-                  uId: 42,
-                  pId: 1,
-                )),
+                child: HeartButtonWidget(uId: uId, pId: hotPlaceData.pId)),
             Positioned(
                 bottom: 30,
                 left: 10,
@@ -139,8 +129,8 @@ Widget popularHotPlaceCard(
           ])));
 }
 
-Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
-    bool fillHeartColor, int uId) {
+Widget hotPlaceCard(
+    BuildContext context, HotPlacePostResponse hotPlaceData, int uId) {
   return GestureDetector(
       onTap: () {
         Get.to(() => HotPlaceDetailPage(hotPlacePost: hotPlaceData));
@@ -163,9 +153,7 @@ Widget hotPlaceCard(BuildContext context, HotPlacePostResponse hotPlaceData,
                   style: CustomThemes.hotPlacePostTitleTextStyle),
             ),
             Positioned(
-              right: 0,
-              child:
-                  HeartButtonWidget(uId: uId, pId: hotPlaceData.pId, fillHeart: fillHeartColor),
-            )
+                right: 0,
+                child: HeartButtonWidget(uId: uId, pId: hotPlaceData.pId)),
           ])));
 }

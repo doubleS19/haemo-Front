@@ -6,27 +6,33 @@ import 'package:hae_mo/service/db_service.dart';
 import '../../model/wish_model.dart';
 
 class HeartButtonWidget extends StatefulWidget {
-  const HeartButtonWidget(
-      {super.key,
-      required this.fillHeart,
-      required this.uId,
-      required this.pId});
+  const HeartButtonWidget({super.key, required this.uId, required this.pId});
 
-  final bool fillHeart;
   final int uId;
   final int pId;
+
   @override
   _HeartButtonWidgetState createState() => _HeartButtonWidgetState();
 }
 
 class _HeartButtonWidgetState extends State<HeartButtonWidget> {
-  late bool fillHeartColor;
+  bool fillHeartColor = false;
   DBService db = DBService();
 
   @override
   void initState() {
     super.initState();
-    fillHeartColor = widget.fillHeart;
+    _fetchWishList().then((result) {
+      setState(() {
+        fillHeartColor = result;
+      });
+    });
+  }
+
+  Future<bool> _fetchWishList() async {
+    var wishResponseList = await db.getWishListByUser(widget.uId);
+
+    return wishResponseList.any((item) => item.pId == widget.pId);
   }
 
   @override

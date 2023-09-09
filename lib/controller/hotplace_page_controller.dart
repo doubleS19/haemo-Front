@@ -12,33 +12,23 @@ class HotPlacePageController extends GetxController {
   final RxList<HotPlacePostResponse> hotPlacePostList =
       <HotPlacePostResponse>[].obs;
   final RxList<CommentResponse> commentList = <CommentResponse>[].obs;
-  late RxList<HotPlacePostResponse> wishList = <HotPlacePostResponse>[].obs;
   late int uId;
-
   final Rx<bool> hotPlaceListisLoading = false.obs;
 
   @override
   void onInit() {
     super.onInit();
 
-    // 여기에서 uId를 초기화합니다.
     uId = PreferenceUtil.getInt("uid")!;
-
-    updateWishList();
+    updateHotPlaceList();
   }
 
-  Future<void> updateWishList() async {
-    var wishResponseList = await dbService.getWishListByUser(uId);
-
-    wishList.assignAll(wishResponseList);
-  }
 
   void updateHotPlaceList() {
     print("updateHotPlaceList 실행");
     hotPlaceListisLoading.value = false;
     fetchPopularHotPlaceList();
     fetchHotPlaceList();
-    updateWishList();
     hotPlaceListisLoading.value = true;
     update();
     print("hotPlacePostList Length: ${hotPlacePostList.length}");
@@ -63,14 +53,5 @@ class HotPlacePageController extends GetxController {
     } catch (error) {
       print("Error to get HotPlaceList: ${error}");
     }
-  }
-
-  bool checkHotPlaceList(int pId) {
-    for (HotPlacePostResponse item in wishList) {
-      if (item.pId == pId) {
-        return true;
-      }
-    }
-    return false;
   }
 }
