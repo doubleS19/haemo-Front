@@ -39,7 +39,8 @@ class _MyPageState extends State<MyPage> {
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.settings),
+              icon: Image.asset("assets/icons/setting_icon.png",
+                  color: AppTheme.mainColor),
               onPressed: () {
                 Get.to(() => SettingsPage());
               },
