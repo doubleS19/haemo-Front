@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/screens/page/my_page/my_meeting_page.dart';
+import 'package:hae_mo/screens/page/my_page/my_wish_club_page%20.dart';
 import 'package:hae_mo/screens/page/my_page/my_wish_meeting_page.dart';
 import 'package:hae_mo/screens/page/my_page/my_wish_page.dart';
 import 'package:hae_mo/screens/page/setting/settings_page.dart';
@@ -141,6 +142,24 @@ class _MyPageState extends State<MyPage> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "가고 싶은 모임",
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w300,
+                                  color: AppTheme.mainTextColor),
+                            ),
+                          )),
+                      Divider(color: AppTheme.mainPageTextColor),
+                      InkWell(
+                          onTap: () {
+                            Get.to(const MyWishClubPage());
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 44.0,
+                            margin: const EdgeInsets.only(left: 20.0),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "가고 싶은 소모임",
                               style: TextStyle(
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w300,

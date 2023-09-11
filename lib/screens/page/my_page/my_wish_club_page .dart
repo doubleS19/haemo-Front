@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/screens/Page/board/board_detail_page.dart';
 import 'package:hae_mo/screens/components/wishStarButton.dart';
 import 'package:hae_mo/service/db_service.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 
-class MyWishMeetingPage extends StatefulWidget {
-  const MyWishMeetingPage({super.key});
+class MyWishClubPage extends StatefulWidget {
+  const MyWishClubPage({super.key});
 
   @override
-  State<MyWishMeetingPage> createState() => _MyWishMeetingPageState();
+  State<MyWishClubPage> createState() => _MyWishClubPageState();
 }
 
-class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
+class _MyWishClubPageState extends State<MyWishClubPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +24,7 @@ class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
           foregroundColor: Colors.black,
           elevation: 0.0,
           title: const Text(
-            "가고 싶은 모임",
+            "가고 싶은 소모임",
             style: TextStyle(
               color: Color(0xff595959),
               fontSize: 19.0,
@@ -39,22 +40,22 @@ class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
                 color: AppTheme.dividerColor,
                 thickness: 0.5,
               ),
-              Expanded(flex: 3, child: myWishMeetingList())
+              Expanded(flex: 3, child: myWishClubList())
             ])));
   }
 
-  Widget myWishMeetingList() {
+  Widget myWishClubList() {
     DBService db = DBService();
     return FutureBuilder(
-        future: db.getWishMeetingListByUser(PreferenceUtil.getInt("uId")!),
+        future: db.getWishClubListByUser(PreferenceUtil.getInt("uId")!),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final List<PostResponse> postList =
-                snapshot.data as List<PostResponse>;
+            final List<ClubPostResponse> postList =
+                snapshot.data as List<ClubPostResponse>;
             if (postList.isEmpty) {
               return Center(
                   child: Text(
-                "아직 찜한 게시물이 없어요!",
+                "아직 찜한 소모임이 없어요!",
                 style: TextStyle(
                     fontWeight: FontWeight.w300,
                     color: AppTheme.mainPageTextColor),
@@ -66,7 +67,7 @@ class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
                     return GestureDetector(
                         onTap: () {
                           Get.to(() => BoardDetailPage(
-                              pId: postList[index].pId, type: 1));
+                              pId: postList[index].pId, type: 2));
                         },
                         child: Expanded(
                             child: Column(children: [
@@ -82,15 +83,14 @@ class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
                                   10.0, 10.0, 10.0, 10.0),
                               child: Align(
                                   alignment: Alignment.centerLeft,
-                                  child: Expanded(
-                                      child: Column(
+                                  child: Column(
                                     children: [
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Expanded(
-                                              flex: 4,
+                                              flex: 5,
                                               child: Text(
                                                 postList[index].title,
                                                 maxLines: 1,
@@ -142,7 +142,7 @@ class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
                                                 fontWeight: FontWeight.w300),
                                           ),
                                           Text(
-                                            postList[index].date,
+                                            postList[index].category,
                                             style: TextStyle(
                                               fontSize: 12.0,
                                               color: AppTheme.mainPageTextColor,
@@ -151,7 +151,7 @@ class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
                                         ],
                                       )
                                     ],
-                                  )))),
+                                  ))),
                         ])));
                   });
             }
