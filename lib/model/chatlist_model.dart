@@ -1,20 +1,47 @@
 import 'dart:ffi';
 
-// firebase chatList
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'chat_message_model.dart';
+
 class ChatList{
-  String? chatRoomId;
-  String? chatUser1;
-  String? chatUser2;
-  String? lastChat;
-  Int? countNewChat;
+  DateTime createdAt;
+  String createdBy;
+  String id;
+  bool isDeleted;
+  List<String> members;
+  ChatMessage recentMessage;
 
   ChatList({
-    required this.chatRoomId,
-    required this.chatUser1,
-    required this.chatUser2,
-    required this.lastChat,
-    required this.countNewChat
+    required this.createdAt,
+    required this.createdBy,
+    required this.id,
+    required this.isDeleted,
+    required this.members,
+    required this.recentMessage,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'createdAt': createdAt.toUtc(),
+      'createdBy': createdBy,
+      'id': id,
+      'isDeleted': isDeleted,
+      'members': members,
+      'recentMessage': recentMessage.toJson(),
+    };
+  }
+
+  factory ChatList.fromJson(Map<String, dynamic> json) {
+    return ChatList(
+      createdAt: DateTime.fromMillisecondsSinceEpoch(json['createdAt'].millisecondsSinceEpoch).toUtc(),
+      createdBy: json['createdBy'],
+      id: json['id'],
+      isDeleted: json['isDeleted'],
+      members: List<String>.from(json['members']),
+      recentMessage: ChatMessage.fromJson(json['recentMessage']),
+    );
+  }
 }
 
 /*
