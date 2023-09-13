@@ -18,7 +18,6 @@ class ChatMessage {
       'messageText': messageText,
       'sentBy': sentBy,
       'sentAt': sentAt.toUtc().toIso8601String(),
-      // Convert DateTime to ISO 8601 string
       'isRead': isRead,
     };
   }
