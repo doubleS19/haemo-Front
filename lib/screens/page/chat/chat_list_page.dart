@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/service/db_service.dart';
+import '../../../common/theme.dart';
 import '../../../controller/chatlist_controller.dart';
 import '../../../model/chat_message_model.dart';
 import '../../components/customAppBar.dart';
@@ -29,34 +29,36 @@ class _ChatListPageState extends State<ChatListPage> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: Builder(
-              builder: (context) => backButtonAppbar(context, ""))),
+          child: Builder(builder: (context) => backButtonAppbar(context, ""))),
       body: Container(
-          height: MediaQuery.sizeOf(context).height,
+          height: MediaQuery.sizeOf(context).height*0.9,
           width: MediaQuery.sizeOf(context).width,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                  child: Text("채팅목록",
+                      style: CustomThemes.chatListTitleTeextStyle)),
               SizedBox(
-                height: MediaQuery.sizeOf(context).height*0.8,
-                width: MediaQuery.sizeOf(context).width,
-                child: ListView.builder(
-                    itemCount: 3,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          slidableCard(),
-                          const Divider(thickness: 1)
-                        ],
-                      );
-                    }),
-              ),
+                  height: MediaQuery.sizeOf(context).height * 0.7, // 0.75
+                  width: MediaQuery.sizeOf(context).width,
+                  child: ListView.separated(
+                      padding: EdgeInsets.zero,
+                      itemCount: 7,
+                      itemBuilder: (BuildContext context, int index) {
+                        return slidableCard();
+                      },
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(height: 1))),
               TextButton(
                   onPressed: () {
                     chatListController.addChatList();
                     print("click addChatList");
                   },
-                  child: Text("click to make List"))
+                  child: const Text("click to make List"))
             ],
           )),
     );
@@ -74,50 +76,50 @@ class _ChatListPageState extends State<ChatListPage> {
 
   Widget slidableCard() {
     return Container(
-        height: 80,
-        //width: MediaQuery.of(context).size.width,
+        height: 85,
         child: Slidable(
-              endActionPane: ActionPane(
-                extentRatio: 0.3,
-                motion: const DrawerMotion(),
-                children: [
-                  SlidableAction(
-                    flex: 1,
-                    onPressed: (BuildContext context) => doNothing(context),
-                    backgroundColor: Color.fromARGB(196, 172, 49, 38),
-                    foregroundColor: Colors.white,
-                    icon: Icons.check_rounded,
-                    label: 'CHECK',
-                  ),
-                ],
+          endActionPane: ActionPane(
+            extentRatio: 0.3,
+            motion: const DrawerMotion(),
+            children: [
+              SlidableAction(
+                flex: 1,
+                onPressed: (BuildContext context) => doNothing(context),
+                backgroundColor: Color.fromARGB(196, 172, 49, 38),
+                foregroundColor: Colors.white,
+                icon: Icons.check_rounded,
+                label: 'CHECK',
               ),
-              child: chatCard(ChatMessage(
-                  messageText: "text",
-                  sentBy: 43,
-                  sentAt: DateTime.now(),
-                  isRead: false)),
-            ));
+            ],
+          ),
+          child: chatCard(ChatMessage(
+              messageText: "text",
+              sentBy: 43,
+              sentAt: DateTime.now(),
+              isRead: false)),
+        ));
   }
 
   Widget chatCard(ChatMessage chat) {
-    return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            profileImage(context, user),
-            Container(
-              width: MediaQuery.sizeOf(context).width*0.7,
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          profileImage(context, user),
+          Container(
+              height: double.maxFinite,
+              width: MediaQuery.sizeOf(context).width * 0.7,
               child: ListTile(
                 title: Text(user.nickname),
                 subtitle: Text(chat.messageText ?? ""),
-              ))]);
+              ))
+        ]));
   }
 }
 
-
-Widget profileImage(BuildContext context, UserResponse user){
+Widget profileImage(BuildContext context, UserResponse user) {
   return SizedBox(
-      width: 41.0,
-      height: 41.0,
+      width: MediaQuery.sizeOf(context).width * 0.15,
+      height: MediaQuery.sizeOf(context).width * 0.15,
       child: RawMaterialButton(
           elevation: 0.0,
           fillColor: Colors.transparent,
@@ -126,14 +128,13 @@ Widget profileImage(BuildContext context, UserResponse user){
             userBottomSheet(context, user);
           }),
           child: Container(
-            width: 41,
-            height: 41,
+            width: MediaQuery.sizeOf(context).width * 0.15,
+            height: MediaQuery.sizeOf(context).width * 0.15,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.transparent,
               image: DecorationImage(
-                image: AssetImage(
-                    "assets/user/user_dog.png"),
+                image: AssetImage("assets/user/user_dog.png"),
               ),
             ),
           )));

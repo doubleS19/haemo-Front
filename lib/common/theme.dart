@@ -80,6 +80,10 @@ class CustomThemes {
   static var customSelectListDialoglContentTextStyle = TextStyle(
       color: AppTheme.contactPageListDialogContentTextColor,
       fontWeight: FontWeight.bold);
+  static var chatListTitleTeextStyle = TextStyle(
+    color: AppTheme.mainAppBarColor,
+    fontSize: 22.0
+  );
 
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',
