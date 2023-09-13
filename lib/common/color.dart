@@ -65,13 +65,12 @@ class AppTheme {
   static var clubPageTitleColor = const Color(0xFF353535);
 
   /// 포스팅 게시물 페이지
-  static var postingPageHeadlineColor = const Color(0xFFFFFFFF);
   static var postingPageDetailTextFieldColor = const Color(0xFFF5F5F5);
   static var postingPageDetailHintTextColor = const Color(0xFFB6B6B6);
 
   /// 채팅 페이지
   static var borderColor = const Color(0xFFD9D9D9);
-  static var buttonColor = const Color(0xFFFFFFFF);
+  static var white = const Color(0xFFFFFFFF);
   static var receiverText = const Color(0xFFDEDEDE);
   static var senderText = const Color(0xFFC6EFF9);
 

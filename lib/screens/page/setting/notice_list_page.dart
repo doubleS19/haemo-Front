@@ -73,7 +73,7 @@ class NoticePage extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: AppTheme.postingPageHeadlineColor,
+            color: AppTheme.white,
           ),
           height: /*MediaQuery.of(context).size.height*/ 80,
           alignment: Alignment.centerLeft,

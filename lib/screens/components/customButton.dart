@@ -25,7 +25,7 @@ Widget postingButton(BuildContext context, void Function()? onPressed) {
                         Theme.of(context).textTheme.headlineSmall?.fontFamily,
                     fontSize:
                         Theme.of(context).textTheme.headlineSmall?.fontSize,
-                    color: AppTheme.postingPageHeadlineColor)),
+                    color: AppTheme.white)),
           )));
 }
 

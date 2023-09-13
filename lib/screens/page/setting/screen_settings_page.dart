@@ -46,7 +46,7 @@ class _SettingScreenThemePageState extends State<SettingScreenThemePage> {
         height: MediaQuery.of(context).size.height / 18,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            color: AppTheme.buttonColor,
+            color: AppTheme.white,
             border: Border(
                 bottom: BorderSide(
                     color: AppTheme.settingPageDividerColor, width: 3.0))),

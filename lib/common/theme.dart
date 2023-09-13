@@ -11,16 +11,16 @@ class CustomThemes {
     fontSize: 14,
   );
   static var hotPlacePopularPostTitleTextStyle = TextStyle(
-      color: AppTheme.postingPageHeadlineColor,
+      color: AppTheme.white,
       fontFamily: myFont,
       fontSize: 15,
       fontWeight: FontWeight.bold);
   static var hotPlacePopularPostSubtitleTextStyle = TextStyle(
-      color: AppTheme.postingPageHeadlineColor,
+      color: AppTheme.white,
       fontFamily: myFont,
       fontSize: 11);
   static var hotPlacePostTitleTextStyle = TextStyle(
-      color: AppTheme.postingPageHeadlineColor,
+      color: AppTheme.white,
       fontFamily: myFont,
       fontSize: 13);
 
@@ -69,7 +69,7 @@ class CustomThemes {
       fontWeight: FontWeight.w500);
   static var customDialogConfirmButtonTextStyle = TextStyle(
       fontSize: 15.0,
-      color: AppTheme.postingPageHeadlineColor,
+      color: AppTheme.white,
       fontWeight: FontWeight.w400);
   static var customDialogCancelButtonTextStyle = const TextStyle(
       fontSize: 15.0, color: Color(0xFF969696), fontWeight: FontWeight.w300);
@@ -85,14 +85,14 @@ class CustomThemes {
       fontFamily: 'SCDream',
       primaryColor: AppTheme.mainColor,
       buttonTheme: const ButtonThemeData(),
-      iconTheme: IconThemeData(color: AppTheme.postingPageHeadlineColor),
+      iconTheme: IconThemeData(color: AppTheme.white),
       textTheme: TextTheme(
           headlineLarge: TextStyle(
               color: AppTheme.mainPageHeadlineColor,
               fontWeight: FontWeight.bold,
               fontSize: 20),
           headlineMedium: TextStyle(
-              color: AppTheme.postingPageHeadlineColor,
+              color: AppTheme.white,
               fontWeight: FontWeight.bold,
               fontSize: 18),
           headlineSmall: TextStyle(
