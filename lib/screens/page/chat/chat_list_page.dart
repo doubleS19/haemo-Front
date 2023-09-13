@@ -5,6 +5,7 @@ import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/service/db_service.dart';
 import '../../../controller/chatlist_controller.dart';
 import '../../../model/chat_message_model.dart';
+import '../../components/customAppBar.dart';
 import '../../components/userBottomSheet.dart';
 
 class ChatListPage extends StatefulWidget {
@@ -26,16 +27,10 @@ class _ChatListPageState extends State<ChatListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        title: const Align(
-            alignment: Alignment.centerLeft,
-            child: Text("채팅리스트",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontWeight: FontWeight.w800))),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-      ),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Builder(
+              builder: (context) => backButtonAppbar(context, ""))),
       body: Container(
           height: MediaQuery.sizeOf(context).height,
           width: MediaQuery.sizeOf(context).width,

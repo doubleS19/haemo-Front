@@ -119,6 +119,29 @@ Widget customColorSettingPageAppbar(BuildContext context, String appBarText, Fun
 }
 
 
+Widget backButtonAppbar(BuildContext context, String appBarText){
+  return AppBar(
+    title: Text(appBarText, style: Theme.of(context).textTheme.headlineMedium),
+    centerTitle: true,
+    leading: IconButton(
+      onPressed: () {
+        Get.back();
+      },
+      color: AppTheme.mainPageHeadlineColor,
+      icon: const Icon(Icons.arrow_back_ios),
+    ),
+    shape: Border(
+      bottom: BorderSide(
+        color: AppTheme.mainColor,
+        width: 1,
+      ),
+    ),
+    elevation: 0.0,
+    backgroundColor: AppTheme.white,
+  );
+}
+
+
 Widget noticePageAdminAppbar(BuildContext context, String appBarText, Widget iconButton){
   return AppBar(
     title: Text(appBarText, style: Theme.of(context).textTheme.headlineMedium),
