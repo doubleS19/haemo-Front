@@ -645,4 +645,20 @@ class DBService {
       throw Exception('Failed to load post list');
     }
   }
+
+  /// user_listchat DB
+  /// 채팅방 처음 생성 시 uId, 처음 생긴 채팅방 id로 데이터 생성(채팅방 id는 파이어베이스에서 내가 받아옴)
+/*  Future<void> saveChatList(int uId, String chatId){
+
+  }*/
+
+  /// uId를 바탕으로 채팅방 id 추가
+/*  Future<void> updateChatId(int uId){
+
+  }*/
+
+  /// uId를 바탕으로 채팅방 id 삭제
+/*  Future<void> deleteChatId(int uId, String chatId){
+
+  }*/
 }
