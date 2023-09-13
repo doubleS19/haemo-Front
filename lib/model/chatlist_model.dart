@@ -9,7 +9,7 @@ class ChatList{
   String createdBy;
   String id;
   bool isDeleted;
-  List<String> members;
+  List<int> membersId;
   ChatMessage recentMessage;
 
   ChatList({
@@ -17,7 +17,7 @@ class ChatList{
     required this.createdBy,
     required this.id,
     required this.isDeleted,
-    required this.members,
+    required this.membersId,
     required this.recentMessage,
   });
 
@@ -27,7 +27,7 @@ class ChatList{
       'createdBy': createdBy,
       'id': id,
       'isDeleted': isDeleted,
-      'members': members,
+      'members': membersId,
       'recentMessage': recentMessage.toJson(),
     };
   }
@@ -38,7 +38,7 @@ class ChatList{
       createdBy: json['createdBy'],
       id: json['id'],
       isDeleted: json['isDeleted'],
-      members: List<String>.from(json['members']),
+      membersId: List<int>.from(json['members']),
       recentMessage: ChatMessage.fromJson(json['recentMessage']),
     );
   }

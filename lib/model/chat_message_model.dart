@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatMessage {
   String messageText;
-  String sentBy;
+  int sentBy;
   DateTime sentAt;
   bool isRead;
 
