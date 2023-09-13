@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:get/get.dart';
 import 'package:hae_mo/model/chatlist_model.dart';
-
 import '../../../controller/chatlist_controller.dart';
+import '../../../model/chat_message_model.dart';
 
 class ChatListPage extends StatefulWidget {
   const ChatListPage({super.key});
@@ -15,90 +14,83 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
-  ChatListController controller = ChatListController();
+  ChatListController chatListController = ChatListController();
 
   @override
   void initState() {
-    //adding item to list, you can add using json from network
-
     super.initState();
+    chatListController.getChatList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          title: const Align(
-              alignment: Alignment.centerLeft,
-              child: Text("채팅리스트",
-                  textAlign: TextAlign.left,
-                  style: TextStyle(fontWeight: FontWeight.w800))),
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-              padding: const EdgeInsets.all(10),
-              child: StreamBuilder(
-                  stream: controller.streamController.stream,
-                  builder: (BuildContext context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                          itemCount: snapshot.data.hashCode,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: controller.chatList.map((snapshot) {
-                                return slidableCard(snapshot);
-                              }).toList(),
-                            );
-                          });
-                    } else {
-                      return Column(
-                        children: [Text("data")],
+      appBar: AppBar(
+        elevation: 0.0,
+        title: const Align(
+            alignment: Alignment.centerLeft,
+            child: Text("채팅리스트",
+                textAlign: TextAlign.left,
+                style: TextStyle(fontWeight: FontWeight.w800))),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+      ),
+      body:
+          Container(
+            height: MediaQuery.sizeOf(context).height,
+            width: MediaQuery.sizeOf(context).width,
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Container(
+                  height: 500,
+                  width: MediaQuery.sizeOf(context).width,
+                  child: ListView.builder(
+                    itemCount: chatListController.chatList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                          height: 100,
+                          width: MediaQuery.of(context).size.width,
+                          child: Slidable(
+                            endActionPane: ActionPane(
+                              extentRatio: 0.3,
+                              motion: const DrawerMotion(), // 스와이프 애니메이션..
+                              children: [
+                                SlidableAction(
+                                  flex: 1,
+                                  // 여러 액션이 있을때 차지하는 비율
+                                  onPressed: (BuildContext context) => doNothing(context),
+                                  backgroundColor: Color.fromARGB(196, 172, 49, 38),
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.check_rounded,
+                                  label: 'CHECK',
+                                ),
+                              ],
+                            ),
+                            child: chatCard(chatListController.chatList[index].recentMessage),
+                          )
                       );
                     }
-                  })),
-        ));
+                  ),
+                ),
+                TextButton(
+                    onPressed: () {
+                      chatListController.addChatList();
+                      print("click addChatList");
+                    },
+                    child: Text("click to make List"))
+              ],
+            )
+          ),
+    );
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  void doNothing(BuildContext context) {}
 }
-
-Widget slidableCard(ChatList chat) {
-  return Slidable(
-    key: Key(chat.chatRoomId!!),
-    actionPane: const SlidableDrawerActionPane(),
-    actionExtentRatio: 0.15,
-    secondaryActions: [
-      Container(
-          margin: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-          height: double.infinity,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-            child: const Text("삭제",
-                style: TextStyle(color: Colors.white, fontSize: 13.0)),
-            onPressed: () {
-              // chat.removeWhere((element) {
-              //   return element.nickname == personone.nickname;
-              // });
-            },
-          )),
-    ],
-    child: Card(
-      child: ListTile(
-        title: Text("chat.nickname"),
-        subtitle: Text(chat.lastChat != null ? chat.lastChat! : ""),
-      ),
+Widget chatCard(ChatMessage chat) {
+  return Container(
+    child: ListTile(
+      title: Text(chat.sentBy),
+      subtitle: Text(chat.messageText ?? ""),
     ),
   );
-}
-
-class Chat {
-  String nickname, message;
-
-  Chat({required this.nickname, required this.message});
 }
