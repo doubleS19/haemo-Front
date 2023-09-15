@@ -21,14 +21,13 @@ class ChatListController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    uId = PreferenceUtil.getInt("uid")!;
     nickname = PreferenceUtil.getString("nickname")!;
   }
 
-  void addChatList() async {
+  void addChatList(int relativeId, ChatMessage firstMessage) async {
     bool isEnabled = false;
 
-    await firestore.collection("group").where("members", isEqualTo: [43, 47]).where("isDeleted", isEqualTo: true).get().then((value) {
+    await firestore.collection("group").where("members", isEqualTo: [uId, relativeId]).where("isDeleted", isEqualTo: true).get().then((value) {
       print("print: ${value.docs}");
       if(value.docs.isEmpty){
         isEnabled = true;
@@ -36,18 +35,16 @@ class ChatListController extends GetxController {
     });
 
     if(isEnabled){
-      await firestore.collection("group").doc().set(ChatList(
-          createdAt: DateTime.now(),
-          createdBy: "seoyeon",
-          id: "id",
-          isDeleted: false,
-          membersId: [43, 47],
-          recentMessage: ChatMessage(
-              messageText: "Hi!",
-              sentBy: 43,
-              sentAt: DateTime.now(),
-              isRead: false
-          )).toJson());
+      await firestore.collection("group").add({
+        "createdAt": DateTime.now(),
+        "createdBy": uId,
+        "id": null, // 이 부분을 자동 생성된 ID로 둘 것입니다.
+        "isDeleted": false,
+        "membersId": [uId, relativeId],
+        "recentMessage": firstMessage.toJson(),
+      }).then((DocumentReference docRef) {
+        docRef.update({"id": docRef.id});
+      });
     }
   }
 
@@ -63,7 +60,7 @@ class ChatListController extends GetxController {
     return user;
   }
 
-  void deleteChatList() {
-    /// ui에서만 삭제
+  void deleteChatList(String chatId) {
+    firestore.collection("group").doc(chatId).update({"isDeleted":true});
   }
 }

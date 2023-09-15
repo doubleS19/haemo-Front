@@ -5,6 +5,7 @@ import 'package:hae_mo/model/user_response_model.dart';
 import '../../../common/theme.dart';
 import '../../../controller/chatlist_controller.dart';
 import '../../../model/chat_message_model.dart';
+import '../../../utils/shared_preference.dart';
 import '../../components/customAppBar.dart';
 import '../../components/userBottomSheet.dart';
 
@@ -21,6 +22,8 @@ class _ChatListPageState extends State<ChatListPage> {
   @override
   void initState() {
     super.initState();
+
+    chatListController.uId = PreferenceUtil.getInt("uid")!;
     chatListController.getChatList();
   }
 
@@ -55,7 +58,12 @@ class _ChatListPageState extends State<ChatListPage> {
                           const Divider(height: 1))),
               TextButton(
                   onPressed: () {
-                    chatListController.addChatList();
+                    chatListController.addChatList(45, ChatMessage(
+                        messageText: "Hi!",
+                        sentBy: chatListController.uId,
+                        sentAt: DateTime.now(),
+                        isRead: false
+                    ));
                     print("click addChatList");
                   },
                   child: const Text("click to make List"))
@@ -94,7 +102,7 @@ class _ChatListPageState extends State<ChatListPage> {
           ),
           child: chatCard(ChatMessage(
               messageText: "text",
-              sentBy: 43,
+              sentBy: 44,
               sentAt: DateTime.now(),
               isRead: false)),
         ));

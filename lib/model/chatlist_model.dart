@@ -6,7 +6,7 @@ import 'chat_message_model.dart';
 
 class ChatList{
   DateTime createdAt;
-  String createdBy;
+  int createdBy;
   String id;
   bool isDeleted;
   List<int> membersId;
