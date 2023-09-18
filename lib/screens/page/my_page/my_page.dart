@@ -8,7 +8,6 @@ import 'package:hae_mo/screens/page/my_page/my_wish_page.dart';
 import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/page/chat/chat_room_page.dart';
 import 'package:hae_mo/service/db_service.dart';
 
 import '../../Page/chat/chat_list_page.dart';

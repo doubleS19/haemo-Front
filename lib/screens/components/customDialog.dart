@@ -266,8 +266,10 @@ showAttendUserDialog(BuildContext context, List<UserResponse> user, int person,
                                       child: Center(
                                         child: Text(attendUser.nickname,
                                             style: TextStyle(
-                                                fontSize: 14.0,
-                                                color: AppTheme.mainTextColor)),
+                                              fontSize: 14.0,
+                                              color: AppTheme.mainTextColor,
+                                              decoration: TextDecoration.none,
+                                            )),
                                       )),
                                   Obx(() => Expanded(
                                       flex: 1,
