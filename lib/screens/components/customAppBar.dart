@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/controller/club_page_controller.dart';
+import 'package:hae_mo/controller/meeting_page_controller.dart';
+import 'package:hae_mo/screens/components/wishStarButton.dart';
+import 'package:hae_mo/utils/shared_preference.dart';
 
 import '../../common/color.dart';
 import '../Page/board/meeting_page.dart';
@@ -98,7 +102,8 @@ AppBar backAppBar() {
   );
 }
 
-Widget customColorSettingPageAppbar(BuildContext context, String appBarText, Function onClickNo) {
+Widget customColorSettingPageAppbar(
+    BuildContext context, String appBarText, Function onClickNo) {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white, // 회색
   ));
@@ -108,7 +113,8 @@ Widget customColorSettingPageAppbar(BuildContext context, String appBarText, Fun
     centerTitle: true,
     leading: IconButton(
       onPressed: () {
-        restartAppDialog(context, "테마 설정을 위해 앱이 재시작됩니다.", "아니요", "예", onClickNo);
+        restartAppDialog(
+            context, "테마 설정을 위해 앱이 재시작됩니다.", "아니요", "예", onClickNo);
       },
       color: Theme.of(context).iconTheme.color,
       icon: const Icon(Icons.arrow_back),
@@ -118,8 +124,7 @@ Widget customColorSettingPageAppbar(BuildContext context, String appBarText, Fun
   );
 }
 
-
-Widget backButtonAppbar(BuildContext context, String appBarText){
+Widget backButtonAppbar(BuildContext context, String appBarText) {
   return AppBar(
     title: Text(appBarText, style: Theme.of(context).textTheme.headlineMedium),
     centerTitle: true,
@@ -141,8 +146,8 @@ Widget backButtonAppbar(BuildContext context, String appBarText){
   );
 }
 
-
-Widget noticePageAdminAppbar(BuildContext context, String appBarText, Widget iconButton){
+Widget noticePageAdminAppbar(
+    BuildContext context, String appBarText, Widget iconButton) {
   return AppBar(
     title: Text(appBarText, style: Theme.of(context).textTheme.headlineMedium),
     centerTitle: true,
@@ -153,10 +158,97 @@ Widget noticePageAdminAppbar(BuildContext context, String appBarText, Widget ico
       color: Theme.of(context).iconTheme.color,
       icon: const Icon(Icons.arrow_back_ios),
     ),
-    actions: [
-      iconButton
-    ],
+    actions: [iconButton],
     elevation: 0.0,
     backgroundColor: AppTheme.mainColor,
+  );
+}
+
+AppBar boardDetailAppbar(MeetingPageController meetingController,
+    ClubPageController clubPageController, int type, int pId) {
+  return AppBar(
+    backgroundColor: Colors.transparent,
+    foregroundColor: Colors.black,
+    elevation: 0.0,
+    automaticallyImplyLeading: true,
+    actions: [
+      if (type == 1) ...[
+        FutureBuilder<bool>(
+          future: meetingController.checkIsWished(
+            PreferenceUtil.getInt("uId")!,
+            pId,
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // 데이터가 로딩 중일 때 표시할 위젯
+              return CircularProgressIndicator(); // 예시로 로딩 스피너를 사용했습니다.
+            } else if (snapshot.hasError) {
+              // 에러가 발생한 경우 표시할 위젯
+              return Text('Error: ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              // 데이터가 없는 경우나 null인 경우 표시할 위젯
+              return Text('Data not available');
+            } else {
+              // 데이터가 정상적으로 로드된 경우 표시할 위젯
+              final bool fillHeartColor = snapshot.data!;
+              return WishStarButton(
+                  fillHeart: fillHeartColor,
+                  uId: PreferenceUtil.getInt("uId")!,
+                  pId: pId,
+                  type: type);
+            }
+          },
+        )
+      ] else ...[
+        FutureBuilder<bool>(
+          future: clubPageController.checkIsWished(
+            PreferenceUtil.getInt("uId")!,
+            pId,
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // 데이터가 로딩 중일 때 표시할 위젯
+              return CircularProgressIndicator(); // 예시로 로딩 스피너를 사용했습니다.
+            } else if (snapshot.hasError) {
+              // 에러가 발생한 경우 표시할 위젯
+              return Text('Error: ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              // 데이터가 없는 경우나 null인 경우 표시할 위젯
+              return Text('Data not available');
+            } else {
+              // 데이터가 정상적으로 로드된 경우 표시할 위젯
+              final bool fillHeartColor = snapshot.data!;
+              return WishStarButton(
+                  fillHeart: fillHeartColor,
+                  uId: PreferenceUtil.getInt("uId")!,
+                  pId: pId,
+                  type: type);
+            }
+          },
+        )
+      ]
+    ],
+  );
+}
+
+AppBar boardWriterAppbar() {
+  return AppBar(
+    backgroundColor: Colors.white,
+    leading: IconButton(
+      onPressed: () {
+        Get.back();
+      },
+      color: AppTheme.dividerColor,
+      icon: const Icon(Icons.arrow_back_ios_new_sharp),
+    ),
+    elevation: 0.0,
+    automaticallyImplyLeading: true,
+    actions: [IconButton(icon: Icon(Icons.menu_sharp), onPressed: () {})],
+    shape: Border(
+      bottom: BorderSide(
+        color: AppTheme.mainColor,
+        width: 0.5,
+      ),
+    ),
   );
 }
