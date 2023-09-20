@@ -67,14 +67,14 @@ PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle) {
     ),
     actions: [
       IconButton(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.only(top: 10.0, right: 10.0),
-        onPressed: () {
-          Get.to(() => const ChatListPage());
-        },
-        icon: const Icon(Icons.menu),
-        color: AppTheme.mainColor,
-      ),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(top: 10.0, right: 10.0),
+          onPressed: () {
+            Get.to(() => const ChatListPage());
+          },
+          icon: Image.asset("assets/icons/menu_icon.png",
+              color: AppTheme.mainColor),
+          color: AppTheme.mainColor),
     ],
     elevation: 0.0,
     automaticallyImplyLeading: false,
@@ -238,17 +238,17 @@ AppBar boardWriterAppbar() {
       onPressed: () {
         Get.back();
       },
-      color: AppTheme.dividerColor,
+      color: AppTheme.customAppBarBackColor,
       icon: const Icon(Icons.arrow_back_ios_new_sharp),
     ),
     elevation: 0.0,
     automaticallyImplyLeading: true,
-    actions: [IconButton(icon: Icon(Icons.menu_sharp), onPressed: () {})],
-    shape: Border(
-      bottom: BorderSide(
-        color: AppTheme.mainColor,
-        width: 0.5,
-      ),
-    ),
+    actions: [
+      IconButton(
+          icon: Image.asset("assets/icons/menu_icon.png",
+              color: AppTheme.mainColor),
+          color: AppTheme.mainColor,
+          onPressed: () {})
+    ],
   );
 }
