@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/screens/page/chat/chat_room_page.dart';
 import '../../../common/theme.dart';
 import '../../../controller/chatlist_controller.dart';
 import '../../../model/chat_message_model.dart';
+import '../../../model/chatlist_model.dart';
 import '../../../utils/shared_preference.dart';
 import '../../components/customAppBar.dart';
 import '../../components/userBottomSheet.dart';
@@ -48,20 +53,20 @@ class _ChatListPageState extends State<ChatListPage> {
               SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.7, // 0.75
                   width: MediaQuery.sizeOf(context).width,
-                  child: ListView.separated(
+                  child: Obx(()=> chatListController.chatList.isNotEmpty? ListView.separated(
                       padding: EdgeInsets.zero,
-                      itemCount: 7,
+                      itemCount: chatListController.chatList.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return slidableCard();
+                        return slidableCard(chatListController.chatList[index], index);
                       },
                       separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(height: 1))),
+                      const Divider(height: 1)):Container())),
               TextButton(
                   onPressed: () {
                     chatListController.addChatList(45, ChatMessage(
                         messageText: "Hi!",
                         sentBy: chatListController.uId,
-                        sentAt: DateTime.now(),
+                        sentAt: Timestamp.fromDate(DateTime.now()),
                         isRead: false
                     ));
                     print("click addChatList");
@@ -80,32 +85,34 @@ class _ChatListPageState extends State<ChatListPage> {
       userImage: "rabbit",
       gender: "");
 
-  void doNothing(BuildContext context) {}
-
-  Widget slidableCard() {
-    return Container(
-        height: 85,
-        child: Slidable(
-          endActionPane: ActionPane(
-            extentRatio: 0.3,
-            motion: const DrawerMotion(),
-            children: [
-              SlidableAction(
-                flex: 1,
-                onPressed: (BuildContext context) => doNothing(context),
-                backgroundColor: Color.fromARGB(196, 172, 49, 38),
-                foregroundColor: Colors.white,
-                icon: Icons.check_rounded,
-                label: 'CHECK',
-              ),
-            ],
-          ),
-          child: chatCard(ChatMessage(
-              messageText: "text",
-              sentBy: 44,
-              sentAt: DateTime.now(),
-              isRead: false)),
-        ));
+  Widget slidableCard(ChatList chat, int index) {
+    return GestureDetector(
+        onTap: () {
+          Get.to(() => const ChatRoomPage(chatRoomId: ""));
+        },
+      child: Container(
+          height: 85,
+          child: Slidable(
+            endActionPane: ActionPane(
+              extentRatio: 0.3,
+              motion: const DrawerMotion(),
+              children: [
+                SlidableAction(
+                  flex: 1,
+                  onPressed: (BuildContext context) {
+                    chatListController.deleteChatList(chat.id);
+                    chatListController.chatList.removeAt(index);
+                  },
+                  backgroundColor: Color.fromARGB(196, 172, 49, 38),
+                  foregroundColor: Colors.white,
+                  icon: Icons.check_rounded,
+                  label: 'CHECK',
+                ),
+              ],
+            ),
+            child: chatCard(chat.recentMessage),
+          ))
+    );
   }
 
   Widget chatCard(ChatMessage chat) {
