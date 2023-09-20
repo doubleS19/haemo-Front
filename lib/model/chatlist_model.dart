@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'chat_message_model.dart';
 
 class ChatList{
-  DateTime createdAt;
+  Timestamp createdAt;
   int createdBy;
   String id;
   bool isDeleted;
@@ -23,7 +23,7 @@ class ChatList{
 
   Map<String, dynamic> toJson() {
     return {
-      'createdAt': createdAt.toUtc(),
+      'createdAt': createdAt,
       'createdBy': createdBy,
       'id': id,
       'isDeleted': isDeleted,
@@ -34,11 +34,11 @@ class ChatList{
 
   factory ChatList.fromJson(Map<String, dynamic> json) {
     return ChatList(
-      createdAt: DateTime.fromMillisecondsSinceEpoch(json['createdAt'].millisecondsSinceEpoch).toUtc(),
+      createdAt: json['createdAt'],
       createdBy: json['createdBy'],
       id: json['id'],
       isDeleted: json['isDeleted'],
-      membersId: List<int>.from(json['members']),
+      membersId: List<int>.from(json['membersId']),
       recentMessage: ChatMessage.fromJson(json['recentMessage']),
     );
   }
@@ -57,3 +57,5 @@ chatList.add(Chat(nickname: "돌아가는", message: "Hari Prasad Chaudhary"));
 chatList.add(Chat(nickname: "쨍구의하루", message: "Krishna Karki"));
 chatList.add(Chat(nickname: "또라에모옹도와죠", message: "Hari Prasad Chaudhary"));
 chatList.add(Chat(nickname: "인천섹시남", message: "Krishna Karki"));*/
+
+

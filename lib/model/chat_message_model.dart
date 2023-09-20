@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ChatMessage {
   String messageText;
   int sentBy;
-  DateTime sentAt;
+  Timestamp sentAt;
   bool isRead;
 
   ChatMessage({
@@ -17,7 +17,7 @@ class ChatMessage {
     return {
       'messageText': messageText,
       'sentBy': sentBy,
-      'sentAt': sentAt.toUtc().toIso8601String(),
+      'sentAt': sentAt,
       'isRead': isRead,
     };
   }
@@ -26,7 +26,7 @@ class ChatMessage {
     return ChatMessage(
       messageText: json['messageText'],
       sentBy: json['sentBy'],
-      sentAt: DateTime.parse(json['sentAt']),
+      sentAt: json['sentAt'],
       isRead: json['isRead'],
     );
   }
