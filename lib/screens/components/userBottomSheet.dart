@@ -76,7 +76,7 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                           color: AppTheme.mainColor),
                       child: RawMaterialButton(
                           onPressed: (() {
-                            Get.to(ChatRoom(chatRoomId: "3"));
+                            Get.to(ChatRoomPage(chatRoomId: "3"));
                           }),
                           child: const Text(
                             "채팅하기",

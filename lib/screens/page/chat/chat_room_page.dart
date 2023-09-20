@@ -9,16 +9,16 @@ import 'package:hae_mo/utils/chage_time_format.dart';
 import '../../../model/chatmessage_model.dart';
 import '../../../utils/shared_preference.dart';
 
-class ChatRoom extends StatefulWidget {
-  const ChatRoom({Key? key, required this.chatRoomId}) : super(key: key);
+class ChatRoomPage extends StatefulWidget {
+  const ChatRoomPage({Key? key, required this.chatRoomId}) : super(key: key);
 
   final String chatRoomId;
 
   @override
-  State<ChatRoom> createState() => _ChatRoomState();
+  State<ChatRoomPage> createState() => _ChatRoomPageState();
 }
 
-class _ChatRoomState extends State<ChatRoom> {
+class _ChatRoomPageState extends State<ChatRoomPage> {
   final TextEditingController _textController = TextEditingController();
   final controller = Get.put(ChatController());
   final String studentId = PreferenceUtil.getString("studentId") != null
