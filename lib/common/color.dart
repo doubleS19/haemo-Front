@@ -16,10 +16,11 @@ Map<int, ThemeType> colorTheme = {
 class AppTheme {
   static Rx<ThemeType> themeType = ThemeType.Blue.obs;
 
-  static void getThemeType(){
+  static void getThemeType() {
     var themeColor = PreferenceUtil.getInt("colorTheme");
 
-    themeType.value = (themeColor == null ? ThemeType.Blue : colorTheme[themeColor])!;
+    themeType.value =
+        (themeColor == null ? ThemeType.Blue : colorTheme[themeColor])!;
   }
 
   static void changeThemeType(ThemeType newThemeType) {
@@ -83,11 +84,14 @@ class AppTheme {
   static var settingPageDividerColor = const Color(0xFFF4F4F4);
   static var settingPageAlarmBoxColor =
       const Color(0xFFF8FFDC).withOpacity(0.62);
-  static var contactPageListDialogTitleTextColor = const Color(0xFF515151).withOpacity(0.5);
+  static var contactPageListDialogTitleTextColor =
+      const Color(0xFF515151).withOpacity(0.5);
   static var contactPageListDialogContentTextColor = const Color(0xFF686868);
   static var noticePageIconColor = const Color(0xFFC0C0C0);
 
-
   /// 신고 페이지
   static var reportingPageTextColor = const Color(0xff686868);
+
+  /// 커스텀 앱바
+  static var customAppBarBackColor = const Color(0xff545454);
 }

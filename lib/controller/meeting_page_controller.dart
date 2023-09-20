@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
+import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/model/wish_meeting_response_model.dart';
 import 'package:hae_mo/model/wish_response_model.dart';
 import 'package:hae_mo/service/db_service.dart';
@@ -18,7 +19,7 @@ class MeetingPageController extends GetxController {
       final posts = await dbService.get24HoursPosts();
       todayNoticeList.assignAll(posts);
     } catch (error) {
-      // 오류 처리
+      print(error.toString());
     }
   }
 
@@ -27,7 +28,7 @@ class MeetingPageController extends GetxController {
       final posts = await dbService.getAllPost();
       postList.assignAll(posts);
     } catch (error) {
-      // 오류 처리
+      print(error.toString());
     }
   }
 
