@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -9,7 +8,7 @@ import 'package:hae_mo/screens/page/chat/chat_room_page.dart';
 import '../../../common/theme.dart';
 import '../../../controller/chatlist_controller.dart';
 import '../../../model/chat_message_model.dart';
-import '../../../model/chatlist_model.dart';
+import '../../../model/chatroom_model.dart';
 import '../../../utils/shared_preference.dart';
 import '../../components/customAppBar.dart';
 import '../../components/userBottomSheet.dart';
@@ -60,18 +59,7 @@ class _ChatListPageState extends State<ChatListPage> {
                         return slidableCard(chatListController.chatList[index], index);
                       },
                       separatorBuilder: (BuildContext context, int index) =>
-                      const Divider(height: 1)):Container())),
-              TextButton(
-                  onPressed: () {
-                    chatListController.addChatList(45, ChatMessage(
-                        messageText: "Hi!",
-                        sentBy: chatListController.uId,
-                        sentAt: Timestamp.fromDate(DateTime.now()),
-                        isRead: false
-                    ));
-                    print("click addChatList");
-                  },
-                  child: const Text("click to make List"))
+                      const Divider(height: 1)):Container()))
             ],
           )),
     );
@@ -85,10 +73,10 @@ class _ChatListPageState extends State<ChatListPage> {
       userImage: "rabbit",
       gender: "");
 
-  Widget slidableCard(ChatList chat, int index) {
+  Widget slidableCard(ChatRoom chat, int index) {
     return GestureDetector(
         onTap: () {
-          Get.to(() => const ChatRoomPage(chatRoomId: ""));
+          Get.to(() => ChatRoomPage(chatRoomId: chat.id, otherUserId: chatListController.getOtherId(chat)));
         },
       child: Container(
           height: 85,
