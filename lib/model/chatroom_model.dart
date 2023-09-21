@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'chat_message_model.dart';
 
-class ChatList{
+class ChatRoom{
   Timestamp createdAt;
   int createdBy;
   String id;
@@ -12,7 +12,7 @@ class ChatList{
   List<int> membersId;
   ChatMessage recentMessage;
 
-  ChatList({
+  ChatRoom({
     required this.createdAt,
     required this.createdBy,
     required this.id,
@@ -32,8 +32,8 @@ class ChatList{
     };
   }
 
-  factory ChatList.fromJson(Map<String, dynamic> json) {
-    return ChatList(
+  factory ChatRoom.fromJson(Map<String, dynamic> json) {
+    return ChatRoom(
       createdAt: json['createdAt'],
       createdBy: json['createdBy'],
       id: json['id'],
