@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:hae_mo/controller/chat_controller.dart';
 import 'package:hae_mo/utils/chage_time_format.dart';
-import '../../../model/chatmessage_model.dart';
+import '../../../model/chat_message_model.dart';
+import '../../../model/user_response_model.dart';
 import '../../../utils/shared_preference.dart';
 
 class ChatRoomPage extends StatefulWidget {
-  const ChatRoomPage({Key? key, required this.chatRoomId}) : super(key: key);
+  const ChatRoomPage({Key? key, required this.chatRoomId, required this.otherUserId}) : super(key: key);
 
-  final String chatRoomId;
+  final String? chatRoomId;
+  final int otherUserId;
 
   @override
   State<ChatRoomPage> createState() => _ChatRoomPageState();
@@ -28,65 +29,14 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
       ? PreferenceUtil.getInt("profileImage")!
       : 1;
 
-  Widget receiver(String text, String name, DateTime time, dynamic profile) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            const CircleAvatar(
-              backgroundColor: Colors.amberAccent,
-            ),
-            Flexible(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(name),
-                Container(
-                  child: Text(text, style: TextStyle(fontSize: 20)),
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(13),
-                      color: Colors.white),
-                )
-              ],
-            )),
-            const SizedBox(width: 5),
-            Flexible(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 22),
-                Text(changeDatetimeToString(time),
-                    style: const TextStyle(fontSize: 12, color: Colors.black26))
-              ],
-            )),
-          ],
-        ),
-      ],
-    );
-  }
+  @override
+  void initState() {
+    super.initState();
 
-  Widget sender(String text, DateTime time) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
-        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          Column(
-            children: [
-              SizedBox(height: 18),
-              Text(changeDatetimeToString(time),
-                  style: TextStyle(fontSize: 12, color: Colors.black26)),
-            ],
-          ),
-          SizedBox(width: 5),
-          Flexible(
-              child: Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(13),
-                color: Color(0xFFfeec34)),
-            child: Text(text, style: TextStyle(fontSize: 20)),
-          ))
-        ]));
+    if(widget.chatRoomId !=""){
+      controller.chatRoomId.value = widget.chatRoomId!;
+    }
+    controller.setOtherUser(widget.otherUserId);
   }
 
   Widget timeLine(String time) {
@@ -114,26 +64,16 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     if (_textController.text == "") {
       return;
     }
-
-    controller.sendData(
-        widget.chatRoomId,
-        ChatMessage(
-            text: _textController.text,
-            sender: studentId,
-            createdAt: DateTime.now(),
-            isRead: false));
-
-    _textController.clear();
   }
 
-  Widget chooseSender(ChatMessage chat) {
+/*  Widget chooseSender(ChatMessage chat) {
     // sharedpreference에 저장된 아이디라면
     if (chat.sender == studentId) {
       return sender(chat.text!, chat.createdAt!);
     } else {
       return receiver(chat.text!, chat.sender!, chat.createdAt!, 1);
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +138,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                     ],
                   ),
                 ))),
-            sendTextField(widget.chatRoomId)
+            //sendTextField(widget.chatRoomId)
           ])),
     ));
   }
@@ -232,4 +172,66 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           ],
         ));
   }
+}
+
+
+Widget receiver(String text, String name, DateTime time, dynamic profile) {
+  return Column(
+    children: [
+      Row(
+        children: [
+          const CircleAvatar(
+            backgroundColor: Colors.amberAccent,
+          ),
+          Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(name),
+                  Container(
+                    child: Text(text, style: TextStyle(fontSize: 20)),
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(13),
+                        color: Colors.white),
+                  )
+                ],
+              )),
+          const SizedBox(width: 5),
+          Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 22),
+                  Text(changeDatetimeToString(time),
+                      style: const TextStyle(fontSize: 12, color: Colors.black26))
+                ],
+              )),
+        ],
+      ),
+    ],
+  );
+}
+
+Widget sender(String text, DateTime time) {
+  return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+        Column(
+          children: [
+            SizedBox(height: 18),
+            Text(changeDatetimeToString(time),
+                style: TextStyle(fontSize: 12, color: Colors.black26)),
+          ],
+        ),
+        SizedBox(width: 5),
+        Flexible(
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(13),
+                  color: Color(0xFFfeec34)),
+              child: Text(text, style: TextStyle(fontSize: 20)),
+            ))
+      ]));
 }
