@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/controller/chat_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/page/chat/chat_room_page.dart';
 import 'package:hae_mo/screens/page/report/reporting_page.dart';
-import 'package:hae_mo/service/db_service.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
 
 void userBottomSheet(BuildContext context, UserResponse user) {
-  DBService db = DBService();
+  ChatController chatController = ChatController();
+
   showModalBottomSheet<void>(
     context: context,
     shape: RoundedRectangleBorder(
@@ -75,8 +75,8 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                               const BorderRadius.all(Radius.circular(20.0)),
                           color: AppTheme.mainColor),
                       child: RawMaterialButton(
-                          onPressed: (() {
-                            Get.to(ChatRoomPage(chatRoomId: "3"));
+                          onPressed: (() async {
+                            Get.to(ChatRoomPage(chatRoomId: await chatController.checkChatRoomExistence(user.uId), otherUserId: user.uId));
                           }),
                           child: const Text(
                             "채팅하기",

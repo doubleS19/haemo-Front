@@ -1,25 +1,28 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:hae_mo/screens/page/chat/chat_list_page.dart';
-import 'package:http/http.dart';
-
-import '../model/chatmessage_model.dart';
-import '../utils/shared_preference.dart';
+import 'package:hae_mo/model/user_model.dart';
+import 'package:hae_mo/model/user_response_model.dart';
+import '../model/chat_message_model.dart';
+import '../model/chatroom_model.dart';
 
 class ChatController extends GetxController {
   final firestore = FirebaseFirestore.instance;
-  final RxString _text = "".obs;
-  final RxString _sender = "".obs;
+  //final RxString _text = "".obs;
   final createdAt = DateTime.now();
   late List<ChatMessage> chatMessageList = [];
+  late int uId;
+  late Rx<String> chatRoomId = "".obs;
+  late Rx<int> _otherUserId;
 
-  get text => _text;
-  get sender => _sender;
+  get otherUser => _otherUserId;
+
+  setOtherUser(int userId){
+    _otherUserId.value = userId;
+  }
+  //get text => _text;
 
   StreamController<List<ChatMessage>> streamController =
       StreamController<List<ChatMessage>>();
@@ -31,31 +34,65 @@ class ChatController extends GetxController {
     super.onInit();
   }
 
+  /// 나와 상대의 채팅방이 이미 존재한다면 false, 없다면 true => true이면 채팅방 생성 가능
+  /// @param relativeId 상대 uId
+  /// return Future<String?>
+  /// @author: seoyeon
+  Future<String?> checkChatRoomExistence(int otherUserId) async {
+    String? chatRoomId = "";
+
+    await firestore.collection("group").where("members", isEqualTo: [uId, otherUserId]).where("isDeleted", isEqualTo: false).get().then((value) {
+      print("print: ${value.docs}");
+      if(value.docs.isEmpty){
+        chatRoomId = "";
+      }else{
+        chatRoomId = value.docs.map((e) => ChatRoom.fromJson(e.data())).toList()[0].id;
+      }
+    });
+    return chatRoomId;
+  }
+
   /// Firestore doc에 새로운 체탱창 생성
-  /// @param ChatUser chatuser receiver의 ChatUser 정보
-  /// @param ChatMessage chatMessage sender이 입력한 ChatMessage
+  /// @param String chatRoomId 고유 채팅방 Id
+  /// @param ChatMessage chatMessage 전송할 채팅 메세지
+  /// @return void
+  /// @success - 채팅창 메세지 저장 성공
+  /// @author: seoyeon
+  Future<void> createChatRoom(int relativeId, ChatMessage firstMessage) async {
+    await firestore.collection("group").add({
+      "createdAt": DateTime.now(),
+      "createdBy": uId,
+      "id": null,
+      "isDeleted": false,
+      "membersId": [uId, _otherUserId.value],
+      "recentMessage": firstMessage.toJson(),
+    }).then((DocumentReference docRef) {
+      docRef.update({"id": docRef.id});
+    });
+  }
+
+  Future<void> updateLastChatMessage(String chatRoomId, ChatMessage message) async{
+    await firestore.collection("group").doc(chatRoomId).update({"recentMessage": message.toJson()});
+  }
+
+  /// Firestore doc에 새로운 체탱창 생성
+  /// @param ChatUser chatuser: receiver의 ChatUser 정보
+  /// @param ChatMessage chatMessage: sender이 입력한 ChatMessage
   /// @return void
   /// @success - 채팅창 생성 성공
   /// @author: seoyeon
   /// @ 테스트 후 studentId를 sharedPreference에서 가져오도록 변경하기
-  void createChatroom(ChatUser otherUser, ChatMessage chatMessage) {
-    // me, other 사이에 생성된 채팅방이 있는지 확인 - 게시물에서 채팅으로 넘어갈 때 필요할 듯?
-    var chatRoomId =
-        "${PreferenceUtil.getString("studentId") != null ? PreferenceUtil.getString("studentId")! : "seoyeon"}_${otherUser.studentId}";
+  void sendChatMessage(String chatRoomId, String chatMessageText) {
 
-    var chatroom = ChatData(
-        chatRoomId: chatRoomId,
-        chatUser1: ChatUser(
-/*          studentId:
-PreferenceUtil.getString("studentId")!,
-          profileImage: PreferenceUtil.getInt("profileImage") != null? PreferenceUtil.getInt("profileImage")! : 1*/
-            studentId: "seoyeon",
-            profileImage: 1),
-        chatUser2: otherUser,
-        chatMessageList: [chatMessage]);
+    var firstChatMessage = ChatMessage(
+        isRead: false,
+        messageText: chatMessageText,
+        sentBy: 47,
+        sentAt: Timestamp.fromDate(DateTime.now()));
 
-    firestore.collection('haemo').doc(chatRoomId).set(chatroom.toJson());
+    firestore.collection('message').doc(chatRoomId).set(firstChatMessage.toJson());
   }
+
 
   /// 메세지 전송 클릭 시 FireStore로 전송되어 chatMessageList에 저장됨
   /// @param String chatRoomId 고유 채팅방 Id
@@ -63,7 +100,7 @@ PreferenceUtil.getString("studentId")!,
   /// @return void
   /// @success - 채팅창 메세지 저장 성공
   /// @author: seoyeon
-  void sendData(String chatRoomId, ChatMessage chatMessage) async {
+/*  void sendData(String chatRoomId, ChatMessage chatMessage) async {
     try {
       final snapshot =
           await firestore.collection('haemo').doc(chatRoomId).get();
@@ -83,7 +120,7 @@ PreferenceUtil.getString("studentId")!,
     } catch (ex) {
       log('error', error: ex.toString());
     }
-  }
+  }*/
 
   /// 메세지 읽었을 때 false -> true
 
@@ -92,7 +129,7 @@ PreferenceUtil.getString("studentId")!,
   /// @return Stream<ChatData> (Streambuilder에서 바로 사용)
   /// @notSuccess
   /// @author: seoyeon
-  Stream<ChatData> streamChatMessage(String chatRoomId) {
+/*  Stream<ChatData> streamChatMessage(String chatRoomId) {
     try {
       // charRoomId가 없으면 조회되지 않음
 
@@ -107,5 +144,5 @@ PreferenceUtil.getString("studentId")!,
       log('error: ', error: ex.toString(), stackTrace: StackTrace.current);
       return Stream.error(ex.toString());
     }
-  }
+  }*/
 }
