@@ -4,14 +4,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/controller/chat_controller.dart';
+import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/screens/components/customAppBar.dart';
 import 'package:hae_mo/utils/chage_time_format.dart';
 import '../../../utils/shared_preference.dart';
 
 class ChatRoomPage extends StatefulWidget {
-  const ChatRoomPage({Key? key, required this.chatRoomId, required this.otherUserId}) : super(key: key);
+  const ChatRoomPage({Key? key, required this.chatRoomId, required this.otherUser}) : super(key: key);
 
   final String? chatRoomId;
-  final int otherUserId;
+  final UserResponse otherUser;
 
   @override
   State<ChatRoomPage> createState() => _ChatRoomPageState();
@@ -19,9 +21,9 @@ class ChatRoomPage extends StatefulWidget {
 
 class _ChatRoomPageState extends State<ChatRoomPage> {
   final TextEditingController _textController = TextEditingController();
-  ChatController chatController = ChatController();
-  final String studentId = PreferenceUtil.getString("uId") != null
-      ? PreferenceUtil.getString("uId")!
+  late ChatController chatController = ChatController();
+  final String studentId = PreferenceUtil.getInt("uId") != null
+      ? PreferenceUtil.getInt("uId").toString()!
       : "sender";
   final int profileImage = PreferenceUtil.getInt("profileImage") != null
       ? PreferenceUtil.getInt("profileImage")!
@@ -30,11 +32,9 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   @override
   void initState() {
     super.initState();
-
     if(widget.chatRoomId !=""){
       chatController.chatRoomId.value = widget.chatRoomId!;
     }
-    chatController.setOtherUser(widget.otherUserId);
     chatController.uId = PreferenceUtil.getInt("uId")!;
   }
 
@@ -78,27 +78,12 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      //color: ,
       child: Scaffold(
           backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            title: Text("Seoyeon"),
-            //style: Theme.of(context).textTheme.headline6
-            leading: IconButton(
-              icon: const Icon(FontAwesomeIcons.arrowLeft),
-              onPressed: () {
-                Get.back();
-              },
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.report_gmailerrorred_rounded, size: 25),
-                onPressed: () {},
-              ),
-              const SizedBox(width: 8)
-            ],
-          ),
+          appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: Builder(
+                  builder: (context) => chatRoomAppbar(chatController.otherUserInfo.nickname, context))),
           body: Column(children: [
             Expanded(
                 flex: 3,
@@ -137,12 +122,12 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                     ],
                   ),
                 ))),
-            //sendTextField(widget.chatRoomId)
+            sendTextField()
           ])),
     ));
   }
 
-  Widget sendTextField(String chatRoomId) {
+  Widget sendTextField() {
     return Container(
         height: MediaQuery.of(context).size.height * 0.7,
         color: Colors.white,
@@ -154,7 +139,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
                     child: TextFormField(
               /// https://dalgoodori.tistory.com/60
               controller: _textController,
-              maxLines: 1,
+              maxLines: 3,
               cursorColor: Colors.orange,
               style: const TextStyle(fontSize: 20),
               decoration: const InputDecoration(

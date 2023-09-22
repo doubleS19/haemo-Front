@@ -252,3 +252,27 @@ AppBar boardWriterAppbar() {
     ],
   );
 }
+
+Widget chatRoomAppbar(String appBarText, BuildContext context){
+  return AppBar(
+    title: Text(appBarText, style: Theme.of(context).textTheme.headlineMedium),
+    centerTitle: true,
+    leading: IconButton(
+      onPressed: () {
+        Get.back();
+      },
+      color: AppTheme.mainColor,
+      icon: const Icon(Icons.arrow_back_ios),
+    ),
+    actions: [
+      IconButton(
+          icon: const Icon(Icons.menu),
+          color: AppTheme.mainColor,
+          onPressed: () {
+
+          })
+    ],
+    elevation: 0.0,
+    backgroundColor: AppTheme.mainColor,
+  );
+}
