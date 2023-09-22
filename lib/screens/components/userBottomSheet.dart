@@ -76,7 +76,7 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                           color: AppTheme.mainColor),
                       child: RawMaterialButton(
                           onPressed: (() async {
-                            Get.to(ChatRoomPage(chatRoomId: await chatController.checkChatRoomExistence(user.uId), otherUserId: user.uId));
+                            Get.to(ChatRoomPage(chatRoomId: await chatController.checkChatRoomExistence(user.uId), otherUser: user));
                           }),
                           child: const Text(
                             "채팅하기",

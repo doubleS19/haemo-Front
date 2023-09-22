@@ -5,25 +5,24 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:hae_mo/model/user_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/service/db_service.dart';
 import '../model/chat_message_model.dart';
 import '../model/chatroom_model.dart';
 import '../utils/shared_preference.dart';
 
 class ChatController extends GetxController {
   final firestore = FirebaseFirestore.instance;
+  DBService db = DBService();
   //final RxString _text = "".obs;
   final createdAt = DateTime.now();
   late List<ChatMessage> chatMessageList = [];
   late int uId;
   late Rx<String> chatRoomId = "".obs;
-  final Rx<int> _otherUserId = 0.obs;
+  late final Rx<UserResponse> _otherUserInfo;
 
-  get otherUser => _otherUserId;
-
-  setOtherUser(int userId){
-    _otherUserId.value = userId;
-  }
   //get text => _text;
+
+  get otherUserInfo => _otherUserInfo.value;
 
   StreamController<List<ChatMessage>> streamController =
       StreamController<List<ChatMessage>>();
@@ -71,7 +70,7 @@ class ChatController extends GetxController {
       "createdBy": uId,
       "id": null,
       "isDeleted": false,
-      "membersId": [uId, _otherUserId.value],
+      "membersId": [uId, _otherUserInfo.value.uId],
       "recentMessage": firstMessage.toJson(),
     }).then((DocumentReference docRef) {
       docRef.update({"id": docRef.id});
