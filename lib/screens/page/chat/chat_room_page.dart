@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/controller/chat_controller.dart';
 import 'package:hae_mo/utils/chage_time_format.dart';
-import '../../../model/chat_message_model.dart';
-import '../../../model/user_response_model.dart';
 import '../../../utils/shared_preference.dart';
 
 class ChatRoomPage extends StatefulWidget {
@@ -21,9 +19,9 @@ class ChatRoomPage extends StatefulWidget {
 
 class _ChatRoomPageState extends State<ChatRoomPage> {
   final TextEditingController _textController = TextEditingController();
-  final controller = Get.put(ChatController());
-  final String studentId = PreferenceUtil.getString("studentId") != null
-      ? PreferenceUtil.getString("studentId")!
+  ChatController chatController = ChatController();
+  final String studentId = PreferenceUtil.getString("uId") != null
+      ? PreferenceUtil.getString("uId")!
       : "sender";
   final int profileImage = PreferenceUtil.getInt("profileImage") != null
       ? PreferenceUtil.getInt("profileImage")!
@@ -34,9 +32,10 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     super.initState();
 
     if(widget.chatRoomId !=""){
-      controller.chatRoomId.value = widget.chatRoomId!;
+      chatController.chatRoomId.value = widget.chatRoomId!;
     }
-    controller.setOtherUser(widget.otherUserId);
+    chatController.setOtherUser(widget.otherUserId);
+    chatController.uId = PreferenceUtil.getInt("uId")!;
   }
 
   Widget timeLine(String time) {

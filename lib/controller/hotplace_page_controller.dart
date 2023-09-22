@@ -19,7 +19,7 @@ class HotPlacePageController extends GetxController {
   void onInit() {
     super.onInit();
 
-    uId = PreferenceUtil.getInt("uid")!;
+    uId = PreferenceUtil.getInt("uId")!;
     updateHotPlaceList();
   }
 

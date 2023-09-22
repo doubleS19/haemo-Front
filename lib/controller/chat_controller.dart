@@ -7,6 +7,7 @@ import 'package:hae_mo/model/user_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import '../model/chat_message_model.dart';
 import '../model/chatroom_model.dart';
+import '../utils/shared_preference.dart';
 
 class ChatController extends GetxController {
   final firestore = FirebaseFirestore.instance;
@@ -15,7 +16,7 @@ class ChatController extends GetxController {
   late List<ChatMessage> chatMessageList = [];
   late int uId;
   late Rx<String> chatRoomId = "".obs;
-  late Rx<int> _otherUserId;
+  final Rx<int> _otherUserId = 0.obs;
 
   get otherUser => _otherUserId;
 
@@ -29,9 +30,15 @@ class ChatController extends GetxController {
 
   void startStream() {}
 
-  @override
-  void onInit() {
+  ChatController() {
     super.onInit();
+    final uIdFromPreferences = PreferenceUtil.getInt("uId");
+    if (uIdFromPreferences != null) {
+      uId = uIdFromPreferences;
+    } else {
+      uId = 47;
+      print("have no UID");
+    }
   }
 
   /// 나와 상대의 채팅방이 이미 존재한다면 false, 없다면 true => true이면 채팅방 생성 가능
