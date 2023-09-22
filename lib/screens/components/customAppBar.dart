@@ -7,6 +7,7 @@ import 'package:hae_mo/screens/components/wishStarButton.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 
 import '../../common/color.dart';
+import '../../common/theme.dart';
 import '../Page/board/meeting_page.dart';
 import '../Page/chat/chat_list_page.dart';
 import 'customDialog.dart';
@@ -255,8 +256,8 @@ AppBar boardWriterAppbar() {
 
 Widget chatRoomAppbar(String appBarText, BuildContext context){
   return AppBar(
-    title: Text(appBarText, style: Theme.of(context).textTheme.headlineMedium),
-    centerTitle: true,
+    title: Text(appBarText, style: CustomThemes.chatRoomTitleTextStyle),
+    centerTitle: false,
     leading: IconButton(
       onPressed: () {
         Get.back();
@@ -273,6 +274,6 @@ Widget chatRoomAppbar(String appBarText, BuildContext context){
           })
     ],
     elevation: 0.0,
-    backgroundColor: AppTheme.mainColor,
+    backgroundColor: AppTheme.white,
   );
 }

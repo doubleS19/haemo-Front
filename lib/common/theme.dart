@@ -84,6 +84,10 @@ class CustomThemes {
     color: AppTheme.mainAppBarColor,
     fontSize: 22.0
   );
+  static var chatRoomTitleTextStyle = TextStyle(
+      color: AppTheme.mainTextColor,
+      fontSize: 22.0
+  );
 
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',

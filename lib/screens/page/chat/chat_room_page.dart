@@ -77,59 +77,58 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Builder(
+              builder: (context) =>
+                  chatRoomAppbar(widget.otherUser.nickname, context))),
         body: Container(
-      child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(kToolbarHeight),
-              child: Builder(
-                  builder: (context) => chatRoomAppbar(chatController.otherUserInfo.nickname, context))),
-          body: Column(children: [
-            Expanded(
-                flex: 3,
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height*0.8,
                 child: SingleChildScrollView(
                     child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    children: [
-                      // StreamBuilder(
-                      //   stream: controller.streamChatMessage(widget.chatRoomId),
-                      //   builder: (BuildContext context,
-                      //       AsyncSnapshot<dynamic> snapshot) {
-                      //     if (snapshot.hasData) {
-                      //       ChatData chatData = snapshot.data;
-                      //       List<ChatMessage>? listMessage =
-                      //           chatData.chatMessageList;
-                      //       return ListView.builder(
-                      //         itemCount: listMessage?.length,
-                      //         physics: const NeverScrollableScrollPhysics(),
-                      //         itemBuilder: (BuildContext context, int index) {
-                      //           for (var chat in controller.chatMessageList) {
-                      //             if (chat.sender == studentId) {
-                      //               return sender(chat.text!, chat.createdAt!);
-                      //             } else {
-                      //               return receiver(chat.text!, chat.sender!,
-                      //                   chat.createdAt!, 1);
-                      //             }
-                      //           }
-                      //         },
-                      //       );
-                      //     } else {
-                      //       return const Center(child: Text("a"));
-                      //     }
-                      //   },
-                      // ),
-                    ],
-                  ),
-                ))),
-            sendTextField()
-          ])),
-    ));
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Container()
+/*                    StreamBuilder(
+                      stream: controller.streamChatMessage(widget.chatRoomId),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<dynamic> snapshot) {
+                        if (snapshot.hasData) {
+                          ChatData chatData = snapshot.data;
+                          List<ChatMessage>? listMessage =
+                              chatData.chatMessageList;
+                          return ListView.builder(
+                            itemCount: listMessage?.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              for (var chat in controller.chatMessageList) {
+                                if (chat.sender == studentId) {
+                                  return sender(chat.text!, chat.createdAt!);
+                                } else {
+                                  return receiver(chat.text!, chat.sender!,
+                                      chat.createdAt!, 1);
+                                }
+                              }
+                            },
+                          );
+                        } else {
+                          return const Center(child: Text("a"));
+                        }
+                      },
+                    ),*/
+                    )),
+              ),
+              sendTextField()
+            ],
+          )),
+    );
   }
 
   Widget sendTextField() {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.7,
+        height: MediaQuery.of(context).size.height * 0.1,
         color: Colors.white,
         child: Row(
           children: [

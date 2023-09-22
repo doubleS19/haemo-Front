@@ -31,8 +31,9 @@ class ChatListController extends GetxController {
     int otherUid;
     if (uId == chatRoomData.membersId[0]) {
       otherUid = chatRoomData.membersId[1];
+    }else{
+      otherUid = chatRoomData.membersId[0];
     }
-    otherUid = chatRoomData.membersId[0];
     return await dbService.getUserById(otherUid);
   }
 
