@@ -130,9 +130,9 @@ class DBService {
     }
   }
 
-  Future<UserResponse> getUserById(int uId) async{
-    final response = await http
-        .get(Uri.parse("http://43.201.211.1:1004/user/find/$uId"));
+  Future<UserResponse> getUserById(int uId) async {
+    final response =
+        await http.get(Uri.parse("http://43.201.211.1:1004/user/find/$uId"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -199,7 +199,7 @@ class DBService {
     } else if (response.statusCode == 404) {
       throw Exception("User not found");
     } else {
-      throw Exception("Failed to fetch User by Post");
+      throw Exception("Failed to fetch User by Club Post");
     }
   }
 
