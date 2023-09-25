@@ -1,16 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/controller/chat_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/customAppBar.dart';
 import 'package:hae_mo/utils/chage_time_format.dart';
+import '../../../common/color.dart';
+import '../../../model/chat_message_model.dart';
 import '../../../utils/shared_preference.dart';
 
 class ChatRoomPage extends StatefulWidget {
-  const ChatRoomPage({Key? key, required this.chatRoomId, required this.otherUser}) : super(key: key);
+  const ChatRoomPage(
+      {Key? key, required this.chatRoomId, required this.otherUser})
+      : super(key: key);
 
   final String? chatRoomId;
   final UserResponse otherUser;
@@ -28,11 +31,13 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   final int profileImage = PreferenceUtil.getInt("profileImage") != null
       ? PreferenceUtil.getInt("profileImage")!
       : 1;
+  final firestore = FirebaseFirestore.instance;
+
 
   @override
   void initState() {
     super.initState();
-    if(widget.chatRoomId !=""){
+    if (widget.chatRoomId != "") {
       chatController.chatRoomId.value = widget.chatRoomId!;
     }
     chatController.uId = PreferenceUtil.getInt("uId")!;
@@ -47,13 +52,22 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   }
 
   Widget chatIconButton(Icon icon) {
-    return IconButton(
-      padding: EdgeInsets.symmetric(horizontal: 15),
-      icon: icon,
-      iconSize: 25,
-      onPressed: () {
+    return GestureDetector(
+      onTap: (){
         _handleSubmitted();
       },
+      child: Container(
+        width: 20,
+        height: 20,
+        decoration: BoxDecoration(
+          color: AppTheme.mainColor,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.send_rounded,
+          color: AppTheme.white,
+        )
+      ),
     );
   }
 
@@ -65,92 +79,106 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     }
   }
 
-/*  Widget chooseSender(ChatMessage chat) {
-    // sharedpreference에 저장된 아이디라면
-    if (chat.sender == studentId) {
-      return sender(chat.text!, chat.createdAt!);
+  Widget chooseSender(ChatMessage chat) {
+    if (chat.sentBy == studentId) {
+      return sender(chat.messageText!, chat.sentAt!.toDate());
     } else {
-      return receiver(chat.text!, chat.sender!, chat.createdAt!, 1);
+      return receiver(chat.messageText!, widget.otherUser.nickname,
+          chat.sentAt!.toDate(), widget.otherUser.userImage);
     }
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
+    double appScreenHeight = MediaQuery.of(context).size.height - (MediaQuery.of(context).padding.top + kToolbarHeight)!;
+
     return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: Builder(
-              builder: (context) =>
-                  chatRoomAppbar(widget.otherUser.nickname, context))),
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Builder(
+                builder: (context) =>
+                    chatRoomAppbar(widget.otherUser.nickname, context))),
         body: Container(
+          height: appScreenHeight,
+          width: MediaQuery.of(context).size.width,
           child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height*0.8,
-                child: SingleChildScrollView(
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Container()
-/*                    StreamBuilder(
-                      stream: controller.streamChatMessage(widget.chatRoomId),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<dynamic> snapshot) {
-                        if (snapshot.hasData) {
-                          ChatData chatData = snapshot.data;
-                          List<ChatMessage>? listMessage =
-                              chatData.chatMessageList;
-                          return ListView.builder(
-                            itemCount: listMessage?.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (BuildContext context, int index) {
-                              for (var chat in controller.chatMessageList) {
-                                if (chat.sender == studentId) {
-                                  return sender(chat.text!, chat.createdAt!);
-                                } else {
-                                  return receiver(chat.text!, chat.sender!,
-                                      chat.createdAt!, 1);
-                                }
-                              }
-                            },
-                          );
-                        } else {
-                          return const Center(child: Text("a"));
-                        }
-                      },
-                    ),*/
-                    )),
-              ),
-              sendTextField()
-            ],
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+          Container(
+            height: appScreenHeight - 90,
+          width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+            child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: StreamBuilder(
+                  stream: firestore
+                      .collection('message')
+                      .doc(widget.chatRoomId)
+                      .collection('message')
+                      .snapshots()
+                      .map((querySnapshot) {
+                    querySnapshot.docs.forEach((document) {
+                      List<ChatMessage> chatMessages = [];
+
+                      final data = document.data() as Map<String, dynamic>;
+                      final chatMessage = ChatMessage.fromJson(data);
+                      chatMessages.add(chatMessage);
+                    });
+                  }),
+                   builder: (BuildContext context, AsyncSnapshot<Null> snapshot) {
+                     if (snapshot.hasData) {
+                       List<ChatMessage>? chatListMessage = snapshot.data;
+                       return ListView.builder(
+                         itemCount: chatListMessage?.length,
+                         physics: const NeverScrollableScrollPhysics(),
+                         itemBuilder: (BuildContext context, int index) {
+                           for (var chat in chatListMessage!) {
+                             chooseSender(chat);
+                           }
+                         },
+                       );
+                     } else {
+                       return Container();
+                     }
+                },
+                )),
           )),
-    );
+                sendTextField()
+          ],
+        )));
   }
 
   Widget sendTextField() {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.1,
+      height: 80,
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         color: Colors.white,
         child: Row(
           children: [
-            chatIconButton(const Icon(FontAwesomeIcons.squarePlus)),
-            Expanded(
-                child: Container(
-                    child: TextFormField(
-              /// https://dalgoodori.tistory.com/60
-              controller: _textController,
-              maxLines: 3,
-              cursorColor: Colors.orange,
-              style: const TextStyle(fontSize: 20),
-              decoration: const InputDecoration(
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-              ),
-              textInputAction: TextInputAction.next,
-              onFieldSubmitted: (String value) {
-                _handleSubmitted();
-              },
-            ))),
-            chatIconButton(const Icon(FontAwesomeIcons.faceSmile)),
+            Container(
+              height: 70,
+                width: MediaQuery.of(context).size.width*0.5,
+                child: TextFormField(
+                  /// https://dalgoodori.tistory.com/60
+                  controller: _textController,
+                  maxLines: 1,
+                  cursorColor: Colors.orange,
+                  style: const TextStyle(fontSize: 20),
+                  decoration: InputDecoration(
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      filled: true,
+                      fillColor: AppTheme.chatTextFieldBackgroundColor
+                  ),
+                  textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (String value) {
+                    _handleSubmitted();
+                  },
+                )),
             chatIconButton(const Icon(FontAwesomeIcons.gear))
           ],
         ));
@@ -187,7 +215,8 @@ Widget receiver(String text, String name, DateTime time, dynamic profile) {
                 children: [
                   SizedBox(height: 22),
                   Text(changeDatetimeToString(time),
-                      style: const TextStyle(fontSize: 12, color: Colors.black26))
+                      style: const TextStyle(
+                          fontSize: 12, color: Colors.black26))
                 ],
               )),
         ],

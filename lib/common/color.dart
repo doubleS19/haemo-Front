@@ -94,4 +94,9 @@ class AppTheme {
 
   /// 커스텀 앱바
   static var customAppBarBackColor = const Color(0xff545454);
+
+  /// 채팅 페이지
+  static var chatTextFieldBackgroundColor = const Color(0xFFEDEDED);
+  static var chatReceiverBackgroundColor = const Color(0xFFDEDEDE);
+
 }

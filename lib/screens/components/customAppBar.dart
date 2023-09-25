@@ -265,6 +265,12 @@ Widget chatRoomAppbar(String appBarText, BuildContext context){
       color: AppTheme.mainColor,
       icon: const Icon(Icons.arrow_back_ios),
     ),
+    shape: Border(
+      bottom: BorderSide(
+        color: AppTheme.dividerColor,
+        width: 0.5,
+      ),
+    ),
     actions: [
       IconButton(
           icon: const Icon(Icons.menu),
