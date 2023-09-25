@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/common/user_image.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/userBottomSheet.dart';
+import 'package:hae_mo/utils/shared_preference.dart';
 
 Row userProfile(BuildContext context, UserResponse user) {
   return Row(
@@ -24,7 +26,8 @@ Row userProfile(BuildContext context, UserResponse user) {
                   shape: BoxShape.circle,
                   color: Colors.transparent,
                   image: DecorationImage(
-                    image: AssetImage(user.userImage),
+                    image: AssetImage(
+                        userRoundImage[PreferenceUtil.getInt("userImage")!]),
                   ),
                 ),
               ))),

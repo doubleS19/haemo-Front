@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/common/user_image.dart';
 import 'package:hae_mo/controller/club_page_controller.dart';
 import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/model/post_type.dart';
 import 'package:hae_mo/screens/page/board/posting_page.dart';
+import 'package:hae_mo/utils/user_image.dart';
 import '../../controller/meeting_page_controller.dart';
 import '../../model/user_response_model.dart';
 import '../../service/db_service.dart';
@@ -51,6 +53,11 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.hasData) {
             final UserResponse user = snapshot.data as UserResponse;
             PreferenceUtil.setInt("uId", user.uId);
+            PreferenceUtil.setInt(
+                "userImage", userProfileImage.indexOf(user.userImage));
+            print(PreferenceUtil.getInt("userImage"));
+            print(
+                "userIndex=${userProfileImage.indexOf(user.userImage).toString()}");
             return Scaffold(
                 body: SafeArea(
                   child: _widgetOptions.elementAt(_selectedIndex),
@@ -117,9 +124,9 @@ class _HomePageState extends State<HomePage> {
                                   width: 0.8,
                                 ),
                                 color: Colors.transparent,
-                                image: const DecorationImage(
-                                  ///임시
-                                  image: AssetImage('assets/user/user_cat.png'),
+                                image: DecorationImage(
+                                  image: AssetImage(userRoundImage[
+                                      PreferenceUtil.getInt("userImage")!]),
                                 ),
                               ),
                             ),
@@ -134,9 +141,9 @@ class _HomePageState extends State<HomePage> {
                                   width: 0.8,
                                 ),
                                 color: Colors.transparent,
-                                image: const DecorationImage(
-                                  ///임시
-                                  image: AssetImage('assets/user/user_cat.png'),
+                                image: DecorationImage(
+                                  image: AssetImage(userRoundImage[
+                                      PreferenceUtil.getInt("userImage")!]),
                                 ),
                               ),
                             ),

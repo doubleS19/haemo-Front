@@ -1,4 +1,4 @@
-var userImage = [
+var userProfileImage = [
   "assets/user/user_cat.png",
   "assets/user/user_chick.png",
   "assets/user/user_dog.png",
