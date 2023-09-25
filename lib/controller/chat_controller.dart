@@ -13,6 +13,7 @@ import '../utils/shared_preference.dart';
 class ChatController extends GetxController {
   final firestore = FirebaseFirestore.instance;
   DBService db = DBService();
+
   //final RxString _text = "".obs;
   final createdAt = DateTime.now();
   late List<ChatMessage> chatMessageList = [];
@@ -47,14 +48,22 @@ class ChatController extends GetxController {
   Future<String?> checkChatRoomExistence(int otherUserId) async {
     String? chatRoomId = "";
 
-    await firestore.collection("group").where("members", isEqualTo: [uId, otherUserId]).where("isDeleted", isEqualTo: false).get().then((value) {
-      print("print: ${value.docs}");
-      if(value.docs.isEmpty){
-        chatRoomId = "";
-      }else{
-        chatRoomId = value.docs.map((e) => ChatRoom.fromJson(e.data())).toList()[0].id;
-      }
-    });
+    await firestore
+        .collection("group")
+        .where("members", isEqualTo: [uId, otherUserId])
+        .where("isDeleted", isEqualTo: false)
+        .get()
+        .then((value) {
+          print("print: ${value.docs}");
+          if (value.docs.isEmpty) {
+            chatRoomId = "";
+          } else {
+            chatRoomId = value.docs
+                .map((e) => ChatRoom.fromJson(e.data()))
+                .toList()[0]
+                .id;
+          }
+        });
     return chatRoomId;
   }
 
@@ -77,8 +86,12 @@ class ChatController extends GetxController {
     });
   }
 
-  Future<void> updateLastChatMessage(String chatRoomId, ChatMessage message) async{
-    await firestore.collection("group").doc(chatRoomId).update({"recentMessage": message.toJson()});
+  Future<void> updateLastChatMessage(
+      String chatRoomId, ChatMessage message) async {
+    await firestore
+        .collection("group")
+        .doc(chatRoomId)
+        .update({"recentMessage": message.toJson()});
   }
 
   /// Firestore doc에 새로운 체탱창 생성
@@ -89,16 +102,17 @@ class ChatController extends GetxController {
   /// @author: seoyeon
   /// @ 테스트 후 studentId를 sharedPreference에서 가져오도록 변경하기
   void sendChatMessage(String chatRoomId, String chatMessageText) {
-
     var firstChatMessage = ChatMessage(
         isRead: false,
         messageText: chatMessageText,
         sentBy: 47,
         sentAt: Timestamp.fromDate(DateTime.now()));
 
-    firestore.collection('message').doc(chatRoomId).set(firstChatMessage.toJson());
+    firestore
+        .collection('message')
+        .doc(chatRoomId)
+        .set(firstChatMessage.toJson());
   }
-
 
   /// 메세지 전송 클릭 시 FireStore로 전송되어 chatMessageList에 저장됨
   /// @param String chatRoomId 고유 채팅방 Id
@@ -135,17 +149,24 @@ class ChatController extends GetxController {
   /// @return Stream<ChatData> (Streambuilder에서 바로 사용)
   /// @notSuccess
   /// @author: seoyeon
-/*  Stream<ChatData> streamChatMessage(String chatRoomId) {
+/*  Stream<void> streamChatMessage(String chatRoomId) {
+    List<ChatMessage> chatMessages = [];
+
     try {
       // charRoomId가 없으면 조회되지 않음
 
-      final snapshots = firestore
-          .collection('haemo')
+      Stream chatMessageSnapshots = firestore
+          .collection('message')
           .doc(chatRoomId)
+          .collection('message')
           .snapshots()
-          .map((event) => ChatData.fromDocumentSnapshot(event));
-
-      return snapshots;
+          .map((querySnapshot) {
+        querySnapshot.docs.forEach((document) {
+          final data = document.data() as Map<String, dynamic>;
+          final chatMessage = ChatMessage.fromJson(data);
+          chatMessages.add(chatMessage);
+        });
+      });
     } catch (ex) {
       log('error: ', error: ex.toString(), stackTrace: StackTrace.current);
       return Stream.error(ex.toString());
