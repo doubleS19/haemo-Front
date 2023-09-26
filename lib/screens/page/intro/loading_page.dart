@@ -22,7 +22,6 @@ class _LoadingPageState extends State<LoadingPage> {
   bool selected = false;
   String? id;
 
-
   @override
   void initState() {
     super.initState();
@@ -32,9 +31,9 @@ class _LoadingPageState extends State<LoadingPage> {
     changePage(id);
   }
 
-  void changePage(String? id){
+  void changePage(String? id) {
     Timer(const Duration(milliseconds: 2000), () {
-      if (id != null || id?.isNotEmpty == true || id != "") {
+      if (id != null && id.isNotEmpty && true && id != "") {
         Get.to(const HomePage());
       } else {
         Get.to(const RegisterPage());

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/common/user_image.dart';
 import 'package:hae_mo/service/db_service.dart';
 import 'package:hae_mo/utils/user_image.dart';
 import '../../../controller/user_controller.dart';
@@ -95,9 +96,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 height: 200,
                                 child: CarouselSlider.builder(
                                   carouselController: _carouselController,
-                                  itemCount: userImage.length,
+                                  itemCount: userProfileImage.length,
                                   itemBuilder: (context, index, realIndex) {
-                                    final path = userImage[index];
+                                    final path = userProfileImage[index];
                                     return imageSlider(path, index);
                                   },
                                   options: CarouselOptions(
@@ -298,7 +299,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           _textController.text,
                           _selectedMajor,
                           _selectedGender,
-                          userImage[_index],
+                          userProfileImage[_index],
                         );
                       } else {
                         showNicknameUnavailable(
