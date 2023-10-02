@@ -26,14 +26,14 @@ class _LoadingPageState extends State<LoadingPage> {
   void initState() {
     super.initState();
     AppTheme.getThemeType();
-    id = PreferenceUtil.getString("id");
+    id = PreferenceUtil.getString("nickname");
     dev.log("id: ${PreferenceUtil.getString("nickname")}");
     changePage(id);
   }
 
   void changePage(String? id) {
     Timer(const Duration(milliseconds: 2000), () {
-      if (id != null && id.isNotEmpty && true && id != "") {
+      if (id != null && id.isNotEmpty == true && id != "") {
         Get.to(const HomePage());
       } else {
         Get.to(const RegisterPage());

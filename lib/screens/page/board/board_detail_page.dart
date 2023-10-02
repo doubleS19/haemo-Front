@@ -59,6 +59,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
               widget.pId,
             ),
             builder: (context, snapshot) {
+              print(snapshot.data.toString);
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // 데이터가 로딩 중일 때 표시할 위젯
                 return CircularProgressIndicator();
