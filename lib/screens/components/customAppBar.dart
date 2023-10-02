@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:hae_mo/controller/club_page_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/screens/components/wishStarButton.dart';
+import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 
 import '../../common/color.dart';
@@ -254,7 +255,7 @@ AppBar boardWriterAppbar() {
   );
 }
 
-Widget chatRoomAppbar(String appBarText, BuildContext context){
+Widget chatRoomAppbar(String appBarText, BuildContext context) {
   return AppBar(
     title: Text(appBarText, style: CustomThemes.chatRoomTitleTextStyle),
     centerTitle: false,
@@ -275,11 +276,51 @@ Widget chatRoomAppbar(String appBarText, BuildContext context){
       IconButton(
           icon: const Icon(Icons.menu),
           color: AppTheme.mainColor,
-          onPressed: () {
-
-          })
+          onPressed: () {})
     ],
     elevation: 0.0,
     backgroundColor: AppTheme.white,
+  );
+}
+
+PreferredSizeWidget myPageAppbar(String appBarTitle) {
+  return AppBar(
+    backgroundColor: Colors.white,
+    title: Container(
+      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 10.0, 10.0),
+      alignment: Alignment.centerLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            appBarTitle,
+            style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 17.0,
+              color: AppTheme.mainPageHeadlineColor,
+            ),
+          ),
+        ],
+      ),
+    ),
+    shape: Border(
+      bottom: BorderSide(
+        color: AppTheme.dividerColor,
+        width: 0.5,
+      ),
+    ),
+    actions: [
+      IconButton(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(top: 10.0, right: 10.0),
+          onPressed: () {
+            Get.to(() => const SettingsPage());
+          },
+          icon: Image.asset("assets/icons/setting_icon.png",
+              color: AppTheme.mainColor),
+          color: AppTheme.mainColor),
+    ],
+    elevation: 0.0,
+    automaticallyImplyLeading: false,
   );
 }

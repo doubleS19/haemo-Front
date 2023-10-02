@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/screens/components/customAppBar.dart';
 import 'package:hae_mo/screens/page/my_page/my_meeting_page.dart';
 import 'package:hae_mo/screens/page/my_page/my_wish_club_page%20.dart';
 import 'package:hae_mo/screens/page/my_page/my_wish_meeting_page.dart';
@@ -25,28 +26,7 @@ class _MyPageState extends State<MyPage> {
   Widget build(BuildContext context) {
     DBService db = DBService();
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          foregroundColor: Colors.black,
-          elevation: 0.0,
-          title: Text(
-            "마이 페이지",
-            style: TextStyle(
-              color: AppTheme.mainPageTextColor,
-              fontSize: 19.0,
-            ),
-          ),
-          actions: [
-            IconButton(
-              icon: Image.asset("assets/icons/setting_icon.png",
-                  color: AppTheme.mainColor),
-              onPressed: () {
-                Get.to(() => SettingsPage());
-              },
-            ),
-          ],
-          automaticallyImplyLeading: false,
-        ),
+        appBar: myPageAppbar("마이페이지"),
         body: FutureBuilder(
             future: db.getUserByNickname(PreferenceUtil.getString("nickname")!),
             builder: (context, snapshot) {
@@ -55,7 +35,6 @@ class _MyPageState extends State<MyPage> {
                 return Container(
                     margin: const EdgeInsets.only(top: 20.0),
                     child: Column(children: [
-                      Divider(color: AppTheme.mainPageTextColor),
                       const Text(
                         "프로필",
                         style: TextStyle(
