@@ -272,7 +272,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                                 "nickname")!,
                                                         commentController.text,
                                                         widget.pId,
-                                                        widget.type);
+                                                        widget.type,
+                                                        context);
                                               }),
                                               child: Container(
                                                 width: 41,
