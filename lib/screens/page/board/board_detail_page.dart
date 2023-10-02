@@ -208,7 +208,75 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                   ],
                                 ),
                               )
-                            ])));
+                            ])),
+                            bottomNavigationBar: Container(
+                                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                                child: Row(children: [
+                                  Expanded(
+                                      flex: 7,
+                                      child: Container(
+                                          margin: EdgeInsets.fromLTRB(
+                                              0.0, 20.0, 5.0, 25.0),
+                                          height: _textFieldHeight,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.82),
+                                              color: AppTheme.receiverText),
+                                          child: TextField(
+                                            expands: true,
+                                            controller: commentController,
+                                            maxLines: null,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14.0,
+                                                color: AppTheme.mainTextColor),
+                                            cursorColor:
+                                                AppTheme.mainPageTextColor,
+                                            keyboardType:
+                                                TextInputType.multiline,
+                                            textInputAction:
+                                                TextInputAction.newline,
+                                            decoration: InputDecoration(
+                                                focusedBorder: InputBorder.none,
+                                                enabledBorder: InputBorder.none,
+                                                border: InputBorder.none,
+                                                hintText: "댓글을 작성해 주세요.",
+                                                hintStyle: TextStyle(
+                                                    fontSize: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall
+                                                        ?.fontSize,
+                                                    fontFamily:
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall
+                                                            ?.fontFamily,
+                                                    color: AppTheme
+                                                        .postingPageDetailHintTextColor)),
+                                          ))),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: SizedBox(
+                                          width: 33.0,
+                                          height: 33.0,
+                                          child: RawMaterialButton(
+                                              elevation: 0.0,
+                                              fillColor: AppTheme.mainColor,
+                                              shape: const CircleBorder(),
+                                              onPressed: (() {}),
+                                              child: Container(
+                                                width: 41,
+                                                height: 41,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.transparent,
+                                                  image: DecorationImage(
+                                                    image: AssetImage(
+                                                        "assets/icons/send_comment_icon.png"),
+                                                  ),
+                                                ),
+                                              )))),
+                                ])));
                       } else if (snapshot.hasError) {
                         return Center(
                           child: Text("${snapshot.error}"),

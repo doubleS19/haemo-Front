@@ -4,8 +4,6 @@ import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/common/user_image.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/userBottomSheet.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
-
 import '../../model/club_comment_response_model.dart';
 import '../../model/comment_response_model.dart';
 import '../../model/hotplace_comment_response_model.dart';
