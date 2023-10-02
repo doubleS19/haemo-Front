@@ -54,12 +54,11 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   Widget build(BuildContext context) {
     return GetBuilder<AttendController>(builder: (_attendController) {
       if (widget.type == 1) {
-        return FutureBuilder<UserResponse>(
-            future: db.getUserByPost(
+        return FutureBuilder<Post>(
+            future: db.getPostById(
               widget.pId,
             ),
             builder: (context, snapshot) {
-              print(snapshot.data.toString);
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // 데이터가 로딩 중일 때 표시할 위젯
                 return CircularProgressIndicator();
@@ -70,24 +69,28 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                 // 데이터가 없는 경우나 null인 경우 표시할 위젯
                 return Text('Data not available');
               } else {
-                UserResponse user = snapshot.data!;
+                Post post = snapshot.data!;
                 // 데이터가 정상적으로 로드된 경우 표시할 위젯
-                return Scaffold(
-                    appBar: (user.uId == PreferenceUtil.getInt("uId")
-                        ? boardWriterAppbar()
-                        : boardDetailAppbar(meetingController,
-                            clubPageController, widget.type, widget.pId)),
-                    body: SingleChildScrollView(
-                        child: Column(children: [
-                      Divider(
-                        color: AppTheme.mainColor,
-                        thickness: 1.0,
-                      ),
-                      FutureBuilder(
-                          future: db.getPostById(widget.pId),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              final Post post = snapshot.data as Post;
+                return FutureBuilder(
+                    future: db.getUserByPost(widget.pId),
+                    builder: (context, snapshot) {
+                      dev.log(snapshot.connectionState.toString());
+                      if (snapshot.hasData) {
+                        final UserResponse user = snapshot.data as UserResponse;
+                        return Scaffold(
+                            appBar: (user.uId == PreferenceUtil.getInt("uId")
+                                ? boardWriterAppbar()
+                                : boardDetailAppbar(
+                                    meetingController,
+                                    clubPageController,
+                                    widget.type,
+                                    widget.pId)),
+                            body: SingleChildScrollView(
+                                child: Column(children: [
+                              Divider(
+                                color: AppTheme.mainColor,
+                                thickness: 1.0,
+                              ),
                               Container(
                                 margin: const EdgeInsets.fromLTRB(
                                     20.0, 10.0, 20.0, 0.0),
@@ -204,17 +207,17 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                     commentWidget(widget.pId, widget.type),
                                   ],
                                 ),
-                              );
-                            } else if (snapshot.hasError) {
-                              return Center(
-                                child: Text("${snapshot.error}"),
-                              );
-                            }
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          })
-                    ])));
+                              )
+                            ])));
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text("${snapshot.error}"),
+                        );
+                      }
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    });
               }
             });
       } else {
