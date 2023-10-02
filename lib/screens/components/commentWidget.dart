@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/common/user_image.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/userBottomSheet.dart';
+import 'package:hae_mo/utils/shared_preference.dart';
 
 import '../../model/club_comment_response_model.dart';
 import '../../model/comment_response_model.dart';
@@ -28,9 +30,9 @@ Widget commentWidget(int pId, int type) {
           );
         } else if (snapshot.hasData && snapshot.data!.isEmpty) {
           // 댓글이 없는 경우
-          return Column(
+          return const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text("댓글 0",
                     style: TextStyle(
                         color: Color(0xff040404), fontWeight: FontWeight.w500)),
@@ -88,7 +90,7 @@ Widget commentWidget(int pId, int type) {
                                       child: RawMaterialButton(
                                           elevation: 0.0,
                                           fillColor: Colors.transparent,
-                                          shape: const CircleBorder(),
+                                          shape: CircleBorder(),
                                           onPressed: (() {
                                             userBottomSheet(context, user);
                                           }),
@@ -99,8 +101,11 @@ Widget commentWidget(int pId, int type) {
                                               shape: BoxShape.circle,
                                               color: Colors.transparent,
                                               image: DecorationImage(
-                                                image:
-                                                    AssetImage(user.userImage),
+                                                image: AssetImage(
+                                                    userRoundImage[
+                                                        userProfileImage
+                                                            .indexOf(user
+                                                                .userImage)]),
                                               ),
                                             ),
                                           ))),
@@ -158,9 +163,9 @@ Widget commentWidget(int pId, int type) {
           );
         } else if (snapshot.hasData && snapshot.data!.isEmpty) {
           // 댓글이 없는 경우
-          return Column(
+          return const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text("댓글 0",
                     style: TextStyle(
                         color: Color(0xff040404), fontWeight: FontWeight.w500)),
@@ -218,7 +223,7 @@ Widget commentWidget(int pId, int type) {
                                       child: RawMaterialButton(
                                           elevation: 0.0,
                                           fillColor: Colors.transparent,
-                                          shape: const CircleBorder(),
+                                          shape: CircleBorder(),
                                           onPressed: (() {
                                             userBottomSheet(context, user);
                                           }),
@@ -229,8 +234,11 @@ Widget commentWidget(int pId, int type) {
                                               shape: BoxShape.circle,
                                               color: Colors.transparent,
                                               image: DecorationImage(
-                                                image:
-                                                    AssetImage(user.userImage),
+                                                image: AssetImage(
+                                                    userRoundImage[
+                                                        userProfileImage
+                                                            .indexOf(user
+                                                                .userImage)]),
                                               ),
                                             ),
                                           ))),
@@ -289,9 +297,9 @@ Widget commentWidget(int pId, int type) {
           );
         } else if (snapshot.hasData && snapshot.data!.isEmpty) {
           // 댓글이 없는 경우
-          return Column(
+          return const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text("댓글 0",
                     style: TextStyle(
                         color: Color(0xff040404), fontWeight: FontWeight.w500)),
@@ -349,7 +357,7 @@ Widget commentWidget(int pId, int type) {
                                       child: RawMaterialButton(
                                           elevation: 0.0,
                                           fillColor: Colors.transparent,
-                                          shape: const CircleBorder(),
+                                          shape: CircleBorder(),
                                           onPressed: (() {
                                             userBottomSheet(context, user);
                                           }),
@@ -360,8 +368,11 @@ Widget commentWidget(int pId, int type) {
                                               shape: BoxShape.circle,
                                               color: Colors.transparent,
                                               image: DecorationImage(
-                                                image:
-                                                    AssetImage(user.userImage),
+                                                image: AssetImage(
+                                                    userRoundImage[
+                                                        userProfileImage
+                                                            .indexOf(user
+                                                                .userImage)]),
                                               ),
                                             ),
                                           ))),
