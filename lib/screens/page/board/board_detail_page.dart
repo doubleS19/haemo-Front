@@ -210,12 +210,13 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                               )
                             ])),
                             bottomNavigationBar: Container(
-                                margin: EdgeInsets.symmetric(horizontal: 15.0),
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
                                 child: Row(children: [
                                   Expanded(
                                       flex: 7,
                                       child: Container(
-                                          margin: EdgeInsets.fromLTRB(
+                                          margin: const EdgeInsets.fromLTRB(
                                               0.0, 20.0, 5.0, 25.0),
                                           height: _textFieldHeight,
                                           decoration: BoxDecoration(
@@ -263,7 +264,16 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               elevation: 0.0,
                                               fillColor: AppTheme.mainColor,
                                               shape: const CircleBorder(),
-                                              onPressed: (() {}),
+                                              onPressed: (() {
+                                                meetingController
+                                                    .checkCommentValid(
+                                                        PreferenceUtil
+                                                            .getString(
+                                                                "nickname")!,
+                                                        commentController.text,
+                                                        widget.pId,
+                                                        widget.type);
+                                              }),
                                               child: Container(
                                                 width: 41,
                                                 height: 41,

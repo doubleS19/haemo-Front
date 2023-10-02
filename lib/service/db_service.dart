@@ -3,6 +3,7 @@ import 'package:hae_mo/model/acceptation_model.dart';
 import 'package:hae_mo/model/acceptation_response_model.dart';
 import 'package:hae_mo/model/club_comment_response_model.dart';
 import 'package:hae_mo/model/club_post_model.dart';
+import 'package:hae_mo/model/comment_model.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
@@ -656,6 +657,28 @@ class DBService {
           .toList();
     } else {
       throw Exception('Failed to load post list');
+    }
+  }
+
+  Future<bool> sendComment(Comment comment) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://43.201.211.1:1004/postComment"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(comment.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send comment data");
+      } else {
+        dev.log("Post Comment Data sent successfully");
+        return true;
+        //Get.to(() => const HomePage());
+      }
+    } catch (e) {
+      dev.log("Failed to send post comment: ${e}");
+      return false;
     }
   }
 
