@@ -27,7 +27,7 @@ class DBService {
   Future<bool> saveUser(User user) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/user"),
+        Uri.parse("http://localhost:1004/user"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -49,7 +49,7 @@ class DBService {
   Future<bool> savePost(Post post) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/post"),
+        Uri.parse("http://localhost:1004/post"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -68,7 +68,7 @@ class DBService {
   }
 
   Future<List<PostResponse>> getAllPost() async {
-    final response = await http.get(Uri.parse("http://43.201.211.1:1004/post"));
+    final response = await http.get(Uri.parse("http://localhost:1004/post"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -81,7 +81,7 @@ class DBService {
 
   Future<List<PostResponse>> get24HoursPosts() async {
     final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/post/24hours"));
+        await http.get(Uri.parse("http://localhost:1004/post/24hours"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -94,7 +94,7 @@ class DBService {
 
   Future<Post> getPostById(int id) async {
     final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/post/$id"));
+        await http.get(Uri.parse("http://localhost:1004/post/$id"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return Post.fromJson(jsonData);
@@ -106,8 +106,8 @@ class DBService {
   }
 
   Future<UserResponse> getUserByPost(int pId) async {
-    final response = await http
-        .get(Uri.parse("http://43.201.211.1:1004/post/postUser/$pId"));
+    final response =
+        await http.get(Uri.parse("http://localhost:1004/post/postUser/$pId"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -120,7 +120,7 @@ class DBService {
 
   Future<UserResponse> getUserByNickname(String nickname) async {
     final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/user/$nickname"));
+        await http.get(Uri.parse("http://localhost:1004/user/$nickname"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -133,7 +133,7 @@ class DBService {
 
   Future<UserResponse> getUserById(int uId) async {
     final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/user/find/$uId"));
+        await http.get(Uri.parse("http://localhost:1004/user/find/$uId"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -147,7 +147,7 @@ class DBService {
   Future<bool> saveClubPost(ClubPost post) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/club"),
+        Uri.parse("http://localhost:1004/club"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -167,7 +167,7 @@ class DBService {
   }
 
   Future<List<ClubPostResponse>> getAllClubPost() async {
-    final response = await http.get(Uri.parse("http://43.201.211.1:1004/club"));
+    final response = await http.get(Uri.parse("http://localhost:1004/club"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -180,7 +180,7 @@ class DBService {
 
   Future<ClubPost> getClubPostById(int id) async {
     final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/club/$id"));
+        await http.get(Uri.parse("http://localhost:1004/club/$id"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return ClubPost.fromJson(jsonData);
@@ -193,7 +193,7 @@ class DBService {
 
   Future<UserResponse> getUserByClubPost(int pId) async {
     final response = await http
-        .get(Uri.parse("http://43.201.211.1:1004/club/clubPostUser/$pId"));
+        .get(Uri.parse("http://localhost:1004/club/clubPostUser/$pId"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -205,8 +205,8 @@ class DBService {
   }
 
   Future<List<CommentResponse>> getCommentsByPId(int pId) async {
-    final response = await http.get(
-        Uri.parse('http://43.201.211.1:1004/postComment/commentPost/$pId'));
+    final response = await http
+        .get(Uri.parse('http://localhost:1004/postComment/commentPost/$pId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -217,8 +217,8 @@ class DBService {
   }
 
   Future<List<ClubCommentResponse>> getClubCommentsByCpId(int cpId) async {
-    final response = await http.get(
-        Uri.parse('http://43.201.211.1:1004/clubComment/commentPost/$cpId'));
+    final response = await http
+        .get(Uri.parse('http://localhost:1004/clubComment/commentPost/$cpId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -230,8 +230,8 @@ class DBService {
 
   Future<List<HotPlaceCommentResponse>> getHotPlaceCommentsByHpId(
       int hpId) async {
-    final response = await http.get(
-        Uri.parse('http://43.201.211.1:1004/hotComment/commentPost/$hpId'));
+    final response = await http
+        .get(Uri.parse('http://localhost:1004/hotComment/commentPost/$hpId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -246,7 +246,7 @@ class DBService {
   Future<bool> saveHotPlacePost(HotPlacePost post) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/hot"),
+        Uri.parse("http://localhost:1004/hot"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -265,7 +265,7 @@ class DBService {
   }
 
   Future<List<HotPlacePostResponse>> getAllHotPlacePost() async {
-    final response = await http.get(Uri.parse("http://43.201.211.1:1004/hot"));
+    final response = await http.get(Uri.parse("http://localhost:1004/hot"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -279,7 +279,7 @@ class DBService {
 
   Future<List<HotPlacePostResponse>> getHotPlaceById(int pId) async {
     final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/hot/$pId"));
+        await http.get(Uri.parse("http://localhost:1004/hot/$pId"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -292,7 +292,7 @@ class DBService {
   }
 
   Future<List<HotPlacePostResponse>> getPopularHotPlacePosts() async {
-    final response = await http.get(Uri.parse("http://43.201.211.1:1004/hot"));
+    final response = await http.get(Uri.parse("http://localhost:1004/hot"));
 
     ///   수정하기
     if (response.statusCode == 200) {
@@ -309,7 +309,7 @@ class DBService {
   ///유저의 wishList(찜한 핫플) 가져오기
   Future<List<HotPlacePostResponse>> getWishListByUser(int uId) async {
     final response =
-        await http.get(Uri.parse('http://43.201.211.1:1004/wish/myList/$uId'));
+        await http.get(Uri.parse('http://localhost:1004/wish/myList/$uId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -322,7 +322,7 @@ class DBService {
   Future<bool> addWishList(Wish wish) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/wish"),
+        Uri.parse("http://localhost:1004/wish"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -342,7 +342,7 @@ class DBService {
 
   Future<void> deleteWishList(int uId, int pId) async {
     final response = await http.delete(
-      Uri.parse('http://43.201.211.1:1004/wish/delete/$uId/$pId'),
+      Uri.parse('http://localhost:1004/wish/delete/$uId/$pId'),
     );
     if (response.statusCode == 204) {
       print('WishList deleted successfully');
@@ -353,7 +353,7 @@ class DBService {
 
   Future<List<HotPlacePostResponse>> getWishListHpIdsByUser(int uId) async {
     final response =
-        await http.get(Uri.parse('http://43.201.211.1:1004/wish/myList/$uId'));
+        await http.get(Uri.parse('http://localhost:1004/wish/myList/$uId'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -367,7 +367,7 @@ class DBService {
 
   Future<bool> checkNicknameDuplicate(String nickname) async {
     final response = await http
-        .get(Uri.parse("http://43.201.211.1:1004/user/isDuplicate/$nickname"));
+        .get(Uri.parse("http://localhost:1004/user/isDuplicate/$nickname"));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as bool;
@@ -383,7 +383,7 @@ class DBService {
   Future<bool> saveNotice(Notice notice) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/notice"),
+        Uri.parse("http://localhost:1004/notice"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -404,7 +404,7 @@ class DBService {
   Future<void> changeNoticeVisibility(int nId) async {
     try {
       final response = await http
-          .get(Uri.parse("http://43.201.211.1:1004/notice/visible/$nId"));
+          .get(Uri.parse("http://localhost:1004/notice/visible/$nId"));
 
       if (response.statusCode == 200) {
         // API 호출 성공
@@ -420,8 +420,7 @@ class DBService {
   }
 
   Future<List<Notice>> getAllNotice() async {
-    final response =
-        await http.get(Uri.parse("http://43.201.211.1:1004/notice"));
+    final response = await http.get(Uri.parse("http://localhost:1004/notice"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       print("db service: ${data}");
@@ -434,8 +433,8 @@ class DBService {
 
   /// 이건 어떤 용도?
   Future<List<NoticeResponse>> getNoticeById(int nId) async {
-    final response = await http
-        .get(Uri.parse("http://43.201.211.1:1004/notice/visible/$nId"));
+    final response =
+        await http.get(Uri.parse("http://localhost:1004/notice/visible/$nId"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -449,7 +448,7 @@ class DBService {
   Future<bool> requestJoin(Acceptation acceptation) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/accept"),
+        Uri.parse("http://localhost:1004/accept"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -470,7 +469,7 @@ class DBService {
   Future<void> acceptUserToJoin(int uId, int pId) async {
     try {
       final response = await http
-          .get(Uri.parse("http://43.201.211.1:1004/accept/accept/$uId/$pId"));
+          .get(Uri.parse("http://localhost:1004/accept/accept/$uId/$pId"));
 
       if (response.statusCode != 201) {
         // API 호출 성공
@@ -489,7 +488,7 @@ class DBService {
 
   Future<void> cancleJoinRequest(int uId, int pId) async {
     final response = await http.delete(
-      Uri.parse('http://43.201.211.1:1004/accept/delete/$uId/$pId'),
+      Uri.parse('http://localhost:1004/accept/delete/$uId/$pId'),
     );
     if (response.statusCode == 204) {
       print('Request deleted successfully');
@@ -500,7 +499,7 @@ class DBService {
 
   Future<AcceptationResponse> getRequestById(int uId, int pId) async {
     final response = await http
-        .get(Uri.parse("http://43.201.211.1:1004/accept/check/$uId/$pId"));
+        .get(Uri.parse("http://localhost:1004/accept/check/$uId/$pId"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return AcceptationResponse.fromJson(jsonData);
@@ -511,7 +510,7 @@ class DBService {
 
   Future<bool> checkRequestExist(int uId, int pId) async {
     final response = await http
-        .get(Uri.parse("http://43.201.211.1:1004/accept/isExist/$uId/$pId"));
+        .get(Uri.parse("http://localhost:1004/accept/isExist/$uId/$pId"));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as bool;
@@ -522,8 +521,8 @@ class DBService {
   }
 
   Future<List<UserResponse>> getAttendUserList(int pId) async {
-    final response = await http
-        .get(Uri.parse("http://43.201.211.1:1004/accept/userList/$pId"));
+    final response =
+        await http.get(Uri.parse("http://localhost:1004/accept/userList/$pId"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -537,7 +536,7 @@ class DBService {
   // ///유저의 찜한 게시물 가져오기
   // Future<List<WishMeetingResponse>> getWishMeetingListByUser(int uId) async {
   //   final response = await http
-  //       .get(Uri.parse("http://43.201.211.1:1004/wishMeeting/myList/$uId"));
+  //       .get(Uri.parse("http://localhost:1004/wishMeeting/myList/$uId"));
   //   if (response.statusCode == 200) {
   //     final data = json.decode(response.body) as List<dynamic>;
   //     return data
@@ -550,8 +549,8 @@ class DBService {
   // }
 
   Future<bool> checkWishMeetingExist(int uId, int pId) async {
-    final response = await http.get(
-        Uri.parse("http://43.201.211.1:1004/wishMeeting/isExist/$uId/$pId"));
+    final response = await http
+        .get(Uri.parse("http://localhost:1004/wishMeeting/isExist/$uId/$pId"));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as bool;
@@ -564,7 +563,7 @@ class DBService {
   Future<bool> addWishMeetingList(WishMeeting wish) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/wishMeeting"),
+        Uri.parse("http://localhost:1004/wishMeeting"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -584,7 +583,7 @@ class DBService {
 
   Future<void> deleteWishMeetingList(int uId, int pId) async {
     final response = await http.delete(
-      Uri.parse('http://43.201.211.1:1004/wishMeeting/delete/$uId/$pId'),
+      Uri.parse('http://localhost:1004/wishMeeting/delete/$uId/$pId'),
     );
     if (response.statusCode == 204) {
       print('WishList deleted successfully');
@@ -595,7 +594,7 @@ class DBService {
 
   Future<List<PostResponse>> getWishMeetingListByUser(int uId) async {
     final response = await http
-        .get(Uri.parse('http://43.201.211.1:1004/wishMeeting/myList/$uId'));
+        .get(Uri.parse('http://localhost:1004/wishMeeting/myList/$uId'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -608,7 +607,7 @@ class DBService {
 
   Future<bool> checkWishClubExist(int uId, int pId) async {
     final response = await http
-        .get(Uri.parse("http://43.201.211.1:1004/wishClub/isExist/$uId/$pId"));
+        .get(Uri.parse("http://localhost:1004/wishClub/isExist/$uId/$pId"));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as bool;
@@ -620,7 +619,7 @@ class DBService {
 
   Future<bool> addWishClubList(WishClub wish) async {
     final response = await http.post(
-      Uri.parse("http://43.201.211.1:1004/wishClub"),
+      Uri.parse("http://localhost:1004/wishClub"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -637,7 +636,7 @@ class DBService {
 
   Future<void> deleteWishClubList(int uId, int pId) async {
     final response = await http.delete(
-      Uri.parse('http://43.201.211.1:1004/wishClub/delete/$uId/$pId'),
+      Uri.parse('http://localhost:1004/wishClub/delete/$uId/$pId'),
     );
     if (response.statusCode == 204) {
       print('WishList deleted successfully');
@@ -648,8 +647,8 @@ class DBService {
   }
 
   Future<List<ClubPostResponse>> getWishClubListByUser(int uId) async {
-    final response = await http
-        .get(Uri.parse('http://43.201.211.1:1004/wishClub/myList/$uId'));
+    final response =
+        await http.get(Uri.parse('http://localhost:1004/wishClub/myList/$uId'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -663,7 +662,7 @@ class DBService {
   Future<bool> sendComment(Comment comment) async {
     try {
       final response = await http.post(
-        Uri.parse("http://43.201.211.1:1004/postComment"),
+        Uri.parse("http://localhost:1004/postComment"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
