@@ -65,12 +65,8 @@ class MeetingPageController extends GetxController {
   Future saveComment(String nickname, String content, int pId, int type) async {
     DBService dbService = DBService();
 
-    Comment comment = Comment(
-        nickname: nickname,
-        content: content,
-        date: getNow(),
-        pId: pId,
-        type: type);
+    Comment comment =
+        Comment(nickname: nickname, content: content, date: getNow(), pId: pId);
     _commentState = CommentState.success;
     bool isUserSaved = await dbService.sendComment(comment);
     if (isUserSaved) {

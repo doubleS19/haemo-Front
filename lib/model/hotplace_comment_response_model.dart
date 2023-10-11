@@ -4,15 +4,13 @@ class HotPlaceCommentResponse {
   final String date;
   final int pId;
   final int cId;
-  final int type;
 
   HotPlaceCommentResponse(
       {required this.content,
       required this.nickname,
       required this.date,
       required this.cId,
-      required this.pId,
-      required this.type});
+      required this.pId});
 
   factory HotPlaceCommentResponse.fromJson(Map<String, dynamic> json) {
     return HotPlaceCommentResponse(
@@ -20,8 +18,7 @@ class HotPlaceCommentResponse {
         nickname: json['nickname'],
         date: json['date'],
         cId: json['cid'],
-        pId: json['hpId'],
-        type: json['type']);
+        pId: json['hpId']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -29,7 +26,6 @@ class HotPlaceCommentResponse {
         'nickname': nickname,
         'date': date,
         'cid': cId,
-        'hpId': pId,
-        'type': type
+        'hpId': pId
       };
 }

@@ -4,32 +4,28 @@ class HotPlaceReplyResponse {
   final String date;
   final int cId;
   final int rId;
-  final int type;
 
   HotPlaceReplyResponse(
       {required this.content,
       required this.nickname,
       required this.date,
       required this.cId,
-      required this.rId,
-      required this.type});
+      required this.rId});
 
   factory HotPlaceReplyResponse.fromJson(Map<String, dynamic> json) {
     return HotPlaceReplyResponse(
         content: json['content'],
         nickname: json['nickname'],
         date: json['date'],
-        rId: json['hrid'],
-        cId: json['hcId'],
-        type: json['type']);
+        rId: json['hrId'],
+        cId: json['hcId']);
   }
 
   Map<String, dynamic> toJson() => {
         'content': content,
         'nickname': nickname,
         'date': date,
-        'hrid': rId,
-        'hcId': cId,
-        'type': type
+        'hrId': rId,
+        'hcId': cId
       };
 }

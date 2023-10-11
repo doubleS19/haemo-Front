@@ -4,15 +4,13 @@ class CommentResponse {
   final String date;
   final int pId;
   final int cId;
-  final int type;
 
   CommentResponse(
       {required this.content,
       required this.nickname,
       required this.date,
       required this.cId,
-      required this.pId,
-      required this.type});
+      required this.pId});
 
   factory CommentResponse.fromJson(Map<String, dynamic> json) {
     return CommentResponse(
@@ -20,8 +18,7 @@ class CommentResponse {
         nickname: json['nickname'],
         date: json['date'],
         cId: json['cid'],
-        pId: json['pid'],
-        type: json['type']);
+        pId: json['pid']);
   }
 
   Map<String, dynamic> toJson() => {
@@ -29,7 +26,6 @@ class CommentResponse {
         'nickname': nickname,
         'date': date,
         'cid': cId,
-        'pid': pId,
-        'type': type
+        'pid': pId
       };
 }

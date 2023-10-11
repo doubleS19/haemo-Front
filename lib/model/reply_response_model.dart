@@ -29,7 +29,6 @@ class ReplyResponse {
         'nickname': nickname,
         'date': date,
         'cid': cId,
-        'rid': rId,
-        'type': type
+        'rid': rId
       };
 }
