@@ -1,7 +1,4 @@
-import 'dart:ffi';
-
 import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
-import 'package:hae_mo/model/post_model.dart';
 
 class HotPlacePostResponse {
   int pId;
