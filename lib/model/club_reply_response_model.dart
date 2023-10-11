@@ -17,7 +17,7 @@ class ClubReplyResponse {
         content: json['content'],
         nickname: json['nickname'],
         date: json['date'],
-        rId: json['crid'],
+        rId: json['crId'],
         cId: json['ccId']);
   }
 
@@ -25,7 +25,7 @@ class ClubReplyResponse {
         'content': content,
         'nickname': nickname,
         'date': date,
-        'crid': rId,
+        'crId': rId,
         'ccId': cId
       };
 }

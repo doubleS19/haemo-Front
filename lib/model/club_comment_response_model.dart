@@ -4,32 +4,28 @@ class ClubCommentResponse {
   final String date;
   final int pId;
   final int cId;
-  final int type;
 
   ClubCommentResponse(
       {required this.content,
       required this.nickname,
       required this.date,
       required this.cId,
-      required this.pId,
-      required this.type});
+      required this.pId});
 
   factory ClubCommentResponse.fromJson(Map<String, dynamic> json) {
     return ClubCommentResponse(
         content: json['content'],
         nickname: json['nickname'],
         date: json['date'],
-        cId: json['cid'],
-        pId: json['cpId'],
-        type: json['type']);
+        cId: json['ccId'],
+        pId: json['cpId']);
   }
 
   Map<String, dynamic> toJson() => {
         'content': content,
         'nickname': nickname,
         'date': date,
-        'cid': cId,
-        'cpId': pId,
-        'type': type
+        'ccId': cId,
+        'cpId': pId
       };
 }
