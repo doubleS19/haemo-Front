@@ -17,7 +17,7 @@ class HotPlaceCommentResponse {
         content: json['content'],
         nickname: json['nickname'],
         date: json['date'],
-        cId: json['cid'],
+        cId: json['hcId'],
         pId: json['hpId']);
   }
 
@@ -25,7 +25,7 @@ class HotPlaceCommentResponse {
         'content': content,
         'nickname': nickname,
         'date': date,
-        'cid': cId,
+        'hcId': cId,
         'hpId': pId
       };
 }
