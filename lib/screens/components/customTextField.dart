@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
 import '../../controller/posting_controller.dart';
+import 'customButton.dart';
 import 'customDialog.dart';
 
 Widget postingPageTitleTextField(
@@ -168,4 +170,36 @@ Widget iconTextField(BuildContext context, String hintText, void Function() onPr
       text: value
     ),
   );
+}
+
+
+Widget chatTextField(
+    TextEditingController textEditingController,
+    Function onSubmit
+    ) {
+  return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+    Expanded(
+        child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            height: 50,
+            decoration: BoxDecoration(
+              color: AppTheme.chatTextFieldBackgroundColor,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Expanded(
+                child: TextFormField(
+                  /// https://dalgoodori.tistory.com/60
+                  controller: textEditingController,
+                  maxLines: 1,
+                  keyboardType: TextInputType.multiline,
+                  cursorColor: AppTheme.mainColor,
+                  style: const TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  )
+                )))),
+    const SizedBox(width: 8),
+    chatIconButton(const Icon(FontAwesomeIcons.gear), onSubmit)
+  ]);
 }

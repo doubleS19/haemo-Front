@@ -68,3 +68,24 @@ Widget reportingPageCustomBotton(
                 color: Colors.white),
           )));
 }
+
+
+Widget chatIconButton(Icon icon, Function onClick) {
+  return GestureDetector(
+    onTap: () {
+      onClick;
+    },
+    child: Container(
+        width: 45,
+        height: 45,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: AppTheme.mainColor,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.send_rounded,
+          color: AppTheme.white,
+        )),
+  );
+}
