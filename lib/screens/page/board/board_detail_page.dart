@@ -7,6 +7,7 @@ import 'dart:developer' as dev;
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/board/attend_controller.dart';
 import 'package:hae_mo/controller/club_page_controller.dart';
+import 'package:hae_mo/controller/comment_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/club_post_model.dart';
 import 'package:hae_mo/model/user_model.dart';
@@ -36,7 +37,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   double _textFieldHeight = 35.0;
   MeetingPageController meetingController = MeetingPageController();
   ClubPageController clubPageController = ClubPageController();
-  TextEditingController commentController = TextEditingController();
+  CommentController commentController = CommentController();
+  TextEditingController textController = TextEditingController();
   final AttendController _attendController = Get.put(AttendController());
   late AcceptionState _acceptionState;
   bool isReply = false;
@@ -236,7 +238,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               color: AppTheme.receiverText),
                                           child: TextField(
                                             expands: true,
-                                            controller: commentController,
+                                            controller: textController,
                                             maxLines: null,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
@@ -277,24 +279,22 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               shape: const CircleBorder(),
                                               onPressed: (() {
                                                 if (isReply == false) {
-                                                  meetingController
+                                                  commentController
                                                       .checkCommentValid(
                                                           PreferenceUtil
                                                               .getString(
                                                                   "nickname")!,
-                                                          commentController
-                                                              .text,
+                                                          textController.text,
                                                           widget.pId,
                                                           widget.type,
                                                           context);
                                                 } else {
-                                                  meetingController
+                                                  commentController
                                                       .checkReplyValid(
                                                           PreferenceUtil
                                                               .getString(
                                                                   "nickname")!,
-                                                          commentController
-                                                              .text,
+                                                          textController.text,
                                                           widget.pId,
                                                           cId,
                                                           widget.type,
@@ -461,7 +461,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                       color: AppTheme.receiverText),
                                   child: TextField(
                                     expands: true,
-                                    controller: commentController,
+                                    controller: textController,
                                     maxLines: null,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
