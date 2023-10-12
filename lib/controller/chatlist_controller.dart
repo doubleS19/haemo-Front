@@ -14,24 +14,23 @@ class ChatListController extends GetxController {
   StreamController streamController = StreamController();
   late int uId;
 
-  void getChatList() async {
+  Stream<List<ChatRoom>> getChatList() async* {
     print("uid: $uId");
-    QuerySnapshot<Map<String, dynamic>> _snapshot = await firestore
+    Stream<QuerySnapshot<Map<String, dynamic>>> documentStream = await firestore
         .collection("group")
         .where("membersId", arrayContains: uId)
         .where("isDeleted", isEqualTo: false)
-        .get();
-    print(
-        "들어온 데이터는? ${_snapshot.docs.map((e) => ChatRoom.fromJson(e.data())).toList()}");
-    chatList.value =
-        _snapshot.docs.map((e) => ChatRoom.fromJson(e.data())).toList();
+        .snapshots();
+
+    yield* documentStream.map((snapshot) =>
+        snapshot.docs.map((e) => ChatRoom.fromJson(e.data())).toList());
   }
 
   Future<UserResponse> getOtherUserInfo(ChatRoom chatRoomData) async {
     int otherUid;
     if (uId == chatRoomData.membersId[0]) {
       otherUid = chatRoomData.membersId[1];
-    }else{
+    } else {
       otherUid = chatRoomData.membersId[0];
     }
     return await dbService.getUserById(otherUid);

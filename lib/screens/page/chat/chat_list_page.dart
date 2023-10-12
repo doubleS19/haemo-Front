@@ -54,20 +54,27 @@ class _ChatListPageState extends State<ChatListPage> {
               SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.7, // 0.75
                   width: MediaQuery.sizeOf(context).width,
-                  child: Obx(() => chatListController.chatList.isNotEmpty
-                      ? ListView.separated(
+                  child: StreamBuilder(
+                    stream: chatListController.getChatList(),
+                    builder: (context, snapshot){
+                      if(!snapshot.hasData){
+                        return Center(child: Container(child: Text("메세지가 없어용~")));
+                      }
+                      List<ChatRoom>? chatRoomList = snapshot.data;
+                      return ListView.separated(
                           padding: EdgeInsets.zero,
-                          itemCount: chatListController.chatList.length,
+                          itemCount: chatRoomList!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return SlidableCard(
-                              chat: chatListController.chatList[index],
+                              chat: chatRoomList[index],
                               index: index,
                               chatListController: chatListController,
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) =>
-                              const Divider(height: 1))
-                      : Container()))
+                          const Divider(height: 1));
+                    },
+                  ))
             ],
           )),
     );
