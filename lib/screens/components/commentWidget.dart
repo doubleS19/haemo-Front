@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/common/user_image.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/screens/components/replyWidget.dart';
 import 'package:hae_mo/screens/components/userBottomSheet.dart';
 import '../../model/club_comment_response_model.dart';
 import '../../model/comment_response_model.dart';
@@ -133,6 +134,11 @@ Widget commentWidget(int pId, int type) {
                                   ),
                                 ])),
                           ),
+                          replyWidget(commentList[index].cId, type),
+                          Divider(
+                            color: AppTheme.commentDividerColor,
+                            height: 0.5,
+                          )
                         ],
                       );
                     } else {
@@ -266,6 +272,11 @@ Widget commentWidget(int pId, int type) {
                                   ),
                                 ])),
                           ),
+                          replyWidget(commentList[index].cId, type),
+                          Divider(
+                            color: AppTheme.commentDividerColor,
+                            height: 0.5,
+                          )
                         ],
                       );
                     } else {
@@ -400,6 +411,14 @@ Widget commentWidget(int pId, int type) {
                                   ),
                                 ])),
                           ),
+                          replyWidget(commentList[index].cId, type),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          Divider(
+                            color: AppTheme.commentDividerColor,
+                            height: 0.5,
+                          )
                         ],
                       );
                     } else {

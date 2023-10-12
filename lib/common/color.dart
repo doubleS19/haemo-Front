@@ -99,4 +99,6 @@ class AppTheme {
   static var chatTextFieldBackgroundColor = const Color(0xFFEDEDED);
   static var chatReceiverBackgroundColor = const Color(0xFFDEDEDE);
 
+  /// 댓글 위젯 디바이더
+  static var commentDividerColor = const Color(0xFFBBBBBB);
 }

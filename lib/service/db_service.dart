@@ -3,15 +3,18 @@ import 'package:hae_mo/model/acceptation_model.dart';
 import 'package:hae_mo/model/acceptation_response_model.dart';
 import 'package:hae_mo/model/club_comment_response_model.dart';
 import 'package:hae_mo/model/club_post_model.dart';
+import 'package:hae_mo/model/club_reply_response_model.dart';
 import 'package:hae_mo/model/comment_model.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
+import 'package:hae_mo/model/hotplace_reply_response_model.dart';
 import 'package:hae_mo/model/notice_model.dart';
 import 'package:hae_mo/model/notice_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
+import 'package:hae_mo/model/reply_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/model/wish_meeting_model.dart';
 import 'package:hae_mo/model/wish_meeting_response_model.dart';
@@ -696,4 +699,42 @@ class DBService {
 /*  Future<void> deleteChatId(int uId, String chatId){
 
   }*/
+
+  Future<List<ReplyResponse>> getReplysByCId(int cId) async {
+    final response = await http
+        .get(Uri.parse('http://localhost:1004/postReply/commentPost/$cId'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse.map((e) => ReplyResponse.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load replys.');
+    }
+  }
+
+  Future<List<ClubReplyResponse>> getClubReplysByCcId(int ccId) async {
+    final response = await http
+        .get(Uri.parse('http://localhost:1004/clubReply/commentPost/$ccId'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse.map((e) => ClubReplyResponse.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load club replys.');
+    }
+  }
+
+  Future<List<HotPlaceReplyResponse>> getHotPlaceReplysByHcId(int hcId) async {
+    final response = await http
+        .get(Uri.parse('http://localhost:1004/hotReply/commentPost/$hcId'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
+      return jsonResponse
+          .map((e) => HotPlaceReplyResponse.fromJson(e))
+          .toList();
+    } else {
+      throw Exception('Failed to load hotplace replys.');
+    }
+  }
 }

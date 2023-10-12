@@ -4,15 +4,13 @@ class ReplyResponse {
   final String date;
   final int rId;
   final int cId;
-  final int type;
 
   ReplyResponse(
       {required this.content,
       required this.nickname,
       required this.date,
       required this.cId,
-      required this.rId,
-      required this.type});
+      required this.rId});
 
   factory ReplyResponse.fromJson(Map<String, dynamic> json) {
     return ReplyResponse(
@@ -20,8 +18,7 @@ class ReplyResponse {
         nickname: json['nickname'],
         date: json['date'],
         cId: json['cid'],
-        rId: json['rid'],
-        type: json['type']);
+        rId: json['rid']);
   }
 
   Map<String, dynamic> toJson() => {
