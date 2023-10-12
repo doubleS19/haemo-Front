@@ -751,11 +751,11 @@ class DBService {
       if (response.statusCode != 201) {
         throw Exception("Failed to send comment data");
       } else {
-        dev.log("Post Comment Data sent successfully");
+        dev.log("Post reply Data sent successfully");
         return true;
       }
     } catch (e) {
-      dev.log("Failed to send post comment: ${e}");
+      dev.log("Failed to send post reply: ${e}");
       return false;
     }
   }

@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/common/user_image.dart';
 import 'package:hae_mo/controller/club_page_controller.dart';
+import 'package:hae_mo/controller/comment_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/replyWidget.dart';
@@ -13,8 +15,8 @@ import '../../model/hotplace_comment_response_model.dart';
 import '../../service/db_service.dart';
 import 'dart:developer' as dev;
 
-Widget commentWidget(int pId, int type,
-    {ValueSetter<bool>? isReply, ValueSetter<int>? commentId}) {
+Widget commentWidget(int pId, int type) {
+  CommentController commentController = CommentController();
   DBService db = DBService();
   if (type == 1) {
     return FutureBuilder<List<CommentResponse>>(
@@ -162,9 +164,14 @@ Widget commentWidget(int pId, int type,
                                                       AppTheme.mainTextColor),
                                             ),
                                             onPressed: () {
-                                              isReply?.call(true);
-                                              commentId?.call(
-                                                  commentList[index].cId);
+                                              commentController.cId.value =
+                                                  commentList[index].cId;
+                                              commentController.isReply.value =
+                                                  true;
+                                              dev.log(
+                                                  "cId는용 ${commentController.cId.toString()}");
+                                              dev.log(
+                                                  "true? false? ${commentController.isReply.toString()}");
                                             },
                                           )))
                                 ])),
@@ -331,9 +338,7 @@ Widget commentWidget(int pId, int type,
                                                   color:
                                                       AppTheme.mainTextColor),
                                             ),
-                                            onPressed: () {
-                                              isReply?.call(true);
-                                            },
+                                            onPressed: () {},
                                           )))
                                 ])),
                           ),
@@ -500,9 +505,7 @@ Widget commentWidget(int pId, int type,
                                                   color:
                                                       AppTheme.mainTextColor),
                                             ),
-                                            onPressed: () {
-                                              isReply?.call(true);
-                                            },
+                                            onPressed: () {},
                                           )))
                                 ])),
                           ),
