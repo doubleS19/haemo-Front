@@ -26,9 +26,9 @@ class CommentController extends GetxController {
 
   final DBService dbService = DBService();
 
-  var isReply = false.obs;
+  var isReply = false;
 
-  var cId = 0.obs;
+  var cId = 0;
 
   Future checkCommentValid(String nickname, String content, int pId, int type,
       BuildContext context) async {
@@ -64,11 +64,11 @@ class CommentController extends GetxController {
     update();
   }
 
-  Future checkReplyValid(String nickname, String content, int pId, RxInt cId,
+  Future checkReplyValid(String nickname, String content, int pId, int cId,
       int type, BuildContext context) async {
     if (content != "" && content.isEmpty == false) {
       _replyState = ReplyState.okay;
-      saveReply(nickname, content, pId, cId as int, type);
+      saveReply(nickname, content, pId, cId, type);
       dev.log("Reply Okay~");
     } else {
       _replyState = ReplyState.empty;
@@ -90,7 +90,7 @@ class CommentController extends GetxController {
     bool isReplySaved = await dbService.sendReply(reply);
     if (isReplySaved) {
       _replyState = ReplyState.success;
-      isReply = false.obs;
+      isReply = false;
       Get.back();
       Get.to(BoardDetailPage(pId: pId, type: type));
     } else {
@@ -100,12 +100,12 @@ class CommentController extends GetxController {
   }
 
   void setIsReply(bool value) {
-    isReply = value.obs;
+    isReply = value;
     update();
   }
 
   void setCId(int value) {
-    cId = value.obs;
+    cId = value;
     update();
   }
 }
