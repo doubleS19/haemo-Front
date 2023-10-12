@@ -63,7 +63,9 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           children: [
             Expanded(
               flex: 1,
-              child: Container(  ),
+              child: Container(
+                child: chatListStreamList()
+              ),
             ),
             Container(
               height: 80,

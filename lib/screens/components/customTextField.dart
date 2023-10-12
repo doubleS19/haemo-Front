@@ -13,9 +13,8 @@ Widget postingPageTitleTextField(
   return TextFormField(
     enabled: true,
     decoration: InputDecoration(
-      focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: Colors.grey)
-      ),
+        focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey)),
         hintText: hintText,
         hintStyle: Theme.of(context).textTheme.bodySmall,
         isDense: true),
@@ -24,7 +23,6 @@ Widget postingPageTitleTextField(
 }
 
 Widget hashTagTextField(TextfieldTagsController controller) {
-
   return Container(
       alignment: Alignment.center,
       child: TextFieldTags(
@@ -50,8 +48,7 @@ Widget hashTagTextField(TextfieldTagsController controller) {
 
                 decoration: InputDecoration(
                   focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   hintText: tags.isNotEmpty ? '' : "#해시태그를 입력해주세요",
                   hintStyle: TextStyle(
                       fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
@@ -69,8 +66,12 @@ Widget hashTagTextField(TextfieldTagsController controller) {
                               children: tags.map((String tag) {
                             return Container(
                               decoration: BoxDecoration(
-                                border: Border.all(color: Theme.of(context).primaryColor,),
-                                borderRadius: const BorderRadius.all(Radius.circular(10.0),),
+                                border: Border.all(
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
                                 color: Colors.white,
                               ),
                               margin:
@@ -132,27 +133,28 @@ Widget postingPageDetailTextField(
       child: Scrollbar(
           controller: scrollController,
           child: TextFormField(
-          cursorColor: AppTheme.mainPageTextColor,
-          maxLines: 20,
-          maxLength: 500,
-          keyboardType: TextInputType.multiline,
-          controller: textEdController,
-          decoration: InputDecoration(
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              border: InputBorder.none,
-              //filled: true,
-              //fillColor: AppTheme.postingPageDetailTextFieldColor,
-              hintText: hintText,
-              hintStyle: TextStyle(
-                  fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
-                  fontFamily: Theme.of(context).textTheme.bodySmall?.fontFamily,
-                  color: AppTheme.postingPageDetailHintTextColor)),
-        )
-      ));
+            cursorColor: AppTheme.mainPageTextColor,
+            maxLines: 20,
+            maxLength: 500,
+            keyboardType: TextInputType.multiline,
+            controller: textEdController,
+            decoration: InputDecoration(
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                border: InputBorder.none,
+                //filled: true,
+                //fillColor: AppTheme.postingPageDetailTextFieldColor,
+                hintText: hintText,
+                hintStyle: TextStyle(
+                    fontSize: Theme.of(context).textTheme.bodySmall?.fontSize,
+                    fontFamily:
+                        Theme.of(context).textTheme.bodySmall?.fontFamily,
+                    color: AppTheme.postingPageDetailHintTextColor)),
+          )));
 }
 
-Widget iconTextField(BuildContext context, String hintText, void Function() onPressed, String? value){
+Widget iconTextField(BuildContext context, String hintText,
+    void Function() onPressed, String? value) {
   return TextField(
     readOnly: true, // 값을 변경하지 못하게 설정
     decoration: InputDecoration(
@@ -166,18 +168,42 @@ Widget iconTextField(BuildContext context, String hintText, void Function() onPr
         icon: const Icon(Icons.keyboard_arrow_down_rounded),
       ),
     ),
-    controller: TextEditingController(
-      text: value
-    ),
+    controller: TextEditingController(text: value),
   );
 }
 
-
 Widget chatTextField(
-    TextEditingController textEditingController,
-    Function onSubmit
-    ) {
-  return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+    TextEditingController textEditingController, Function onSubmit) {
+  return Container(
+          margin: EdgeInsets.symmetric(horizontal: 4.0),
+          child: Row(
+            children: [
+              Flexible(
+                child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14),
+                    decoration: BoxDecoration(
+                      color: AppTheme.chatTextFieldBackgroundColor,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: TextFormField(
+                        controller: textEditingController,
+                        maxLines: 1,
+                        keyboardType: TextInputType.multiline,
+                        cursorColor: AppTheme.mainColor,
+                        style: const TextStyle(fontSize: 20),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ))),
+              ),
+              SizedBox(width: 10),
+              Container(
+                  child: chatIconButton(
+                      const Icon(FontAwesomeIcons.gear), onSubmit))
+            ],
+          ))
+
+      /*Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
     Expanded(
         child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -201,5 +227,6 @@ Widget chatTextField(
                 )))),
     const SizedBox(width: 8),
     chatIconButton(const Icon(FontAwesomeIcons.gear), onSubmit)
-  ]);
+  ])*/
+      ;
 }
