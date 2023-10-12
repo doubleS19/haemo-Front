@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/common/user_image.dart';
+import 'package:hae_mo/controller/club_page_controller.dart';
+import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/replyWidget.dart';
 import 'package:hae_mo/screens/components/userBottomSheet.dart';
@@ -11,7 +13,8 @@ import '../../model/hotplace_comment_response_model.dart';
 import '../../service/db_service.dart';
 import 'dart:developer' as dev;
 
-Widget commentWidget(int pId, int type) {
+Widget commentWidget(int pId, int type,
+    {ValueSetter<bool>? isReply, ValueSetter<int>? commentId}) {
   DBService db = DBService();
   if (type == 1) {
     return FutureBuilder<List<CommentResponse>>(
@@ -132,6 +135,38 @@ Widget commentWidget(int pId, int type) {
                                       ),
                                     ],
                                   ),
+                                  Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(23.0),
+                                          ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              7,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              33,
+                                          child: MaterialButton(
+                                            color: Colors.transparent,
+                                            elevation: 0.0,
+                                            child: Text(
+                                              "답글",
+                                              style: TextStyle(
+                                                  fontSize: 8.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      AppTheme.mainTextColor),
+                                            ),
+                                            onPressed: () {
+                                              isReply?.call(true);
+                                              commentId?.call(
+                                                  commentList[index].cId);
+                                            },
+                                          )))
                                 ])),
                           ),
                           replyWidget(commentList[index].cId, type),
@@ -270,6 +305,36 @@ Widget commentWidget(int pId, int type) {
                                       ),
                                     ],
                                   ),
+                                  Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(23.0),
+                                          ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              7,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              33,
+                                          child: MaterialButton(
+                                            color: Colors.transparent,
+                                            elevation: 0.0,
+                                            child: Text(
+                                              "답글",
+                                              style: TextStyle(
+                                                  fontSize: 8.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      AppTheme.mainTextColor),
+                                            ),
+                                            onPressed: () {
+                                              isReply?.call(true);
+                                            },
+                                          )))
                                 ])),
                           ),
                           replyWidget(commentList[index].cId, type),
@@ -409,6 +474,36 @@ Widget commentWidget(int pId, int type) {
                                       ),
                                     ],
                                   ),
+                                  Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(23.0),
+                                          ),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              7,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              33,
+                                          child: MaterialButton(
+                                            color: Colors.transparent,
+                                            elevation: 0.0,
+                                            child: Text(
+                                              "답글",
+                                              style: TextStyle(
+                                                  fontSize: 8.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  color:
+                                                      AppTheme.mainTextColor),
+                                            ),
+                                            onPressed: () {
+                                              isReply?.call(true);
+                                            },
+                                          )))
                                 ])),
                           ),
                           replyWidget(commentList[index].cId, type),

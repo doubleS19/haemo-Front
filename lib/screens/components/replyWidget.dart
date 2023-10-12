@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/model/club_reply_response_model.dart';

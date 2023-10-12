@@ -39,6 +39,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   TextEditingController commentController = TextEditingController();
   final AttendController _attendController = Get.put(AttendController());
   late AcceptionState _acceptionState;
+  bool isReply = false;
+  int cId = 0;
 
   DBService db = DBService();
 
@@ -204,7 +206,16 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               },
                                             ))),
                                     Divider(color: AppTheme.mainTextColor),
-                                    commentWidget(widget.pId, widget.type),
+                                    commentWidget(widget.pId, widget.type,
+                                        isReply: (newIsReply) {
+                                      setState(() {
+                                        isReply = newIsReply;
+                                      });
+                                    }, commentId: (commentId) {
+                                      setState(() {
+                                        cId = commentId;
+                                      });
+                                    }),
                                   ],
                                 ),
                               )
@@ -265,15 +276,30 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               fillColor: AppTheme.mainColor,
                                               shape: const CircleBorder(),
                                               onPressed: (() {
-                                                meetingController
-                                                    .checkCommentValid(
-                                                        PreferenceUtil
-                                                            .getString(
-                                                                "nickname")!,
-                                                        commentController.text,
-                                                        widget.pId,
-                                                        widget.type,
-                                                        context);
+                                                if (isReply == false) {
+                                                  meetingController
+                                                      .checkCommentValid(
+                                                          PreferenceUtil
+                                                              .getString(
+                                                                  "nickname")!,
+                                                          commentController
+                                                              .text,
+                                                          widget.pId,
+                                                          widget.type,
+                                                          context);
+                                                } else {
+                                                  meetingController
+                                                      .checkReplyValid(
+                                                          PreferenceUtil
+                                                              .getString(
+                                                                  "nickname")!,
+                                                          commentController
+                                                              .text,
+                                                          widget.pId,
+                                                          cId,
+                                                          widget.type,
+                                                          context);
+                                                }
                                               }),
                                               child: Container(
                                                 width: 41,
@@ -388,7 +414,12 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                             Divider(
                                                 color: AppTheme.mainTextColor),
                                             commentWidget(
-                                                widget.pId, widget.type),
+                                                widget.pId, widget.type,
+                                                isReply: (newIsReply) {
+                                              setState(() {
+                                                isReply = newIsReply;
+                                              });
+                                            }),
                                           ],
                                         ),
                                       );
