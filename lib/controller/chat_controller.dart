@@ -26,7 +26,7 @@ class ChatController extends GetxController {
   get otherUserInfo => _otherUserInfo.value;
 
   StreamController<List<ChatMessage>> streamController =
-      StreamController<List<ChatMessage>>();
+  StreamController<List<ChatMessage>>();
 
   void startStream() {}
 
@@ -54,16 +54,16 @@ class ChatController extends GetxController {
         .where("isDeleted", isEqualTo: false)
         .get()
         .then((value) {
-          print("print: ${value.docs}");
-          if (value.docs.isEmpty) {
-            chatRoomId = "";
-          } else {
-            chatRoomId = value.docs
-                .map((e) => ChatRoom.fromJson(e.data()))
-                .toList()[0]
-                .id;
-          }
-        });
+      print("print: ${value.docs}");
+      if (value.docs.isEmpty) {
+        chatRoomId = "";
+      } else {
+        chatRoomId = value.docs
+            .map((e) => ChatRoom.fromJson(e.data()))
+            .toList()[0]
+            .id;
+      }
+    });
     return chatRoomId;
   }
 
@@ -86,8 +86,8 @@ class ChatController extends GetxController {
     });
   }
 
-  Future<void> updateLastChatMessage(
-      String chatRoomId, ChatMessage message) async {
+  Future<void> updateLastChatMessage(String chatRoomId,
+      ChatMessage message) async {
     await firestore
         .collection("group")
         .doc(chatRoomId)
@@ -149,27 +149,25 @@ class ChatController extends GetxController {
   /// @return Stream<ChatData> (Streambuilder에서 바로 사용)
   /// @notSuccess
   /// @author: seoyeon
-/*  Stream<void> streamChatMessage(String chatRoomId) {
+  Stream<List<ChatMessage>> streamChatMessage(String chatRoomId) async* {
     List<ChatMessage> chatMessages = [];
 
     try {
       // charRoomId가 없으면 조회되지 않음
 
-      Stream chatMessageSnapshots = firestore
+      Stream<QuerySnapshot<Map<String, dynamic>>> chatMessageSnapshots = firestore
           .collection('message')
           .doc(chatRoomId)
           .collection('message')
-          .snapshots()
-          .map((querySnapshot) {
-        querySnapshot.docs.forEach((document) {
-          final data = document.data() as Map<String, dynamic>;
-          final chatMessage = ChatMessage.fromJson(data);
-          chatMessages.add(chatMessage);
-        });
-      });
+          .snapshots();
+
+      yield* chatMessageSnapshots.map((querySnapshot) =>
+          querySnapshot.docs.map((document) => ChatMessage.fromJson(document.data())).toList()
+
+      );
     } catch (ex) {
       log('error: ', error: ex.toString(), stackTrace: StackTrace.current);
-      return Stream.error(ex.toString());
+      yield* Stream.error(ex.toString());
     }
-  }*/
+  }
 }
