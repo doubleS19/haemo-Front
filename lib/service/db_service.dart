@@ -14,6 +14,7 @@ import 'package:hae_mo/model/notice_model.dart';
 import 'package:hae_mo/model/notice_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
+import 'package:hae_mo/model/reply_model.dart';
 import 'package:hae_mo/model/reply_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/model/wish_meeting_model.dart';
@@ -735,6 +736,27 @@ class DBService {
           .toList();
     } else {
       throw Exception('Failed to load hotplace replys.');
+    }
+  }
+
+  Future<bool> sendReply(Reply reply) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://localhost:1004/postReply"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(reply.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send comment data");
+      } else {
+        dev.log("Post Comment Data sent successfully");
+        return true;
+      }
+    } catch (e) {
+      dev.log("Failed to send post comment: ${e}");
+      return false;
     }
   }
 }
