@@ -214,33 +214,36 @@ class DBService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse.map((e) => CommentResponse.fromJson(e)).toList();
+      return jsonResponse
+          .map((e) => CommentResponse.fromJson(e, CommentType.Post))
+          .toList();
     } else {
       throw Exception('Failed to load comments');
     }
   }
 
-  Future<List<ClubCommentResponse>> getClubCommentsByCpId(int cpId) async {
+  Future<List<CommentResponse>> getClubCommentsByCpId(int cpId) async {
     final response = await http
         .get(Uri.parse('http://localhost:1004/clubComment/commentPost/$cpId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse.map((e) => ClubCommentResponse.fromJson(e)).toList();
+      return jsonResponse
+          .map((e) => CommentResponse.fromJson(e, CommentType.Club))
+          .toList();
     } else {
       throw Exception('Failed to load comments');
     }
   }
 
-  Future<List<HotPlaceCommentResponse>> getHotPlaceCommentsByHpId(
-      int hpId) async {
+  Future<List<CommentResponse>> getHotPlaceCommentsByHpId(int hpId) async {
     final response = await http
         .get(Uri.parse('http://localhost:1004/hotComment/commentPost/$hpId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse
-          .map((e) => HotPlaceCommentResponse.fromJson(e))
+          .map((e) => CommentResponse.fromJson(e, CommentType.HotPlace))
           .toList();
     } else {
       throw Exception('Failed to load comments');
@@ -707,32 +710,36 @@ class DBService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse.map((e) => ReplyResponse.fromJson(e)).toList();
+      return jsonResponse
+          .map((e) => ReplyResponse.fromJson(e, ReplyType.Post))
+          .toList();
     } else {
       throw Exception('Failed to load replys.');
     }
   }
 
-  Future<List<ClubReplyResponse>> getClubReplysByCcId(int ccId) async {
+  Future<List<ReplyResponse>> getClubReplysByCcId(int ccId) async {
     final response = await http
         .get(Uri.parse('http://localhost:1004/clubReply/commentPost/$ccId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse.map((e) => ClubReplyResponse.fromJson(e)).toList();
+      return jsonResponse
+          .map((e) => ReplyResponse.fromJson(e, ReplyType.Club))
+          .toList();
     } else {
       throw Exception('Failed to load club replys.');
     }
   }
 
-  Future<List<HotPlaceReplyResponse>> getHotPlaceReplysByHcId(int hcId) async {
+  Future<List<ReplyResponse>> getHotPlaceReplysByHcId(int hcId) async {
     final response = await http
         .get(Uri.parse('http://localhost:1004/hotReply/commentPost/$hcId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse
-          .map((e) => HotPlaceReplyResponse.fromJson(e))
+          .map((e) => ReplyResponse.fromJson(e, ReplyType.HotPlace))
           .toList();
     } else {
       throw Exception('Failed to load hotplace replys.');
