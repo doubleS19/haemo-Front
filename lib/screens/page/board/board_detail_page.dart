@@ -208,7 +208,14 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               },
                                             ))),
                                     Divider(color: AppTheme.mainTextColor),
-                                    commentWidget(widget.pId, widget.type),
+                                    CommentWidget(
+                                      pId: widget.pId,
+                                      type: widget.type,
+                                      onReplyPressed: (int cId) {
+                                        commentController.cId.value = cId;
+                                        commentController.isReply.value = true;
+                                      },
+                                    ),
                                   ],
                                 ),
                               )
@@ -292,7 +299,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                                     "nickname")!,
                                                             textController.text,
                                                             widget.pId,
-                                                            cId,
+                                                            commentController
+                                                                .cId.value,
                                                             widget.type,
                                                             context);
                                                   }
@@ -411,9 +419,15 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                             ),
                                             Divider(
                                                 color: AppTheme.mainTextColor),
-                                            commentWidget(
-                                              widget.pId,
-                                              widget.type,
+                                            CommentWidget(
+                                              pId: widget.pId,
+                                              type: widget.type,
+                                              onReplyPressed: (int cId) {
+                                                commentController.cId.value =
+                                                    cId;
+                                                commentController
+                                                    .isReply.value = true;
+                                              },
                                             ),
                                           ],
                                         ),

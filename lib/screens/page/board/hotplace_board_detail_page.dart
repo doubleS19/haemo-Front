@@ -66,7 +66,14 @@ class _HotPlaceDetailPageState extends State<HotPlaceDetailPage> {
             Divider(color: CustomThemes.mainTheme.dividerColor),
             Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                child: commentWidget(widget.hotPlacePost.pId, 3))
+                child: CommentWidget(
+                  pId: widget.hotPlacePost.pId,
+                  type: 3,
+                  onReplyPressed: (int cId) {
+                    // commentController.cId.value = cId;
+                    // commentController.isReply.value = true;
+                  },
+                ))
           ],
         ),
       ),
