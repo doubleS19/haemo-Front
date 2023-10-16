@@ -223,103 +223,127 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                             bottomNavigationBar: Container(
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 15.0),
-                                child: Row(children: [
-                                  Expanded(
-                                      flex: 7,
-                                      child: Container(
-                                          margin: const EdgeInsets.fromLTRB(
-                                              0.0, 20.0, 5.0, 25.0),
-                                          height: _textFieldHeight,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30.82),
-                                              color: AppTheme.receiverText),
-                                          child: TextField(
-                                            expands: true,
-                                            controller: textController,
-                                            maxLines: null,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14.0,
-                                                color: AppTheme.mainTextColor),
-                                            cursorColor:
-                                                AppTheme.mainPageTextColor,
-                                            keyboardType:
-                                                TextInputType.multiline,
-                                            textInputAction:
-                                                TextInputAction.newline,
-                                            decoration: InputDecoration(
-                                                focusedBorder: InputBorder.none,
-                                                enabledBorder: InputBorder.none,
-                                                border: InputBorder.none,
-                                                hintText: "댓글을 작성해 주세요.",
-                                                hintStyle: TextStyle(
-                                                    fontSize: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall
-                                                        ?.fontSize,
-                                                    fontFamily:
-                                                        Theme.of(context)
-                                                            .textTheme
-                                                            .bodySmall
-                                                            ?.fontFamily,
-                                                    color: AppTheme
-                                                        .postingPageDetailHintTextColor)),
-                                          ))),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Obx(() {
-                                        return SizedBox(
-                                            width: 33.0,
-                                            height: 33.0,
-                                            child: RawMaterialButton(
-                                                elevation: 0.0,
-                                                fillColor: AppTheme.mainColor,
-                                                shape: const CircleBorder(),
-                                                onPressed: (() {
-                                                  dev.log(
-                                                      "cId는,,,,,, ${commentController.cId.value}");
-                                                  if (commentController
-                                                          .isReply ==
-                                                      false.obs) {
-                                                    commentController
-                                                        .checkCommentValid(
-                                                            PreferenceUtil
-                                                                .getString(
-                                                                    "nickname")!,
-                                                            textController.text,
-                                                            widget.pId,
-                                                            widget.type,
-                                                            context);
-                                                  } else {
-                                                    commentController
-                                                        .checkReplyValid(
-                                                            PreferenceUtil
-                                                                .getString(
-                                                                    "nickname")!,
-                                                            textController.text,
-                                                            widget.pId,
-                                                            commentController
-                                                                .cId.value,
-                                                            widget.type,
-                                                            context);
-                                                  }
-                                                }),
-                                                child: Container(
-                                                  width: 41,
-                                                  height: 41,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.transparent,
-                                                    image: DecorationImage(
-                                                      image: AssetImage(
-                                                          "assets/icons/send_comment_icon.png"),
-                                                    ),
-                                                  ),
-                                                )));
-                                      })),
-                                ])));
+                                child: GestureDetector(
+                                    onTap: () {
+                                      if (commentController.isReply.value ==
+                                          true) {
+                                        showYesOrNoDialog(
+                                            context,
+                                            "대댓글 작성을 중지하시겠습니까?",
+                                            "취소",
+                                            "확인", () {
+                                          commentController.cId.value = 0;
+                                          commentController.isReply.value =
+                                              false;
+                                        });
+                                      }
+                                    },
+                                    child: Row(children: [
+                                      Expanded(
+                                          flex: 7,
+                                          child: Container(
+                                              margin: const EdgeInsets.fromLTRB(
+                                                  0.0, 20.0, 5.0, 25.0),
+                                              height: _textFieldHeight,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          30.82),
+                                                  color: AppTheme.receiverText),
+                                              child: TextField(
+                                                expands: true,
+                                                controller: textController,
+                                                maxLines: null,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    fontSize: 14.0,
+                                                    color:
+                                                        AppTheme.mainTextColor),
+                                                cursorColor:
+                                                    AppTheme.mainPageTextColor,
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                                textInputAction:
+                                                    TextInputAction.newline,
+                                                decoration: InputDecoration(
+                                                    focusedBorder:
+                                                        InputBorder.none,
+                                                    enabledBorder:
+                                                        InputBorder.none,
+                                                    border: InputBorder.none,
+                                                    hintText: "댓글을 작성해 주세요.",
+                                                    hintStyle: TextStyle(
+                                                        fontSize:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodySmall
+                                                                ?.fontSize,
+                                                        fontFamily:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodySmall
+                                                                ?.fontFamily,
+                                                        color: AppTheme
+                                                            .postingPageDetailHintTextColor)),
+                                              ))),
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Obx(() {
+                                            return SizedBox(
+                                                width: 33.0,
+                                                height: 33.0,
+                                                child: RawMaterialButton(
+                                                    elevation: 0.0,
+                                                    fillColor:
+                                                        AppTheme.mainColor,
+                                                    shape: const CircleBorder(),
+                                                    onPressed: (() {
+                                                      dev.log(
+                                                          "cId는,,,,,, ${commentController.cId.value}");
+                                                      if (commentController
+                                                              .isReply ==
+                                                          false.obs) {
+                                                        commentController
+                                                            .checkCommentValid(
+                                                                PreferenceUtil
+                                                                    .getString(
+                                                                        "nickname")!,
+                                                                textController
+                                                                    .text,
+                                                                widget.pId,
+                                                                widget.type,
+                                                                context);
+                                                      } else {
+                                                        commentController
+                                                            .checkReplyValid(
+                                                                PreferenceUtil
+                                                                    .getString(
+                                                                        "nickname")!,
+                                                                textController
+                                                                    .text,
+                                                                widget.pId,
+                                                                commentController
+                                                                    .cId.value,
+                                                                widget.type,
+                                                                context);
+                                                      }
+                                                    }),
+                                                    child: Container(
+                                                      width: 41,
+                                                      height: 41,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        color:
+                                                            Colors.transparent,
+                                                        image: DecorationImage(
+                                                          image: AssetImage(
+                                                              "assets/icons/send_comment_icon.png"),
+                                                        ),
+                                                      ),
+                                                    )));
+                                          })),
+                                    ]))));
                       } else if (snapshot.hasError) {
                         return Center(
                           child: Text("${snapshot.error}"),

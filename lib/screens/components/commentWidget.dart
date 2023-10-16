@@ -190,14 +190,6 @@ class _CommentWidgetState extends State<CommentWidget> {
                                             onPressed: () {
                                               widget.onReplyPressed(
                                                   commentList[index].cId);
-                                              // commentController.cId.value =
-                                              //     commentList[index].cId;
-                                              // commentController.isReply.value =
-                                              //     true;
-                                              // dev.log(
-                                              //     "cId는용 ${commentController.cId.toString()}");
-                                              // dev.log(
-                                              //     "true? false? ${commentController.isReply.toString()}");
                                             },
                                           )))
                                 ])),
