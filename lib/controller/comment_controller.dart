@@ -91,7 +91,14 @@ class CommentController extends GetxController {
         cId: cId,
         type: ReplyType.Post);
     _replyState = ReplyState.success;
-    bool isReplySaved = await dbService.sendReply(reply);
+    bool isReplySaved;
+    if (type == 1) {
+      isReplySaved = await dbService.sendReply(reply);
+    } else if (type == 2) {
+      isReplySaved = await dbService.sendClubReply(reply);
+    } else {
+      isReplySaved = await dbService.sendHotPlaceReply(reply);
+    }
     if (isReplySaved) {
       _replyState = ReplyState.success;
       isReply = false.obs;

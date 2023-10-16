@@ -498,26 +498,50 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                   ))),
                           IconButton(
                               onPressed: () {},
-                              icon: SizedBox(
-                                  width: 33.0,
-                                  height: 33.0,
-                                  child: RawMaterialButton(
-                                      elevation: 0.0,
-                                      fillColor: AppTheme.mainColor,
-                                      shape: const CircleBorder(),
-                                      onPressed: (() {}),
-                                      child: Container(
-                                        width: 41,
-                                        height: 41,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.transparent,
-                                          image: DecorationImage(
-                                            image: AssetImage(
-                                                "assets/icons/send_comment_icon.png"),
+                              icon: Obx(() {
+                                return SizedBox(
+                                    width: 33.0,
+                                    height: 33.0,
+                                    child: RawMaterialButton(
+                                        elevation: 0.0,
+                                        fillColor: AppTheme.mainColor,
+                                        shape: const CircleBorder(),
+                                        onPressed: (() {
+                                          dev.log(
+                                              "cId는,,,,,, ${commentController.cId.value}");
+                                          if (commentController.isReply ==
+                                              false.obs) {
+                                            commentController.checkCommentValid(
+                                                PreferenceUtil.getString(
+                                                    "nickname")!,
+                                                textController.text,
+                                                widget.pId,
+                                                widget.type,
+                                                context);
+                                          } else {
+                                            commentController.checkReplyValid(
+                                                PreferenceUtil.getString(
+                                                    "nickname")!,
+                                                textController.text,
+                                                widget.pId,
+                                                commentController.cId.value,
+                                                widget.type,
+                                                context);
+                                          }
+                                        }),
+                                        child: Container(
+                                          width: 41,
+                                          height: 41,
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.transparent,
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/icons/send_comment_icon.png"),
+                                            ),
                                           ),
-                                        ),
-                                      )))),
+                                        )));
+                              })),
                         ])));
               }
             });
