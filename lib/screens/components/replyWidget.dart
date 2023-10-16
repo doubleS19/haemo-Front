@@ -20,7 +20,7 @@ Widget replyWidget(int cId, int type) {
 
   // if (type == 1) {
   return FutureBuilder<List<ReplyResponse>>(
-      future: db.getReplysByCId(cId),
+      future: replyFuture,
       builder: (context, snapshot) {
         print(snapshot.data);
         if (snapshot.connectionState == ConnectionState.waiting) {
