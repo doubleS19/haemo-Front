@@ -711,7 +711,7 @@ class DBService {
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse
-          .map((e) => ReplyResponse.fromJson(e, ReplyType.Post))
+          .map((e) => ReplyResponse.fromJson(e, ReplyResponseType.Post))
           .toList();
     } else {
       throw Exception('Failed to load replys.');
@@ -725,7 +725,7 @@ class DBService {
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse
-          .map((e) => ReplyResponse.fromJson(e, ReplyType.Club))
+          .map((e) => ReplyResponse.fromJson(e, ReplyResponseType.Club))
           .toList();
     } else {
       throw Exception('Failed to load club replys.');
@@ -739,7 +739,7 @@ class DBService {
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse
-          .map((e) => ReplyResponse.fromJson(e, ReplyType.HotPlace))
+          .map((e) => ReplyResponse.fromJson(e, ReplyResponseType.HotPlace))
           .toList();
     } else {
       throw Exception('Failed to load hotplace replys.');
@@ -747,6 +747,48 @@ class DBService {
   }
 
   Future<bool> sendReply(Reply reply) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://localhost:1004/postReply"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(reply.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send comment data");
+      } else {
+        dev.log("Post reply Data sent successfully");
+        return true;
+      }
+    } catch (e) {
+      dev.log("Failed to send post reply: ${e}");
+      return false;
+    }
+  }
+
+  Future<bool> sendClubReply(Reply reply) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://localhost:1004/clubReply"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(reply.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send comment data");
+      } else {
+        dev.log("Post reply Data sent successfully");
+        return true;
+      }
+    } catch (e) {
+      dev.log("Failed to send post reply: ${e}");
+      return false;
+    }
+  }
+
+  Future<bool> sendHotPlaceReply(Reply reply) async {
     try {
       final response = await http.post(
         Uri.parse("http://localhost:1004/postReply"),

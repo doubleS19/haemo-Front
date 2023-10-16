@@ -84,8 +84,12 @@ class CommentController extends GetxController {
       String nickname, String content, int pId, int cId, int type) async {
     DBService dbService = DBService();
 
-    Reply reply =
-        Reply(nickname: nickname, content: content, date: getNow(), cId: cId);
+    Reply reply = Reply(
+        nickname: nickname,
+        content: content,
+        date: getNow(),
+        cId: cId,
+        type: ReplyType.Post);
     _replyState = ReplyState.success;
     bool isReplySaved = await dbService.sendReply(reply);
     if (isReplySaved) {

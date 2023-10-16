@@ -1,6 +1,6 @@
 import 'package:hae_mo/model/reply_model.dart';
 
-enum ReplyType { Post, Club, HotPlace }
+enum ReplyResponseType { Post, Club, HotPlace }
 
 class ReplyResponse {
   final String content;
@@ -8,7 +8,7 @@ class ReplyResponse {
   final String date;
   final int rId;
   final int cId;
-  final ReplyType type;
+  final ReplyResponseType type;
 
   ReplyResponse(
       {required this.content,
@@ -18,17 +18,18 @@ class ReplyResponse {
       required this.rId,
       required this.type});
 
-  factory ReplyResponse.fromJson(Map<String, dynamic> json, ReplyType type) {
+  factory ReplyResponse.fromJson(
+      Map<String, dynamic> json, ReplyResponseType type) {
     return ReplyResponse(
         content: json['content'],
         nickname: json['nickname'],
         date: json['date'],
-        cId: json[type == ReplyType.Post
+        cId: json[type == ReplyResponseType.Post
             ? 'cid'
-            : (type == ReplyType.Club ? 'ccId' : 'hcId')],
-        rId: json[type == ReplyType.Post
+            : (type == ReplyResponseType.Club ? 'ccId' : 'hcId')],
+        rId: json[type == ReplyResponseType.Post
             ? 'rid'
-            : (type == ReplyType.Club ? 'crId' : 'hrId')],
+            : (type == ReplyResponseType.Club ? 'crId' : 'hrId')],
         type: type);
   }
 
@@ -36,11 +37,11 @@ class ReplyResponse {
         'content': content,
         'nickname': nickname,
         'date': date,
-        if (type == ReplyType.Post) 'cid': cId,
-        if (type == ReplyType.Post) 'rid': rId,
-        if (type == ReplyType.Club) 'ccId': cId,
-        if (type == ReplyType.Club) 'crId': rId,
-        if (type == ReplyType.Post) 'hcId': cId,
-        if (type == ReplyType.Post) 'hrId': cId,
+        if (type == ReplyResponseType.Post) 'cid': cId,
+        if (type == ReplyResponseType.Post) 'rid': rId,
+        if (type == ReplyResponseType.Club) 'ccId': cId,
+        if (type == ReplyResponseType.Club) 'crId': rId,
+        if (type == ReplyResponseType.Post) 'hcId': cId,
+        if (type == ReplyResponseType.Post) 'hrId': rId,
       };
 }
