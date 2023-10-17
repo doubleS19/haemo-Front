@@ -29,9 +29,11 @@ class CommentController extends GetxController {
   final DBService dbService = DBService();
   final RxList<CommentResponse> commentList = <CommentResponse>[].obs;
   final RxList<ReplyResponse> replyList = <ReplyResponse>[].obs;
+  final RxList<UserResponse> userList = <UserResponse>[].obs;
   RxBool isReply = false.obs;
-  RxList<UserResponse> userList = <UserResponse>[].obs;
   RxInt cId = 0.obs;
+
+  List<UserResponse> get users => userList;
 
   Future checkCommentValid(String nickname, String content, int pId, int type,
       BuildContext context) async {
@@ -135,7 +137,6 @@ class CommentController extends GetxController {
         final comments = await dbService.getHotPlaceCommentsByHpId(pId);
         commentList.assignAll(comments);
       }
-      fetchUser(pId, type);
       dev.log("commentList length: ${commentList.length}");
     } catch (error) {
       print(error.toString());
@@ -154,7 +155,7 @@ class CommentController extends GetxController {
         final users = await dbService.getHotPlaceCommentUser(pId);
         userList.assignAll(users);
       }
-      dev.log("userList length: ${userList.length}");
+      dev.log("userList length: ${userList[userList.length - 1].userImage}");
     } catch (error) {
       print(error.toString());
     }

@@ -35,15 +35,3 @@ class UserResponse {
         'gender': gender,
       };
 }
-
-Future<List<UserResponse>> fetchUser() async {
-  final response = await http.get(Uri.parse("3.34.190.238:8080/user"));
-  if (response.statusCode == 200) {
-    final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
-    return parsed
-        .map<UserResponse>((json) => UserResponse.fromJson(json))
-        .toList();
-  } else {
-    throw Exception("Failed to fetch User");
-  }
-}

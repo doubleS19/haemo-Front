@@ -34,14 +34,15 @@ class _CommentWidgetState extends State<CommentWidget> {
   @override
   void initState() {
     super.initState();
-    commentController.fetchCommentList(widget.pId, widget.type);
-    commentList = commentController.commentList;
-    userList = commentController.userList;
   }
 
   @override
   Widget build(BuildContext context) {
+    commentController.fetchCommentList(widget.pId, widget.type);
+    commentController.fetchUser(widget.pId, widget.type);
     return Obx(() {
+      commentList = commentController.commentList;
+      userList = commentController.users;
       if (commentList.isEmpty) {
         // 댓글이 없는 경우
         return const Column(
@@ -75,7 +76,7 @@ class _CommentWidgetState extends State<CommentWidget> {
           ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: commentList.length,
+              itemCount: userList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: [
@@ -86,29 +87,29 @@ class _CommentWidgetState extends State<CommentWidget> {
                       child: Align(
                           alignment: Alignment.centerLeft,
                           child: Row(children: [
-                            // SizedBox(
-                            //     width: 41.0,
-                            //     height: 41.0,
-                            //     child: RawMaterialButton(
-                            //         elevation: 0.0,
-                            //         fillColor: Colors.transparent,
-                            //         shape: const CircleBorder(),
-                            //         onPressed: (() {
-                            //           userBottomSheet(context, userList[index]);
-                            //         }),
-                            //         child: Container(
-                            //           width: 41,
-                            //           height: 41,
-                            //           decoration: BoxDecoration(
-                            //             shape: BoxShape.circle,
-                            //             color: Colors.transparent,
-                            //             image: DecorationImage(
-                            //               image: AssetImage(userRoundImage[
-                            //                   userProfileImage.indexOf(
-                            //                       userList[index].userImage)]),
-                            //             ),
-                            //           ),
-                            //         ))),
+                            SizedBox(
+                                width: 41.0,
+                                height: 41.0,
+                                child: RawMaterialButton(
+                                    elevation: 0.0,
+                                    fillColor: Colors.transparent,
+                                    shape: const CircleBorder(),
+                                    onPressed: (() {
+                                      userBottomSheet(context, userList[index]);
+                                    }),
+                                    child: Container(
+                                      width: 41,
+                                      height: 41,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.transparent,
+                                        image: DecorationImage(
+                                          image: AssetImage(userRoundImage[
+                                              userProfileImage.indexOf(
+                                                  userList[index].userImage)]),
+                                        ),
+                                      ),
+                                    ))),
                             const SizedBox(width: 10.0),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,6 +132,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                                 ),
                               ],
                             ),
+                            const SizedBox(width: 15.0),
                             Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(

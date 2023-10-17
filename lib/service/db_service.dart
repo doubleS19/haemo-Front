@@ -805,37 +805,40 @@ class DBService {
 
   Future<List<UserResponse>> getCommentUser(int pId) async {
     final response = await http
-        .get(Uri.parse('http://localhost:1004/postComment/commentUser/$pId'));
-
+        .get(Uri.parse("http://localhost:1004/postComment/commentUser/$pId"));
     if (response.statusCode == 200) {
-      final List<dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse.map((e) => UserResponse.fromJson(e)).toList();
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<UserResponse>((json) => UserResponse.fromJson(json))
+          .toList();
     } else {
-      throw Exception('Failed to load comment Users.');
+      throw Exception('Failed to load hot list');
     }
   }
 
   Future<List<UserResponse>> getClubCommentUser(int pId) async {
     final response = await http
-        .get(Uri.parse('http://localhost:1004/clubComment/commentUser/$pId'));
-
+        .get(Uri.parse("http://localhost:1004/clubComment/commentUser/$pId"));
     if (response.statusCode == 200) {
-      final List<dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse.map((e) => UserResponse.fromJson(e)).toList();
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<UserResponse>((json) => UserResponse.fromJson(json))
+          .toList();
     } else {
-      throw Exception('Failed to load club comment Users.');
+      throw Exception('Failed to load hot list');
     }
   }
 
   Future<List<UserResponse>> getHotPlaceCommentUser(int pId) async {
     final response = await http
-        .get(Uri.parse('http://localhost:1004/hotComment/commentUser/$pId'));
-
+        .get(Uri.parse("http://localhost:1004/hotComment/commentUser/$pId"));
     if (response.statusCode == 200) {
-      final List<dynamic> jsonResponse = jsonDecode(response.body);
-      return jsonResponse.map((e) => UserResponse.fromJson(e)).toList();
+      final data = json.decode(response.body) as List<dynamic>;
+      return data
+          .map<UserResponse>((json) => UserResponse.fromJson(json))
+          .toList();
     } else {
-      throw Exception('Failed to load hotplace comment Users.');
+      throw Exception('Failed to load hot list');
     }
   }
 }

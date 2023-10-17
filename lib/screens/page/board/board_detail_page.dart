@@ -221,7 +221,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                     Divider(color: AppTheme.mainTextColor),
                                     CommentWidget(
                                       pId: widget.pId,
-                                      type: widget.type,
+                                      type: 1,
                                       onReplyPressed: (int cId) {
                                         commentController.cId.value = cId;
                                         commentController.isReply.value = true;
@@ -434,12 +434,13 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                 color: AppTheme.mainTextColor),
                                             CommentWidget(
                                               pId: widget.pId,
-                                              type: widget.type,
+                                              type: 2,
                                               onReplyPressed: (int cId) {
                                                 commentController.cId.value =
                                                     cId;
                                                 commentController
                                                     .isReply.value = true;
+                                                _focustNode.requestFocus();
                                               },
                                             ),
                                           ],
