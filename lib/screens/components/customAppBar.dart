@@ -183,7 +183,7 @@ AppBar boardDetailAppbar(MeetingPageController meetingController,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // 데이터가 로딩 중일 때 표시할 위젯
-              return CircularProgressIndicator(); // 예시로 로딩 스피너를 사용했습니다.
+              return Container(); // 예시로 로딩 스피너를 사용했습니다.
             } else if (snapshot.hasError) {
               // 에러가 발생한 경우 표시할 위젯
               return Text('Error: ${snapshot.error}');

@@ -25,7 +25,6 @@ class MeetingPageController extends GetxController {
   final DBService dbService = DBService();
   final RxList<PostResponse> todayNoticeList = <PostResponse>[].obs;
   final RxList<PostResponse> postList = <PostResponse>[].obs;
-  final RxList<CommentResponse> commentList = <CommentResponse>[].obs;
   late List<int> wishMeetingListPId = <int>[].obs;
   late List<WishMeetingResponse> wishMeetingList = <WishMeetingResponse>[].obs;
 
