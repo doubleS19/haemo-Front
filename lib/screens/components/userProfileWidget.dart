@@ -15,7 +15,7 @@ Row userProfile(BuildContext context, UserResponse user) {
           child: RawMaterialButton(
               elevation: 0.0,
               fillColor: Colors.transparent,
-              shape: CircleBorder(),
+              shape: const CircleBorder(),
               onPressed: (() {
                 userBottomSheet(context, user);
               }),
@@ -26,8 +26,8 @@ Row userProfile(BuildContext context, UserResponse user) {
                   shape: BoxShape.circle,
                   color: Colors.transparent,
                   image: DecorationImage(
-                    image: AssetImage(
-                        userRoundImage[PreferenceUtil.getInt("userImage")!]),
+                    image: AssetImage(userRoundImage[
+                        userProfileImage.indexOf(user.userImage)]),
                   ),
                 ),
               ))),
