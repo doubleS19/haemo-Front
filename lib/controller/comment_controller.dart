@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:hae_mo/model/comment_model.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/reply_model.dart';
+import 'package:hae_mo/model/reply_response_model.dart';
+import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/model/wish_meeting_response_model.dart';
 import 'package:hae_mo/screens/components/customDialog.dart';
 import 'package:hae_mo/screens/page/board/board_detail_page.dart';
@@ -25,9 +27,10 @@ class CommentController extends GetxController {
   ReplyState get replyState => _replyState;
 
   final DBService dbService = DBService();
-
+  final RxList<CommentResponse> commentList = <CommentResponse>[].obs;
+  final RxList<ReplyResponse> replyList = <ReplyResponse>[].obs;
   RxBool isReply = false.obs;
-
+  RxList<UserResponse> userList = <UserResponse>[].obs;
   RxInt cId = 0.obs;
 
   Future checkCommentValid(String nickname, String content, int pId, int type,
@@ -118,5 +121,73 @@ class CommentController extends GetxController {
   void setCId(int value) {
     cId = value.obs;
     update();
+  }
+
+  void fetchCommentList(int pId, int type) async {
+    try {
+      if (type == 1) {
+        final comments = await dbService.getCommentsByPId(pId);
+        commentList.assignAll(comments);
+      } else if (type == 2) {
+        final comments = await dbService.getClubCommentsByCpId(pId);
+        commentList.assignAll(comments);
+      } else {
+        final comments = await dbService.getHotPlaceCommentsByHpId(pId);
+        commentList.assignAll(comments);
+      }
+      fetchUser(pId, type);
+      dev.log("commentList length: ${commentList.length}");
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  void fetchUser(int pId, int type) async {
+    try {
+      if (type == 1) {
+        final users = await dbService.getCommentUser(pId);
+        userList.assignAll(users);
+      } else if (type == 2) {
+        final users = await dbService.getClubCommentUser(pId);
+        userList.assignAll(users);
+      } else {
+        final users = await dbService.getHotPlaceCommentUser(pId);
+        userList.assignAll(users);
+      }
+      dev.log("userList length: ${userList.length}");
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  // void fetchUser(List<CommentResponse> comments) async {
+  //   try {
+  //     RxList<UserResponse> users = <UserResponse>[].obs;
+  //     for (CommentResponse comment in comments) {
+  //       final user = await dbService.getUserByNickname(comment.nickname);
+  //       users.add(user);
+  //     }
+  //     dev.log(users[0].nickname.toString());
+  //     userList = users;
+  //   } catch (error) {
+  //     print(error.toString());
+  //   }
+  // }
+
+  void fetchReplyList(int cId, int type) async {
+    try {
+      if (type == 1) {
+        final replys = await dbService.getReplysByCId(cId);
+        replyList.assignAll(replys);
+      } else if (type == 2) {
+        final replys = await dbService.getClubReplysByCcId(cId);
+        replyList.assignAll(replys);
+      } else {
+        final replys = await dbService.getHotPlaceReplysByHcId(cId);
+        replyList.assignAll(replys);
+      }
+    } catch (error) {
+      print(error.toString());
+    }
   }
 }
