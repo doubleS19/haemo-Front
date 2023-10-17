@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'dart:developer' as dev;
 import 'package:hae_mo/common/color.dart';
@@ -38,7 +37,6 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   final FocusNode _focustNode = FocusNode();
   bool isReply = false;
   int cId = 0;
-
   DBService db = DBService();
 
   @override
@@ -51,6 +49,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    // return Obx(() {
     return GestureDetector(onTap: () {
       _focustNode.unfocus();
       if (commentController.isReply.value == true) {
@@ -64,6 +63,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
             textController.clear();
           });
         }
+        dev.log("cId 0이어야 됨: ${commentController.cId.value}");
       }
     }, child: Scaffold(body: Scaffold(
         body: GetBuilder<AttendController>(builder: (_attendController) {
@@ -225,6 +225,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                       onReplyPressed: (int cId) {
                                         commentController.cId.value = cId;
                                         commentController.isReply.value = true;
+                                        _focustNode.requestFocus();
                                       },
                                     ),
                                   ],
