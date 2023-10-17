@@ -1,7 +1,5 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'dart:developer' as dev;
 import 'package:hae_mo/common/color.dart';
@@ -10,18 +8,14 @@ import 'package:hae_mo/controller/club_page_controller.dart';
 import 'package:hae_mo/controller/comment_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/model/club_post_model.dart';
-import 'package:hae_mo/model/user_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/commentWidget.dart';
 import 'package:hae_mo/screens/components/customAppBar.dart';
 import 'package:hae_mo/screens/components/customDialog.dart';
 import 'package:hae_mo/screens/components/userProfileWidget.dart';
-import 'package:hae_mo/screens/components/wishStarButton.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import '../../../model/post_model.dart';
 import '../../../service/db_service.dart';
-import '../../components/heartButton.dart';
-import '../../components/userBottomSheet.dart';
 
 class BoardDetailPage extends StatefulWidget {
   const BoardDetailPage({super.key, required this.pId, required this.type});
@@ -41,6 +35,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   TextEditingController textController = TextEditingController();
   final AttendController _attendController = Get.put(AttendController());
   late AcceptionState _acceptionState;
+  final FocusNode _focustNode = FocusNode();
   bool isReply = false;
   int cId = 0;
 
@@ -56,7 +51,22 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AttendController>(builder: (_attendController) {
+    return GestureDetector(onTap: () {
+      _focustNode.unfocus();
+      if (commentController.isReply.value == true) {
+        if (textController.text.isEmpty) {
+          commentController.cId.value = 0;
+          commentController.isReply.value = false;
+        } else {
+          showYesOrNoDialog(context, "대댓글 작성을 중지하시겠습니까?", "취소", "확인", () {
+            commentController.cId.value = 0;
+            commentController.isReply.value = false;
+            textController.clear();
+          });
+        }
+      }
+    }, child: Scaffold(body: Scaffold(
+        body: GetBuilder<AttendController>(builder: (_attendController) {
       if (widget.type == 1) {
         return FutureBuilder<Post>(
             future: db.getPostById(
@@ -82,6 +92,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                       if (snapshot.hasData) {
                         final UserResponse user = snapshot.data as UserResponse;
                         return Scaffold(
+                            resizeToAvoidBottomInset: false,
                             appBar: (user.uId == PreferenceUtil.getInt("uId")
                                 ? boardWriterAppbar()
                                 : boardDetailAppbar(
@@ -223,127 +234,104 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                             bottomNavigationBar: Container(
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 15.0),
-                                child: GestureDetector(
-                                    onTap: () {
-                                      if (commentController.isReply.value ==
-                                          true) {
-                                        showYesOrNoDialog(
-                                            context,
-                                            "대댓글 작성을 중지하시겠습니까?",
-                                            "취소",
-                                            "확인", () {
-                                          commentController.cId.value = 0;
-                                          commentController.isReply.value =
-                                              false;
-                                        });
-                                      }
-                                    },
-                                    child: Row(children: [
-                                      Expanded(
-                                          flex: 7,
-                                          child: Container(
-                                              margin: const EdgeInsets.fromLTRB(
-                                                  0.0, 20.0, 5.0, 25.0),
-                                              height: _textFieldHeight,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30.82),
-                                                  color: AppTheme.receiverText),
-                                              child: TextField(
-                                                expands: true,
-                                                controller: textController,
-                                                maxLines: null,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize: 14.0,
-                                                    color:
-                                                        AppTheme.mainTextColor),
-                                                cursorColor:
-                                                    AppTheme.mainPageTextColor,
-                                                keyboardType:
-                                                    TextInputType.multiline,
-                                                textInputAction:
-                                                    TextInputAction.newline,
-                                                decoration: InputDecoration(
-                                                    focusedBorder:
-                                                        InputBorder.none,
-                                                    enabledBorder:
-                                                        InputBorder.none,
-                                                    border: InputBorder.none,
-                                                    hintText: "댓글을 작성해 주세요.",
-                                                    hintStyle: TextStyle(
-                                                        fontSize:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodySmall
-                                                                ?.fontSize,
-                                                        fontFamily:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodySmall
-                                                                ?.fontFamily,
-                                                        color: AppTheme
-                                                            .postingPageDetailHintTextColor)),
-                                              ))),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Obx(() {
-                                            return SizedBox(
-                                                width: 33.0,
-                                                height: 33.0,
-                                                child: RawMaterialButton(
-                                                    elevation: 0.0,
-                                                    fillColor:
-                                                        AppTheme.mainColor,
-                                                    shape: const CircleBorder(),
-                                                    onPressed: (() {
-                                                      dev.log(
-                                                          "cId는,,,,,, ${commentController.cId.value}");
-                                                      if (commentController
-                                                              .isReply ==
-                                                          false.obs) {
-                                                        commentController
-                                                            .checkCommentValid(
-                                                                PreferenceUtil
-                                                                    .getString(
-                                                                        "nickname")!,
-                                                                textController
-                                                                    .text,
-                                                                widget.pId,
-                                                                widget.type,
-                                                                context);
-                                                      } else {
-                                                        commentController
-                                                            .checkReplyValid(
-                                                                PreferenceUtil
-                                                                    .getString(
-                                                                        "nickname")!,
-                                                                textController
-                                                                    .text,
-                                                                widget.pId,
-                                                                commentController
-                                                                    .cId.value,
-                                                                widget.type,
-                                                                context);
-                                                      }
-                                                    }),
-                                                    child: Container(
-                                                      width: 41,
-                                                      height: 41,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        shape: BoxShape.circle,
-                                                        color:
-                                                            Colors.transparent,
-                                                        image: DecorationImage(
-                                                          image: AssetImage(
-                                                              "assets/icons/send_comment_icon.png"),
-                                                        ),
-                                                      ),
-                                                    )));
-                                          })),
-                                    ]))));
+                                child: Row(children: [
+                                  Expanded(
+                                      flex: 7,
+                                      child: Container(
+                                          margin: const EdgeInsets.fromLTRB(
+                                              0.0, 20.0, 5.0, 25.0),
+                                          height: _textFieldHeight,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30.82),
+                                              color: AppTheme.receiverText),
+                                          child: TextField(
+                                            expands: true,
+                                            focusNode: _focustNode,
+                                            controller: textController,
+                                            maxLines: null,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14.0,
+                                                color: AppTheme.mainTextColor),
+                                            cursorColor:
+                                                AppTheme.mainPageTextColor,
+                                            keyboardType:
+                                                TextInputType.multiline,
+                                            textInputAction:
+                                                TextInputAction.newline,
+                                            decoration: InputDecoration(
+                                                focusedBorder: InputBorder.none,
+                                                enabledBorder: InputBorder.none,
+                                                border: InputBorder.none,
+                                                hintText: "댓글을 작성해 주세요.",
+                                                hintStyle: TextStyle(
+                                                    fontSize: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall
+                                                        ?.fontSize,
+                                                    fontFamily:
+                                                        Theme.of(context)
+                                                            .textTheme
+                                                            .bodySmall
+                                                            ?.fontFamily,
+                                                    color: AppTheme
+                                                        .postingPageDetailHintTextColor)),
+                                          ))),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Obx(() {
+                                        return SizedBox(
+                                            width: 33.0,
+                                            height: 33.0,
+                                            child: RawMaterialButton(
+                                                elevation: 0.0,
+                                                fillColor: AppTheme.mainColor,
+                                                shape: const CircleBorder(),
+                                                onPressed: (() {
+                                                  dev.log(
+                                                      "cId는,,,,,, ${commentController.cId.value}");
+                                                  if (commentController
+                                                          .isReply ==
+                                                      false.obs) {
+                                                    commentController
+                                                        .checkCommentValid(
+                                                            PreferenceUtil
+                                                                .getString(
+                                                                    "nickname")!,
+                                                            textController.text,
+                                                            widget.pId,
+                                                            widget.type,
+                                                            context);
+                                                  } else {
+                                                    commentController
+                                                        .checkReplyValid(
+                                                            PreferenceUtil
+                                                                .getString(
+                                                                    "nickname")!,
+                                                            textController.text,
+                                                            widget.pId,
+                                                            commentController
+                                                                .cId.value,
+                                                            widget.type,
+                                                            context);
+                                                  }
+                                                }),
+                                                child: Container(
+                                                  width: 41,
+                                                  height: 41,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Colors.transparent,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                          "assets/icons/send_comment_icon.png"),
+                                                    ),
+                                                  ),
+                                                )));
+                                      })),
+                                ])));
                       } else if (snapshot.hasError) {
                         return Center(
                           child: Text("${snapshot.error}"),
@@ -570,6 +558,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
               }
             });
       }
-    });
+    }))));
   }
+  // );
 }
+// }
