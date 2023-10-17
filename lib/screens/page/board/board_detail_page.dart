@@ -57,10 +57,12 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
           commentController.cId.value = 0;
           commentController.isReply.value = false;
         } else {
-          showYesOrNoDialog(context, "대댓글 작성을 중지하시겠습니까?", "취소", "확인", () {
+          replyDialog(context, "대댓글 작성을 중지하시겠습니까?", "취소", "확인", () {
             commentController.cId.value = 0;
             commentController.isReply.value = false;
             textController.clear();
+          }, () {
+            _focustNode.requestFocus();
           });
         }
         dev.log("cId 0이어야 됨: ${commentController.cId.value}");
@@ -484,6 +486,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                       color: AppTheme.receiverText),
                                   child: TextField(
                                     expands: true,
+                                    focusNode: _focustNode,
                                     controller: textController,
                                     maxLines: null,
                                     style: TextStyle(

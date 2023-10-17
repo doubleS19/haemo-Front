@@ -295,3 +295,56 @@ showAttendUserDialog(BuildContext context, List<UserResponse> user, int person,
     },
   );
 }
+
+void replyDialog(BuildContext context, String content, String cancel,
+    String confirm, Function onClick, Function onCancel) {
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      content: Container(
+        height: 80,
+        alignment: Alignment.center,
+        child: Text(content, style: CustomThemes.customDialogContentTextStyle),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+      actions: <Widget>[
+        Row(
+          children: [
+            Expanded(
+                child: Container(
+                    height: 35,
+                    margin: EdgeInsets.fromLTRB(6, 0, 6, 6),
+                    decoration: BoxDecoration(
+                        color: AppTheme.settingPageDividerColor,
+                        borderRadius: BorderRadius.circular(8.0)),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        onCancel();
+                      },
+                      child: Text(cancel,
+                          style:
+                              CustomThemes.customDialogCancelButtonTextStyle),
+                    ))),
+            Expanded(
+                child: Container(
+              height: 35,
+              margin: EdgeInsets.fromLTRB(6, 0, 6, 6),
+              decoration: BoxDecoration(
+                  color: AppTheme.mainColor,
+                  borderRadius: BorderRadius.circular(10.0)),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  onClick();
+                },
+                child: Text(confirm,
+                    style: CustomThemes.customDialogConfirmButtonTextStyle),
+              ),
+            )),
+          ],
+        )
+      ],
+    ),
+  );
+}
