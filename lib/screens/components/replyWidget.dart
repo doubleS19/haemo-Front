@@ -24,13 +24,11 @@ class _ReplyWidgetState extends State<ReplyWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.type == 1) {
-      commentFuture = db.getReplysByCId(widget.cId);
-    } else if (widget.type == 2) {
-      commentFuture = db.getClubReplysByCcId(widget.cId);
-    } else {
-      commentFuture = db.getHotPlaceReplysByHcId(widget.cId);
-    }
+    widget.type == 1
+        ? (commentFuture = db.getReplysByCId(widget.cId))
+        : (widget.type == 2
+            ? (commentFuture = db.getClubReplysByCcId(widget.cId))
+            : (commentFuture = db.getHotPlaceReplysByHcId(widget.cId)));
   }
 
   @override
@@ -87,10 +85,8 @@ class _ReplyWidgetState extends State<ReplyWidget> {
                                           fontWeight: FontWeight.w500),
                                     ),
                                     const SizedBox(width: 5.0),
-                                    // Align(alignment: Alignment., child:
                                     Text(
                                       replyList[index].date,
-
                                       style: TextStyle(
                                           fontSize: 8.0,
                                           color: AppTheme.mainTextColor),

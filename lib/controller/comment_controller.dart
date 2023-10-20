@@ -158,34 +158,18 @@ class CommentController extends GetxController {
     }
   }
 
-  // void fetchUser(List<CommentResponse> comments) async {
-  //   try {
-  //     RxList<UserResponse> users = <UserResponse>[].obs;
-  //     for (CommentResponse comment in comments) {
-  //       final user = await dbService.getUserByNickname(comment.nickname);
-  //       users.add(user);
-  //     }
-  //     dev.log(users[0].nickname.toString());
-  //     userList = users;
-  //   } catch (error) {
-  //     print(error.toString());
-  //   }
-  // }
-
   void fetchReplyList(int cId, int type) async {
     try {
-      if (type == 1) {
-        final replys = await dbService.getReplysByCId(cId);
-        replyList.assignAll(replys);
-      } else if (type == 2) {
-        final replys = await dbService.getClubReplysByCcId(cId);
-        replyList.assignAll(replys);
-      } else {
-        final replys = await dbService.getHotPlaceReplysByHcId(cId);
-        replyList.assignAll(replys);
-      }
-    } catch (error) {
-      print(error.toString());
+      late List<ReplyResponse> replys;
+
+      type == 1
+          ? replys = await dbService.getReplysByCId(cId)
+          : (type == 2
+              ? replys = await dbService.getClubReplysByCcId(cId)
+              : replys = await dbService.getHotPlaceReplysByHcId(cId));
+      replyList.assignAll(replys);
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

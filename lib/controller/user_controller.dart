@@ -21,10 +21,10 @@ class UserController extends GetxController {
   Future checkUserInfo(String nickname, String major, String gender) async {
     if (nickname.isNotEmpty && major != "학과 선택" && gender != "성별") {
       _registerState = RegisterState.okay;
-      dev.log("Okay~");
+      dev.log("Register State: Okay~");
     } else {
       _registerState = RegisterState.empty;
-      dev.log("Empty~");
+      dev.log("Register State: Empty~");
     }
     update();
   }
