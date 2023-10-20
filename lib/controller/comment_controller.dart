@@ -127,16 +127,14 @@ class CommentController extends GetxController {
 
   void fetchCommentList(int pId, int type) async {
     try {
-      if (type == 1) {
-        final comments = await dbService.getCommentsByPId(pId);
-        commentList.assignAll(comments);
-      } else if (type == 2) {
-        final comments = await dbService.getClubCommentsByCpId(pId);
-        commentList.assignAll(comments);
-      } else {
-        final comments = await dbService.getHotPlaceCommentsByHpId(pId);
-        commentList.assignAll(comments);
-      }
+      late List<CommentResponse> comments;
+
+      type == 1
+          ? comments = await dbService.getCommentsByPId(pId)
+          : (type == 2
+              ? comments = await dbService.getClubCommentsByCpId(pId)
+              : (comments = await dbService.getHotPlaceCommentsByHpId(pId)));
+      commentList.assignAll(comments);
       dev.log("commentList length: ${commentList.length}");
     } catch (error) {
       print(error.toString());
@@ -145,16 +143,15 @@ class CommentController extends GetxController {
 
   void fetchUser(int pId, int type) async {
     try {
-      if (type == 1) {
-        final users = await dbService.getCommentUser(pId);
-        userList.assignAll(users);
-      } else if (type == 2) {
-        final users = await dbService.getClubCommentUser(pId);
-        userList.assignAll(users);
-      } else {
-        final users = await dbService.getHotPlaceCommentUser(pId);
-        userList.assignAll(users);
-      }
+      late List<UserResponse> users;
+
+      type == 1
+          ? users = await dbService.getCommentUser(pId)
+          : (type == 2
+              ? users = await dbService.getClubCommentUser(pId)
+              : (users = await dbService.getHotPlaceCommentUser(pId)));
+
+      userList.assignAll(users);
       dev.log("userList length: ${userList[userList.length - 1].userImage}");
     } catch (error) {
       print(error.toString());
