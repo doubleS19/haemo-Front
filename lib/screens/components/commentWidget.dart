@@ -65,74 +65,74 @@ class _CommentWidgetState extends State<CommentWidget> {
       } else {
         // 댓글 목록
         return Column(children: [
-          Row(children: [
-            const Text("댓글 ",
-                style: TextStyle(
-                    color: Color(0xff040404), fontWeight: FontWeight.w500)),
-            Text(commentList.length.toString(),
-                style: const TextStyle(
-                    color: Color(0xff040404), fontWeight: FontWeight.w500)),
-          ]),
+          Align(
+              alignment: Alignment.centerLeft,
+              child: Text("댓글 ${commentList.length}",
+                  style: const TextStyle(
+                      color: Color(0xff040404), fontWeight: FontWeight.w500))),
           ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: userList.length,
               itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  children: [
-                    Container(
+                return Column(children: [
+                  Container(
                       height: 50.0,
                       width: double.infinity,
                       margin: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Row(children: [
-                            SizedBox(
-                                width: 41.0,
-                                height: 41.0,
-                                child: RawMaterialButton(
-                                    elevation: 0.0,
-                                    fillColor: Colors.transparent,
-                                    shape: const CircleBorder(),
-                                    onPressed: (() {
-                                      userBottomSheet(context, userList[index]);
-                                    }),
-                                    child: Container(
-                                      width: 41,
-                                      height: 41,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.transparent,
-                                        image: DecorationImage(
-                                          image: AssetImage(userRoundImage[
-                                              userProfileImage.indexOf(
-                                                  userList[index].userImage)]),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(children: [
+                              SizedBox(
+                                  width: 41.0,
+                                  height: 41.0,
+                                  child: RawMaterialButton(
+                                      elevation: 0.0,
+                                      fillColor: Colors.transparent,
+                                      shape: const CircleBorder(),
+                                      onPressed: (() {
+                                        userBottomSheet(
+                                            context, userList[index]);
+                                      }),
+                                      child: Container(
+                                        width: 41,
+                                        height: 41,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.transparent,
+                                          image: DecorationImage(
+                                            image: AssetImage(userRoundImage[
+                                                userProfileImage.indexOf(
+                                                    userList[index]
+                                                        .userImage)]),
+                                          ),
                                         ),
-                                      ),
-                                    ))),
-                            const SizedBox(width: 10.0),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  commentList[index].nickname,
-                                  style: TextStyle(
-                                    color: AppTheme.mainTextColor,
-                                    fontSize: 12.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  commentList[index].content,
-                                  style: TextStyle(
-                                      fontSize: 12.0,
+                                      ))),
+                              const SizedBox(width: 10.0),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    commentList[index].nickname,
+                                    style: TextStyle(
                                       color: AppTheme.mainTextColor,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(width: 15.0),
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  Text(
+                                    commentList[index].content,
+                                    style: TextStyle(
+                                        fontSize: 12.0,
+                                        color: AppTheme.mainTextColor,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(width: 15.0),
+                            ]),
                             Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
@@ -142,7 +142,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                                             color: Colors.transparent),
                                         borderRadius:
                                             BorderRadius.circular(23.0),
-                                        color: Color(0xffededed)),
+                                        color: const Color(0xffededed)),
                                     width:
                                         MediaQuery.of(context).size.width / 7,
                                     height:
@@ -163,17 +163,15 @@ class _CommentWidgetState extends State<CommentWidget> {
                                       },
                                     )))
                           ])),
-                    ),
-                    ReplyWidget(
-                      cId: commentList[index].cId,
-                      type: widget.type,
-                    ),
-                    Divider(
-                      color: AppTheme.commentDividerColor,
-                      height: 0.5,
-                    )
-                  ],
-                );
+                  ReplyWidget(
+                    cId: commentList[index].cId,
+                    type: widget.type,
+                  ),
+                  Divider(
+                    color: AppTheme.commentDividerColor,
+                    height: 0.5,
+                  )
+                ]);
               })
         ]);
       }
