@@ -34,7 +34,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   TextEditingController textController = TextEditingController();
   final AttendController _attendController = Get.put(AttendController());
   late AcceptionState _acceptionState;
-  final FocusNode _focustNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   bool isReply = false;
   int cId = 0;
   DBService db = DBService();
@@ -51,7 +51,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   Widget build(BuildContext context) {
     // return Obx(() {
     return GestureDetector(onTap: () {
-      _focustNode.unfocus();
+      _focusNode.unfocus();
       if (commentController.isReply.value == true) {
         if (textController.text.isEmpty) {
           commentController.cId.value = 0;
@@ -62,7 +62,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
             commentController.isReply.value = false;
             textController.clear();
           }, () {
-            _focustNode.requestFocus();
+            _focusNode.requestFocus();
           });
         }
         dev.log("cId 0이어야 됨: ${commentController.cId.value}");
@@ -225,9 +225,9 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                       pId: widget.pId,
                                       type: 1,
                                       onReplyPressed: (int cId) {
+                                        _focusNode.requestFocus();
                                         commentController.cId.value = cId;
                                         commentController.isReply.value = true;
-                                        _focustNode.requestFocus();
                                       },
                                     ),
                                   ],
@@ -250,7 +250,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               color: AppTheme.receiverText),
                                           child: TextField(
                                             expands: true,
-                                            focusNode: _focustNode,
+                                            focusNode: _focusNode,
                                             controller: textController,
                                             maxLines: null,
                                             style: TextStyle(
@@ -442,7 +442,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                     cId;
                                                 commentController
                                                     .isReply.value = true;
-                                                _focustNode.requestFocus();
+                                                _focusNode.requestFocus();
                                               },
                                             ),
                                           ],
@@ -486,7 +486,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                       color: AppTheme.receiverText),
                                   child: TextField(
                                     expands: true,
-                                    focusNode: _focustNode,
+                                    focusNode: _focusNode,
                                     controller: textController,
                                     maxLines: null,
                                     style: TextStyle(

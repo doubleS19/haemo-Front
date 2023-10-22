@@ -209,7 +209,7 @@ class DBService {
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse
-          .map((e) => CommentResponse.fromJson(e, CommentType.Post))
+          .map((e) => CommentResponse.fromJson(e, CommentResponseType.Post))
           .toList();
     } else {
       throw Exception('Failed to load comments');
@@ -223,7 +223,7 @@ class DBService {
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse
-          .map((e) => CommentResponse.fromJson(e, CommentType.Club))
+          .map((e) => CommentResponse.fromJson(e, CommentResponseType.Club))
           .toList();
     } else {
       throw Exception('Failed to load comments');
@@ -237,7 +237,7 @@ class DBService {
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse
-          .map((e) => CommentResponse.fromJson(e, CommentType.HotPlace))
+          .map((e) => CommentResponse.fromJson(e, CommentResponseType.HotPlace))
           .toList();
     } else {
       throw Exception('Failed to load comments');
@@ -657,6 +657,49 @@ class DBService {
           .toList();
     } else {
       throw Exception('Failed to load post list');
+    }
+  }
+
+  Future<bool> sendClubComment(Comment comment) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://localhost:1004/clubComment"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(comment.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send comment data");
+      } else {
+        dev.log("Post Comment Data sent successfully");
+        return true;
+        //Get.to(() => const HomePage());
+      }
+    } catch (e) {
+      dev.log("Failed to send post comment: ${e}");
+      return false;
+    }
+  }
+
+  Future<bool> sendHotPlaceComment(Comment comment) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://localhost:1004/hotComment"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(comment.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send comment data");
+      } else {
+        dev.log("Post Comment Data sent successfully");
+        return true;
+      }
+    } catch (e) {
+      dev.log("Failed to send post comment: ${e}");
+      return false;
     }
   }
 

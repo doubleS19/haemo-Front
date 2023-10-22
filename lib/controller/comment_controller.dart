@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/comment_model.dart';
@@ -7,12 +5,10 @@ import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/reply_model.dart';
 import 'package:hae_mo/model/reply_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/model/wish_meeting_response_model.dart';
 import 'package:hae_mo/screens/components/customDialog.dart';
 import 'package:hae_mo/screens/page/board/board_detail_page.dart';
 import 'package:hae_mo/service/date_service.dart';
 import 'package:hae_mo/service/db_service.dart';
-import '../model/post_response_model.dart';
 import 'dart:developer' as dev;
 
 enum CommentState { success, fail, empty, okay }
@@ -54,10 +50,23 @@ class CommentController extends GetxController {
   Future saveComment(String nickname, String content, int pId, int type) async {
     DBService dbService = DBService();
 
-    Comment comment =
-        Comment(nickname: nickname, content: content, date: getNow(), pId: pId);
+    Comment comment = Comment(
+        nickname: nickname,
+        content: content,
+        date: getNow(),
+        pId: pId,
+        type: type == 1
+            ? CommentType.Post
+            : (type == 2 ? CommentType.Club : CommentType.HotPlace));
     _commentState = CommentState.success;
-    bool isCommentSaved = await dbService.sendComment(comment);
+    bool isCommentSaved;
+
+    type == 1
+        ? isCommentSaved = await dbService.sendComment(comment)
+        : (type == 2
+            ? isCommentSaved = await dbService.sendClubComment(comment)
+            : isCommentSaved = await dbService.sendHotPlaceComment(comment));
+
     if (isCommentSaved) {
       _commentState = CommentState.success;
       Get.back();
