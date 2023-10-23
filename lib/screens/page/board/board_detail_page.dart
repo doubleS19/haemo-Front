@@ -259,11 +259,27 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                 color: AppTheme.mainTextColor),
                                             cursorColor:
                                                 AppTheme.mainPageTextColor,
+                                            onChanged: (text) {
+                                              // 텍스트 필드 내용이 변경될 때 호출
+                                              if (text.contains('\n')) {
+                                                int lineCount =
+                                                    text.split('\n').length;
+                                                double newHeight =
+                                                    40.0 * lineCount;
+                                                setState(() {
+                                                  _textFieldHeight = newHeight;
+                                                });
+                                              }
+                                            },
                                             keyboardType:
                                                 TextInputType.multiline,
                                             textInputAction:
                                                 TextInputAction.newline,
                                             decoration: InputDecoration(
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        vertical: 10.0,
+                                                        horizontal: 10.0),
                                                 focusedBorder: InputBorder.none,
                                                 enabledBorder: InputBorder.none,
                                                 border: InputBorder.none,
