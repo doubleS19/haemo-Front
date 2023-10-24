@@ -235,7 +235,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                   Divider(color: AppTheme.mainTextColor),
                                   CommentWidget(
                                     pId: widget.pId,
-                                    type: 1,
+                                    type: widget.type,
                                     onReplyPressed: (int cId) {
                                       _focusNode.requestFocus();
                                       commentController.cId.value = cId;
