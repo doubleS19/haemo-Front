@@ -18,6 +18,9 @@ class UserController extends GetxController {
 
   RegisterState get registerState => _registerState;
 
+  DBService db = DBService();
+  UserResponse? user;
+
   Future checkUserInfo(String nickname, String major, String gender) async {
     if (nickname.isNotEmpty && major != "학과 선택" && gender != "성별") {
       _registerState = RegisterState.okay;
@@ -31,8 +34,6 @@ class UserController extends GetxController {
 
   Future saveInfo(
       String nickname, String major, String gender, String image) async {
-    DBService dbService = DBService();
-
     if (_registerState == RegisterState.okay) {
       User user = User(
           studentId: "00000000",
@@ -42,9 +43,9 @@ class UserController extends GetxController {
           userImage: image);
       _registerState = RegisterState.success;
       PreferenceUtil.saveUser(user);
-      bool isUserSaved = await dbService.saveUser(user);
+      bool isUserSaved = await db.saveUser(user);
       if (isUserSaved) {
-        UserResponse userResponse = await dbService.getUserByNickname(nickname);
+        UserResponse userResponse = await db.getUserByNickname(nickname);
         PreferenceUtil.setInt("uid", userResponse.uId);
         Get.to(const HomePage());
       } else {}
@@ -58,12 +59,26 @@ class UserController extends GetxController {
   }
 
   Future<bool> checkNickname(String nickname) async {
-    DBService db = DBService();
     bool isUsed = await db.checkNicknameDuplicate(nickname);
     if (isUsed == false) {
       return true;
     } else {
       return false;
+    }
+  }
+
+  void fetchBoardUser(int pId, int type) async {
+    try {
+      late UserResponse postUser;
+
+      type == 1
+          ? postUser = await db.getUserByPost(pId)
+          : (type == 2
+              ? postUser = await db.getUserByClubPost(pId)
+              : (postUser = await db.getUserByHotPlace(pId)));
+      user = postUser;
+    } catch (error) {
+      print(error.toString());
     }
   }
 }
