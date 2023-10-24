@@ -27,7 +27,7 @@ class BoardDetailPage extends StatefulWidget {
 }
 
 class _BoardDetailPageState extends State<BoardDetailPage> {
-  double _textFieldHeight = 35.0;
+  double _textFieldHeight = 40.0;
   MeetingPageController meetingController = MeetingPageController();
   ClubPageController clubPageController = ClubPageController();
   CommentController commentController = CommentController();

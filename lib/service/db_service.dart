@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:hae_mo/model/acceptation_model.dart';
 import 'package:hae_mo/model/acceptation_response_model.dart';
 import 'package:hae_mo/model/club_post_model.dart';
@@ -882,6 +883,33 @@ class DBService {
           .toList();
     } else {
       throw Exception('Failed to load hot list');
+    }
+  }
+
+  Future<void> uploadImage(
+      Dio dio, String cpId, MultipartFile? imageFile) async {
+    try {
+      if (cpId.isNotEmpty && imageFile != null) {
+        FormData formData = FormData.fromMap({
+          "image": imageFile,
+          "cpId": cpId,
+        });
+
+        Response response = await dio.post(
+          "http://localhost:1004/club/uploadImage",
+          data: formData,
+        );
+
+        if (response.statusCode == 200) {
+          print("Image uploaded successfully.");
+        } else {
+          print("Image upload failed.");
+        }
+      } else {
+        print("Please provide cpId and select an image.");
+      }
+    } catch (e) {
+      print("Error uploading image: $e");
     }
   }
 }
