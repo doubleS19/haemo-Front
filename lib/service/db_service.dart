@@ -203,6 +203,19 @@ class DBService {
     }
   }
 
+  Future<UserResponse> getUserByHotPlace(int pId) async {
+    final response =
+        await http.get(Uri.parse("http://localhost:1004/hot/postUser/$pId"));
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body) as Map<String, dynamic>;
+      return UserResponse.fromJson(jsonData);
+    } else if (response.statusCode == 404) {
+      throw Exception("User not found");
+    } else {
+      throw Exception("Failed to fetch User by Post");
+    }
+  }
+
   Future<List<CommentResponse>> getCommentsByPId(int pId) async {
     final response = await http
         .get(Uri.parse('http://localhost:1004/postComment/commentPost/$pId'));
