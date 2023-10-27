@@ -1,3 +1,4 @@
+import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:developer' as dev;
@@ -260,29 +261,19 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                             borderRadius:
                                                 BorderRadius.circular(30.82),
                                             color: AppTheme.receiverText),
-                                        child: TextField(
-                                          expands: true,
+                                        child: AutoSizeTextField(
+                                          minFontSize: 14.0,
+                                          maxFontSize: 14.0,
                                           focusNode: _focusNode,
                                           controller: textController,
-                                          maxLines: null,
+                                          maxLines: 5,
+                                          minLines: 1,
                                           style: TextStyle(
                                               fontWeight: FontWeight.w500,
                                               fontSize: 14.0,
                                               color: AppTheme.mainTextColor),
                                           cursorColor:
                                               AppTheme.mainPageTextColor,
-                                          onChanged: (text) {
-                                            // 텍스트 필드 내용이 변경될 때 호출
-                                            if (text.contains('\n')) {
-                                              int lineCount =
-                                                  text.split('\n').length;
-                                              double newHeight =
-                                                  40.0 * lineCount;
-                                              setState(() {
-                                                _textFieldHeight = newHeight;
-                                              });
-                                            }
-                                          },
                                           keyboardType: TextInputType.multiline,
                                           textInputAction:
                                               TextInputAction.newline,
