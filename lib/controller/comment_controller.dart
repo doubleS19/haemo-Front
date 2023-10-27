@@ -69,8 +69,6 @@ class CommentController extends GetxController {
 
     if (isCommentSaved) {
       _commentState = CommentState.success;
-      Get.back();
-      Get.to(BoardDetailPage(pId: pId, type: type));
     } else {
       _commentState = CommentState.fail;
     }
@@ -116,8 +114,6 @@ class CommentController extends GetxController {
     if (isReplySaved) {
       _replyState = ReplyState.success;
       isReply = false.obs;
-      Get.back();
-      Get.to(BoardDetailPage(pId: pId, type: type));
     } else {
       _replyState = ReplyState.fail;
     }

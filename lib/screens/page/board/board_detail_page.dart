@@ -335,6 +335,9 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                           widget.type,
                                                           context);
                                                 }
+                                                setState(() {
+                                                  textController.clear();
+                                                });
                                               }),
                                               child: Container(
                                                 width: 41,
