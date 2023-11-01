@@ -73,18 +73,18 @@ Widget menuTitle(BuildContext context, String text) {
           child: Text(text, style: CustomThemes.settingPageMenuTextStyle)));
 }
 
-Widget menuItem(BuildContext context, String text, int sectionIndex, int itemIndex) {
+Widget menuItem(
+    BuildContext context, String text, int sectionIndex, int itemIndex) {
   return GestureDetector(
       onTap: () {
-        if (menuItemRoutes[sectionIndex][itemIndex] == ''){
-          showYesOrNoDialog(context, "로그아웃 하시겠습니까?", '아니요','예', (){
+        if (menuItemRoutes[sectionIndex][itemIndex] == '') {
+          showYesOrNoDialog(context, "로그아웃 하시겠습니까?", '아니요', '예', () {
             /// 로그아웃 기능 추가
             Navigator.of(context).pop();
           });
-        }else{
+        } else {
           Get.toNamed(menuItemRoutes[sectionIndex][itemIndex]);
         }
-
       },
       child: Container(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),

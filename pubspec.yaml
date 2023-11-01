@@ -55,6 +55,8 @@ dependencies:
   flutter_email_sender: ^6.0.1
   dio: ^5.3.3
   auto_size_text_field: ^2.2.2
+  package_info: ^2.0.2
+  yaml: ^3.1.2
 
 dev_dependencies:
   flutter_test:
@@ -78,6 +80,7 @@ flutter:
     - assets/images/
     - assets/user/
     - assets/icons/
+    - pubspec.yaml
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

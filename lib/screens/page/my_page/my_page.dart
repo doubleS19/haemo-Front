@@ -35,116 +35,12 @@ class _MyPageState extends State<MyPage> {
                 return Container(
                     margin: const EdgeInsets.only(top: 20.0),
                     child: Column(children: [
-                      const Text(
-                        "프로필",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: Color(0xff818181),
-                            fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      Container(
-                        width: 200,
-                        height: 200,
-                        child: Image(image: AssetImage(user.userImage)),
-                        alignment: Alignment.center,
-                      ),
-                      const SizedBox(
-                        height: 12.0,
-                      ),
-                      Text(
-                        user.major,
-                        style: const TextStyle(
-                          fontSize: 10.0,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        user.nickname,
-                        style: const TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
+                      userInfo(user),
                       const SizedBox(
                         height: 30.0,
                       ),
                       Divider(color: AppTheme.mainPageTextColor),
-                      InkWell(
-                          onTap: () {
-                            Get.to(() => const MyMeetingPage());
-                          },
-                          child: Container(
-                              width: double.infinity,
-                              height: 44.0,
-                              margin: const EdgeInsets.only(left: 20.0),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "내가 작성한 글",
-                                style: TextStyle(
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w300,
-                                    color: AppTheme.mainTextColor),
-                              ))),
-                      Divider(color: AppTheme.mainPageTextColor),
-                      InkWell(
-                          onTap: () {
-                            Get.to(() => const MyWishPage());
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 44.0,
-                            margin: const EdgeInsets.only(left: 20.0),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "찜한 장소",
-                              style: TextStyle(
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppTheme.mainTextColor),
-                            ),
-                          )),
-                      Divider(color: AppTheme.mainPageTextColor),
-                      InkWell(
-                          onTap: () {
-                            Get.to(const MyWishMeetingPage());
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 44.0,
-                            margin: const EdgeInsets.only(left: 20.0),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "가고 싶은 모임",
-                              style: TextStyle(
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppTheme.mainTextColor),
-                            ),
-                          )),
-                      Divider(color: AppTheme.mainPageTextColor),
-                      InkWell(
-                          onTap: () {
-                            Get.to(const MyWishClubPage());
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 44.0,
-                            margin: const EdgeInsets.only(left: 20.0),
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "가고 싶은 소모임",
-                              style: TextStyle(
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppTheme.mainTextColor),
-                            ),
-                          ))
+                      myPageColumn()
                     ]));
               } else {
                 return const Center(
@@ -182,4 +78,122 @@ class _MyPageState extends State<MyPage> {
               ]));
         });
   }
+}
+
+Widget myPageColumn() {
+  return Column(children: [
+    InkWell(
+        onTap: () {
+          Get.to(() => const MyMeetingPage());
+        },
+        child: Container(
+            width: double.infinity,
+            height: 44.0,
+            margin: const EdgeInsets.only(left: 20.0),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "내가 작성한 글",
+              style: TextStyle(
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w300,
+                  color: AppTheme.mainTextColor),
+            ))),
+    Divider(color: AppTheme.mainPageTextColor),
+    InkWell(
+        onTap: () {
+          Get.to(() => const MyWishPage());
+        },
+        child: Container(
+          width: double.infinity,
+          height: 44.0,
+          margin: const EdgeInsets.only(left: 20.0),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "찜한 장소",
+            style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w300,
+                color: AppTheme.mainTextColor),
+          ),
+        )),
+    Divider(color: AppTheme.mainPageTextColor),
+    InkWell(
+        onTap: () {
+          Get.to(const MyWishMeetingPage());
+        },
+        child: Container(
+          width: double.infinity,
+          height: 44.0,
+          margin: const EdgeInsets.only(left: 20.0),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "가고 싶은 모임",
+            style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w300,
+                color: AppTheme.mainTextColor),
+          ),
+        )),
+    Divider(color: AppTheme.mainPageTextColor),
+    InkWell(
+        onTap: () {
+          Get.to(const MyWishClubPage());
+        },
+        child: Container(
+          width: double.infinity,
+          height: 44.0,
+          margin: const EdgeInsets.only(left: 20.0),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "가고 싶은 소모임",
+            style: TextStyle(
+                fontSize: 15.0,
+                fontWeight: FontWeight.w300,
+                color: AppTheme.mainTextColor),
+          ),
+        ))
+  ]);
+}
+
+Widget userInfo(UserResponse user) {
+  return Column(
+    children: [
+      const Text(
+        "프로필",
+        style: TextStyle(
+            fontSize: 20.0,
+            color: Color(0xff818181),
+            fontWeight: FontWeight.w700),
+      ),
+      const SizedBox(
+        height: 10.0,
+      ),
+      Container(
+        width: 200,
+        height: 200,
+        child: Image(image: AssetImage(user.userImage)),
+        alignment: Alignment.center,
+      ),
+      const SizedBox(
+        height: 12.0,
+      ),
+      Text(
+        user.major,
+        style: const TextStyle(
+          fontSize: 10.0,
+          fontWeight: FontWeight.w300,
+        ),
+      ),
+      const SizedBox(
+        height: 10.0,
+      ),
+      Text(
+        user.nickname,
+        style: const TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.w300,
+        ),
+      )
+    ],
+  );
 }

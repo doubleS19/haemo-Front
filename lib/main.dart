@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
 import 'package:hae_mo/screens/Page/intro/loading_page.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/screens/page/setting/app_version_page.dart';
 import 'package:hae_mo/screens/page/setting/contact_page.dart';
 import 'package:hae_mo/screens/page/setting/delete_account_page.dart';
 import 'package:hae_mo/screens/page/setting/alarm_setting_page.dart';
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/screen-settings', page: () => SettingScreenThemePage()),
         GetPage(name: '/contact', page: () => ContactPage()),
         GetPage(name: '/notice', page: () => NoticePage(isAdmin: true)),
+        GetPage(name: '/app-version', page: () => AppVersionPage()),
       ],
     );
   }
