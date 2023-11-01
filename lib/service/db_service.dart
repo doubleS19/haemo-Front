@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:hae_mo/model/acceptation_model.dart';
 import 'package:hae_mo/model/acceptation_response_model.dart';
@@ -899,18 +900,23 @@ class DBService {
     }
   }
 
-  Future<void> uploadImage(
-      Dio dio, String cpId, MultipartFile? imageFile) async {
+  Future<void> uploadImage(String cpId, Uint8List imageBytes) async {
     try {
-      if (cpId.isNotEmpty && imageFile != null) {
-        FormData formData = FormData.fromMap({
-          "image": imageFile,
+      if (cpId.isNotEmpty && imageBytes.isNotEmpty) {
+        String url =
+            'http://localhost:1004/club/uploadImage'; // 이미지를 업로드할 서버 엔드포인트 URL로 변경
+        Map<String, String> headers = {
+          'Content-Type': 'application/json',
+        };
+        Map<String, dynamic> body = {
+          "imageData": base64Encode(imageBytes), // 이미지 데이터를 Base64로 인코딩
           "cpId": cpId,
-        });
+        };
 
-        Response response = await dio.post(
-          "http://localhost:1004/club/uploadImage",
-          data: formData,
+        final response = await http.post(
+          Uri.parse(url),
+          headers: headers,
+          body: jsonEncode(body),
         );
 
         if (response.statusCode == 200) {
@@ -923,6 +929,59 @@ class DBService {
       }
     } catch (e) {
       print("Error uploading image: $e");
+    }
+  }
+
+  Future<Uint8List?> getImage(String cpId) async {
+    try {
+      if (cpId.isNotEmpty) {
+        String url =
+            'http://localhost:1004/club/imageList/$cpId'; // 이미지를 가져올 서버 엔드포인트 URL로 변경
+
+        final response = await http.get(Uri.parse(url));
+
+        if (response.statusCode == 200) {
+          String base64Image = jsonDecode(response.body);
+          Uint8List imageBytes = base64Decode(base64Image); // Base64 디코딩
+
+          return imageBytes;
+        } else {
+          print("Failed to get image.");
+          return null;
+        }
+      } else {
+        print("Please provide a valid cpId.");
+        return null;
+      }
+    } catch (e) {
+      print("Error getting image: $e");
+      return null;
+    }
+  }
+
+  Future<List<List<int>>?> fetchHotPlaceImages(int pId) async {
+    try {
+      final response =
+          await http.get(Uri.parse('http://localhost:1004/hot/$pId/getImages'));
+
+      if (response.statusCode == 200) {
+        List<dynamic> imageList = jsonDecode(response.body);
+        List<List<int>> decodedImages = [];
+
+        for (var imageData in imageList) {
+          // 이미지 데이터를 바이트 리스트로 변환
+          List<int> imageBytes = imageData.cast<int>();
+          decodedImages.add(imageBytes);
+        }
+
+        return decodedImages;
+      } else {
+        print("fail to load image list from hotplace data.");
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 }
