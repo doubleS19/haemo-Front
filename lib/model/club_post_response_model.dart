@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 class ClubPostResponse {
   final String nickname;
   final String title;
@@ -6,6 +8,7 @@ class ClubPostResponse {
   final String category;
   final int pId;
   final String description;
+  final List<Uint8List>? logo;
 
   ClubPostResponse(
       {required this.nickname,
@@ -14,7 +17,8 @@ class ClubPostResponse {
       required this.person,
       required this.category,
       required this.description,
-      required this.pId});
+      required this.pId,
+      required this.logo});
 
   factory ClubPostResponse.fromJson(Map<String, dynamic> json) {
     return ClubPostResponse(
@@ -24,7 +28,8 @@ class ClubPostResponse {
         person: json['person'],
         category: json['category'],
         description: json['description'],
-        pId: json['cpId']);
+        pId: json['cpId'],
+        logo: json["image"]);
   }
 
   Map<String, dynamic> toJson() => {
@@ -34,6 +39,7 @@ class ClubPostResponse {
         'person': person,
         'category': category,
         'description': description,
-        'cpId': pId
+        'cpId': pId,
+        'image': logo
       };
 }

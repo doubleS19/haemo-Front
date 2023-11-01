@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
@@ -48,7 +50,6 @@ class _ClubPageState extends State<ClubPage> {
 
   Widget clubList() {
     clubController.fetchClubList();
-
     return Obx(
       () {
         final postList = clubController.clubList;
@@ -76,16 +77,34 @@ class _ClubPageState extends State<ClubPage> {
                           vertical: 10.0, horizontal: 15.0),
                       child: Column(children: [
                         Row(children: [
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
+                          if (postList[index].logo == null) ...[
+                            Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: AppTheme.mainTextColor,
-                                image: const DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/sunset.jpg'))),
-                          ),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/images/sunset.jpg'),
+                                  fit: BoxFit.cover, // 이미지 크기 및 맞춤 방식 설정
+                                ),
+                              ),
+                            ),
+                          ] else ...[
+                            Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppTheme.mainTextColor,
+                                image: DecorationImage(
+                                  image: MemoryImage(
+                                      postList[index].logo as Uint8List),
+                                  fit: BoxFit.cover, // 이미지 크기 및 맞춤 방식 설정
+                                ),
+                              ),
+                            ),
+                          ],
                           const SizedBox(
                             width: 10.0,
                           ),

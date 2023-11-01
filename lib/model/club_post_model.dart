@@ -30,7 +30,7 @@ class ClubPost extends PostBase {
         content: json['content'],
         description: json['description'],
         person: json['person'],
-        logo: json['logo'],
+        logo: json['image'],
         hashTag: json['hashTag']
 
         /// 멀티파트 이미지 리스트 DB로 전송
@@ -43,7 +43,7 @@ class ClubPost extends PostBase {
         'content': content,
         'description': description,
         'person': person,
-        'logo': logo,
+        'image': logo,
         'hashTag': hashTag
 
         /// 멀티파트 이미지 리스트 변수 넣기

@@ -139,9 +139,17 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  const SizedBox(height: 10.0),
-                                  Divider(color: AppTheme.mainTextColor),
-                                  const SizedBox(height: 10.0),
+                                  const SizedBox(height: 15.0),
+                                  if (widget.type == 2 &&
+                                      post.logo != null) ...[
+                                    SizedBox(
+                                      width: double.infinity,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.2,
+                                      child: Image.memory(post.logo),
+                                    )
+                                  ],
                                   Container(
                                     margin: const EdgeInsets.only(bottom: 10.0),
                                     width: double.infinity,
@@ -163,76 +171,80 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                       ],
                                     ),
                                   ),
-                                  Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Container(
-                                          margin: const EdgeInsets.only(
-                                              right: 10.0),
-                                          child: Text(
-                                            "3/3",
-                                            style: TextStyle(
-                                                color: AppTheme.mainColor,
-                                                fontSize: 12.0,
-                                                fontWeight: FontWeight.w700),
-                                          ))),
-                                  const SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Container(
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  width: 0.5,
-                                                  color: attendController
-                                                      .borderColor.value),
-                                              borderRadius:
-                                                  BorderRadius.circular(23.0),
-                                              color: attendController
-                                                  .buttonColor.value),
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              5,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              31,
-                                          child: MaterialButton(
-                                            color: Colors.transparent,
-                                            elevation: 0.0,
+                                  if (widget.type == 1) ...[
+                                    Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Container(
+                                            margin: const EdgeInsets.only(
+                                                right: 10.0),
                                             child: Text(
-                                              attendController.buttonText.value,
+                                              "3/",
                                               style: TextStyle(
-                                                  fontSize: 10.8,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: attendController
-                                                      .textColor.value),
-                                            ),
-                                            onPressed: () async {
-                                              if (user.uId ==
-                                                  PreferenceUtil.getInt(
-                                                      "uId")) {
-                                                List<UserResponse> userList =
-                                                    await db.getAttendUserList(
-                                                        widget.pId);
-                                                // ignore: use_build_context_synchronously
-                                                return showAttendUserDialog(
-                                                    context,
-                                                    userList,
-                                                    userList.length,
-                                                    attendController,
-                                                    widget.pId);
-                                              } else {
+                                                  color: AppTheme.mainColor,
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w700),
+                                            ))),
+                                    const SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    width: 0.5,
+                                                    color: attendController
+                                                        .borderColor.value),
+                                                borderRadius:
+                                                    BorderRadius.circular(23.0),
+                                                color: attendController
+                                                    .buttonColor.value),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                5,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                31,
+                                            child: MaterialButton(
+                                              color: Colors.transparent,
+                                              elevation: 0.0,
+                                              child: Text(
                                                 attendController
-                                                    .requestParticipation(
-                                                        context,
-                                                        PreferenceUtil.getInt(
-                                                            "uId")!,
-                                                        widget.pId);
-                                              }
-                                            },
-                                          ))),
+                                                    .buttonText.value,
+                                                style: TextStyle(
+                                                    fontSize: 10.8,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: attendController
+                                                        .textColor.value),
+                                              ),
+                                              onPressed: () async {
+                                                if (user.uId ==
+                                                    PreferenceUtil.getInt(
+                                                        "uId")) {
+                                                  List<UserResponse> userList =
+                                                      await db
+                                                          .getAttendUserList(
+                                                              widget.pId);
+                                                  // ignore: use_build_context_synchronously
+                                                  return showAttendUserDialog(
+                                                      context,
+                                                      userList,
+                                                      userList.length,
+                                                      attendController,
+                                                      widget.pId);
+                                                } else {
+                                                  attendController
+                                                      .requestParticipation(
+                                                          context,
+                                                          PreferenceUtil.getInt(
+                                                              "uId")!,
+                                                          widget.pId);
+                                                }
+                                              },
+                                            ))),
+                                  ],
                                   Divider(color: AppTheme.mainTextColor),
                                   CommentWidget(
                                     pId: widget.pId,
