@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:standard_searchbar/standard_searchbar.dart';
 import '../../../controller/club_page_controller.dart';
 import '../../components/customAppBar.dart';
@@ -20,6 +21,9 @@ class _ClubPageState extends State<ClubPage> {
 
   @override
   Widget build(BuildContext context) {
+    clubController.fetchClubList();
+    final postList = clubController.clubList;
+    List<String> suggestions = postList.map((post) => post.title).toList();
     return Scaffold(
       appBar: customMainAppbar("소모임/동아리 게시판", "공지 24시간"),
       body: Container(
@@ -43,21 +47,21 @@ class _ClubPageState extends State<ClubPage> {
               ),
             ),
             Container(
-                margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-                child: StandardSearchBar(
-                    width: MediaQuery.of(context).size.width)),
-            Expanded(flex: 3, child: clubList()),
+              margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+              child: StandardSearchBar(
+                  suggestions: suggestions,
+                  width: MediaQuery.of(context).size.width),
+            ),
+            Expanded(flex: 3, child: clubList(postList)),
           ],
         ),
       ),
     );
   }
 
-  Widget clubList() {
-    clubController.fetchClubList();
+  Widget clubList(List<ClubPostResponse> postList) {
     return Obx(
       () {
-        final postList = clubController.clubList;
         if (postList.isEmpty) {
           return Center(
             child: Text(
