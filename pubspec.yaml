@@ -57,6 +57,7 @@ dependencies:
   auto_size_text_field: ^2.2.2
   package_info: ^2.0.2
   yaml: ^3.1.2
+  standard_searchbar: ^2.0.3
 
 dev_dependencies:
   flutter_test:

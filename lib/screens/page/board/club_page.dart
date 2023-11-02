@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:standard_searchbar/standard_searchbar.dart';
 import '../../../controller/club_page_controller.dart';
 import '../../components/customAppBar.dart';
 import 'board_detail_page.dart';
@@ -28,19 +29,23 @@ class _ClubPageState extends State<ClubPage> {
           children: [
             Container(
               height: 13.0,
-              margin: const EdgeInsets.only(left: 40.0),
+              margin: const EdgeInsets.fromLTRB(30.0, 10.0, 0.0, 5.0),
               alignment: Alignment.centerLeft,
               child: Obx(
                 () => Text(
                   "총 ${clubController.clubList.length}개의 동아리&소모임이 있습니다.",
                   style: const TextStyle(
-                    fontSize: 9.0,
+                    fontSize: 12.0,
                     color: Color(0xff838383),
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
             ),
+            Container(
+                margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+                child: StandardSearchBar(
+                    width: MediaQuery.of(context).size.width)),
             Expanded(flex: 3, child: clubList()),
           ],
         ),
