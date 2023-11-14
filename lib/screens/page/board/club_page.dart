@@ -20,64 +20,76 @@ class _ClubPageState extends State<ClubPage> {
   final ClubPageController clubController = Get.find<ClubPageController>();
   String searchText = '';
 
+  final FocusNode _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     clubController.fetchClubList();
     final postList = clubController.clubList;
 
-    RxList<ClubPostResponse> filteredPosts = <ClubPostResponse>[].obs;
-    List<String> suggestions = postList.map((post) => post.title).toList();
     return Scaffold(
-      appBar: customMainAppbar("소모임/동아리 게시판", "공지 24시간"),
-      body: Container(
-        alignment: Alignment.center,
-        color: Colors.white,
-        child: Column(
-          children: [
-            Container(
-              height: 13.0,
-              margin: const EdgeInsets.fromLTRB(30.0, 10.0, 0.0, 5.0),
-              alignment: Alignment.centerLeft,
-              child: Obx(
-                () => Text(
-                  "총 ${clubController.clubList.length}개의 동아리&소모임이 있습니다.",
-                  style: const TextStyle(
-                    fontSize: 12.0,
-                    color: Color(0xff838383),
-                    fontWeight: FontWeight.w400,
+        appBar: customMainAppbar("소모임/동아리 게시판", "공지 24시간"),
+        body: GestureDetector(
+          onTap: () {
+            _focusNode.unfocus();
+          },
+          child: Container(
+            alignment: Alignment.center,
+            color: Colors.white,
+            child: Column(
+              children: [
+                Container(
+                  height: 13.0,
+                  margin: const EdgeInsets.fromLTRB(30.0, 10.0, 0.0, 5.0),
+                  alignment: Alignment.centerLeft,
+                  child: Obx(
+                    () => Text(
+                      "총 ${clubController.clubList.length}개의 동아리&소모임이 있습니다.",
+                      style: const TextStyle(
+                        fontSize: 12.0,
+                        color: Color(0xff838383),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Container(
+                    margin:
+                        EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+                    height: 30.0,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(23.0)),
+                    child: TextFormField(
+                      focusNode: _focusNode,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.only(left: 10.0),
+                          constraints: const BoxConstraints(
+                              minHeight: 30.0, maxHeight: 30.0),
+                          filled: true,
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  const BorderSide(color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(23.0)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  const BorderSide(color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(23.0)),
+                          fillColor: AppTheme.clubPageSearchBarColor,
+                          hintText: '검색어를 입력해 주세요.'),
+                      style: TextStyle(
+                          fontSize: 14.0, color: AppTheme.mainTextColor),
+                      cursorColor: AppTheme.mainTextColor,
+                      onChanged: (value) {
+                        setState(() {
+                          searchText = value;
+                        });
+                      },
+                    )),
+                Expanded(flex: 3, child: clubList(postList, searchText)),
+              ],
             ),
-            Container(
-                margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), hintText: '검색어를 입력해 주세요.'),
-                  onChanged: (value) {
-                    setState(() {
-                      searchText = value;
-                    });
-                  },
-                )
-                // StandardSearchBar(
-                //     onChanged: (query) {
-                //       if (query.isEmpty) {
-                //         clubController.filteredPosts
-                //             .assignAll(clubController.clubList);
-                //       } else {
-                //         clubController.updateFilteredPosts(query);
-                //       }
-                //     },
-                //     suggestions: suggestions,
-                //     width: MediaQuery.of(context).size.width),
-                ),
-            Expanded(
-                flex: 3, child: clubList(clubController.clubList, searchText)),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 
   Widget clubList(RxList<ClubPostResponse> postList, String search) {

@@ -64,6 +64,7 @@ class AppTheme {
 
   /// 소모임 게시물 페이지
   static var clubPageTitleColor = const Color(0xFF353535);
+  static var clubPageSearchBarColor = const Color(0xFFEDEDED);
 
   /// 포스팅 게시물 페이지
   static var postingPageDetailTextFieldColor = const Color(0xFFF5F5F5);
