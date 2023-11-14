@@ -26,4 +26,17 @@ class ClubPageController extends GetxController {
   Future<bool> checkIsWished(int uId, int pId) {
     return dbService.checkWishClubExist(uId, pId);
   }
+
+  void updateFilteredPosts(String query) {
+    if (query.isEmpty) {
+      // 검색어가 비어있을 때, 전체 목록을 보여줌
+      filteredPosts.assignAll(clubList);
+    } else {
+      // 검색어가 있을 때, 해당 검색어를 포함하는 게시물만 필터링
+      final filtered =
+          clubList.where((post) => post.title.contains(query)).toList();
+      filteredPosts.clear(); // 기존 목록 비우기
+      filteredPosts.addAll(filtered); // 필터링된 항목 추가
+    }
+  }
 }

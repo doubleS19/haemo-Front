@@ -18,6 +18,7 @@ class ClubPage extends StatefulWidget {
 
 class _ClubPageState extends State<ClubPage> {
   final ClubPageController clubController = Get.find<ClubPageController>();
+  String searchText = '';
 
   @override
   Widget build(BuildContext context) {
@@ -49,26 +50,37 @@ class _ClubPageState extends State<ClubPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
-              child: StandardSearchBar(
-                  onChanged: (query) {
-                    final filtered = postList
-                        .where((post) => post.title.contains(query))
-                        .toList();
-                    clubController.filteredPosts.clear(); // 기존 목록 비우기
-                    clubController.filteredPosts.addAll(filtered); // 필터링된 항목 추가
+                margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(), hintText: '검색어를 입력해 주세요.'),
+                  onChanged: (value) {
+                    setState(() {
+                      searchText = value;
+                    });
                   },
-                  suggestions: suggestions,
-                  width: MediaQuery.of(context).size.width),
-            ),
-            Expanded(flex: 3, child: clubList(clubController.filteredPosts)),
+                )
+                // StandardSearchBar(
+                //     onChanged: (query) {
+                //       if (query.isEmpty) {
+                //         clubController.filteredPosts
+                //             .assignAll(clubController.clubList);
+                //       } else {
+                //         clubController.updateFilteredPosts(query);
+                //       }
+                //     },
+                //     suggestions: suggestions,
+                //     width: MediaQuery.of(context).size.width),
+                ),
+            Expanded(
+                flex: 3, child: clubList(clubController.clubList, searchText)),
           ],
         ),
       ),
     );
   }
 
-  Widget clubList(RxList<ClubPostResponse> postList) {
+  Widget clubList(RxList<ClubPostResponse> postList, String search) {
     return Obx(
       () {
         if (postList.isEmpty && clubController.clubList.isEmpty) {
@@ -83,94 +95,101 @@ class _ClubPageState extends State<ClubPage> {
           );
         } else {
           return ListView.builder(
-            itemCount: postList.length,
-            itemBuilder: (BuildContext context, int index) {
-              final post = postList[index];
-              return GestureDetector(
-                  onTap: () {
-                    Get.to(() => BoardDetailPage(pId: post.pId, type: 2));
-                  },
-                  child: Container(
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 15.0),
-                      child: Column(children: [
-                        Row(children: [
-                          if (post.logo == null) ...[
-                            Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppTheme.mainTextColor,
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/sunset.jpg'),
-                                  fit: BoxFit.cover,
+              itemCount: postList.length,
+              itemBuilder: (BuildContext context, int index) {
+                final post = postList[index];
+                if (searchText.isEmpty ||
+                    post.title.toLowerCase().contains(search.toLowerCase())) {
+                  return GestureDetector(
+                      onTap: () {
+                        Get.to(() => BoardDetailPage(pId: post.pId, type: 2));
+                      },
+                      child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 15.0),
+                          child: Column(children: [
+                            Row(children: [
+                              if (post.logo == null) ...[
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppTheme.mainTextColor,
+                                    image: const DecorationImage(
+                                      image: AssetImage(
+                                          'assets/images/sunset.jpg'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ] else ...[
-                            Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppTheme.mainTextColor,
-                                image: DecorationImage(
-                                  image: MemoryImage(post.logo as Uint8List),
-                                  fit: BoxFit.cover,
+                              ] else ...[
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: AppTheme.mainTextColor,
+                                    image: DecorationImage(
+                                      image:
+                                          MemoryImage(post.logo as Uint8List),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ],
-                          const SizedBox(
-                            width: 10.0,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "상시 모집",
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 9.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppTheme.mainPagePersonColor),
-                              ),
-                              Text(
-                                post.title,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 13.0,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppTheme.clubPageTitleColor),
-                              ),
+                              ],
                               const SizedBox(
-                                height: 15.0,
+                                width: 10.0,
                               ),
-                              SizedBox(
-                                  width: 169.0,
-                                  height: 33.0,
-                                  child: Text(
-                                    post.description,
-                                    maxLines: 3,
-                                    overflow: TextOverflow.clip,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "상시 모집",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 9.0,
                                         fontWeight: FontWeight.w600,
+                                        color: AppTheme.mainPagePersonColor),
+                                  ),
+                                  Text(
+                                    post.title,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.w600,
                                         color: AppTheme.clubPageTitleColor),
-                                  )),
-                            ],
-                          )
-                        ]),
-                        const SizedBox(
-                          height: 10.0,
-                        ),
-                        Divider(thickness: 1.0, color: AppTheme.dividerColor),
-                      ])));
-            },
-          );
+                                  ),
+                                  const SizedBox(
+                                    height: 15.0,
+                                  ),
+                                  SizedBox(
+                                      width: 169.0,
+                                      height: 33.0,
+                                      child: Text(
+                                        post.description,
+                                        maxLines: 3,
+                                        overflow: TextOverflow.clip,
+                                        style: TextStyle(
+                                            fontSize: 9.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppTheme.clubPageTitleColor),
+                                      )),
+                                ],
+                              )
+                            ]),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            Divider(
+                                thickness: 1.0, color: AppTheme.dividerColor),
+                          ])));
+                } else {
+                  return Container();
+                }
+              });
         }
       },
     );
