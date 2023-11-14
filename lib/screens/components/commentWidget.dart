@@ -83,85 +83,97 @@ class _CommentWidgetState extends State<CommentWidget> {
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(children: [
-                              SizedBox(
-                                  width: 41.0,
-                                  height: 41.0,
-                                  child: RawMaterialButton(
-                                      elevation: 0.0,
-                                      fillColor: Colors.transparent,
-                                      shape: const CircleBorder(),
-                                      onPressed: (() {
-                                        userBottomSheet(
-                                            context, userList[index]);
-                                      }),
-                                      child: Container(
-                                        width: 41,
-                                        height: 41,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.transparent,
-                                          image: DecorationImage(
-                                            image: AssetImage(userRoundImage[
-                                                userProfileImage.indexOf(
-                                                    userList[index]
-                                                        .userImage)]),
+                            Expanded(
+                                flex: 7,
+                                child: Row(children: [
+                                  SizedBox(
+                                      width: 41.0,
+                                      height: 41.0,
+                                      child: RawMaterialButton(
+                                          elevation: 0.0,
+                                          fillColor: Colors.transparent,
+                                          shape: const CircleBorder(),
+                                          onPressed: (() {
+                                            userBottomSheet(
+                                                context, userList[index]);
+                                          }),
+                                          child: Container(
+                                            width: 41,
+                                            height: 41,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.transparent,
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    userRoundImage[
+                                                        userProfileImage
+                                                            .indexOf(userList[
+                                                                    index]
+                                                                .userImage)]),
+                                              ),
+                                            ),
+                                          ))),
+                                  const SizedBox(width: 10.0),
+                                  Expanded(
+                                      flex: 7,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            commentList[index].nickname,
+                                            style: TextStyle(
+                                              color: AppTheme.mainTextColor,
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
-                                        ),
-                                      ))),
-                              const SizedBox(width: 10.0),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    commentList[index].nickname,
-                                    style: TextStyle(
-                                      color: AppTheme.mainTextColor,
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    commentList[index].content,
-                                    style: TextStyle(
-                                        fontSize: 12.0,
-                                        color: AppTheme.mainTextColor,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(width: 15.0),
-                            ]),
-                            Align(
-                                alignment: Alignment.centerRight,
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            width: 0.5,
-                                            color: Colors.transparent),
-                                        borderRadius:
-                                            BorderRadius.circular(23.0),
-                                        color: const Color(0xffededed)),
-                                    width:
-                                        MediaQuery.of(context).size.width / 7,
-                                    height:
-                                        MediaQuery.of(context).size.height / 32,
-                                    child: MaterialButton(
-                                      color: Colors.transparent,
-                                      elevation: 0.0,
-                                      child: Text(
-                                        "답글",
-                                        style: TextStyle(
-                                            fontSize: 8.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppTheme.mainTextColor),
-                                      ),
-                                      onPressed: () {
-                                        widget.onReplyPressed(
-                                            commentList[index].cId);
-                                      },
-                                    )))
+                                          Text(
+                                            commentList[index].content,
+                                            style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: AppTheme.mainTextColor,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ],
+                                      )),
+                                  const SizedBox(width: 15.0),
+                                ])),
+                            Expanded(
+                                flex: 2,
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                width: 0.5,
+                                                color: Colors.transparent),
+                                            borderRadius:
+                                                BorderRadius.circular(23.0),
+                                            color: const Color(0xffededed)),
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                7,
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                32,
+                                        child: MaterialButton(
+                                          color: Colors.transparent,
+                                          elevation: 0.0,
+                                          child: Text(
+                                            "답글",
+                                            style: TextStyle(
+                                                fontSize: 8.0,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppTheme.mainTextColor),
+                                          ),
+                                          onPressed: () {
+                                            widget.onReplyPressed(
+                                                commentList[index].cId);
+                                          },
+                                        ))))
                           ])),
                   ReplyWidget(
                     cId: commentList[index].cId,

@@ -12,6 +12,7 @@ class ClubPageController extends GetxController {
   final DBService dbService = DBService();
   final RxList<ClubPostResponse> todayNoticeList = <ClubPostResponse>[].obs;
   final RxList<ClubPostResponse> clubList = <ClubPostResponse>[].obs;
+  RxList<ClubPostResponse> filteredPosts = <ClubPostResponse>[].obs;
 
   void fetchClubList() async {
     try {

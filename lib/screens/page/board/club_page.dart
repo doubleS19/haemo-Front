@@ -23,6 +23,8 @@ class _ClubPageState extends State<ClubPage> {
   Widget build(BuildContext context) {
     clubController.fetchClubList();
     final postList = clubController.clubList;
+
+    RxList<ClubPostResponse> filteredPosts = <ClubPostResponse>[].obs;
     List<String> suggestions = postList.map((post) => post.title).toList();
     return Scaffold(
       appBar: customMainAppbar("소모임/동아리 게시판", "공지 24시간"),
@@ -49,20 +51,27 @@ class _ClubPageState extends State<ClubPage> {
             Container(
               margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 15.0),
               child: StandardSearchBar(
+                  onChanged: (query) {
+                    final filtered = postList
+                        .where((post) => post.title.contains(query))
+                        .toList();
+                    clubController.filteredPosts.clear(); // 기존 목록 비우기
+                    clubController.filteredPosts.addAll(filtered); // 필터링된 항목 추가
+                  },
                   suggestions: suggestions,
                   width: MediaQuery.of(context).size.width),
             ),
-            Expanded(flex: 3, child: clubList(postList)),
+            Expanded(flex: 3, child: clubList(clubController.filteredPosts)),
           ],
         ),
       ),
     );
   }
 
-  Widget clubList(List<ClubPostResponse> postList) {
+  Widget clubList(RxList<ClubPostResponse> postList) {
     return Obx(
       () {
-        if (postList.isEmpty) {
+        if (postList.isEmpty && clubController.clubList.isEmpty) {
           return Center(
             child: Text(
               "게시물이 없어요!",
@@ -76,17 +85,17 @@ class _ClubPageState extends State<ClubPage> {
           return ListView.builder(
             itemCount: postList.length,
             itemBuilder: (BuildContext context, int index) {
+              final post = postList[index];
               return GestureDetector(
                   onTap: () {
-                    Get.to(() =>
-                        BoardDetailPage(pId: postList[index].pId, type: 2));
+                    Get.to(() => BoardDetailPage(pId: post.pId, type: 2));
                   },
                   child: Container(
                       margin: const EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 15.0),
                       child: Column(children: [
                         Row(children: [
-                          if (postList[index].logo == null) ...[
+                          if (post.logo == null) ...[
                             Container(
                               width: 60,
                               height: 60,
@@ -95,7 +104,7 @@ class _ClubPageState extends State<ClubPage> {
                                 color: AppTheme.mainTextColor,
                                 image: DecorationImage(
                                   image: AssetImage('assets/images/sunset.jpg'),
-                                  fit: BoxFit.cover, // 이미지 크기 및 맞춤 방식 설정
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -107,9 +116,8 @@ class _ClubPageState extends State<ClubPage> {
                                 shape: BoxShape.circle,
                                 color: AppTheme.mainTextColor,
                                 image: DecorationImage(
-                                  image: MemoryImage(
-                                      postList[index].logo as Uint8List),
-                                  fit: BoxFit.cover, // 이미지 크기 및 맞춤 방식 설정
+                                  image: MemoryImage(post.logo as Uint8List),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -130,7 +138,7 @@ class _ClubPageState extends State<ClubPage> {
                                     color: AppTheme.mainPagePersonColor),
                               ),
                               Text(
-                                postList[index].title,
+                                post.title,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -145,7 +153,7 @@ class _ClubPageState extends State<ClubPage> {
                                   width: 169.0,
                                   height: 33.0,
                                   child: Text(
-                                    postList[index].description,
+                                    post.description,
                                     maxLines: 3,
                                     overflow: TextOverflow.clip,
                                     style: TextStyle(
