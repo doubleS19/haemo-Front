@@ -41,15 +41,7 @@ class _MeetingPageState extends State<MeetingPage> {
     return Obx(() {
       final postList = meetingController.todayNoticeList;
       if (postList.isEmpty) {
-        return Center(
-          child: Text(
-            "아직 시간이 많이 남았네용",
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              color: AppTheme.mainPageTextColor,
-            ),
-          ),
-        );
+        return Container();
       } else {
         return Align(
           alignment: Alignment.centerLeft,
@@ -70,7 +62,7 @@ class _MeetingPageState extends State<MeetingPage> {
                     borderRadius: BorderRadius.circular(20.0),
                     boxShadow: [
                       BoxShadow(
-                        color: AppTheme.mainPageBlurColor.withOpacity(0.3),
+                        color: AppTheme.mainColor.withOpacity(0.3),
                         blurRadius: 4.0,
                       ),
                     ],
