@@ -25,8 +25,12 @@ class MeetingPageController extends GetxController {
   final DBService dbService = DBService();
   final RxList<PostResponse> todayNoticeList = <PostResponse>[].obs;
   final RxList<PostResponse> postList = <PostResponse>[].obs;
+  final RxList<PostResponse> detailPost = <PostResponse>[].obs;
   late List<int> wishMeetingListPId = <int>[].obs;
   late List<WishMeetingResponse> wishMeetingList = <WishMeetingResponse>[].obs;
+  late int _boardPerson = 0;
+
+  int get boardPerson => _boardPerson;
 
   void fetchTodayNotice() async {
     try {
@@ -41,6 +45,16 @@ class MeetingPageController extends GetxController {
     try {
       final posts = await dbService.getAllPost();
       postList.assignAll(posts);
+    } catch (error) {
+      print(error.toString());
+    }
+  }
+
+  void fetchPostPerson(int pId) async {
+    try {
+      final detail = await dbService.getPostById(pId);
+      int person = detail.person;
+      _boardPerson = person;
     } catch (error) {
       print(error.toString());
     }

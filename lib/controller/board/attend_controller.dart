@@ -4,8 +4,8 @@ import 'package:hae_mo/common/color.dart';
 import "dart:developer" as dev;
 import 'package:hae_mo/model/acceptation_model.dart';
 import 'package:hae_mo/model/acceptation_response_model.dart';
+import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/customDialog.dart';
-import 'package:hae_mo/screens/page/board/board_detail_page.dart';
 
 import 'package:hae_mo/service/db_service.dart';
 
@@ -21,6 +21,8 @@ class AttendController extends GetxController {
   var _userListButtonColor = Color(0xffb3b3b3).obs;
   var _isAccepted = false.obs;
 
+  RxList<AcceptationResponse> _userList = <AcceptationResponse>[].obs;
+
   AcceptionState get acceptionState => _acceptionState;
   Rx<String> get buttonText => _buttonText;
   Rx<Color> get buttonColor => _buttonColor;
@@ -28,6 +30,7 @@ class AttendController extends GetxController {
   Rx<Color> get textColor => _buttonTextColor;
   Rx<Color> get userListButtonColor => _userListButtonColor;
   Rx<bool> get isAccepted => _isAccepted;
+  RxList<AcceptationResponse> get acceptList => _userList;
 
   Future requestParticipation(BuildContext context, int uId, int pId) async {
     checkState(uId, pId);
@@ -109,5 +112,15 @@ class AttendController extends GetxController {
     }
     dbService.acceptUserToJoin(uId, pId);
     update();
+  }
+
+  void fetchAttendUserList(int pId) async {
+    try {
+      final users = await dbService.getAttendList(pId);
+      users.removeWhere((element) => element.isAccepted == false);
+      _userList.assignAll(users);
+    } catch (error) {
+      print(error.toString());
+    }
   }
 }

@@ -48,7 +48,9 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   void initState() {
     _attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
     _acceptionState = _attendController.acceptionState;
+    _attendController.fetchAttendUserList(widget.pId);
     widget.type == 1 ? model = Post : model = ClubPost;
+    meetingController.fetchPostPerson(widget.pId);
     dev.log(_acceptionState.toString());
     super.initState();
   }
@@ -111,6 +113,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                     dev.log(snapshot.connectionState.toString());
                     if (snapshot.hasData) {
                       final UserResponse user = snapshot.data as UserResponse;
+                      attendController.setUserList(user.uId, widget.pId);
                       return Scaffold(
                           resizeToAvoidBottomInset: false,
                           appBar: (user.uId == PreferenceUtil.getInt("uId")
@@ -178,7 +181,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                             margin: const EdgeInsets.only(
                                                 right: 10.0),
                                             child: Text(
-                                              "3/",
+                                              "${attendController.acceptList.length}/5",
                                               style: TextStyle(
                                                   color: AppTheme.mainColor,
                                                   fontSize: 12.0,
@@ -227,6 +230,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                       await db
                                                           .getAttendUserList(
                                                               widget.pId);
+
                                                   // ignore: use_build_context_synchronously
                                                   return showAttendUserDialog(
                                                       context,
