@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class AcceptationResponse {
   final int aId;
   final int pId;

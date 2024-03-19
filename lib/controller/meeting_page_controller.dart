@@ -53,6 +53,7 @@ class MeetingPageController extends GetxController {
   void fetchPostPerson(int pId) async {
     try {
       final detail = await dbService.getPostById(pId);
+      dev.log("펄슨은요: ${detail.person.toString()}");
       int person = detail.person;
       _boardPerson = person;
     } catch (error) {

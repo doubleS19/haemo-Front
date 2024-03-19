@@ -47,14 +47,14 @@ class _HomePageState extends State<HomePage> {
     Get.put(HotPlacePageController());
     DBService db = DBService();
     return FutureBuilder(
-        future: db
-            .getUserByNickname(PreferenceUtil.getString("nickname").toString()),
+        future: db.getUserByNickname(PreferenceUtil.getString("nickname")!),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final UserResponse user = snapshot.data as UserResponse;
             PreferenceUtil.setInt("uId", user.uId);
             PreferenceUtil.setInt(
                 "userImage", userProfileImage.indexOf(user.userImage));
+            print("uId: " + user.uId.toString());
             print(PreferenceUtil.getInt("userImage"));
             print(
                 "userIndex=${userProfileImage.indexOf(user.userImage).toString()}");

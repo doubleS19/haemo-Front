@@ -23,7 +23,6 @@ class HotPlacePageController extends GetxController {
     updateHotPlaceList();
   }
 
-
   void updateHotPlaceList() {
     hotPlaceListisLoading.value = false;
     fetchPopularHotPlaceList();

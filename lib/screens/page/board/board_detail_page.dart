@@ -50,13 +50,14 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
     _acceptionState = _attendController.acceptionState;
     _attendController.fetchAttendUserList(widget.pId);
     widget.type == 1 ? model = Post : model = ClubPost;
-    meetingController.fetchPostPerson(widget.pId);
     dev.log(_acceptionState.toString());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    meetingController.fetchPostPerson(widget.pId);
+
     widget.type == 1
         ? future = db.getPostById(widget.pId)
         : future = db.getClubPostById(widget.pId);
@@ -113,7 +114,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                     dev.log(snapshot.connectionState.toString());
                     if (snapshot.hasData) {
                       final UserResponse user = snapshot.data as UserResponse;
-                      attendController.setUserList(user.uId, widget.pId);
+                      attendController.setUserList(
+                          PreferenceUtil.getInt("uId")!, widget.pId);
                       return Scaffold(
                           resizeToAvoidBottomInset: false,
                           appBar: (user.uId == PreferenceUtil.getInt("uId")
@@ -181,7 +183,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                             margin: const EdgeInsets.only(
                                                 right: 10.0),
                                             child: Text(
-                                              "${attendController.acceptList.length}/5",
+                                              "${attendController.acceptList.length}/${meetingController.boardPerson}",
                                               style: TextStyle(
                                                   color: AppTheme.mainColor,
                                                   fontSize: 12.0,
