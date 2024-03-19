@@ -87,29 +87,29 @@ class _PostingPageState extends State<PostingPage> {
                 ],
               ),
             )),
-
-              bottomNavigationBar: Container(
-                height: 150,
-                padding: const EdgeInsets.fromLTRB(30, 40, 30, 70),
-                child: postingButton(context, () async {
-                  bool isSuccess = false;
-                  if (postController.checkEmpty()) {
-                    showMyAlertDialog(context, "경고!!!!!", "빈칸 안 채우면 못 지나감.", null);
+            bottomNavigationBar: Container(
+              height: 150,
+              padding: const EdgeInsets.fromLTRB(30, 40, 30, 70),
+              child: postingButton(context, () async {
+                bool isSuccess = false;
+                if (postController.checkEmpty()) {
+                  showMyAlertDialog(
+                      context, "경고!!!!!", "빈칸 안 채우면 못 지나감.", null);
+                } else {
+                  postController.saveControllerData();
+                  isSuccess = await postController.saveBoard();
+                  if (isSuccess) {
+                    /// 다이얼로그 안 됨ㅠㅠ
+                    showMyAlertDialog(
+                        context, "확인요망!!", "게시물이 전송되었습니다. ", null);
+                    postController.deleteData();
+                    Get.to(const HomePage());
                   } else {
-                    postController.saveControllerData();
-                    isSuccess = await postController.saveBoard();
-                    if (isSuccess) {
-                      /// 다이얼로그 안 됨ㅠㅠ
-                      showMyAlertDialog(context, "확인요망!!", "게시물이 전송되었습니다. ", null);
-                      postController.deleteData();
-                      Get.to(const HomePage());
-                    } else {
-                      showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..", null);
-                    }
+                    showMyAlertDialog(context, "ㅠ_ㅠ", "게시물 전송 실패..", null);
                   }
-                }),
-              )
-            ));
+                }
+              }),
+            )));
   }
 }
 
@@ -238,7 +238,7 @@ Widget selectDropdownButton(
                 list: setDayList(),
                 basicType: "$selectedDay월",
                 onChanged: (value) {
-                  value = value.toString().length < 2
+                  value = value.toString().length < 3
                       ? "0$value"
                       : value.toString();
                   postController.selectedDay.value = value;
@@ -249,10 +249,11 @@ Widget selectDropdownButton(
                 list: setHourList(),
                 basicType: "$selectedHour시",
                 onChanged: (value) {
-                  value = value.toString().length < 2
+                  value = value.toString().length < 3
                       ? "0$value"
                       : value.toString();
                   postController.selectedHour.value = value;
+                  print(postController.selectedHour.value);
                 }))
       ]);
   }
