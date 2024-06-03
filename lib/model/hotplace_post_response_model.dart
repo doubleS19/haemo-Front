@@ -7,7 +7,7 @@ class HotPlacePostResponse {
   String nickname;
   String date;
   String? address;
-  late List<MultipartFile>? photoList = [];
+  late List<String>? photoList = [];
   int? heartNum = 0;
 
   HotPlacePostResponse(

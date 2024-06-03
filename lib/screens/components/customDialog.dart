@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:hae_mo/common/theme.dart';
+import 'package:hae_mo/common/user_image.dart';
 import 'package:hae_mo/controller/board/attend_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/Page/home_page.dart';
@@ -257,7 +258,8 @@ showAttendUserDialog(BuildContext context, List<UserResponse> user, int person,
                                               color: Colors.transparent,
                                               image: DecorationImage(
                                                 image: AssetImage(
-                                                    attendUser.userImage),
+                                                    userRoundImage[
+                                                        attendUser.userImage]),
                                               ),
                                             ),
                                           ))),

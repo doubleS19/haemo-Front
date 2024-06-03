@@ -100,6 +100,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                   ? post = snapshot.data as Post
                   : post = snapshot.data as ClubPost;
 
+              print(post.person);
+
               userController.fetchBoardUser(widget.pId, widget.type);
 
               Future? userFuture;

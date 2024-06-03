@@ -8,7 +8,7 @@ class PreferenceUtil {
       _prefs = await SharedPreferences.getInstance();
 
   static saveUser(User user) {
-    setString("studentid", user.studentId);
+    setInt("studentid", user.studentId);
     setString("nickname", user.nickname);
     setString("major", user.major);
     setString("gender", user.gender);

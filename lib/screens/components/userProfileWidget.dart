@@ -26,8 +26,7 @@ Row userProfile(BuildContext context, UserResponse user) {
                   shape: BoxShape.circle,
                   color: Colors.transparent,
                   image: DecorationImage(
-                    image: AssetImage(userRoundImage[
-                        userProfileImage.indexOf(user.userImage)]),
+                    image: AssetImage(userRoundImage[user.userImage]),
                   ),
                 ),
               ))),

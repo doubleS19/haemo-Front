@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class User {
-  final String studentId;
+  final int studentId;
   final String nickname;
   final String major;
   final String gender;
-  final String userImage;
+  final int userImage;
 
   User(
       {required this.studentId,

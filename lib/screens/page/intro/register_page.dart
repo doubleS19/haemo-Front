@@ -59,9 +59,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.topCenter,
                 padding: const EdgeInsets.only(top: 30.0),
                 child: Column(children: [
-                  const Text(
-                    "헤모 🍻",
-                    style: TextStyle(fontSize: 48.0),
+                  const Image(
+                    image: AssetImage("assets/icons/wont.png"),
                   ),
                   const SizedBox(
                     height: 30.0,
@@ -299,7 +298,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           _textController.text,
                           _selectedMajor,
                           _selectedGender,
-                          userProfileImage[_index],
+                          _index,
                         );
                       } else {
                         showNicknameUnavailable(

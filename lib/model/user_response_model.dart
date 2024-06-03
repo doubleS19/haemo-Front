@@ -3,11 +3,11 @@ import 'package:http/http.dart' as http;
 
 class UserResponse {
   final int uId;
-  final String studentId;
+  final int studentId;
   final String nickname;
   final String major;
   final String gender;
-  final String userImage;
+  final int userImage;
 
   UserResponse(
       {required this.uId,

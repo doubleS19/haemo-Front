@@ -5,6 +5,7 @@ import 'package:hae_mo/controller/chat_controller.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/page/chat/chat_room_page.dart';
 import 'package:hae_mo/screens/page/report/reporting_page.dart';
+import 'package:hae_mo/utils/user_image.dart';
 
 void userBottomSheet(BuildContext context, UserResponse user) {
   ChatController chatController = ChatController();
@@ -24,7 +25,7 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                 width: 97.0,
                 height: 127.0,
                 child: Image(
-                  image: AssetImage(user.userImage),
+                  image: AssetImage(userImage[user.userImage]),
                 )),
             const SizedBox(
               height: 10.0,
@@ -76,7 +77,10 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                           color: AppTheme.mainColor),
                       child: RawMaterialButton(
                           onPressed: (() async {
-                            Get.to(ChatRoomPage(chatRoomId: await chatController.checkChatRoomExistence(user.uId), otherUser: user));
+                            Get.to(ChatRoomPage(
+                                chatRoomId: await chatController
+                                    .checkChatRoomExistence(user.uId),
+                                otherUser: user));
                           }),
                           child: const Text(
                             "채팅하기",

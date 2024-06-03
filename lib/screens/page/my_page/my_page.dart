@@ -10,6 +10,7 @@ import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/service/db_service.dart';
+import 'package:hae_mo/utils/user_image.dart';
 
 import '../../Page/chat/chat_list_page.dart';
 
@@ -171,8 +172,8 @@ Widget userInfo(UserResponse user) {
       Container(
         width: 200,
         height: 200,
-        child: Image(image: AssetImage(user.userImage)),
         alignment: Alignment.center,
+        child: Image(image: AssetImage(userImage[user.userImage])),
       ),
       const SizedBox(
         height: 12.0,

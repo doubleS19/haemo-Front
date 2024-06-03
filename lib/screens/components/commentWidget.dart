@@ -106,10 +106,8 @@ class _CommentWidgetState extends State<CommentWidget> {
                                               image: DecorationImage(
                                                 image: AssetImage(
                                                     userRoundImage[
-                                                        userProfileImage
-                                                            .indexOf(userList[
-                                                                    index]
-                                                                .userImage)]),
+                                                        userList[index]
+                                                            .userImage]),
                                               ),
                                             ),
                                           ))),

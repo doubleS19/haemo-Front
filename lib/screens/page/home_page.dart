@@ -52,12 +52,11 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.hasData) {
             final UserResponse user = snapshot.data as UserResponse;
             PreferenceUtil.setInt("uId", user.uId);
-            PreferenceUtil.setInt(
-                "userImage", userProfileImage.indexOf(user.userImage));
-            print("uId: " + user.uId.toString());
-            print(PreferenceUtil.getInt("userImage"));
-            print(
-                "userIndex=${userProfileImage.indexOf(user.userImage).toString()}");
+            PreferenceUtil.setInt("userImage", user.userImage);
+            // print("uId: " + user.uId.toString());
+            // print(PreferenceUtil.getInt("userImage"));
+            // print(
+            //     "userIndex=${userProfileImage.indexOf(user.userImage).toString()}");
             return Scaffold(
                 body: SafeArea(
                   child: _widgetOptions.elementAt(_selectedIndex),
