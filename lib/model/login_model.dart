@@ -1,5 +1,3 @@
-
-
 class LoginRequestModel {
   String? id;
   String? password;
@@ -8,8 +6,8 @@ class LoginRequestModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['email'] = id;
-    data['email'] = password;
+    data['studentId'] = id;
+    data['pwd'] = password;
     return data;
   }
 }

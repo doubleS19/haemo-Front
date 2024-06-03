@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
@@ -9,6 +10,7 @@ import 'package:hae_mo/model/comment_model.dart';
 import 'package:hae_mo/model/comment_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
+import 'package:hae_mo/model/login_model.dart';
 import 'package:hae_mo/model/notice_model.dart';
 import 'package:hae_mo/model/notice_response_model.dart';
 import 'package:hae_mo/model/post_model.dart';
@@ -904,13 +906,12 @@ class DBService {
   Future<void> uploadImage(String cpId, Uint8List imageBytes) async {
     try {
       if (cpId.isNotEmpty && imageBytes.isNotEmpty) {
-        String url =
-            'http://localhost:1004/club/uploadImage'; // 이미지를 업로드할 서버 엔드포인트 URL로 변경
+        String url = 'http://localhost:1004/club/uploadImage';
         Map<String, String> headers = {
           'Content-Type': 'application/json',
         };
         Map<String, dynamic> body = {
-          "imageData": base64Encode(imageBytes), // 이미지 데이터를 Base64로 인코딩
+          "imageData": base64Encode(imageBytes),
           "cpId": cpId,
         };
 
@@ -936,14 +937,13 @@ class DBService {
   Future<Uint8List?> getImage(String cpId) async {
     try {
       if (cpId.isNotEmpty) {
-        String url =
-            'http://localhost:1004/club/imageList/$cpId'; // 이미지를 가져올 서버 엔드포인트 URL로 변경
+        String url = 'http://localhost:1004/club/imageList/$cpId';
 
         final response = await http.get(Uri.parse(url));
 
         if (response.statusCode == 200) {
           String base64Image = jsonDecode(response.body);
-          Uint8List imageBytes = base64Decode(base64Image); // Base64 디코딩
+          Uint8List imageBytes = base64Decode(base64Image);
 
           return imageBytes;
         } else {
@@ -997,6 +997,27 @@ class DBService {
           .toList();
     } else {
       throw Exception('Failed to load attend list');
+    }
+  }
+
+  Future<bool> signIn(LoginRequestModel loginModel) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://localhost:1004/login"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(loginModel.toJson()),
+      );
+      if (response.statusCode != 201) {
+        throw Exception("Failed to send comment data");
+      } else {
+        dev.log("Post Comment Data sent successfully");
+        return true;
+      }
+    } catch (e) {
+      dev.log("Failed to send post comment: ${e}");
+      return false;
     }
   }
 }
