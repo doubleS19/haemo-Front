@@ -8,6 +8,7 @@ class UserResponse {
   final String major;
   final String gender;
   final int userImage;
+  final String role;
 
   UserResponse(
       {required this.uId,
@@ -15,7 +16,8 @@ class UserResponse {
       required this.nickname,
       required this.major,
       required this.userImage,
-      required this.gender});
+      required this.gender,
+      required this.role});
 
   factory UserResponse.fromJson(Map<String, dynamic> json) {
     return UserResponse(
@@ -24,7 +26,8 @@ class UserResponse {
         nickname: json['nickname'],
         major: json['major'],
         userImage: json['user_image'],
-        gender: json['gender']);
+        gender: json['gender'],
+        role: json['roleType']);
   }
   Map<String, dynamic> toJson() => {
         'uid': uId,
@@ -33,5 +36,6 @@ class UserResponse {
         'major': major,
         'user_image': userImage,
         'gender': gender,
+        'roleType': role
       };
 }

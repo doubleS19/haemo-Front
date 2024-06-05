@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/screens/Page/intro/register_page.dart';
+import 'package:hae_mo/screens/page/intro/login_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/screens/page/home_page.dart';
 import "dart:developer" as dev;
@@ -33,10 +34,10 @@ class _LoadingPageState extends State<LoadingPage> {
 
   void changePage(String? id) {
     Timer(const Duration(milliseconds: 2000), () {
-      if (id != null && id.isNotEmpty == true && id != "") {
+      if (id != null && id.isNotEmpty && id != "") {
         Get.to(const HomePage());
       } else {
-        Get.to(const RegisterPage());
+        Get.to(const LoginPage());
       }
     });
     Future.delayed(duration, () {
