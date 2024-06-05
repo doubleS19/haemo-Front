@@ -1,3 +1,4 @@
+import 'package:hae_mo/model/user_response_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user_model.dart';
 
@@ -28,6 +29,16 @@ class PreferenceUtil {
 
   static Future<bool> setStringList(String key, List<String> value) async =>
       await _prefs.setStringList(key, value);
+
+  static setUser(UserResponse user) {
+    setInt("uId", user.uId);
+    setInt("studentid", user.studentId);
+    setString("nickname", user.nickname);
+    setString("major", user.major);
+    setString("gender", user.gender);
+    setInt("userImage", user.userImage);
+    setString("role", user.role);
+  }
 
   //get
   static bool? getBool(String key) => _prefs.getBool(key);
