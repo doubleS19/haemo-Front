@@ -134,10 +134,10 @@ class DBService {
     }
   }
 
-  Future<UserResponse> getUserById(int uId) async {
+  Future<UserResponse?> getUserById(int uId) async {
     final response =
         await http.get(Uri.parse("http://localhost:1004/user/find/$uId"));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
     } else if (response.statusCode == 404) {
@@ -147,16 +147,13 @@ class DBService {
     }
   }
 
-  Future<UserResponse?> getUserByStudentId(int studentId) async {
+  Future<int> getUserByStudentId(int studentId) async {
     final response = await http
         .get(Uri.parse("http://localhost:1004/user/find/student/$studentId"));
-    if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body) as Map<String, dynamic>;
-      return UserResponse.fromJson(jsonData);
-    } else if (response.statusCode == 404) {
-      throw Exception("User not found");
+    if (response.statusCode == 201) {
+      return int.parse(response.body);
     } else {
-      throw Exception("Failed to fetch User by Nickname");
+      throw Exception("Failed to fetch User by studentId");
     }
   }
 
@@ -343,7 +340,7 @@ class DBService {
     final response =
         await http.get(Uri.parse('http://localhost:1004/wish/myList/$uId'));
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse.map((e) => HotPlacePostResponse.fromJson(e)).toList();
     } else {
@@ -1022,14 +1019,15 @@ class DBService {
         },
         body: jsonEncode(loginModel.toJson()),
       );
-      if (response.statusCode != 201) {
-        throw Exception("Failed to send comment data");
+      if (response.statusCode == 200) {
+        dev.log("Successfully done");
+        return response.body == "true" ? true : false;
       } else {
-        dev.log("Post Comment Data sent successfully");
-        return true;
+        dev.log("결과: ${response.statusCode}");
+        throw Exception("Failed to sign in");
       }
     } catch (e) {
-      dev.log("Failed to send post comment: ${e}");
+      dev.log("Failed to sign in: ${e}");
       return false;
     }
   }

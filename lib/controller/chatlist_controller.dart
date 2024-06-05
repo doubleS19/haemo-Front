@@ -26,7 +26,7 @@ class ChatListController extends GetxController {
         snapshot.docs.map((e) => ChatRoom.fromJson(e.data())).toList());
   }
 
-  Future<UserResponse> getOtherUserInfo(ChatRoom chatRoomData) async {
+  Future<UserResponse?> getOtherUserInfo(ChatRoom chatRoomData) async {
     int otherUid;
     if (uId == chatRoomData.membersId[0]) {
       otherUid = chatRoomData.membersId[1];

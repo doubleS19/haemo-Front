@@ -27,7 +27,7 @@ class LoginController extends GetxController {
     bool loginResult =
         await db.signIn(LoginRequestModel(id: id, password: pwd));
     if (loginResult) {
-      PreferenceUtil.setInt("studentId", id as int);
+      PreferenceUtil.setInt("studentId", int.parse(id));
       _loginState = LoginState.login.obs;
       update();
       return true;
@@ -39,18 +39,33 @@ class LoginController extends GetxController {
   }
 
   Future checkUserExist(int studentId) async {
-    if (_loginState == LoginState.login) {
-      UserResponse? user = await db.getUserByStudentId(studentId);
+    int uId = await db.getUserByStudentId(studentId);
 
-      if (user != null) {
-        PreferenceUtil.setUser(user);
-        _loginState = LoginState.success.obs;
-        Get.offAll(() => const HomePage());
-      } else {
-        _loginState = LoginState.login.obs;
-        Get.offAll(() => const RegisterPage());
-      }
+    if (uId != 0) {
+      PreferenceUtil.setInt("uId", uId);
+      _loginState = LoginState.success.obs;
+      getUserInfoById(uId);
+      // Get.offAll(() => const HomePage());
+    } else {
+      _loginState = LoginState.login.obs;
+      Get.offAll(() => const RegisterPage());
     }
+
+    update();
+  }
+
+  Future getUserInfoById(int uId) async {
+    UserResponse? user = await db.getUserById(uId);
+
+    if (user != null) {
+      PreferenceUtil.setUser(user);
+      _loginState = LoginState.success.obs;
+      Get.offAll(() => const HomePage());
+    } else {
+      // _loginState = LoginState.login.obs;
+      // Get.offAll(() => const RegisterPage());
+    }
+
     update();
   }
 }

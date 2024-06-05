@@ -53,10 +53,9 @@ class _HomePageState extends State<HomePage> {
             final UserResponse user = snapshot.data as UserResponse;
             PreferenceUtil.setInt("uId", user.uId);
             PreferenceUtil.setInt("userImage", user.userImage);
-            // print("uId: " + user.uId.toString());
-            // print(PreferenceUtil.getInt("userImage"));
-            // print(
-            //     "userIndex=${userProfileImage.indexOf(user.userImage).toString()}");
+            print("uId: " + user.uId.toString());
+            print(PreferenceUtil.getInt("userImage"));
+            print("userIndex=${user.userImage.toString()}");
             return Scaffold(
                 body: SafeArea(
                   child: _widgetOptions.elementAt(_selectedIndex),
@@ -124,8 +123,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 color: Colors.transparent,
                                 image: DecorationImage(
-                                  image: AssetImage(userRoundImage[
-                                      PreferenceUtil.getInt("userImage")!]),
+                                  image: AssetImage(
+                                      userRoundImage[user.userImage]),
                                 ),
                               ),
                             ),
