@@ -42,64 +42,64 @@ class AppTheme {
     }
   }
 
-  static var lightGreenColor = const Color(0xFFAAD200);
-  static var blueColor = const Color(0xFF82C0EA);
-  static var pinkColor = const Color(0xFFFF9B9B);
-  static var beigeColor = const Color(0xFFCFB67B);
-  static var dividerColor = const Color(0xFFBBBBBB);
-  static var mainTextColor = const Color(0xFF393939);
-  static var mainAppBarColor = const Color(0xFF595959);
+  static const Color lightGreenColor = Color(0xFFAAD200);
+  static const Color blueColor = Color(0xFF82C0EA);
+  static const Color pinkColor = Color(0xFFFF9B9B);
+  static const Color beigeColor = Color(0xFFCFB67B);
+  static const Color dividerColor = Color(0xFFBBBBBB);
+  static const Color mainTextColor = Color(0xFF393939);
+  static const Color mainAppBarColor = Color(0xFF595959);
 
   /// 회원 가입 페이지
-  static var registerPageHintColor = const Color(0xFF818181);
-  static var registerPageFormColor = const Color(0xFFE3E3E3);
+  static const Color registerPageHintColor = Color(0xFF818181);
+  static const Color registerPageFormColor = Color(0xFFE3E3E3);
 
   /// 메인 게시물 페이지
-  static var mainPageHeadlineColor = const Color(0XFF656565);
-  static var mainPageTextColor = const Color(0xFF595959);
-  static var mainPageSubTextColor = const Color(0xFF999999);
-  static var mainPageBlurColor = const Color(0xFF00B2DB);
-  static var mainPageBottomNavItemColor = const Color(0xFFADADAD);
-  static var mainPagePersonColor = const Color(0xff3AC7E7);
+  static const Color mainPageHeadlineColor = Color(0XFF656565);
+  static const Color mainPageTextColor = Color(0xFF595959);
+  static const Color mainPageSubTextColor = Color(0xFF999999);
+  static const Color mainPageBlurColor = Color(0xFF00B2DB);
+  static const Color mainPageBottomNavItemColor = Color(0xFFADADAD);
+  static const Color mainPagePersonColor = Color(0xff3AC7E7);
 
   /// 소모임 게시물 페이지
-  static var clubPageTitleColor = const Color(0xFF353535);
-  static var clubPageSearchBarColor = const Color(0xFFEDEDED);
+  static const Color clubPageTitleColor = Color(0xFF353535);
+  static const Color clubPageSearchBarColor = Color(0xFFEDEDED);
 
   /// 포스팅 게시물 페이지
-  static var postingPageDetailTextFieldColor = const Color(0xFFF5F5F5);
-  static var postingPageDetailHintTextColor = const Color(0xFFB6B6B6);
+  static const Color postingPageDetailTextFieldColor = Color(0xFFF5F5F5);
+  static const Color postingPageDetailHintTextColor = Color(0xFFB6B6B6);
 
   /// 채팅 페이지
-  static var borderColor = const Color(0xFFD9D9D9);
-  static var white = const Color(0xFFFFFFFF);
-  static var receiverText = const Color(0xFFDEDEDE);
-  static var senderText = const Color(0xFFC6EFF9);
+  static const Color borderColor = Color(0xFFD9D9D9);
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color receiverText = Color(0xFFDEDEDE);
+  static const Color senderText = Color(0xFFC6EFF9);
 
   /// 핫플 페이지
-  static var hotPlacePageSubTitleColor = const Color(0xFF414141);
+  static const Color hotPlacePageSubTitleColor = Color(0xFF414141);
 
   /// 설정 페이지
-  static var settingPageMenuTextColor = const Color(0xFF7F7E7E);
-  static var settingPageMenuListTextColor = const Color(0xFF515151);
-  static var settingPageDividerColor = const Color(0xFFF4F4F4);
-  static var settingPageAlarmBoxColor =
+  static const Color settingPageMenuTextColor = Color(0xFF7F7E7E);
+  static const Color settingPageMenuListTextColor = Color(0xFF515151);
+  static const Color settingPageDividerColor = Color(0xFFF4F4F4);
+  static Color settingPageAlarmBoxColor =
       const Color(0xFFF8FFDC).withOpacity(0.62);
-  static var contactPageListDialogTitleTextColor =
+  static Color contactPageListDialogTitleTextColor =
       const Color(0xFF515151).withOpacity(0.5);
-  static var contactPageListDialogContentTextColor = const Color(0xFF686868);
-  static var noticePageIconColor = const Color(0xFFC0C0C0);
+  static const Color contactPageListDialogContentTextColor = Color(0xFF686868);
+  static const Color noticePageIconColor = Color(0xFFC0C0C0);
 
   /// 신고 페이지
-  static var reportingPageTextColor = const Color(0xff686868);
+  static const Color reportingPageTextColor = Color(0xff686868);
 
   /// 커스텀 앱바
-  static var customAppBarBackColor = const Color(0xff545454);
+  static const Color customAppBarBackColor = Color(0xff545454);
 
   /// 채팅 페이지
-  static var chatTextFieldBackgroundColor = const Color(0xFFEDEDED);
-  static var chatReceiverBackgroundColor = const Color(0xFFDEDEDE);
+  static const Color chatTextFieldBackgroundColor = Color(0xFFEDEDED);
+  static const Color chatReceiverBackgroundColor = Color(0xFFDEDEDE);
 
   /// 댓글 위젯 디바이더
-  static var commentDividerColor = const Color(0xFFBBBBBB);
+  static const Color commentDividerColor = Color(0xFFBBBBBB);
 }

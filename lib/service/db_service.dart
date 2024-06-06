@@ -770,8 +770,8 @@ class DBService {
   }*/
 
   Future<List<ReplyResponse>> getReplysByCId(int cId) async {
-    final response = await http
-        .get(Uri.parse('http://localhost:1004/postReply/commentPost/$cId'));
+    final response =
+        await http.get(Uri.parse('http://localhost:1004/postReply/$cId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -779,13 +779,15 @@ class DBService {
           .map((e) => ReplyResponse.fromJson(e, ReplyResponseType.Post))
           .toList();
     } else {
+      print(response.body.toString());
+      print(response.statusCode);
       throw Exception('Failed to load replys.');
     }
   }
 
   Future<List<ReplyResponse>> getClubReplysByCcId(int ccId) async {
-    final response = await http
-        .get(Uri.parse('http://localhost:1004/clubReply/commentPost/$ccId'));
+    final response =
+        await http.get(Uri.parse('http://localhost:1004/clubReply/$ccId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
