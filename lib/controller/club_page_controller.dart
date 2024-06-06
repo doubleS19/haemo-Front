@@ -12,6 +12,7 @@ class ClubPageController extends GetxController {
   final DBService dbService = DBService();
   final RxList<ClubPostResponse> todayNoticeList = <ClubPostResponse>[].obs;
   final RxList<ClubPostResponse> clubList = <ClubPostResponse>[].obs;
+  final RxList<ClubPostResponse> detailPost = <ClubPostResponse>[].obs;
   RxList<ClubPostResponse> filteredPosts = <ClubPostResponse>[].obs;
 
   // }계획 대로 되는ㄴ게 없어서 첫만남은 너무어려워 매일 드는 말야~ 예에에에 예ㅔ앙아에ㅔㅇ 예ㅖ~
@@ -39,5 +40,10 @@ class ClubPageController extends GetxController {
       filteredPosts.clear(); // 기존 목록 비우기
       filteredPosts.addAll(filtered); // 필터링된 항목 추가
     }
+  }
+
+  Future fetchClubPostByPId(int pId) async {
+    final post = await dbService.getClubPostById(pId);
+    detailPost.assignAll(post as Iterable<ClubPostResponse>);
   }
 }

@@ -15,11 +15,10 @@ enum RegisterState { success, fail, empty, okay }
 
 class UserController extends GetxController {
   RegisterState _registerState = RegisterState.fail;
-
   RegisterState get registerState => _registerState;
 
   DBService db = DBService();
-  UserResponse? user;
+  Rx<UserResponse?> user = Rx<UserResponse?>(null); // Rx로 변경
 
   Future checkUserInfo(String nickname, String major, String gender) async {
     if (nickname.isNotEmpty && major != "학과 선택" && gender != "성별") {
@@ -60,25 +59,18 @@ class UserController extends GetxController {
 
   Future<bool> checkNickname(String nickname) async {
     bool isUsed = await db.checkNicknameDuplicate(nickname);
-    if (isUsed == false) {
-      return true;
-    } else {
-      return false;
-    }
+    return !isUsed;
   }
 
   void fetchBoardUser(int pId, int type) async {
     try {
-      late UserResponse postUser;
-
-      type == 1
-          ? postUser = await db.getUserByPost(pId)
+      user.value = type == 1
+          ? await db.getUserByPost(pId)
           : (type == 2
-              ? postUser = await db.getUserByClubPost(pId)
-              : (postUser = await db.getUserByHotPlace(pId)));
-      user = postUser;
-    } catch (error) {
-      print(error.toString());
+              ? await db.getUserByClubPost(pId)
+              : await db.getUserByHotPlace(pId));
+    } catch (e) {
+      dev.log(e.toString());
     }
   }
 }

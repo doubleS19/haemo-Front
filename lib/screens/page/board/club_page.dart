@@ -120,7 +120,11 @@ class _ClubPageState extends State<ClubPage> {
                     post.title.toLowerCase().contains(search.toLowerCase())) {
                   return GestureDetector(
                       onTap: () {
-                        Get.to(() => BoardDetailPage(pId: post.pId, type: 2));
+                        Get.to(() => BoardDetailPage(
+                            pId: post.pId,
+                            type: 2,
+                            meetingPost: null,
+                            clubPost: post));
                       },
                       child: Container(
                           margin: const EdgeInsets.symmetric(

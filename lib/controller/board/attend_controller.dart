@@ -114,7 +114,17 @@ class AttendController extends GetxController {
     update();
   }
 
-  void fetchAttendUserList(int pId) async {
+  // void fetchAttendUserList(int pId) async {
+  //   try {
+  //     final users = await dbService.getAttendUserList(pId);
+  //     users.removeWhere((element) => element.isAccepted == false);
+  //     _userList!.assignAll(users);
+  //   } catch (error) {
+  //     print(error.toString());
+  //   }
+  // }
+
+  void fetchAttendList(int pId) async {
     try {
       final users = await dbService.getAttendList(pId);
       users.removeWhere((element) => element.isAccepted == false);
@@ -122,5 +132,6 @@ class AttendController extends GetxController {
     } catch (error) {
       print(error.toString());
     }
+    update();
   }
 }

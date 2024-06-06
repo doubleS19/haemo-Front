@@ -95,12 +95,12 @@ class DBService {
     }
   }
 
-  Future<Post> getPostById(int id) async {
+  Future<PostResponse> getPostById(int id) async {
     final response =
         await http.get(Uri.parse("http://localhost:1004/post/$id"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
-      return Post.fromJson(jsonData);
+      return PostResponse.fromJson(jsonData);
     } else if (response.statusCode == 404) {
       throw Exception("Post not found");
     } else {
@@ -373,9 +373,10 @@ class DBService {
     final response = await http.delete(
       Uri.parse('http://localhost:1004/wish/delete/$uId/$pId'),
     );
-    if (response.statusCode == 204) {
+    if (response.statusCode == 201) {
       print('WishList deleted successfully');
     } else {
+      print(response.statusCode);
       throw Exception('Failed to delete WishList');
     }
   }
@@ -540,7 +541,6 @@ class DBService {
   Future<bool> checkRequestExist(int uId, int pId) async {
     final response = await http
         .get(Uri.parse("http://localhost:1004/accept/isExist/$uId/$pId"));
-
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as bool;
       return data;
@@ -793,20 +793,22 @@ class DBService {
           .map((e) => ReplyResponse.fromJson(e, ReplyResponseType.Club))
           .toList();
     } else {
+      print(response.body.toString());
       throw Exception('Failed to load club replys.');
     }
   }
 
   Future<List<ReplyResponse>> getHotPlaceReplysByHcId(int hcId) async {
-    final response = await http
-        .get(Uri.parse('http://localhost:1004/hotReply/commentPost/$hcId'));
+    final response =
+        await http.get(Uri.parse('http://localhost:1004/hotReply/$hcId'));
 
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonResponse = jsonDecode(response.body);
+    if (response.statusCode == 201) {
+      final jsonResponse = jsonDecode(response.body);
       return jsonResponse
           .map((e) => ReplyResponse.fromJson(e, ReplyResponseType.HotPlace))
           .toList();
     } else {
+      print(response.statusCode);
       throw Exception('Failed to load hotplace replys.');
     }
   }
@@ -997,8 +999,8 @@ class DBService {
   }
 
   Future<List<AcceptationResponse>> getAttendList(int pId) async {
-    final response = await http
-        .get(Uri.parse("http://localhost:1004/accept/attendList/$pId"));
+    final response =
+        await http.get(Uri.parse("http://localhost:1004/accept/$pId"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data

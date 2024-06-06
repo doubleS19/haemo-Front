@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/common/user_image.dart';
 import 'package:hae_mo/screens/components/customAppBar.dart';
 import 'package:hae_mo/screens/page/my_page/my_meeting_page.dart';
 import 'package:hae_mo/screens/page/my_page/my_wish_club_page%20.dart';
@@ -10,7 +11,6 @@ import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/service/db_service.dart';
-import 'package:hae_mo/utils/user_image.dart';
 
 import '../../Page/chat/chat_list_page.dart';
 
@@ -173,7 +173,7 @@ Widget userInfo(UserResponse user) {
         width: 200,
         height: 200,
         alignment: Alignment.center,
-        child: Image(image: AssetImage(userImage[user.userImage])),
+        child: Image(image: AssetImage(userProfileImage[user.userImage])),
       ),
       const SizedBox(
         height: 12.0,

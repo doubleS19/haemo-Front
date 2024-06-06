@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
-import 'package:hae_mo/model/post_response_model.dart';
-import '../../Page/board/board_detail_page.dart';
+import 'package:hae_mo/screens/page/board/board_detail_page.dart';
 import '../../components/customAppBar.dart';
 import '../../components/customIndicator.dart';
 
@@ -51,8 +50,11 @@ class _MeetingPageState extends State<MeetingPage> {
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
-                  Get.to(
-                      () => BoardDetailPage(pId: postList[index].pId, type: 1));
+                  Get.to(() => BoardDetailPage(
+                      pId: postList[index].pId,
+                      type: 1,
+                      meetingPost: postList[index],
+                      clubPost: null));
                 },
                 child: Container(
                   width: 130.0,
@@ -82,8 +84,11 @@ class _MeetingPageState extends State<MeetingPage> {
                         backgroundColor: Colors.white,
                       ),
                       onPressed: () {
-                        Get.to(() =>
-                            BoardDetailPage(pId: postList[index].pId, type: 1));
+                        Get.to(() => BoardDetailPage(
+                            pId: postList[index].pId,
+                            type: 1,
+                            meetingPost: postList[index],
+                            clubPost: null));
                       },
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
@@ -175,8 +180,11 @@ class _MeetingPageState extends State<MeetingPage> {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      Get.to(() =>
-                          BoardDetailPage(pId: postList[index].pId, type: 1));
+                      Get.to(() => BoardDetailPage(
+                          pId: postList[index].pId,
+                          type: 1,
+                          meetingPost: postList[index],
+                          clubPost: null));
                     },
                     child: Column(
                       children: [
