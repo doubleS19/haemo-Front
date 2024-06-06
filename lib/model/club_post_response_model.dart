@@ -5,17 +5,15 @@ class ClubPostResponse {
   final String title;
   final String content;
   final int person;
-  final String category;
   final int pId;
   final String description;
-  final List<Uint8List>? logo;
+  final String? logo;
 
   ClubPostResponse(
       {required this.nickname,
       required this.title,
       required this.content,
       required this.person,
-      required this.category,
       required this.description,
       required this.pId,
       required this.logo});
@@ -26,10 +24,9 @@ class ClubPostResponse {
         title: json['title'],
         content: json['content'],
         person: json['person'],
-        category: json['category'],
         description: json['description'],
         pId: json['cpId'],
-        logo: json["image"]);
+        logo: json["logo"]);
   }
 
   Map<String, dynamic> toJson() => {
@@ -37,9 +34,8 @@ class ClubPostResponse {
         'title': title,
         'content': content,
         'person': person,
-        'category': category,
         'description': description,
         'cpId': pId,
-        'image': logo
+        'logo': logo
       };
 }

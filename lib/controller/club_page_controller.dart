@@ -14,13 +14,14 @@ class ClubPageController extends GetxController {
   final RxList<ClubPostResponse> clubList = <ClubPostResponse>[].obs;
   RxList<ClubPostResponse> filteredPosts = <ClubPostResponse>[].obs;
 
-  void fetchClubList() async {
-    try {
-      final posts = await dbService.getAllClubPost();
-      clubList.assignAll(posts);
-    } catch (error) {
-      // 오류 처리
-    }
+  // }계획 대로 되는ㄴ게 없어서 첫만남은 너무어려워 매일 드는 말야~ 예에에에 예ㅔ앙아에ㅔㅇ 예ㅖ~
+  //  애애애애애애~~ 둥
+
+  Future fetchClubPostList() async {
+    final postList = await dbService.getAllClubPost();
+    clubList.assignAll(postList);
+    print(clubList);
+    update();
   }
 
   Future<bool> checkIsWished(int uId, int pId) {

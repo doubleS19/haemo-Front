@@ -140,14 +140,7 @@ class _MyWishClubPageState extends State<MyWishClubPage> {
                                                     AppTheme.mainPageTextColor,
                                                 fontSize: 12.0,
                                                 fontWeight: FontWeight.w300),
-                                          ),
-                                          Text(
-                                            postList[index].category,
-                                            style: TextStyle(
-                                              fontSize: 12.0,
-                                              color: AppTheme.mainPageTextColor,
-                                            ),
-                                          ),
+                                          )
                                         ],
                                       )
                                     ],

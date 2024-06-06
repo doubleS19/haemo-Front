@@ -23,8 +23,14 @@ class _ClubPageState extends State<ClubPage> {
   final FocusNode _focusNode = FocusNode();
 
   @override
+  void initState() {
+    super.initState();
+    clubController.fetchClubPostList();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    clubController.fetchClubList();
+    clubController.fetchClubPostList();
     final postList = clubController.clubList;
 
     return Scaffold(
@@ -143,8 +149,8 @@ class _ClubPageState extends State<ClubPage> {
                                     shape: BoxShape.circle,
                                     color: AppTheme.mainTextColor,
                                     image: DecorationImage(
-                                      image:
-                                          MemoryImage(post.logo as Uint8List),
+                                      image: Image.network(post.logo.toString())
+                                          .image,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
