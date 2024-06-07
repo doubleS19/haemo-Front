@@ -17,7 +17,7 @@ class MyWishClubPage extends StatefulWidget {
 
 class _MyWishClubPageState extends State<MyWishClubPage> {
   @override
-  Widget build(BuildContext context) {
+  build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -36,7 +36,7 @@ class _MyWishClubPageState extends State<MyWishClubPage> {
             margin: const EdgeInsets.only(right: 10.0, left: 10.0),
             color: Colors.white,
             child: Column(children: [
-              Divider(
+              const Divider(
                 color: AppTheme.dividerColor,
                 thickness: 0.5,
               ),
@@ -44,7 +44,7 @@ class _MyWishClubPageState extends State<MyWishClubPage> {
             ])));
   }
 
-  Widget myWishClubList() {
+  myWishClubList() {
     DBService db = DBService();
     return FutureBuilder(
         future: db.getWishClubListByUser(PreferenceUtil.getInt("uId")!),
@@ -53,7 +53,7 @@ class _MyWishClubPageState extends State<MyWishClubPage> {
             final List<ClubPostResponse> postList =
                 snapshot.data as List<ClubPostResponse>;
             if (postList.isEmpty) {
-              return Center(
+              return const Center(
                   child: Text(
                 "아직 찜한 소모임이 없어요!",
                 style: TextStyle(
@@ -95,7 +95,7 @@ class _MyWishClubPageState extends State<MyWishClubPage> {
                                                 postList[index].title,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: AppTheme
                                                         .mainPageTextColor,
                                                     fontSize: 13.5,
@@ -135,7 +135,7 @@ class _MyWishClubPageState extends State<MyWishClubPage> {
                                         children: [
                                           Text(
                                             "${postList[index].person}명",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color:
                                                     AppTheme.mainPageTextColor,
                                                 fontSize: 12.0,

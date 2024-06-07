@@ -15,7 +15,7 @@ class MyMeetingPage extends StatefulWidget {
 
 class _MyMeetingPageState extends State<MyMeetingPage> {
   @override
-  Widget build(BuildContext context) {
+  build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -42,7 +42,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
             ])));
   }
 
-  Widget myBoardList() {
+  myBoardList() {
     DBService db = DBService();
     return FutureBuilder(
         future: db.getAllPost(),

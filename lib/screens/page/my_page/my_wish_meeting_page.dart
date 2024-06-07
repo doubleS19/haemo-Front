@@ -16,7 +16,7 @@ class MyWishMeetingPage extends StatefulWidget {
 
 class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
   @override
-  Widget build(BuildContext context) {
+  build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -43,7 +43,7 @@ class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
             ])));
   }
 
-  Widget myWishMeetingList() {
+  myWishMeetingList() {
     DBService db = DBService();
     return FutureBuilder(
         future: db.getWishMeetingListByUser(PreferenceUtil.getInt("uId")!),
