@@ -9,6 +9,7 @@ import 'package:hae_mo/controller/comment_controller.dart';
 import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/controller/user_controller.dart';
+import 'package:hae_mo/model/acceptation_response_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/post_response_model.dart';
@@ -56,6 +57,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   late Color _borderColor;
   late Color _buttonTextColor;
   late String _buttonText;
+  late int _attendNum;
   DBService db = DBService();
   final FocusNode _focusNode = FocusNode();
   bool isReply = false;
@@ -72,11 +74,13 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   void initState() {
     super.initState();
     if (widget.type == 1) {
+      attendController.fetchAttendList(widget.pId);
       attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
       _borderColor = AppTheme.mainColor;
       _buttonColor = Colors.white;
       _buttonTextColor = AppTheme.mainColor;
       _buttonText = "명단 확인";
+      _attendNum = 0;
     }
   }
 
@@ -102,11 +106,25 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
             ? widget.clubPost?.date
             : widget.hotPlacePost?.date);
 
-    int activeIndex = 0;
+    var activeIndex = 0;
 
-    if (widget.hotPlacePost != null && widget.hotPlacePost!.photoList != null) {
+    if (widget.hotPlacePost != null &&
+        widget.hotPlacePost!.photoList.isNotEmpty) {
       print("photoList: ${widget.hotPlacePost!.photoList}");
     }
+
+    Widget indicator() => Container(
+        margin: const EdgeInsets.only(bottom: 20.0),
+        alignment: Alignment.bottomCenter,
+        child: AnimatedSmoothIndicator(
+          activeIndex: activeIndex,
+          count: widget.hotPlacePost?.photoList.length ?? 0,
+          effect: JumpingDotEffect(
+              dotHeight: 6,
+              dotWidth: 6,
+              activeDotColor: Colors.white,
+              dotColor: Colors.white.withOpacity(0.6)),
+        ));
 
     Widget imageSlider(path, index) => Container(
           width: double.infinity,
@@ -115,32 +133,23 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
           child: Image.network(path, fit: BoxFit.cover),
         );
 
-    Widget indicator() => Container(
-        margin: const EdgeInsets.only(bottom: 20.0),
-        alignment: Alignment.bottomCenter,
-        child: AnimatedSmoothIndicator(
-          activeIndex: activeIndex,
-          count: widget.hotPlacePost?.photoList?.length ?? 0,
-          effect: JumpingDotEffect(
-              dotHeight: 6,
-              dotWidth: 6,
-              activeDotColor: Colors.white,
-              dotColor: Colors.white.withOpacity(0.6)),
-        ));
-
     return Obx(() {
       _postUser = userController.user.value;
 
       if (_postUser == null) {
         return Text("잠시 후 다시 시도해 주세요.");
       } else {
-        if (widget.type == 1 &&
-            _postUser!.uId != PreferenceUtil.getInt("uId")) {
+        if (widget.type == 1) {
+          attendController.acceptList
+              .removeWhere((element) => element.isAccepted == false);
+          _attendNum = attendController.acceptList.length;
           attendController.fetchAttendList(widget.pId);
-          _acceptionState = attendController.acceptionState;
-          _buttonColor = attendController.buttonColor.value;
-          _buttonTextColor = attendController.buttonTextColor.value;
-          _buttonText = attendController.buttonText.value;
+          if (_postUser!.uId != PreferenceUtil.getInt("uId")) {
+            _acceptionState = attendController.acceptionState;
+            _buttonColor = attendController.buttonColor.value;
+            _buttonTextColor = attendController.buttonTextColor.value;
+            _buttonText = attendController.buttonText.value;
+          }
         }
         // 댓글 목록
         return GestureDetector(
@@ -228,7 +237,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                 }),
                                               ),
                                               itemCount: widget.hotPlacePost!
-                                                  .photoList!.length,
+                                                  .photoList.length,
                                               itemBuilder:
                                                   (context, index, realIndex) {
                                                 final path = widget
@@ -273,7 +282,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                               margin: const EdgeInsets.only(
                                                   right: 10.0),
                                               child: Text(
-                                                  "3/${widget.meetingPost?.person}",
+                                                  "$_attendNum/${widget.meetingPost?.person}",
                                                   style: TextStyle(
                                                       fontSize: 12.0,
                                                       fontWeight:

@@ -21,13 +21,13 @@ class AttendController extends GetxController {
   Rx<Color> borderColor = AppTheme.mainColor.obs;
   Rx<String> buttonText = "명단 확인".obs;
 
-  RxList<AcceptationResponse>? _userList = <AcceptationResponse>[].obs;
+  RxList<AcceptationResponse>? _attendList = <AcceptationResponse>[].obs;
 
   AcceptionState get acceptionState => _acceptionState;
   Rx<Color> get userListButtonColor => _userListButtonColor;
   Rx<bool> get isAccepted => _isAccepted;
   RxList<AcceptationResponse> get acceptList =>
-      _userList == null ? <AcceptationResponse>[].obs : _userList!;
+      _attendList == null ? <AcceptationResponse>[].obs : _attendList!;
 
   Future requestParticipation(BuildContext context, int uId, int pId) async {
     checkState(uId, pId);
@@ -126,7 +126,7 @@ class AttendController extends GetxController {
     try {
       final users = await dbService.getAttendList(pId);
       users.removeWhere((element) => element.isAccepted == false);
-      _userList!.assignAll(users);
+      _attendList!.assignAll(users);
     } catch (error) {
       print(error.toString());
     }
