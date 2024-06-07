@@ -771,7 +771,7 @@ class DBService {
 
   Future<List<ReplyResponse>> getReplysByCId(int cId) async {
     final response =
-        await http.get(Uri.parse('http://localhost:1004/postReply/$cId'));
+        await http.get(Uri.parse('http://localhost:1004/postReply/find/$cId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -787,7 +787,7 @@ class DBService {
 
   Future<List<ReplyResponse>> getClubReplysByCcId(int ccId) async {
     final response =
-        await http.get(Uri.parse('http://localhost:1004/clubReply/$ccId'));
+        await http.get(Uri.parse('http://localhost:1004/clubReply/find/$ccId'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -802,10 +802,10 @@ class DBService {
 
   Future<List<ReplyResponse>> getHotPlaceReplysByHcId(int hcId) async {
     final response =
-        await http.get(Uri.parse('http://localhost:1004/hotReply/$hcId'));
+        await http.get(Uri.parse('http://localhost:1004/hotReply/find/$hcId'));
 
-    if (response.statusCode == 201) {
-      final jsonResponse = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = jsonDecode(response.body);
       return jsonResponse
           .map((e) => ReplyResponse.fromJson(e, ReplyResponseType.HotPlace))
           .toList();
