@@ -13,20 +13,17 @@ enum AcceptionState { join, nonParticipation, request }
 class AttendController extends GetxController {
   DBService dbService = DBService();
   AcceptionState _acceptionState = AcceptionState.nonParticipation;
-  var _buttonText = "참여하기".obs;
-  var _buttonColor = Colors.white.obs;
-  var _buttonBorderColor = AppTheme.mainColor.obs;
-  var _buttonTextColor = AppTheme.mainColor.obs;
   var _userListButtonColor = Color(0xffb3b3b3).obs;
   var _isAccepted = false.obs;
+
+  Rx<Color> buttonColor = Colors.white.obs;
+  Rx<Color> buttonTextColor = AppTheme.mainColor.obs;
+  Rx<Color> borderColor = AppTheme.mainColor.obs;
+  Rx<String> buttonText = "명단 확인".obs;
 
   RxList<AcceptationResponse>? _userList = <AcceptationResponse>[].obs;
 
   AcceptionState get acceptionState => _acceptionState;
-  Rx<String> get buttonText => _buttonText;
-  Rx<Color> get buttonColor => _buttonColor;
-  Rx<Color> get borderColor => _buttonBorderColor;
-  Rx<Color> get textColor => _buttonTextColor;
   Rx<Color> get userListButtonColor => _userListButtonColor;
   Rx<bool> get isAccepted => _isAccepted;
   RxList<AcceptationResponse> get acceptList =>
@@ -76,28 +73,29 @@ class AttendController extends GetxController {
 
   Future checkState(int uId, int pId) async {
     bool isExist = await dbService.checkRequestExist(uId, pId);
+    dev.log("참가 요청이 존재하는가? $isExist");
     if (isExist) {
       AcceptationResponse acceptation =
           await dbService.getRequestById(uId, pId);
       if (acceptation.isAccepted == true) {
         _acceptionState = AcceptionState.join;
-        _buttonText = "참여 완료".obs;
-        _buttonBorderColor = Colors.white.obs;
-        _buttonTextColor = Colors.white.obs;
-        _buttonColor = AppTheme.mainColor.obs;
+        buttonText.value = "참여 완료";
+        borderColor.value = Colors.white;
+        buttonTextColor.value = Colors.white;
+        buttonColor.value = AppTheme.mainColor;
       } else {
         _acceptionState = AcceptionState.request;
-        _buttonText = "참여 대기".obs;
-        _buttonBorderColor = Colors.white.obs;
-        _buttonTextColor = Colors.white.obs;
-        _buttonColor = AppTheme.mainColor.obs;
+        buttonText.value = "참여 대기";
+        borderColor.value = Colors.white;
+        buttonTextColor.value = Colors.white;
+        buttonColor.value = AppTheme.mainColor;
       }
     } else {
       _acceptionState = AcceptionState.nonParticipation;
-      _buttonText = "참여하기".obs;
-      _buttonBorderColor = AppTheme.mainColor.obs;
-      _buttonTextColor = AppTheme.mainColor.obs;
-      _buttonColor = Colors.white.obs;
+      buttonText.value = "참여하기";
+      borderColor.value = AppTheme.mainColor;
+      buttonTextColor.value = AppTheme.mainColor;
+      buttonColor.value = Colors.white;
     }
     update();
   }

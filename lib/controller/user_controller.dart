@@ -18,7 +18,7 @@ class UserController extends GetxController {
   RegisterState get registerState => _registerState;
 
   DBService db = DBService();
-  Rx<UserResponse?> user = Rx<UserResponse?>(null); // Rx로 변경
+  Rx<UserResponse?> user = Rx<UserResponse?>(null);
 
   Future checkUserInfo(String nickname, String major, String gender) async {
     if (nickname.isNotEmpty && major != "학과 선택" && gender != "성별") {

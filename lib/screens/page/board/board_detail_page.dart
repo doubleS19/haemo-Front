@@ -52,6 +52,10 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   CommentController commentController = CommentController();
   TextEditingController textController = TextEditingController();
   late AcceptionState _acceptionState;
+  late Color _buttonColor;
+  late Color _borderColor;
+  late Color _buttonTextColor;
+  late String _buttonText;
   DBService db = DBService();
   final FocusNode _focusNode = FocusNode();
   bool isReply = false;
@@ -62,6 +66,18 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
     textController.dispose();
     _focusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.type == 1) {
+      attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
+      _borderColor = AppTheme.mainColor;
+      _buttonColor = Colors.white;
+      _buttonTextColor = AppTheme.mainColor;
+      _buttonText = "명단 확인";
+    }
   }
 
   @override
@@ -88,11 +104,15 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
 
     int activeIndex = 0;
 
+    if (widget.hotPlacePost != null && widget.hotPlacePost!.photoList != null) {
+      print("photoList: ${widget.hotPlacePost!.photoList}");
+    }
+
     Widget imageSlider(path, index) => Container(
           width: double.infinity,
           height: 240,
           color: Colors.grey,
-          child: Image.asset(path, fit: BoxFit.cover),
+          child: Image.network(path, fit: BoxFit.cover),
         );
 
     Widget indicator() => Container(
@@ -110,17 +130,18 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
 
     return Obx(() {
       _postUser = userController.user.value;
-      if (widget.type == 1 &&
-          _postUser != null &&
-          _postUser!.uId != PreferenceUtil.getInt("uId")) {
-        dev.log("미란 로그: 들어와졌음");
-        attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
-        _acceptionState = attendController.acceptionState;
-        dev.log("미란 로그: ${_acceptionState}");
-      }
+
       if (_postUser == null) {
         return Text("잠시 후 다시 시도해 주세요.");
       } else {
+        if (widget.type == 1 &&
+            _postUser!.uId != PreferenceUtil.getInt("uId")) {
+          attendController.fetchAttendList(widget.pId);
+          _acceptionState = attendController.acceptionState;
+          _buttonColor = attendController.buttonColor.value;
+          _buttonTextColor = attendController.buttonTextColor.value;
+          _buttonText = attendController.buttonText.value;
+        }
         // 댓글 목록
         return GestureDetector(
             onTap: () {
@@ -272,7 +293,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           23.0),
-                                                  color: AppTheme.mainColor),
+                                                  color: _borderColor),
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
@@ -281,17 +302,21 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                       .height /
                                                   31,
                                               child: MaterialButton(
-                                                color: Colors.transparent,
+                                                color: _buttonColor,
                                                 elevation: 0.0,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            18.0),
+                                                    side: BorderSide(
+                                                        color: _borderColor)),
                                                 child: Text(
-                                                  attendController
-                                                      .buttonText.value,
+                                                  _buttonText,
                                                   style: TextStyle(
                                                       fontSize: 10.8,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color: attendController
-                                                          .textColor.value),
+                                                      color: _buttonTextColor),
                                                 ),
                                                 onPressed: () async {
                                                   if (_postUser!.uId ==
@@ -301,7 +326,6 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                         userList = await db
                                                             .getAttendUserList(
                                                                 widget.pId);
-
                                                     // ignore: use_build_context_synchronously
                                                     return showAttendUserDialog(
                                                         context,
