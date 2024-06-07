@@ -26,6 +26,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
   @override
   void initState() {
     super.initState();
+    hotPlaceController.updateHotPlaceList();
   }
 
   @override

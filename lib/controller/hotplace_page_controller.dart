@@ -31,24 +31,17 @@ class HotPlacePageController extends GetxController {
     update();
   }
 
-  void fetchPopularHotPlaceList() async {
-    try {
-      final hotplacePosts = await dbService.getPopularHotPlacePosts();
-      popularHotPlaceList.assignAll(hotplacePosts);
-      print("Success to get Popular HotPlaceList: ${hotPlacePostList.length}");
-    } catch (error) {
-      print("Error to get Popular HotPlaceList: ${error}");
-    }
+  Future fetchPopularHotPlaceList() async {
+    final hotplacePosts = await dbService.getPopularHotPlacePosts();
+    popularHotPlaceList.assignAll(hotplacePosts);
+    print("Success to get Popular HotPlaceList: ${hotPlacePostList.length}");
     update();
   }
 
-  void fetchHotPlaceList() async {
-    try {
-      final posts = await dbService.getAllHotPlacePost();
-      hotPlacePostList.assignAll(posts);
-      print("Success to get HotPlaceList: ${hotPlacePostList.length}");
-    } catch (error) {
-      print("Error to get HotPlaceList: ${error}");
-    }
+  Future fetchHotPlaceList() async {
+    final posts = await dbService.getAllHotPlacePost();
+    hotPlacePostList.assignAll(posts);
+    print("Success to get HotPlaceList: ${hotPlacePostList.length}");
+    update();
   }
 }

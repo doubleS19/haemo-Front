@@ -203,7 +203,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                     ),
                                   )
                                 ] else if (widget.type == 3 &&
-                                    widget.hotPlacePost?.photoList != null) ...[
+                                    widget.hotPlacePost?.photoList.length !=
+                                        0) ...[
                                   Container(
                                       decoration: BoxDecoration(
                                           borderRadius:
@@ -232,7 +233,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                                   (context, index, realIndex) {
                                                 final path = widget
                                                     .hotPlacePost!
-                                                    .photoList![index];
+                                                    .photoList[index];
                                                 return imageSlider(path, index);
                                               },
                                             ),

@@ -70,7 +70,8 @@ class _MyWishPageState extends State<MyWishPage> {
                           address: postList[index].address,
                           nickname: postList[index].nickname,
                           date: postList[index].date,
-                          photoList: []),
+                          photoList: [],
+                          heartNum: postList[index].heartNum),
                       PreferenceUtil.getInt("uid")!);
                 });
           } else if (snapshot.hasError) {

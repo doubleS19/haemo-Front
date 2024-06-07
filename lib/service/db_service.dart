@@ -321,9 +321,8 @@ class DBService {
   }
 
   Future<List<HotPlacePostResponse>> getPopularHotPlacePosts() async {
-    final response = await http.get(Uri.parse("http://localhost:1004/hot"));
-
-    ///   수정하기
+    final response =
+        await http.get(Uri.parse("http://localhost:1004/hot/popular"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
@@ -331,6 +330,7 @@ class DBService {
               (json) => HotPlacePostResponse.fromJson(json))
           .toList();
     } else {
+      print(response.statusCode);
       throw Exception('Failed to load popular hot place list');
     }
   }
@@ -520,7 +520,7 @@ class DBService {
     final response = await http.delete(
       Uri.parse('http://localhost:1004/accept/delete/$uId/$pId'),
     );
-    if (response.statusCode == 204) {
+    if (response.statusCode == 200) {
       print('Request deleted successfully');
     } else {
       throw Exception('Failed to delete Request');

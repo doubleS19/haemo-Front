@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
 
 class HotPlacePostResponse {
@@ -7,7 +9,7 @@ class HotPlacePostResponse {
   String nickname;
   String date;
   String? address;
-  late List<String>? photoList = [];
+  List<String?> photoList;
   int? heartNum = 0;
 
   HotPlacePostResponse(
@@ -17,7 +19,8 @@ class HotPlacePostResponse {
       required this.address,
       required this.nickname,
       required this.date,
-      this.photoList});
+      required this.photoList,
+      required this.heartNum});
 
   factory HotPlacePostResponse.fromJson(Map<String, dynamic> json) {
     return HotPlacePostResponse(
@@ -27,8 +30,8 @@ class HotPlacePostResponse {
       address: json['address'],
       date: json['date'],
       pId: json['hpId'],
-      //photoList: json['photolist'],
-      //heartNum: json['heartnum'],
+      photoList: List<String>.from(json['imageList']),
+      heartNum: json['heartnum'],
 
       /// 멀티파트 이미지 리스트 DB로 전송
     );
@@ -40,9 +43,9 @@ class HotPlacePostResponse {
         'content': content,
         'nickname': nickname,
         'date': date,
-        'address': address
-        //'photoList': photoList,
-        //'heartnum': heartNum
+        'address': address,
+        'imageList': photoList,
+        'heartnum': heartNum
 
         /// 멀티파트 이미지 리스트 변수 넣기
       };
