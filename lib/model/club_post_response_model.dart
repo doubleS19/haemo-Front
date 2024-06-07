@@ -8,6 +8,7 @@ class ClubPostResponse {
   final int pId;
   final String description;
   final String? logo;
+  final String date;
 
   ClubPostResponse(
       {required this.nickname,
@@ -16,7 +17,8 @@ class ClubPostResponse {
       required this.person,
       required this.description,
       required this.pId,
-      required this.logo});
+      required this.logo,
+      required this.date});
 
   factory ClubPostResponse.fromJson(Map<String, dynamic> json) {
     return ClubPostResponse(
@@ -26,7 +28,8 @@ class ClubPostResponse {
         person: json['person'],
         description: json['description'],
         pId: json['cpId'],
-        logo: json["logo"]);
+        logo: json["logo"],
+        date: json["date"]);
   }
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +39,7 @@ class ClubPostResponse {
         'person': person,
         'description': description,
         'cpId': pId,
-        'logo': logo
+        'logo': logo,
+        'date': date
       };
 }

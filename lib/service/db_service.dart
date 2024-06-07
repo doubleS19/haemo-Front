@@ -218,8 +218,8 @@ class DBService {
   }
 
   Future<UserResponse> getUserByHotPlace(int pId) async {
-    final response =
-        await http.get(Uri.parse("http://localhost:1004/hot/postUser/$pId"));
+    final response = await http
+        .get(Uri.parse("http://localhost:1004/hot/hotPlaceUser/$pId"));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body) as Map<String, dynamic>;
       return UserResponse.fromJson(jsonData);
@@ -545,7 +545,10 @@ class DBService {
       final data = json.decode(response.body) as bool;
       return data;
     } else {
-      throw Exception('Failed to check nickname availability');
+      print(response.statusCode);
+      print(response.body);
+      print("uId: $uId, pId: $pId");
+      throw Exception('Failed to check request exist');
     }
   }
 

@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hae_mo/controller/comment_controller.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
-import 'package:hae_mo/model/post_type.dart';
-import 'package:hae_mo/model/user_model.dart';
-
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
 import '../../components/commentWidget.dart';
@@ -20,6 +17,8 @@ class HotPlaceDetailPage extends StatefulWidget {
 }
 
 class _HotPlaceDetailPageState extends State<HotPlaceDetailPage> {
+  CommentController commentController = CommentController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,8 +69,8 @@ class _HotPlaceDetailPageState extends State<HotPlaceDetailPage> {
                   pId: widget.hotPlacePost.pId,
                   type: 3,
                   onReplyPressed: (int cId) {
-                    // commentController.cId.value = cId;
-                    // commentController.isReply.value = true;
+                    commentController.cId.value = cId;
+                    commentController.isReply.value = true;
                   },
                 ))
           ],

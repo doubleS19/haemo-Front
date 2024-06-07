@@ -6,7 +6,9 @@ import 'package:hae_mo/model/user_response_model.dart';
 import 'package:hae_mo/screens/components/userBottomSheet.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 
-Row userProfile(BuildContext context, UserResponse user) {
+Row userProfile(BuildContext context, UserResponse user, String date) {
+  final iconColor =
+      user.gender == "남자" ? AppTheme.blueColor : AppTheme.pinkColor;
   return Row(
     children: [
       SizedBox(
@@ -37,7 +39,7 @@ Row userProfile(BuildContext context, UserResponse user) {
           Text(
             user.nickname,
             style: TextStyle(
-              fontSize: 12.0,
+              fontSize: 13.0,
               color: AppTheme.mainTextColor,
               fontWeight: FontWeight.w600,
             ),
@@ -45,17 +47,18 @@ Row userProfile(BuildContext context, UserResponse user) {
           Row(
             children: [
               Text(
-                '${user.major}  /  ',
+                '${user.major} / ',
                 style: TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 10.0,
                   color: AppTheme.mainTextColor,
                   fontWeight: FontWeight.w400,
                 ),
               ),
+              Icon(Icons.favorite, size: 12.0, color: iconColor),
               Text(
-                user.gender,
+                " / ${date.replaceAll("년 ", ".").replaceAll("월 ", ".").replaceAll("일", "")}",
                 style: TextStyle(
-                  fontSize: 12.0,
+                  fontSize: 10.0,
                   color: AppTheme.mainTextColor,
                   fontWeight: FontWeight.w400,
                 ),

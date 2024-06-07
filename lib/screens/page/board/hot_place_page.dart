@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/model/user_response_model.dart';
+import 'package:hae_mo/screens/page/board/board_detail_page.dart';
 import 'package:hae_mo/service/db_service.dart';
 import '../../../common/theme.dart';
 import '../../../controller/hotplace_page_controller.dart';
@@ -56,7 +57,8 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                     child: popularHotPlaceCard(
                                         context,
                                         hotPlaceController
-                                            .popularHotPlaceList[index], hotPlaceController.uId));
+                                            .popularHotPlaceList[index],
+                                        hotPlaceController.uId));
                               },
                             )
                           : Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
@@ -79,10 +81,11 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                       crossAxisSpacing: 10),
                               itemBuilder: (BuildContext context, int index) {
                                 return hotPlaceCard(
-                                    context,
-                                    hotPlaceController
-                                        .hotPlacePostList.value[index],
-                                    hotPlaceController.uId,);
+                                  context,
+                                  hotPlaceController
+                                      .hotPlacePostList.value[index],
+                                  hotPlaceController.uId,
+                                );
                               }))))),
             ],
           )),
@@ -94,7 +97,11 @@ Widget popularHotPlaceCard(
     BuildContext context, HotPlacePostResponse hotPlaceData, int uId) {
   return GestureDetector(
       onTap: () {
-        Get.to(() => HotPlaceDetailPage(hotPlacePost: hotPlaceData));
+        Get.to(() => BoardDetailPage(
+              pId: hotPlaceData.pId,
+              type: 3,
+              hotPlacePost: hotPlaceData,
+            ));
       },
       child: Container(
           width: MediaQuery.of(context).size.width / 2,
@@ -131,7 +138,8 @@ Widget hotPlaceCard(
     BuildContext context, HotPlacePostResponse hotPlaceData, int uId) {
   return GestureDetector(
       onTap: () {
-        Get.to(() => HotPlaceDetailPage(hotPlacePost: hotPlaceData));
+        Get.to(() => BoardDetailPage(
+            pId: hotPlaceData.pId, type: 3, hotPlacePost: hotPlaceData));
       },
       child: Container(
           width: MediaQuery.of(context).size.width / 2.3,

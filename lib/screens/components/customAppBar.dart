@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/club_page_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
+import 'package:hae_mo/screens/components/heartButton.dart';
 import 'package:hae_mo/screens/components/wishStarButton.dart';
 import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
@@ -202,7 +203,7 @@ AppBar boardDetailAppbar(MeetingPageController meetingController,
             }
           },
         )
-      ] else ...[
+      ] else if (pId == 2) ...[
         FutureBuilder<bool>(
           future: clubPageController.checkIsWished(
             PreferenceUtil.getInt("uId")!,
@@ -226,6 +227,25 @@ AppBar boardDetailAppbar(MeetingPageController meetingController,
                   uId: PreferenceUtil.getInt("uId")!,
                   pId: pId,
                   type: type);
+            }
+          },
+        )
+      ] else ...[
+        FutureBuilder<bool>(
+          future: clubPageController.checkIsWished(
+            PreferenceUtil.getInt("uId")!,
+            pId,
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator(); // 예시로 로딩 스피너를 사용했습니다.
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (!snapshot.hasData || snapshot.data == null) {
+              return Text('Data not available');
+            } else {
+              return HeartButtonWidget(
+                  uId: PreferenceUtil.getInt("uId")!, pId: pId);
             }
           },
         )
