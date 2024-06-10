@@ -40,6 +40,17 @@ class PreferenceUtil {
     setString("role", user.role);
   }
 
+  static getUser() {
+    return UserResponse(
+        uId: getInt("uId")!,
+        studentId: getInt("studentid")!,
+        nickname: getString("nickname")!,
+        major: getString("major")!,
+        gender: getString("gender")!,
+        userImage: getInt("userImage")!,
+        role: getString("role")!);
+  }
+
   //get
   static bool? getBool(String key) => _prefs.getBool(key);
 

@@ -69,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                       : null;
                 },
                 controller: passwordCtr,
+                obscureText: true,
                 decoration: const InputDecoration(labelText: 'PW'),
               ),
             ),
@@ -79,7 +80,6 @@ class _LoginPageState extends State<LoginPage> {
                   if (loginSuccess) {
                     _loginController.checkUserExist(int.parse(idCtr.text));
                   }
-                  // await _loginController.login(idCtr.text, passwordCtr.text);
                 },
                 child: const Text('Login')),
           ]);

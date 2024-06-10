@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hae_mo/controller/login_controller.dart';
+import 'package:hae_mo/controller/user_controller.dart';
 import 'package:hae_mo/screens/Page/intro/register_page.dart';
 import 'package:hae_mo/screens/page/intro/login_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
@@ -20,22 +22,22 @@ class LoadingPage extends StatefulWidget {
 
 class _LoadingPageState extends State<LoadingPage> {
   final Duration duration = const Duration(milliseconds: 500);
+  LoginController loginController = Get.put(LoginController());
   bool selected = false;
-  String? id;
+  int? id;
 
   @override
   void initState() {
     super.initState();
     AppTheme.getThemeType();
-    id = PreferenceUtil.getString("nickname");
-    dev.log("id: ${PreferenceUtil.getString("nickname")}");
+    id = PreferenceUtil.getInt("uId");
     changePage(id);
   }
 
-  void changePage(String? id) {
+  void changePage(int? id) {
     Timer(const Duration(milliseconds: 2000), () {
-      if (id != null && id.isNotEmpty && id != "") {
-        Get.to(const HomePage());
+      if (id != null && id != 0) {
+        loginController.checkUserExist(PreferenceUtil.getInt("studentId"));
       } else {
         Get.to(const LoginPage());
       }
