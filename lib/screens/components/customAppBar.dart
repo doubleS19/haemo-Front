@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/controller/club_page_controller.dart';
+import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
+import 'package:hae_mo/controller/wish_controller.dart';
 import 'package:hae_mo/screens/components/heartButton.dart';
 import 'package:hae_mo/screens/components/wishStarButton.dart';
 import 'package:hae_mo/screens/page/setting/settings_page.dart';
@@ -168,87 +170,17 @@ Widget noticePageAdminAppbar(
   );
 }
 
-AppBar boardDetailAppbar(MeetingPageController meetingController,
-    ClubPageController clubPageController, int type, int pId) {
+AppBar boardDetailAppbar(WishController wishController, int type, int pId) {
   return AppBar(
     backgroundColor: Colors.transparent,
     foregroundColor: Colors.black,
     elevation: 0.0,
     automaticallyImplyLeading: true,
     actions: [
-      if (type == 1) ...[
-        FutureBuilder<bool>(
-          future: meetingController.checkIsWished(
-            PreferenceUtil.getInt("uId")!,
-            pId,
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              // 데이터가 로딩 중일 때 표시할 위젯
-              return Container(); // 예시로 로딩 스피너를 사용했습니다.
-            } else if (snapshot.hasError) {
-              // 에러가 발생한 경우 표시할 위젯
-              return Text('Error: ${snapshot.error}');
-            } else if (!snapshot.hasData || snapshot.data == null) {
-              // 데이터가 없는 경우나 null인 경우 표시할 위젯
-              return Text('Data not available');
-            } else {
-              // 데이터가 정상적으로 로드된 경우 표시할 위젯
-              final bool fillHeartColor = snapshot.data!;
-              return WishStarButton(
-                  fillHeart: fillHeartColor,
-                  uId: PreferenceUtil.getInt("uId")!,
-                  pId: pId,
-                  type: type);
-            }
-          },
-        )
-      ] else if (pId == 2) ...[
-        FutureBuilder<bool>(
-          future: clubPageController.checkIsWished(
-            PreferenceUtil.getInt("uId")!,
-            pId,
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              // 데이터가 로딩 중일 때 표시할 위젯
-              return CircularProgressIndicator(); // 예시로 로딩 스피너를 사용했습니다.
-            } else if (snapshot.hasError) {
-              // 에러가 발생한 경우 표시할 위젯
-              return Text('Error: ${snapshot.error}');
-            } else if (!snapshot.hasData || snapshot.data == null) {
-              // 데이터가 없는 경우나 null인 경우 표시할 위젯
-              return Text('Data not available');
-            } else {
-              // 데이터가 정상적으로 로드된 경우 표시할 위젯
-              final bool fillHeartColor = snapshot.data!;
-              return WishStarButton(
-                  fillHeart: fillHeartColor,
-                  uId: PreferenceUtil.getInt("uId")!,
-                  pId: pId,
-                  type: type);
-            }
-          },
-        )
+      if (type == 3) ...[
+        HeartButtonWidget(uId: PreferenceUtil.getInt("uId")!, pId: pId)
       ] else ...[
-        FutureBuilder<bool>(
-          future: clubPageController.checkIsWished(
-            PreferenceUtil.getInt("uId")!,
-            pId,
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator(); // 예시로 로딩 스피너를 사용했습니다.
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else if (!snapshot.hasData || snapshot.data == null) {
-              return Text('Data not available');
-            } else {
-              return HeartButtonWidget(
-                  uId: PreferenceUtil.getInt("uId")!, pId: pId);
-            }
-          },
-        )
+        WishStarButton(uId: PreferenceUtil.getInt("uId")!, pId: pId, type: type)
       ]
     ],
   );

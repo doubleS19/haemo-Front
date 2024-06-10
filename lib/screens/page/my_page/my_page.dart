@@ -6,7 +6,7 @@ import 'package:hae_mo/screens/components/customAppBar.dart';
 import 'package:hae_mo/screens/page/my_page/my_meeting_page.dart';
 import 'package:hae_mo/screens/page/my_page/my_wish_club_page%20.dart';
 import 'package:hae_mo/screens/page/my_page/my_wish_meeting_page.dart';
-import 'package:hae_mo/screens/page/my_page/my_wish_page.dart';
+import 'package:hae_mo/screens/page/my_page/my_wish_place_page.dart';
 import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
 import 'package:hae_mo/model/user_response_model.dart';
@@ -102,7 +102,7 @@ Widget myPageColumn() {
     Divider(color: AppTheme.mainPageTextColor),
     InkWell(
         onTap: () {
-          Get.to(() => const MyWishPage());
+          Get.to(() => const MyWishPlacePage());
         },
         child: Container(
           width: double.infinity,

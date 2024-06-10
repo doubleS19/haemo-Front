@@ -7,13 +7,8 @@ import 'package:hae_mo/service/db_service.dart';
 
 class WishStarButton extends StatefulWidget {
   const WishStarButton(
-      {super.key,
-      required this.fillHeart,
-      required this.uId,
-      required this.pId,
-      required this.type});
+      {super.key, required this.uId, required this.pId, required this.type});
 
-  final bool fillHeart;
   final int uId;
   final int pId;
   final int type;
@@ -22,13 +17,25 @@ class WishStarButton extends StatefulWidget {
 }
 
 class _WishStarButtonState extends State<WishStarButton> {
-  late bool fillHeartColor;
+  bool fillHeartColor = false;
   DBService db = DBService();
 
   @override
   void initState() {
     super.initState();
-    fillHeartColor = widget.fillHeart;
+    _fetchWishList().then((result) {
+      setState(() {
+        fillHeartColor = result;
+      });
+    });
+  }
+
+  Future<bool> _fetchWishList() async {
+    var wishResponseList = widget.type == 1
+        ? await db.checkWishMeetingExist(widget.uId, widget.pId)
+        : await db.checkWishClubExist(widget.uId, widget.pId);
+
+    return wishResponseList;
   }
 
   @override

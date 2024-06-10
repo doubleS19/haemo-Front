@@ -9,6 +9,7 @@ import 'package:hae_mo/controller/comment_controller.dart';
 import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/controller/user_controller.dart';
+import 'package:hae_mo/controller/wish_controller.dart';
 import 'package:hae_mo/model/acceptation_response_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
@@ -51,6 +52,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   HotPlacePageController hotPlacePageController = HotPlacePageController();
   AttendController attendController = AttendController();
   CommentController commentController = CommentController();
+  WishController wishController = WishController();
   TextEditingController textController = TextEditingController();
   late AcceptionState _acceptionState;
   late Color _buttonColor;
@@ -81,6 +83,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
       _buttonTextColor = AppTheme.mainColor;
       _buttonText = "명단 확인";
       _attendNum = 0;
+      _acceptionState = AcceptionState.nonParticipation;
     }
   }
 
@@ -137,7 +140,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
       _postUser = userController.user.value;
 
       if (_postUser == null) {
-        return Text("잠시 후 다시 시도해 주세요.");
+        return const Text("잠시 후 다시 시도해 주세요.");
       } else {
         if (widget.type == 1) {
           attendController.acceptList
@@ -172,8 +175,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                         resizeToAvoidBottomInset: false,
                         appBar: (_postUser!.uId == PreferenceUtil.getInt("uId")
                             ? boardWriterAppbar()
-                            : boardDetailAppbar(meetingController,
-                                clubPageController, widget.type, widget.pId)),
+                            : boardDetailAppbar(
+                                wishController, widget.type, widget.pId)),
                         body: SingleChildScrollView(
                             child: Column(children: [
                           Divider(
