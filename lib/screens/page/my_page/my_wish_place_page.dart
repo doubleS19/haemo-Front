@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hae_mo/common/color.dart';
 import 'package:hae_mo/controller/hotplace_page_controller.dart';
-import 'package:hae_mo/controller/wish_controller.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
 import 'package:hae_mo/screens/Page/board/hot_place_page.dart';
 import 'package:hae_mo/service/db_service.dart';
@@ -15,23 +14,15 @@ class MyWishPlacePage extends StatefulWidget {
 }
 
 class _MyWishPlacePageState extends State<MyWishPlacePage> {
-  WishController wishController = WishController();
   List<HotPlacePostResponse> postList = [];
 
   @override
   void initState() {
     super.initState();
-    wishController.getWishHotPlacePosts();
   }
 
   @override
   Widget build(BuildContext context) {
-    wishController.wishHotPlace.listen((value) {
-      setState(() {
-        postList = value;
-      });
-    });
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,

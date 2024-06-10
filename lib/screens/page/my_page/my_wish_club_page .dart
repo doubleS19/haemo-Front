@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/controller/wish_controller.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/screens/Page/board/board_detail_page.dart';
@@ -18,23 +17,15 @@ class MyWishClubPage extends StatefulWidget {
 }
 
 class _MyWishClubPageState extends State<MyWishClubPage> {
-  WishController wishController = Get.put(WishController());
   List<ClubPostResponse> postList = [];
 
   @override
   void initState() {
     super.initState();
-    wishController.getWishClubPosts();
   }
 
   @override
   build(BuildContext context) {
-    wishController.wishClubPost.listen((value) {
-      setState(() {
-        postList = value;
-      });
-    });
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,

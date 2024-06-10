@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/controller/wish_controller.dart';
 import 'package:hae_mo/model/post_response_model.dart';
 import 'package:hae_mo/screens/Page/board/board_detail_page.dart';
 import 'package:hae_mo/screens/components/wishStarButton.dart';
@@ -16,23 +15,15 @@ class MyWishMeetingPage extends StatefulWidget {
 }
 
 class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
-  WishController wishController = Get.put(WishController());
   List<PostResponse> postList = [];
 
   @override
   void initState() {
     super.initState();
-    wishController.getWishMeetingPosts();
   }
 
   @override
   build(BuildContext context) {
-    wishController.wishMeetingPost.listen((value) {
-      setState(() {
-        postList = value;
-      });
-    });
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,

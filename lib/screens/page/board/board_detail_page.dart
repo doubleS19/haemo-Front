@@ -9,7 +9,6 @@ import 'package:hae_mo/controller/comment_controller.dart';
 import 'package:hae_mo/controller/hotplace_page_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/controller/user_controller.dart';
-import 'package:hae_mo/controller/wish_controller.dart';
 import 'package:hae_mo/model/acceptation_response_model.dart';
 import 'package:hae_mo/model/club_post_response_model.dart';
 import 'package:hae_mo/model/hotplace_post_response_model.dart';
@@ -52,7 +51,6 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
   HotPlacePageController hotPlacePageController = HotPlacePageController();
   AttendController attendController = AttendController();
   CommentController commentController = CommentController();
-  WishController wishController = WishController();
   TextEditingController textController = TextEditingController();
   late AcceptionState _acceptionState;
   late Color _buttonColor;
@@ -175,8 +173,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                         resizeToAvoidBottomInset: false,
                         appBar: (_postUser!.uId == PreferenceUtil.getInt("uId")
                             ? boardWriterAppbar()
-                            : boardDetailAppbar(
-                                wishController, widget.type, widget.pId)),
+                            : boardDetailAppbar(widget.type, widget.pId)),
                         body: SingleChildScrollView(
                             child: Column(children: [
                           Divider(

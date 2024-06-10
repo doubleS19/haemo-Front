@@ -58,14 +58,16 @@ class DBService {
         },
         body: jsonEncode(post.toJson()),
       );
+
       if (response.statusCode != 201) {
-        throw Exception("Failed to send data");
+        print(response.statusCode);
+        throw Exception("Failed to send meeting post data");
       } else {
-        dev.log("Post Data sent successfully");
+        dev.log("Meeting Post Data sent successfully");
         return true;
       }
     } catch (e) {
-      dev.log("Failed to send post data: ${e}");
+      dev.log("Failed to send meeting post data: ${e}");
       return false;
     }
   }
@@ -90,6 +92,17 @@ class DBService {
       return data
           .map<PostResponse>((json) => PostResponse.fromJson(json))
           .toList();
+    } else {
+      throw Exception('Failed to load post llist');
+    }
+  }
+
+  Future<List<int>> getAttendeesCount() async {
+    final response =
+        await http.get(Uri.parse("http://localhost:1004/accept/list"));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as List<dynamic>;
+      return data.map<int>((json) => json).toList();
     } else {
       throw Exception('Failed to load post llist');
     }
@@ -130,6 +143,7 @@ class DBService {
     } else if (response.statusCode == 404) {
       throw Exception("User not found");
     } else {
+      print(response.statusCode);
       throw Exception("Failed to fetch User by Nickname");
     }
   }

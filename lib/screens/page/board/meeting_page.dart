@@ -41,9 +41,7 @@ class _MeetingPageState extends State<MeetingPage> {
 
     return Obx(() {
       final postList = meetingController.todayNoticeList;
-      if (postList.isEmpty) {
-        return Container();
-      } else {
+      if (postList.isNotEmpty) {
         return Align(
           alignment: Alignment.centerLeft,
           child: ListView.builder(
@@ -154,6 +152,8 @@ class _MeetingPageState extends State<MeetingPage> {
             },
           ),
         );
+      } else {
+        return Container();
       }
     });
   }
@@ -165,8 +165,8 @@ class _MeetingPageState extends State<MeetingPage> {
     return Obx(
       () {
         final postList = meetingController.postList;
-
         attendPerson = attendController.attendeesCount;
+
         if (postList.isEmpty) {
           return const Center(
             child: Text(
@@ -184,6 +184,9 @@ class _MeetingPageState extends State<MeetingPage> {
                 itemCount: postList.length,
                 itemBuilder: (BuildContext context, int index) {
                   attendController.fetchAttendList(postList[index].pId);
+                  attendPerson.length >= index
+                      ? attendController.fetchAttendList(postList[index].pId)
+                      : attendController.fetchAttendeesCount();
                   return GestureDetector(
                     onTap: () {
                       Get.to(() => BoardDetailPage(
