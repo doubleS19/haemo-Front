@@ -36,21 +36,15 @@ class MeetingPageController extends GetxController {
   int get boardPerson => _boardPerson;
 
   void fetchTodayNotice() async {
-    try {
-      final posts = await dbService.get24HoursPosts();
-      todayNoticeList.assignAll(posts);
-    } catch (error) {
-      print(error.toString());
-    }
+    final posts = await dbService.get24HoursPosts();
+    todayNoticeList.assignAll(posts);
+    update();
   }
 
   void fetchBoardList() async {
-    try {
-      final posts = await dbService.getAllPost();
-      postList.assignAll(posts);
-    } catch (error) {
-      print(error.toString());
-    }
+    final posts = await dbService.getAllPost();
+    postList.assignAll(posts);
+    update();
   }
 
   // void fetchPostPerson(int pId) async {
