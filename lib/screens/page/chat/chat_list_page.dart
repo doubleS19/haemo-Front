@@ -29,7 +29,7 @@ class _ChatListPageState extends State<ChatListPage> {
   void initState() {
     super.initState();
 
-    chatListController.uId = PreferenceUtil.getInt("uid")!;
+    chatListController.uId = PreferenceUtil.getInt("uId")!;
     chatListController.getChatList();
   }
 
@@ -56,9 +56,10 @@ class _ChatListPageState extends State<ChatListPage> {
                   width: MediaQuery.sizeOf(context).width,
                   child: StreamBuilder(
                     stream: chatListController.getChatList(),
-                    builder: (context, snapshot){
-                      if(!snapshot.hasData){
-                        return Center(child: Container(child: Text("메세지가 없어용~")));
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                            child: Container(child: Text("메세지가 없어용~")));
                       }
                       List<ChatRoom>? chatRoomList = snapshot.data;
                       return ListView.separated(
@@ -72,7 +73,7 @@ class _ChatListPageState extends State<ChatListPage> {
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(height: 1));
+                              const Divider(height: 1));
                     },
                   ))
             ],
@@ -114,11 +115,11 @@ class _SlidableCardState extends State<SlidableCard> {
     return FutureBuilder(
         future: chatListController.getOtherUserInfo(widget.chat),
         builder: (context, snapshot) {
-          if(snapshot.hasData){
+          if (snapshot.hasData) {
             return GestureDetector(
                 onTap: () {
-                  Get.to(() =>
-                      ChatRoomPage(chatRoomId: widget.chat.id, otherUser: snapshot.data!));
+                  Get.to(() => ChatRoomPage(
+                      chatRoomId: widget.chat.id, otherUser: snapshot.data!));
                 },
                 child: SizedBox(
                     height: 85,
@@ -142,15 +143,16 @@ class _SlidableCardState extends State<SlidableCard> {
                           ),
                         ],
                       ),
-                      child: chatCard(widget.chat.recentMessage, snapshot.data!),
+                      child:
+                          chatCard(widget.chat.recentMessage, snapshot.data!),
                     )));
-          }else{
+          } else {
             return Container();
           }
         });
   }
 
-  Widget chatCard(ChatMessage chat,UserResponse user) {
+  Widget chatCard(ChatMessage chat, UserResponse user) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
