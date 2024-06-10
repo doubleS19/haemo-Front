@@ -384,13 +384,14 @@ class DBService {
   Future<List<HotPlacePostResponse>> getWishListHpIdsByUser(int uId) async {
     final response =
         await http.get(Uri.parse('http://localhost:1004/wish/myList/$uId'));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
           .map<HotPlacePostResponse>(
               (json) => HotPlacePostResponse.fromJson(json))
           .toList();
     } else {
+      print(response.statusCode);
       throw Exception('Failed to load hot list');
     }
   }
@@ -617,7 +618,7 @@ class DBService {
     final response = await http.delete(
       Uri.parse('http://localhost:1004/wishMeeting/delete/$uId/$pId'),
     );
-    if (response.statusCode == 204) {
+    if (response.statusCode == 200) {
       print('WishList deleted successfully');
     } else {
       throw Exception('Failed to delete Wish Meeting List');
@@ -633,6 +634,7 @@ class DBService {
           .map<PostResponse>((json) => PostResponse.fromJson(json))
           .toList();
     } else {
+      print(response.statusCode);
       throw Exception('Failed to load post list');
     }
   }
@@ -640,6 +642,18 @@ class DBService {
   Future<bool> checkWishClubExist(int uId, int pId) async {
     final response = await http
         .get(Uri.parse("http://localhost:1004/wishClub/isExist/$uId/$pId"));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as bool;
+      return data;
+    } else {
+      throw Exception('Failed to check wish Meeting exist.');
+    }
+  }
+
+  Future<bool> checkWishHotPlaceExist(int uId, int pId) async {
+    final response = await http
+        .get(Uri.parse("http://localhost:1004/wish/isExist/$uId/$pId"));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as bool;
@@ -670,7 +684,7 @@ class DBService {
     final response = await http.delete(
       Uri.parse('http://localhost:1004/wishClub/delete/$uId/$pId'),
     );
-    if (response.statusCode == 204) {
+    if (response.statusCode == 201) {
       print('WishList deleted successfully');
     } else {
       print("딜리트 클럽 스테이터스: ${response.statusCode}");
@@ -681,12 +695,13 @@ class DBService {
   Future<List<ClubPostResponse>> getWishClubListByUser(int uId) async {
     final response =
         await http.get(Uri.parse('http://localhost:1004/wishClub/myList/$uId'));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final data = json.decode(response.body) as List<dynamic>;
       return data
           .map<ClubPostResponse>((json) => ClubPostResponse.fromJson(json))
           .toList();
     } else {
+      print(response.statusCode);
       throw Exception('Failed to load post list');
     }
   }
