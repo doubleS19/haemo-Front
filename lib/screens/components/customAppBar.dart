@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/controller/club_page_controller.dart';
-import 'package:hae_mo/controller/hotplace_page_controller.dart';
-import 'package:hae_mo/controller/meeting_page_controller.dart';
-import 'package:hae_mo/controller/wish_controller.dart';
 import 'package:hae_mo/screens/components/heartButton.dart';
 import 'package:hae_mo/screens/components/wishStarButton.dart';
 import 'package:hae_mo/screens/page/setting/settings_page.dart';
 import 'package:hae_mo/utils/shared_preference.dart';
-
 import '../../common/color.dart';
 import '../../common/theme.dart';
-import '../Page/board/meeting_page.dart';
 import '../Page/chat/chat_list_page.dart';
 import 'customDialog.dart';
 
@@ -170,7 +164,7 @@ Widget noticePageAdminAppbar(
   );
 }
 
-AppBar boardDetailAppbar(WishController wishController, int type, int pId) {
+AppBar boardDetailAppbar(int type, int pId) {
   return AppBar(
     backgroundColor: Colors.transparent,
     foregroundColor: Colors.black,

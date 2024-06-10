@@ -10,7 +10,7 @@ class HotPlacePostResponse {
   String date;
   String? address;
   List<String?> photoList;
-  int? heartNum = 0;
+  int heartNum = 0;
 
   HotPlacePostResponse(
       {required this.pId,
@@ -31,7 +31,7 @@ class HotPlacePostResponse {
       date: json['date'],
       pId: json['hpId'],
       photoList: List<String>.from(json['imageList']),
-      heartNum: json['heartnum'],
+      heartNum: json['wishing'],
 
       /// 멀티파트 이미지 리스트 DB로 전송
     );
@@ -45,7 +45,7 @@ class HotPlacePostResponse {
         'date': date,
         'address': address,
         'imageList': photoList,
-        'heartnum': heartNum
+        'wishing': heartNum
 
         /// 멀티파트 이미지 리스트 변수 넣기
       };

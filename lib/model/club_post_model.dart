@@ -16,11 +16,13 @@ class ClubPost extends PostBase {
       required String content,
       this.logo,
       required this.person,
-      this.hashTag})
+      this.hashTag,
+      required int wishCnt})
       : super(
           nickname: nickname,
           title: title,
           content: content,
+          wishCnt: 0,
         );
 
   factory ClubPost.fromJson(Map<String, dynamic> json) {
@@ -31,7 +33,8 @@ class ClubPost extends PostBase {
         description: json['description'],
         person: json['person'],
         logo: json['image'],
-        hashTag: json['hashTag']
+        hashTag: json['hashTag'],
+        wishCnt: 0
 
         /// 멀티파트 이미지 리스트 DB로 전송
         );
@@ -44,7 +47,8 @@ class ClubPost extends PostBase {
         'description': description,
         'person': person,
         'image': logo,
-        'hashTag': hashTag
+        'hashTag': hashTag,
+        'wishClubCnt': wishCnt
 
         /// 멀티파트 이미지 리스트 변수 넣기
       };

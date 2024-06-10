@@ -33,19 +33,27 @@ class PostController extends GetxController {
           person: 0,
           category: "",
           deadline: "",
-          date: "")
+          date: "",
+          wishCnt: 0)
       .obs;
-  late Rx<ClubPost> clubPost =
-      ClubPost(nickname: "", title: "", description: "", content: "", person: 0)
-          .obs;
+  late Rx<ClubPost> clubPost = ClubPost(
+          nickname: "",
+          title: "",
+          description: "",
+          content: "",
+          person: 0,
+          wishCnt: 0)
+      .obs;
   late Rx<HotPlacePost> hotPlacePost = HotPlacePost(
-      nickname: "",
-      date: "",
-      title: "",
-      address: "",
-      description: "",
-      content: "",
-      photoList: []).obs;
+          nickname: "",
+          date: "",
+          title: "",
+          address: "",
+          description: "",
+          content: "",
+          photoList: [],
+          wishCnt: 0)
+      .obs;
 
   PostController(PostType type) {
     postType = type;
@@ -70,6 +78,7 @@ class PostController extends GetxController {
           post?.person = selectedPerson.value;
           post?.deadline = getDeadLineFormat();
           post?.date = getNow();
+          post?.wishCnt = 0;
         });
         break;
       case PostType.club:
@@ -81,6 +90,7 @@ class PostController extends GetxController {
           clubPost?.person = selectedPerson.value;
           clubPost?.logo = null;
           clubPost?.hashTag = [''];
+          clubPost?.wishCnt = 0;
         });
         break;
       case PostType.hotPlace:
@@ -91,6 +101,7 @@ class PostController extends GetxController {
           hotPlacePost?.content = detailTextContext.text;
           hotPlacePost?.date = getNow();
           //hotPlacePost?.photoList = [];
+          hotPlacePost?.wishCnt = 0;
         });
         break;
     }

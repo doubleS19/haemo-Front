@@ -100,8 +100,9 @@ class _PostingPageState extends State<PostingPage> {
                   isSuccess = await postController.saveBoard();
                   if (isSuccess) {
                     /// 다이얼로그 안 됨ㅠㅠ
-                    showMyAlertDialog(
-                        context, "확인요망!!", "게시물이 전송되었습니다. ", null);
+                    showMyAlertDialog(context, "확인요망!!", "게시물이 전송되었습니다. ", () {
+                      Get.to(const HomePage());
+                    });
                     postController.deleteData();
                     Get.to(const HomePage());
                   } else {
