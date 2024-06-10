@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hae_mo/common/color.dart';
+import 'package:hae_mo/controller/board/attend_controller.dart';
 import 'package:hae_mo/controller/meeting_page_controller.dart';
 import 'package:hae_mo/screens/page/board/board_detail_page.dart';
 import '../../components/customAppBar.dart';
@@ -16,6 +17,7 @@ class MeetingPage extends StatefulWidget {
 class _MeetingPageState extends State<MeetingPage> {
   final MeetingPageController meetingController =
       Get.find<MeetingPageController>();
+  final AttendController attendController = AttendController();
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +100,7 @@ class _MeetingPageState extends State<MeetingPage> {
                             postList[index].title,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 13.5,
                               color: AppTheme.mainPageTextColor,
@@ -158,12 +160,15 @@ class _MeetingPageState extends State<MeetingPage> {
 
   Widget postList() {
     meetingController.fetchBoardList();
-
+    attendController.fetchAttendeesCount();
+    List<int> attendPerson = List.filled(10000, 0);
     return Obx(
       () {
         final postList = meetingController.postList;
+
+        attendPerson = attendController.attendeesCount;
         if (postList.isEmpty) {
-          return Center(
+          return const Center(
             child: Text(
               "게시물이 없어요!",
               style: TextStyle(
@@ -178,6 +183,7 @@ class _MeetingPageState extends State<MeetingPage> {
               child: ListView.builder(
                 itemCount: postList.length,
                 itemBuilder: (BuildContext context, int index) {
+                  attendController.fetchAttendList(postList[index].pId);
                   return GestureDetector(
                     onTap: () {
                       Get.to(() => BoardDetailPage(
@@ -207,17 +213,17 @@ class _MeetingPageState extends State<MeetingPage> {
                                         postList[index].title,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: AppTheme.mainPageTextColor,
                                           fontSize: 13.5,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 10.0),
+                                    const SizedBox(width: 10.0),
                                     Expanded(
                                       child: Text(
-                                        "3/${postList[index].person}",
+                                        "${attendPerson[index]}/${postList[index].person}",
                                         style: TextStyle(
                                           fontSize: 12.0,
                                           color: AppTheme.mainColor,
@@ -242,7 +248,7 @@ class _MeetingPageState extends State<MeetingPage> {
                                     ),
                                     Text(
                                       postList[index].deadline,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 12.0,
                                         color: AppTheme.mainPageTextColor,
                                       ),
@@ -253,7 +259,8 @@ class _MeetingPageState extends State<MeetingPage> {
                             ),
                           ),
                         ),
-                        Divider(thickness: 1.0, color: AppTheme.dividerColor),
+                        const Divider(
+                            thickness: 1.0, color: AppTheme.dividerColor),
                       ],
                     ),
                   );

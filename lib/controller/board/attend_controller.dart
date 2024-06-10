@@ -28,6 +28,7 @@ class AttendController extends GetxController {
   Rx<bool> get isAccepted => _isAccepted;
   RxList<AcceptationResponse> get acceptList =>
       _attendList == null ? <AcceptationResponse>[].obs : _attendList!;
+  RxList<int> attendeesCount = <int>[].obs;
 
   Future requestParticipation(BuildContext context, int uId, int pId) async {
     checkState(uId, pId);
@@ -127,6 +128,17 @@ class AttendController extends GetxController {
       final users = await dbService.getAttendList(pId);
       users.removeWhere((element) => element.isAccepted == false);
       _attendList!.assignAll(users);
+    } catch (error) {
+      print(error.toString());
+    }
+    update();
+  }
+
+  void fetchAttendeesCount() async {
+    attendeesCount = List<int>.filled(10000, 0).obs;
+    try {
+      final countList = await dbService.getAttendeesCount();
+      attendeesCount.assignAll(countList);
     } catch (error) {
       print(error.toString());
     }
