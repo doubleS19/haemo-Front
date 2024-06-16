@@ -1,52 +1,46 @@
 {
   "project_info": {
-    "project_number": "465184171545",
-    "firebase_url": "https://haemochat-b19a3-default-rtdb.firebaseio.com",
-    "project_id": "haemochat-b19a3",
-    "storage_bucket": "haemochat-b19a3.appspot.com"
+    "project_number": "536803529638",
+    "firebase_url": "https://haemo-c394a-default-rtdb.firebaseio.com",
+    "project_id": "haemo-c394a",
+    "storage_bucket": "haemo-c394a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:465184171545:android:1978e1275278ad792eac88",
+        "mobilesdk_app_id": "1:536803529638:android:5ba8d66fbbaa05606bf567",
         "android_client_info": {
-          "package_name": "com.example.hae_mo"
+          "package_name": "com.example.haemo"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "465184171545-oi5un4aejcoou0n83a9odd3f521cdfpm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.hae_mo",
-            "certificate_hash": "e7b87faf81490416a428093bd542192c25100ef7"
-          }
-        },
-        {
-          "client_id": "465184171545-vemki922i63l39gobggopgr50oaqbp5j.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCIIXMlSY4xSW_h5wefZTQmjzIJ7BJBuN0"
+          "current_key": "AIzaSyC5FkHJGSA_85p2Ni7tGGMxPH-sMz6pzzc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "465184171545-vemki922i63l39gobggopgr50oaqbp5j.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "465184171545-vjfs44s2g0ji67f2eub8fstlc5qemjb0.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.haeMo"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:536803529638:android:09ff4d58114e3afa6bf567",
+        "android_client_info": {
+          "package_name": "com.example.haemo_kotlin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5FkHJGSA_85p2Ni7tGGMxPH-sMz6pzzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }

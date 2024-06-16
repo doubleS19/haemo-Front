@@ -1,6 +1,6 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
+import 'package:haemo/utils/shared_preference.dart';
 
 import '../../common/color.dart';
 
@@ -15,16 +15,18 @@ class SettingScreenThemeController extends GetxController {
   final RxList<bool> isCheckedList = [false, false, false, false].obs;
   ThemeType themeType = AppTheme.themeType.value;
 
-  SettingScreenThemeController(){
+  SettingScreenThemeController() {
     getTheme();
   }
 
-  void getTheme(){
-    isCheckedList[colorTheme.keys.firstWhere((key)=> colorTheme[key] == AppTheme.themeType.value)] = true;
+  void getTheme() {
+    isCheckedList[colorTheme.keys
+            .firstWhere((key) => colorTheme[key] == AppTheme.themeType.value)] =
+        true;
   }
 
   void changeTheme(int selectedIndex) {
-    AppTheme.changeThemeType(colorTheme[selectedIndex]??ThemeType.Blue);
+    AppTheme.changeThemeType(colorTheme[selectedIndex] ?? ThemeType.Blue);
     PreferenceUtil.setInt("colorTheme", selectedIndex);
   }
 
@@ -33,8 +35,10 @@ class SettingScreenThemeController extends GetxController {
       isCheckedList[i] = (i == selectedIndex);
     }
   }
-  void rollBackColor(){
+
+  void rollBackColor() {
     AppTheme.changeThemeType(themeType);
-    PreferenceUtil.setInt("colorTheme", colorTheme.keys.firstWhere((key)=> colorTheme[key] == themeType));
+    PreferenceUtil.setInt("colorTheme",
+        colorTheme.keys.firstWhere((key) => colorTheme[key] == themeType));
   }
 }

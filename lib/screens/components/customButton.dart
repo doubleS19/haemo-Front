@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:hae_mo/controller/setting/contact_email_controller.dart';
-import 'package:hae_mo/screens/components/customDialog.dart';
-import 'package:hae_mo/screens/page/home_page.dart';
+import 'package:haemo/controller/setting/contact_email_controller.dart';
+import 'package:haemo/screens/components/customDialog.dart';
+import 'package:haemo/screens/page/home_page.dart';
 
 import '../../common/color.dart';
 import '../../common/theme.dart';
@@ -68,7 +68,6 @@ Widget reportingPageCustomBotton(
                 color: Colors.white),
           )));
 }
-
 
 Widget chatIconButton(Icon icon, Function onClick) {
   return GestureDetector(

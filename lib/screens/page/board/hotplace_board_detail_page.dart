@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hae_mo/controller/comment_controller.dart';
-import 'package:hae_mo/model/hotplace_post_response_model.dart';
+import 'package:haemo/controller/comment_controller.dart';
+import 'package:haemo/model/hotplace_post_response_model.dart';
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
 import '../../components/commentWidget.dart';

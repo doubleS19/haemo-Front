@@ -1,4 +1,4 @@
-import 'package:hae_mo/model/reply_model.dart';
+import 'package:haemo/model/reply_model.dart';
 
 enum ReplyResponseType { Post, Club, HotPlace }
 

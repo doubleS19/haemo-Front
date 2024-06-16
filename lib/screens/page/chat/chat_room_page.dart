@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:hae_mo/controller/chat_controller.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/components/customAppBar.dart';
-import 'package:hae_mo/utils/chage_time_format.dart';
+import 'package:haemo/controller/chat_controller.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/screens/components/customAppBar.dart';
+import 'package:haemo/utils/chage_time_format.dart';
 import '../../../common/color.dart';
 import '../../../model/chat_message_model.dart';
 import '../../../utils/shared_preference.dart';
@@ -38,7 +38,7 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   void initState() {
     super.initState();
     if (widget.chatRoomId != "") {
-      chatController.chatRoomId.value = widget.chatRoomId!;
+      chatController.chatId.value = widget.chatRoomId!;
     }
     chatController.uId = PreferenceUtil.getInt("uId")!;
   }
@@ -63,19 +63,14 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           children: [
             Expanded(
               flex: 1,
-              child: Container(
-                child: chatListStreamList()
-              ),
+              child: Container(child: Text("하")),
             ),
             Container(
               height: 80,
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               color: Colors.white,
-              child: chatTextField(
-                  _textController,
-                  () => _handleSubmitted()
-              ),
+              child: chatTextField(_textController, () => _handleSubmitted()),
             ),
           ],
         ),
@@ -97,49 +92,6 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
     if (_textController.text == "") {
       print("hey");
     }
-  }
-
-  Widget chooseSender(ChatMessage chat) {
-    if (chat.sentBy == studentId) {
-      return sender(chat.messageText!, chat.sentAt!.toDate());
-    } else {
-      return receiver(chat.messageText!, widget.otherUser.nickname,
-          chat.sentAt!.toDate(), widget.otherUser.userImage);
-    }
-  }
-
-
-
-  Widget chatListStreamList() {
-    if(widget.chatRoomId == ""){
-      return Container();
-    }
-
-    return StreamBuilder(
-      stream: chatController.streamChatMessage(widget.chatRoomId!),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          List<ChatMessage>? chatListMessage = snapshot.data;
-          return ListView.builder(
-            itemCount: chatListMessage?.length,
-            padding: EdgeInsets.only(top: 10, bottom: 10),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              for (var chat in chatListMessage!) {
-                return Container(
-                    height: 80,
-                    width: 100,
-                    margin: EdgeInsets.only(top: 10),
-                    child: chooseSender(chat));
-              }
-            },
-          );
-        } else {
-          return Container();
-        }
-      },
-    );
   }
 }
 

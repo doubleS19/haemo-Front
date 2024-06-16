@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/model/hotplace_post_response_model.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/page/board/board_detail_page.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/model/hotplace_post_response_model.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/screens/page/board/board_detail_page.dart';
+import 'package:haemo/service/db_service.dart';
 import '../../../common/theme.dart';
 import '../../../controller/hotplace_page_controller.dart';
 import '../../components/customAppBar.dart';

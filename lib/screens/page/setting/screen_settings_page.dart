@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hae_mo/screens/page/setting/settings_page.dart';
+import 'package:haemo/screens/page/setting/settings_page.dart';
 
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
@@ -10,7 +10,7 @@ import '../../components/customAppBar.dart';
 /*Map<ThemeType, String> colorTheme = {
   ThemeType.Blue: '블루', ThemeType.Beige:'베이지', ThemeType.Pink:'핑크', ThemeType.LightGreen:'연두'
 };*/
-List<String> colorThemeList = ['블루','베이지','핑크','연두'];
+List<String> colorThemeList = ['블루', '베이지', '핑크', '연두'];
 
 class SettingScreenThemePage extends StatefulWidget {
   const SettingScreenThemePage({Key? key}) : super(key: key);
@@ -20,7 +20,8 @@ class SettingScreenThemePage extends StatefulWidget {
 }
 
 class _SettingScreenThemePageState extends State<SettingScreenThemePage> {
-  SettingScreenThemeController settingScreenThemeController = SettingScreenThemeController();
+  SettingScreenThemeController settingScreenThemeController =
+      SettingScreenThemeController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +29,19 @@ class _SettingScreenThemePageState extends State<SettingScreenThemePage> {
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child: Builder(
-              builder: (context) => customColorSettingPageAppbar(context, "화면 설정", (){
-                settingScreenThemeController.rollBackColor();
-              }))),
+              builder: (context) =>
+                  customColorSettingPageAppbar(context, "화면 설정", () {
+                    settingScreenThemeController.rollBackColor();
+                  }))),
       body: Column(
-        children: [menuTitle(context, "컬러 모드"),
-          for(var i = 0;i<4;i++)
-            switchMenuItem(context, i)
-
+        children: [
+          menuTitle(context, "컬러 모드"),
+          for (var i = 0; i < 4; i++) switchMenuItem(context, i)
         ],
       ),
     );
   }
+
   Widget switchMenuItem(BuildContext context, int index) {
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -51,14 +53,16 @@ class _SettingScreenThemePageState extends State<SettingScreenThemePage> {
                 bottom: BorderSide(
                     color: AppTheme.settingPageDividerColor, width: 3.0))),
         child:
-        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text(colorThemeList[index], style: CustomThemes.settingPageMenuListTextStyle),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Text(colorThemeList[index],
+              style: CustomThemes.settingPageMenuListTextStyle),
           CupertinoSwitch(
             value: settingScreenThemeController.isCheckedList[index],
             activeColor: AppTheme.mainColor,
             onChanged: (bool? value) {
               setState(() {
-                settingScreenThemeController.isCheckedList[index] = value ?? false;
+                settingScreenThemeController.isCheckedList[index] =
+                    value ?? false;
                 settingScreenThemeController.selectOneSwitch(index);
                 settingScreenThemeController.changeTheme(index);
               });
@@ -66,6 +70,4 @@ class _SettingScreenThemePageState extends State<SettingScreenThemePage> {
           )
         ]));
   }
-
 }
-

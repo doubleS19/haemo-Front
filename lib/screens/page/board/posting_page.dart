@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/controller/image_controller.dart';
-import 'package:hae_mo/controller/posting_controller.dart';
+import 'package:haemo/controller/image_controller.dart';
+import 'package:haemo/controller/posting_controller.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import '../../../model/dropdown_type.dart';
 import '../../../model/post_type.dart';
@@ -72,13 +72,13 @@ class _PostingPageState extends State<PostingPage> {
                     child: selectDropDownButtonListType(
                         widget.postType, context, postController),
                   ),
-                  if (widget.postType == PostType.club)
-                    Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: hashTagTextField(hashTagController))
-                  else
-                    Container(),
+                  // if (widget.postType == PostType.club)
+                  //   Container(
+                  //       padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  //       width: MediaQuery.of(context).size.width * 0.9,
+                  //       child: hashTagTextField(hashTagController))
+                  // else
+                  Container(),
                   Flexible(
                     fit: FlexFit.loose,
                     child: postingPageDetailTextField(postUi.hintText,

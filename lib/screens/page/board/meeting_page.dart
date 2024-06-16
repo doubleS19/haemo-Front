@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/controller/board/attend_controller.dart';
-import 'package:hae_mo/controller/meeting_page_controller.dart';
-import 'package:hae_mo/model/post_response_model.dart';
-import 'package:hae_mo/screens/page/board/board_detail_page.dart';
+import 'package:haemo/common/color.dart';
+import 'package:haemo/controller/board/attend_controller.dart';
+import 'package:haemo/controller/meeting_page_controller.dart';
+import 'package:haemo/model/post_response_model.dart';
+import 'package:haemo/screens/page/board/board_detail_page.dart';
 import '../../components/customAppBar.dart';
 import '../../components/customIndicator.dart';
 

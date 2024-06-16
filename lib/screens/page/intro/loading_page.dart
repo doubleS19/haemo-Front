@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/controller/login_controller.dart';
-import 'package:hae_mo/controller/user_controller.dart';
-import 'package:hae_mo/screens/Page/intro/register_page.dart';
-import 'package:hae_mo/screens/page/intro/login_page.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
-import 'package:hae_mo/screens/page/home_page.dart';
+import 'package:haemo/controller/login_controller.dart';
+import 'package:haemo/controller/user_controller.dart';
+import 'package:haemo/screens/Page/intro/register_page.dart';
+import 'package:haemo/screens/page/intro/login_page.dart';
+import 'package:haemo/utils/shared_preference.dart';
+import 'package:haemo/screens/page/home_page.dart';
 import "dart:developer" as dev;
 
 import '../../../common/color.dart';
@@ -37,7 +37,7 @@ class _LoadingPageState extends State<LoadingPage> {
   void changePage(int? id) {
     Timer(const Duration(milliseconds: 2000), () {
       if (id != null && id != 0) {
-        loginController.checkUserExist(PreferenceUtil.getInt("studentId"));
+        loginController.checkUserExist(PreferenceUtil.getInt("studentId")!);
       } else {
         Get.to(const LoginPage());
       }

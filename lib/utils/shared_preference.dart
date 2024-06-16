@@ -1,4 +1,4 @@
-import 'package:hae_mo/model/user_response_model.dart';
+import 'package:haemo/model/user_response_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/user_model.dart';
 

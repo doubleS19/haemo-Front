@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hae_mo/model/wish_response_model.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/model/wish_response_model.dart';
+import 'package:haemo/service/db_service.dart';
 
 import '../../model/wish_model.dart';
 

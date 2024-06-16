@@ -1,4 +1,4 @@
-name: hae_mo
+name: haemo
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -59,6 +59,8 @@ dependencies:
   yaml: ^3.1.2
   standard_searchbar: ^2.0.3
   smooth_page_indicator: ^1.0.0+2
+  firebase_core: ^2.7.0
+  firebase_database: ^10.3.2
 
 dev_dependencies:
   flutter_test:

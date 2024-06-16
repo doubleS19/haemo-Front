@@ -2,7 +2,7 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hae_mo/common/theme.dart';
+import 'package:haemo/common/theme.dart';
 
 class CheckMarkIndicator extends StatefulWidget {
   final Widget child;
@@ -28,17 +28,14 @@ class _CheckMarkIndicatorState extends State<CheckMarkIndicator>
   Widget build(BuildContext context) {
     return CustomRefreshIndicator(
       offsetToArmed: _indicatorSize,
-      onRefresh: () async => {
-        widget.onClick,
-        Future.delayed(const Duration(seconds: 2))
-      },
+      onRefresh: () async =>
+          {widget.onClick, Future.delayed(const Duration(seconds: 2))},
       child: widget.child,
       onStateChanged: (change) {
         if (change.didChange(to: IndicatorState.complete)) {
           setState(() {
             _renderCompleteState = true;
           });
-
         } else if (change.didChange(to: IndicatorState.idle)) {
           setState(() {
             _renderCompleteState = false;

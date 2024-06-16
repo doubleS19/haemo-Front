@@ -1,173 +1,238 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:hae_mo/model/user_model.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/service/db_service.dart';
-import '../model/chat_message_model.dart';
-import '../model/chatroom_model.dart';
+import 'package:intl/intl.dart';
+import '../model/chat_model.dart';
 import '../utils/shared_preference.dart';
 
 class ChatController extends GetxController {
-  final firestore = FirebaseFirestore.instance;
-  DBService db = DBService();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
 
-  //final RxString _text = "".obs;
-  final createdAt = DateTime.now();
-  late List<ChatMessage> chatMessageList = [];
-  late int uId;
-  late Rx<String> chatRoomId = "".obs;
-  late final Rx<UserResponse> _otherUserInfo;
+  var fireBaseChatModel = Rxn<FireBaseChatModel>();
+  var chatMessages = <ChatMessageModel>[].obs;
+  var receiverInfo = Rxn<ChatUserModel>();
+  var chatId = "".obs;
+  var userChatList = <String>[].obs;
+  var receiverChatList = <String>[].obs;
+  var uId = 0;
 
-  //get text => _text;
-
-  get otherUserInfo => _otherUserInfo.value;
-
-  StreamController<List<ChatMessage>> streamController =
-  StreamController<List<ChatMessage>>();
-
-  void startStream() {}
-
-  ChatController() {
+  @override
+  void onInit() {
     super.onInit();
-    final uIdFromPreferences = PreferenceUtil.getInt("uId");
-    if (uIdFromPreferences != null) {
-      uId = uIdFromPreferences;
-    } else {
-      uId = 47;
-      print("have no UID");
-    }
+    uId = PreferenceUtil.getUser().uId;
+    fetchUserChatList();
   }
 
-  /// 나와 상대의 채팅방이 이미 존재한다면 false, 없다면 true => true이면 채팅방 생성 가능
-  /// @param relativeId 상대 uId
-  /// return Future<String?>
-  /// @author: seoyeon
-  Future<String?> checkChatRoomExistence(int otherUserId) async {
-    String? chatRoomId = "";
-
-    await firestore
-        .collection("group")
-        .where("members", isEqualTo: [uId, otherUserId])
-        .where("isDeleted", isEqualTo: false)
-        .get()
-        .then((value) {
-      print("print: ${value.docs}");
-      if (value.docs.isEmpty) {
-        chatRoomId = "";
-      } else {
-        chatRoomId = value.docs
-            .map((e) => ChatRoom.fromJson(e.data()))
-            .toList()[0]
-            .id;
-      }
-    });
-    return chatRoomId;
-  }
-
-  /// Firestore doc에 새로운 체탱창 생성
-  /// @param String chatRoomId 고유 채팅방 Id
-  /// @param ChatMessage chatMessage 전송할 채팅 메세지
-  /// @return void
-  /// @success - 채팅창 메세지 저장 성공
-  /// @author: seoyeon
-  Future<void> createChatRoom(int relativeId, ChatMessage firstMessage) async {
-    await firestore.collection("group").add({
-      "createdAt": DateTime.now(),
-      "createdBy": uId,
-      "id": null,
-      "isDeleted": false,
-      "membersId": [uId, _otherUserInfo.value.uId],
-      "recentMessage": firstMessage.toJson(),
-    }).then((DocumentReference docRef) {
-      docRef.update({"id": docRef.id});
-    });
-  }
-
-  Future<void> updateLastChatMessage(String chatRoomId,
-      ChatMessage message) async {
-    await firestore
-        .collection("group")
-        .doc(chatRoomId)
-        .update({"recentMessage": message.toJson()});
-  }
-
-  /// Firestore doc에 새로운 체탱창 생성
-  /// @param ChatUser chatuser: receiver의 ChatUser 정보
-  /// @param ChatMessage chatMessage: sender이 입력한 ChatMessage
-  /// @return void
-  /// @success - 채팅창 생성 성공
-  /// @author: seoyeon
-  /// @ 테스트 후 studentId를 sharedPreference에서 가져오도록 변경하기
-  void sendChatMessage(String chatRoomId, String chatMessageText) {
-    var firstChatMessage = ChatMessage(
-        isRead: false,
-        messageText: chatMessageText,
-        sentBy: 47,
-        sentAt: Timestamp.fromDate(DateTime.now()));
-
-    firestore
-        .collection('message')
-        .doc(chatRoomId)
-        .set(firstChatMessage.toJson());
-  }
-
-  /// 메세지 전송 클릭 시 FireStore로 전송되어 chatMessageList에 저장됨
-  /// @param String chatRoomId 고유 채팅방 Id
-  /// @param ChatMessage chatMessage 전송할 채팅 메세지
-  /// @return void
-  /// @success - 채팅창 메세지 저장 성공
-  /// @author: seoyeon
-/*  void sendData(String chatRoomId, ChatMessage chatMessage) async {
+  void fetchUserChatList() async {
     try {
-      final snapshot =
-          await firestore.collection('haemo').doc(chatRoomId).get();
-      print(snapshot.data());
-
+      DataSnapshot snapshot =
+          await _databaseReference.child('user').child(uId.toString()).get();
       if (snapshot.exists) {
-        final chatData = ChatData.fromDocumentSnapshot(snapshot);
-        print("chatData: $chatData");
-        final messages = chatData.chatMessageList;
-        messages?.add(chatMessage);
-
-        print(messages);
-
-        firestore.collection('haemo').doc(chatRoomId).update(
-            {'chatMessageList': messages?.map((e) => e.toJson()).toList()});
+        userChatList.value = List<String>.from(snapshot.value as List);
+        print("유저 채팅 정보 가져옴: ${userChatList.obs.value}");
       }
-    } catch (ex) {
-      log('error', error: ex.toString());
+    } catch (e) {
+      print("Error fetching user chat list: $e");
     }
-  }*/
+  }
 
-  /// 메세지 읽었을 때 false -> true
+  Future<void> getChatRoomInfo(String chatId, int receiverId) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> response =
+          await _firestore.collection('users').doc(receiverId.toString()).get();
+      if (response.exists) {
+        receiverInfo.value = ChatUserModel.fromJson(response.data()!);
+        print("미란 receiver: ${receiverInfo.value}");
+      } else {
+        print("ChatController: Failed to get receiver info");
+      }
+    } catch (e) {
+      print("ChatController: Error while getting receiver info: $e");
+    }
 
-  /// Firestore에서 새로운 메시지 가져오기 - stream
-  /// @param String chatRoomId 고유 채팅방 Id
-  /// @return Stream<ChatData> (Streambuilder에서 바로 사용)
-  /// @notSuccess
-  /// @author: seoyeon
-  Stream<List<ChatMessage>> streamChatMessage(String chatRoomId) async* {
-    List<ChatMessage> chatMessages = [];
+    _databaseReference
+        .child('chatRooms')
+        .child(chatId)
+        .get()
+        .then((DataSnapshot snapshot) {
+      if (snapshot.exists) {
+        Map<String, dynamic> result =
+            Map<String, dynamic>.from(snapshot.value as Map);
+        Map<String, dynamic> sender =
+            Map<String, dynamic>.from(result['sender']);
+        Map<String, dynamic> receiver =
+            Map<String, dynamic>.from(result['receiver']);
+
+        fireBaseChatModel.value = FireBaseChatModel(
+          id: result['id'],
+          sender: ChatUserModel(id: sender['id'], nickname: sender['nickname']),
+          receiver:
+              ChatUserModel(id: receiver['id'], nickname: receiver['nickname']),
+          messages: (result['messages'] as List)
+              .map((msg) =>
+                  ChatMessageModel.fromJson(Map<String, dynamic>.from(msg)))
+              .toList(),
+        );
+      }
+    }).catchError((error) {
+      print("미란 chatRoom: $error");
+    });
+
+    _databaseReference
+        .child('chatRooms')
+        .child(chatId)
+        .child('messages')
+        .onValue
+        .listen((event) {
+      List<ChatMessageModel> chatMessage = [];
+      List<dynamic>? messageData = event.snapshot.value as List?;
+
+      if (messageData != null) {
+        for (var message in messageData) {
+          chatMessage.add(
+              ChatMessageModel.fromJson(Map<String, dynamic>.from(message)));
+        }
+      }
+
+      chatMessages.value = chatMessage;
+      readAllMessages(chatId);
+    }, onError: (error) {
+      print("미란 chatCancel: loadMessage:onCancelled $error");
+    });
+  }
+
+  void readAllMessages(String chatId) {
+    print("미란 채팅리스트: ${chatMessages.obs.value}");
+    final updateMap = <String, dynamic>{};
+
+    for (var message in chatMessages.obs.value) {
+      if (!message.isRead && message.from != uId) {
+        print("미란 메시지: $message");
+        message.isRead = true;
+        updateMap["${chatMessages.indexOf(message)}/read"] = true;
+      }
+    }
+
+    print("미란 채팅 메시지: ${chatMessages.obs.value}");
+
+    _databaseReference
+        .child('chatRooms')
+        .child(chatId)
+        .child('messages')
+        .update(updateMap)
+        .then((_) {
+      print("미란 채팅 메시지: 메시지 읽음으로 표시 완료");
+    }).catchError((exception) {
+      print("미란 채팅 메시지: 메시지 읽음으로 표시 실패: $exception");
+    });
+  }
+
+  Future<void> sendMessage(
+      String chatId, int receiverId, ChatMessageModel chatMessageModel) async {
+    if (chatMessages.obs.value.isEmpty) {
+      chatMessages.value = [chatMessageModel];
+      print("미란 sendMessage: 새로운 채팅방 만들 거야");
+      createNewChatRoom(chatId, receiverId, chatMessages.obs.value);
+    } else {
+      chatMessages.add(chatMessageModel);
+      _databaseReference
+          .child('chatRooms')
+          .child(chatId)
+          .child('messages')
+          .set(chatMessages.obs.value.map((e) => e.toJson()).toList())
+          .then((_) {
+        print("미란 message: 메시지 전송 됨");
+      }).catchError((error) {
+        print("미란 message: $error");
+      });
+    }
+  }
+
+  Future<void> createNewChatRoom(
+      String chatId, int receiverId, List<ChatMessageModel> message) async {
+    // SharedPreferenceUtil에서 사용자 정보를 가져와 설정합니다.
+    final myUserData = PreferenceUtil.getUser();
+    final uId = myUserData.uId;
+    final nickname = myUserData.nickname;
+
+    final sender = ChatUserModel(id: uId, nickname: nickname);
+    print("미란 newChatRoom sender: $sender");
 
     try {
-      // charRoomId가 없으면 조회되지 않음
+      if (!userChatList.obs.value.contains(chatId)) {
+        final receiverInfoResponse = await _firestore
+            .collection('users')
+            .doc(receiverId.toString())
+            .get();
+        final receiver = ChatUserModel(
+            id: receiverId, nickname: receiverInfoResponse.data()!['nickname']);
 
-      Stream<QuerySnapshot<Map<String, dynamic>>> chatMessageSnapshots = firestore
-          .collection('message')
-          .doc(chatRoomId)
-          .collection('message')
-          .snapshots();
+        final fireBaseChatModel = FireBaseChatModel(
+          id: chatId,
+          sender: sender,
+          receiver: receiver,
+          messages: message,
+        );
 
-      yield* chatMessageSnapshots.map((querySnapshot) =>
-          querySnapshot.docs.map((document) => ChatMessage.fromJson(document.data())).toList()
+        await _databaseReference
+            .child('chatRooms')
+            .child(chatId)
+            .set(fireBaseChatModel.toJson());
+        print("미란 chatRoom: 채팅룸 생성 완료");
+        getChatRoomInfo(chatId, receiverId);
 
-      );
-    } catch (ex) {
-      log('error: ', error: ex.toString(), stackTrace: StackTrace.current);
-      yield* Stream.error(ex.toString());
+        userChatList.add(chatId);
+
+        await _databaseReference
+            .child('user')
+            .child(uId.toString())
+            .set(userChatList.obs.value);
+        print("미란 UserChatInfo: ${userChatList.obs.value}");
+        getChatRoomInfo(chatId, receiverId);
+
+        getUserChatRoomList(receiverId);
+        print("미란 상대방: ${receiverChatList.obs.value}");
+        setUserChatList(receiverId.toString(), chatId);
+        print("미란 상대방 이후: ${receiverChatList.obs.value}");
+      }
+    } catch (e) {
+      print("Error creating new chat room: $e");
     }
+  }
+
+  Future<void> getUserChatRoomList(int receiverId) async {
+    try {
+      DataSnapshot snapshot = await _databaseReference
+          .child('user')
+          .child(receiverId.toString())
+          .get();
+      if (snapshot.exists) {
+        receiverChatList.value = List<String>.from(snapshot.value as List);
+        print("유저 채팅 정보 가져옴: ${receiverChatList.obs.value}");
+      }
+    } catch (e) {
+      print("Error fetching user chat room list: $e");
+    }
+  }
+
+  Future<void> setUserChatList(String receiverId, String chatId) async {
+    receiverChatList.add(chatId);
+    try {
+      await _databaseReference
+          .child('user')
+          .child(receiverId)
+          .set(receiverChatList.obs.value);
+      print("미란 UserChatInfo: ${receiverChatList.obs.value}");
+    } catch (e) {
+      print("미란 UserChatInfo: $e");
+    }
+  }
+
+  String formatDateTime(int timestamp) {
+    final date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    final format = DateFormat('HH시 mm분');
+    return format.format(date);
   }
 }

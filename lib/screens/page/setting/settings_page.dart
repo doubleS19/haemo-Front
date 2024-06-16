@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:hae_mo/screens/components/customDialog.dart';
+import 'package:haemo/screens/components/customDialog.dart';
 
 import '../../../common/color.dart';
 import '../../../common/theme.dart';

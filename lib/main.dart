@@ -3,14 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
-import 'package:hae_mo/screens/Page/intro/loading_page.dart';
+import 'package:haemo/firebase_options.dart';
+import 'package:haemo/screens/Page/intro/loading_page.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/screens/page/setting/app_version_page.dart';
-import 'package:hae_mo/screens/page/setting/contact_page.dart';
-import 'package:hae_mo/screens/page/setting/delete_account_page.dart';
-import 'package:hae_mo/screens/page/setting/alarm_setting_page.dart';
-import 'package:hae_mo/screens/page/setting/notice_list_page.dart';
-import 'package:hae_mo/screens/page/setting/screen_settings_page.dart';
+import 'package:haemo/screens/page/setting/app_version_page.dart';
+import 'package:haemo/screens/page/setting/contact_page.dart';
+import 'package:haemo/screens/page/setting/delete_account_page.dart';
+import 'package:haemo/screens/page/setting/alarm_setting_page.dart';
+import 'package:haemo/screens/page/setting/notice_list_page.dart';
+import 'package:haemo/screens/page/setting/screen_settings_page.dart';
 
 import 'common/theme.dart';
 import 'utils/shared_preference.dart';
@@ -32,11 +33,7 @@ void main() async {
 Future<void> initializeDefault() async {
   if (Platform.isIOS) {
     await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyCIIXMlSY4xSW_h5wefZTQmjzIJ7BJBuN0",
-            appId: "1:465184171545:ios:f319ab0b4b135b652eac88",
-            messagingSenderId: "465184171545",
-            projectId: "haemochat-b19a3"));
+        options: DefaultFirebaseOptions.currentPlatform);
   } else {
     await Firebase.initializeApp();
   }

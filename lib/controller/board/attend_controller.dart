@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/common/color.dart';
+import 'package:haemo/common/color.dart';
 import "dart:developer" as dev;
-import 'package:hae_mo/model/acceptation_model.dart';
-import 'package:hae_mo/model/acceptation_response_model.dart';
-import 'package:hae_mo/screens/components/customDialog.dart';
+import 'package:haemo/model/acceptation_model.dart';
+import 'package:haemo/model/acceptation_response_model.dart';
+import 'package:haemo/screens/components/customDialog.dart';
 
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/service/db_service.dart';
 
 enum AcceptionState { join, nonParticipation, request }
 

@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/common/user_image.dart';
-import 'package:hae_mo/service/db_service.dart';
-import 'package:hae_mo/utils/user_image.dart';
+import 'package:haemo/common/color.dart';
+import 'package:haemo/common/user_image.dart';
+import 'package:haemo/service/db_service.dart';
+import 'package:haemo/utils/user_image.dart';
 import '../../../controller/user_controller.dart';
 
 class RegisterPage extends StatefulWidget {

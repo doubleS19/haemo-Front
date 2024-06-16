@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:hae_mo/controller/setting/contact_email_controller.dart';
+import 'package:haemo/controller/setting/contact_email_controller.dart';
 
 import '../../../common/theme.dart';
 import '../../components/customAppBar.dart';
@@ -35,8 +35,10 @@ class ContactPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 contactType(context, contactEmailController),
-                enterEmail(context, contactEmailController.emailTextEditingController),
-                contactContent(context, contactEmailController.contentTextEditingController),
+                enterEmail(
+                    context, contactEmailController.emailTextEditingController),
+                contactContent(context,
+                    contactEmailController.contentTextEditingController),
               ],
             ),
           ),
@@ -53,23 +55,24 @@ class ContactPage extends StatelessWidget {
   }
 }
 
-
-Widget contactType(BuildContext context,
-    ContactEmailController contactEmailController) {
+Widget contactType(
+    BuildContext context, ContactEmailController contactEmailController) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text("문의 유형",
           style: CustomThemes.customSelectListDialoglContentTextStyle),
       Obx(() {
-        return iconTextField(context, "카테고리 선택",
-              () async {
-            String? result =
-            await selectListDialog(context, contactTypeList);
+        return iconTextField(
+          context,
+          "카테고리 선택",
+          () async {
+            String? result = await selectListDialog(context, contactTypeList);
             if (result != null) {
               contactEmailController.contactType.value = result;
             }
-          }, contactEmailController.contactType.value,
+          },
+          contactEmailController.contactType.value,
         );
       }),
     ],
@@ -84,15 +87,15 @@ Widget enterEmail(
       Text("답변받을 이메일",
           style: CustomThemes.customSelectListDialoglContentTextStyle),
       SizedBox(
-        child: postingPageTitleTextField("what'sOnTUK@example.com",
-            textEditingController, context),
+        child: postingPageTitleTextField(
+            "what'sOnTUK@example.com", textEditingController, context),
       ),
     ],
   );
 }
 
 Widget contactContent(
-    BuildContext context,  TextEditingController textEditingController) {
+    BuildContext context, TextEditingController textEditingController) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -101,8 +104,8 @@ Widget contactContent(
       Container(
         padding: const EdgeInsets.symmetric(vertical: 15.0),
         height: MediaQuery.of(context).size.height / 2.5,
-        child: postingPageDetailTextField("내용을 입력하세요.",
-            textEditingController, context),
+        child: postingPageDetailTextField(
+            "내용을 입력하세요.", textEditingController, context),
       ),
     ],
   );

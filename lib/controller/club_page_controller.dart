@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/service/db_service.dart';
 import '../model/club_post_response_model.dart';
 
 class ClubPageController extends GetxController {

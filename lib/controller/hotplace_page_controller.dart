@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:hae_mo/model/comment_response_model.dart';
-import 'package:hae_mo/model/hotplace_post_response_model.dart';
-import 'package:hae_mo/model/wish_model.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/model/comment_response_model.dart';
+import 'package:haemo/model/hotplace_post_response_model.dart';
+import 'package:haemo/model/wish_model.dart';
+import 'package:haemo/service/db_service.dart';
 import '../utils/shared_preference.dart';
 
 class HotPlacePageController extends GetxController {

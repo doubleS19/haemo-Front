@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/model/hotplace_post_model.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/model/hotplace_post_model.dart';
+import 'package:haemo/service/db_service.dart';
 import '../model/club_post_model.dart';
 import '../model/post_model.dart';
 import '../model/post_type.dart';

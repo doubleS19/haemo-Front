@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/model/club_post_response_model.dart';
-import 'package:hae_mo/model/post_response_model.dart';
-import 'package:hae_mo/screens/Page/board/board_detail_page.dart';
-import 'package:hae_mo/screens/components/wishStarButton.dart';
-import 'package:hae_mo/service/db_service.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
+import 'package:haemo/common/color.dart';
+import 'package:haemo/model/club_post_response_model.dart';
+import 'package:haemo/model/post_response_model.dart';
+import 'package:haemo/screens/Page/board/board_detail_page.dart';
+import 'package:haemo/screens/components/wishStarButton.dart';
+import 'package:haemo/service/db_service.dart';
+import 'package:haemo/utils/shared_preference.dart';
 
 class MyWishClubPage extends StatefulWidget {
   const MyWishClubPage({super.key});

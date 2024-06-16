@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/controller/chat_controller.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/page/chat/chat_room_page.dart';
-import 'package:hae_mo/screens/page/report/reporting_page.dart';
-import 'package:hae_mo/utils/user_image.dart';
+import 'package:haemo/common/color.dart';
+import 'package:haemo/controller/chat_controller.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/screens/page/chat/chat_room_page.dart';
+import 'package:haemo/screens/page/report/reporting_page.dart';
+import 'package:haemo/utils/user_image.dart';
 
 void userBottomSheet(BuildContext context, UserResponse user) {
   ChatController chatController = ChatController();
@@ -78,9 +78,7 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                       child: RawMaterialButton(
                           onPressed: (() async {
                             Get.to(ChatRoomPage(
-                                chatRoomId: await chatController
-                                    .checkChatRoomExistence(user.uId),
-                                otherUser: user));
+                                chatRoomId: "6+9", otherUser: user));
                           }),
                           child: const Text(
                             "채팅하기",

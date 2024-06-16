@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/model/club_post_response_model.dart';
-import 'package:hae_mo/model/comment_model.dart';
-import 'package:hae_mo/model/comment_response_model.dart';
-import 'package:hae_mo/model/reply_model.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/model/wish_meeting_response_model.dart';
-import 'package:hae_mo/screens/components/customDialog.dart';
-import 'package:hae_mo/screens/page/board/board_detail_page.dart';
-import 'package:hae_mo/service/date_service.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/model/club_post_response_model.dart';
+import 'package:haemo/model/comment_model.dart';
+import 'package:haemo/model/comment_response_model.dart';
+import 'package:haemo/model/reply_model.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/model/wish_meeting_response_model.dart';
+import 'package:haemo/screens/components/customDialog.dart';
+import 'package:haemo/screens/page/board/board_detail_page.dart';
+import 'package:haemo/service/date_service.dart';
+import 'package:haemo/service/db_service.dart';
 import '../model/post_response_model.dart';
 import 'dart:developer' as dev;
 

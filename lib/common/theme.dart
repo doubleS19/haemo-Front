@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hae_mo/common/color.dart';
+import 'package:haemo/common/color.dart';
 
 class CustomThemes {
   static String myFont = 'SCDream';
@@ -15,14 +15,10 @@ class CustomThemes {
       fontFamily: myFont,
       fontSize: 15,
       fontWeight: FontWeight.bold);
-  static var hotPlacePopularPostSubtitleTextStyle = TextStyle(
-      color: AppTheme.white,
-      fontFamily: myFont,
-      fontSize: 11);
-  static var hotPlacePostTitleTextStyle = TextStyle(
-      color: AppTheme.white,
-      fontFamily: myFont,
-      fontSize: 13);
+  static var hotPlacePopularPostSubtitleTextStyle =
+      TextStyle(color: AppTheme.white, fontFamily: myFont, fontSize: 11);
+  static var hotPlacePostTitleTextStyle =
+      TextStyle(color: AppTheme.white, fontFamily: myFont, fontSize: 13);
 
   static var hotPlaceBoardTitleTextStyle = TextStyle(
       fontSize: 20.0,
@@ -48,7 +44,9 @@ class CustomThemes {
   static var noticePageDateTextStyle =
       TextStyle(fontSize: 12.0, color: AppTheme.noticePageIconColor);
   static var noticeDetailPageTitleTextStyle = TextStyle(
-      fontSize: 17.0, color: AppTheme.mainColor, fontWeight: FontWeight.bold);  /// 왜 폰트 크기 적용이 안 될꺼?
+      fontSize: 17.0, color: AppTheme.mainColor, fontWeight: FontWeight.bold);
+
+  /// 왜 폰트 크기 적용이 안 될꺼?
   static var noticeDetailPageDateTextStyle =
       TextStyle(fontSize: 14.0, color: AppTheme.noticePageIconColor);
   static var noticeDetailPageContentTextStyle = noticePageMenuListTextStyle;
@@ -68,9 +66,7 @@ class CustomThemes {
       color: AppTheme.settingPageMenuListTextColor,
       fontWeight: FontWeight.w500);
   static var customDialogConfirmButtonTextStyle = TextStyle(
-      fontSize: 15.0,
-      color: AppTheme.white,
-      fontWeight: FontWeight.w400);
+      fontSize: 15.0, color: AppTheme.white, fontWeight: FontWeight.w400);
   static var customDialogCancelButtonTextStyle = const TextStyle(
       fontSize: 15.0, color: Color(0xFF969696), fontWeight: FontWeight.w300);
   static var customSelectListDialoglTitleTextStyle = TextStyle(
@@ -80,14 +76,10 @@ class CustomThemes {
   static var customSelectListDialoglContentTextStyle = TextStyle(
       color: AppTheme.contactPageListDialogContentTextColor,
       fontWeight: FontWeight.bold);
-  static var chatListTitleTeextStyle = TextStyle(
-    color: AppTheme.mainAppBarColor,
-    fontSize: 22.0
-  );
-  static var chatRoomTitleTextStyle = TextStyle(
-      color: AppTheme.mainTextColor,
-      fontSize: 22.0
-  );
+  static var chatListTitleTeextStyle =
+      TextStyle(color: AppTheme.mainAppBarColor, fontSize: 22.0);
+  static var chatRoomTitleTextStyle =
+      TextStyle(color: AppTheme.mainTextColor, fontSize: 22.0);
 
   static final ThemeData mainTheme = ThemeData(
       fontFamily: 'SCDream',
@@ -100,9 +92,7 @@ class CustomThemes {
               fontWeight: FontWeight.bold,
               fontSize: 20),
           headlineMedium: TextStyle(
-              color: AppTheme.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18),
+              color: AppTheme.white, fontWeight: FontWeight.bold, fontSize: 18),
           headlineSmall: TextStyle(
               color: AppTheme.mainPageHeadlineColor,
               fontWeight: FontWeight.bold,

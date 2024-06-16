@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/screens/components/heartButton.dart';
-import 'package:hae_mo/screens/components/wishStarButton.dart';
-import 'package:hae_mo/screens/page/setting/settings_page.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
+import 'package:haemo/screens/components/heartButton.dart';
+import 'package:haemo/screens/components/wishStarButton.dart';
+import 'package:haemo/screens/page/setting/settings_page.dart';
+import 'package:haemo/utils/shared_preference.dart';
 import '../../common/color.dart';
 import '../../common/theme.dart';
 import '../Page/chat/chat_list_page.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/page/intro/register_page.dart';
-import 'package:hae_mo/service/db_service.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/screens/page/intro/register_page.dart';
+import 'package:haemo/service/db_service.dart';
+import 'package:haemo/utils/shared_preference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/Page/home_page.dart';
 import '../model/login_model.dart';

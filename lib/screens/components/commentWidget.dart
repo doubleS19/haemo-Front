@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/common/user_image.dart';
-import 'package:hae_mo/controller/comment_controller.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/components/replyWidget.dart';
-import 'package:hae_mo/screens/components/userBottomSheet.dart';
+import 'package:haemo/common/color.dart';
+import 'package:haemo/common/user_image.dart';
+import 'package:haemo/controller/comment_controller.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/screens/components/replyWidget.dart';
+import 'package:haemo/screens/components/userBottomSheet.dart';
 import '../../model/comment_response_model.dart';
 import '../../service/db_service.dart';
 import 'dart:developer' as dev;

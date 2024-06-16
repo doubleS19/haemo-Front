@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/controller/setting/contact_email_controller.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/components/customDialog.dart';
-import 'package:hae_mo/screens/page/home_page.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/common/color.dart';
+import 'package:haemo/controller/setting/contact_email_controller.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/screens/components/customDialog.dart';
+import 'package:haemo/screens/page/home_page.dart';
+import 'package:haemo/service/db_service.dart';
 import '../../Page/home_page.dart' as fix;
 import '../../components/customAppBar.dart';
 import '../../components/customButton.dart';

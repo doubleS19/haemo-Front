@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/common/user_image.dart';
-import 'package:hae_mo/screens/components/customAppBar.dart';
-import 'package:hae_mo/screens/page/my_page/my_meeting_page.dart';
-import 'package:hae_mo/screens/page/my_page/my_wish_club_page%20.dart';
-import 'package:hae_mo/screens/page/my_page/my_wish_meeting_page.dart';
-import 'package:hae_mo/screens/page/my_page/my_wish_place_page.dart';
-import 'package:hae_mo/screens/page/setting/settings_page.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/common/color.dart';
+import 'package:haemo/common/user_image.dart';
+import 'package:haemo/screens/components/customAppBar.dart';
+import 'package:haemo/screens/page/my_page/my_meeting_page.dart';
+import 'package:haemo/screens/page/my_page/my_wish_club_page%20.dart';
+import 'package:haemo/screens/page/my_page/my_wish_meeting_page.dart';
+import 'package:haemo/screens/page/my_page/my_wish_place_page.dart';
+import 'package:haemo/screens/page/setting/settings_page.dart';
+import 'package:haemo/utils/shared_preference.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/service/db_service.dart';
 
 import '../../Page/chat/chat_list_page.dart';
 

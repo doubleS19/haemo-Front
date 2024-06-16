@@ -5,7 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:hae_mo/controller/setting/notice_controller.dart';
+import 'package:haemo/controller/setting/notice_controller.dart';
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
 import '../../../model/notice_model.dart';
@@ -39,10 +39,11 @@ class NoticePage extends StatelessWidget {
                   : customColorAppbar(context, "공지사항"))),
       body: Obx(() {
         if (noticeController.noticeState.value == NoticeState.Before) {
-          return Center(child: SpinKitFadingCircle(
-              color: AppTheme.mainColor,
-              size: 40,
-              duration: const Duration(milliseconds: 500)));
+          return Center(
+              child: SpinKitFadingCircle(
+                  color: AppTheme.mainColor,
+                  size: 40,
+                  duration: const Duration(milliseconds: 500)));
         } else if (noticeController.noticeState.value == NoticeState.Empty) {
           return const Center(child: Text("공지사항이 존재하지 않습니다. "));
         } else if (noticeController.noticeState.value == NoticeState.Error) {
@@ -63,13 +64,15 @@ class NoticePage extends StatelessWidget {
       }),
     );
   }
+
   Widget noticeCard(
       BuildContext context, Notice notice, NoticeController noticeController) {
-
     return GestureDetector(
         onTap: () {
           Get.to(() => NoticeDetailPage(
-              notice: notice, isAdmin: isAdmin, noticeController: noticeController));
+              notice: notice,
+              isAdmin: isAdmin,
+              noticeController: noticeController));
         },
         child: Container(
           decoration: BoxDecoration(
@@ -96,6 +99,4 @@ class NoticePage extends StatelessWidget {
           ),
         ));
   }
-
 }
-

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:hae_mo/controller/app_version_controller.dart';
+import 'package:haemo/controller/app_version_controller.dart';
 import 'package:package_info/package_info.dart';
 import 'package:yaml/yaml.dart';
 import '../../components/customAppBar.dart';

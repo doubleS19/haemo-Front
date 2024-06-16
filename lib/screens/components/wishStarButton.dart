@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/model/wish_club_model.dart';
-import 'package:hae_mo/model/wish_meeting_model.dart';
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/common/color.dart';
+import 'package:haemo/model/wish_club_model.dart';
+import 'package:haemo/model/wish_meeting_model.dart';
+import 'package:haemo/service/db_service.dart';
 
 class WishStarButton extends StatefulWidget {
   const WishStarButton(

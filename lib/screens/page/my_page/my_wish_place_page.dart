@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hae_mo/common/color.dart';
-import 'package:hae_mo/controller/hotplace_page_controller.dart';
-import 'package:hae_mo/model/hotplace_post_response_model.dart';
-import 'package:hae_mo/screens/Page/board/hot_place_page.dart';
-import 'package:hae_mo/service/db_service.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
+import 'package:haemo/common/color.dart';
+import 'package:haemo/controller/hotplace_page_controller.dart';
+import 'package:haemo/model/hotplace_post_response_model.dart';
+import 'package:haemo/screens/Page/board/hot_place_page.dart';
+import 'package:haemo/service/db_service.dart';
+import 'package:haemo/utils/shared_preference.dart';
 
 class MyWishPlacePage extends StatefulWidget {
   const MyWishPlacePage({super.key});

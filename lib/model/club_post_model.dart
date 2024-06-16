@@ -1,5 +1,5 @@
 import 'package:get/get_connect/http/src/multipart/multipart_file.dart';
-import 'package:hae_mo/model/post_model.dart';
+import 'package:haemo/model/post_model.dart';
 
 class ClubPost extends PostBase {
   late int person;

@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:hae_mo/common/theme.dart';
-import 'package:hae_mo/common/user_image.dart';
-import 'package:hae_mo/controller/board/attend_controller.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/screens/Page/home_page.dart';
+import 'package:haemo/common/theme.dart';
+import 'package:haemo/common/user_image.dart';
+import 'package:haemo/controller/board/attend_controller.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/screens/Page/home_page.dart';
 
 import '../../common/color.dart';
 

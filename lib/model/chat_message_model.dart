@@ -1,33 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatMessage {
-  String messageText;
-  int sentBy;
-  Timestamp sentAt;
-  bool isRead;
+  final String content;
+  final bool isRead;
+  final int sendTime;
+  final int sender;
 
   ChatMessage({
-    required this.messageText,
-    required this.sentBy,
-    required this.sentAt,
+    required this.content,
     required this.isRead,
+    required this.sendTime,
+    required this.sender,
   });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'messageText': messageText,
-      'sentBy': sentBy,
-      'sentAt': sentAt,
-      'isRead': isRead,
-    };
-  }
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
     return ChatMessage(
-      messageText: json['messageText'],
-      sentBy: json['sentBy'],
-      sentAt: json['sentAt'],
+      content: json['content'],
       isRead: json['isRead'],
+      sendTime: json['sendTime'],
+      sender: json['sender'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'content': content,
+      'isRead': isRead,
+      'sendTime': sendTime,
+      'sender': sender,
+    };
   }
 }

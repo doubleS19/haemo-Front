@@ -2,12 +2,12 @@
 import 'dart:ffi';
 
 import 'package:get/get.dart';
-import 'package:hae_mo/model/user_response_model.dart';
-import 'package:hae_mo/utils/shared_preference.dart';
-import 'package:hae_mo/screens/page/home_page.dart';
+import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/utils/shared_preference.dart';
+import 'package:haemo/screens/page/home_page.dart';
 import "dart:developer" as dev;
 
-import 'package:hae_mo/service/db_service.dart';
+import 'package:haemo/service/db_service.dart';
 
 import '../model/user_model.dart';
 
