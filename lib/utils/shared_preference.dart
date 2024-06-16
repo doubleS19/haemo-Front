@@ -32,7 +32,7 @@ class PreferenceUtil {
 
   static setUser(UserResponse user) {
     setInt("uId", user.uId);
-    setInt("studentid", user.studentId);
+    setInt("studentId", user.studentId);
     setString("nickname", user.nickname);
     setString("major", user.major);
     setString("gender", user.gender);
@@ -43,8 +43,8 @@ class PreferenceUtil {
   static getUser() {
     return UserResponse(
         uId: getInt("uId")!,
-        studentId: getInt("studentid")!,
-        nickname: getString("nickname")!,
+        studentId: getInt("studentId")!,
+        nickname: getString("nickname") ?? "익명",
         major: getString("major")!,
         gender: getString("gender")!,
         userImage: getInt("userImage")!,

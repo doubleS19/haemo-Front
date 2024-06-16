@@ -25,8 +25,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDefault();
   await GetStorage.init();
-
   await PreferenceUtil.init();
+  PreferenceUtil.setString("nickname", "뜽미니에요");
+  print(PreferenceUtil.getUser().toString());
   runApp(const MyApp());
 }
 

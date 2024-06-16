@@ -41,11 +41,11 @@ class UserController extends GetxController {
           gender: gender,
           userImage: image);
       _registerState = RegisterState.success;
-      PreferenceUtil.saveUser(user);
+      // PreferenceUtil.saveUser(user);
       bool isUserSaved = await db.saveUser(user);
       if (isUserSaved) {
         UserResponse userResponse = await db.getUserByNickname(nickname);
-        PreferenceUtil.setInt("uid", userResponse.uId);
+        PreferenceUtil.setInt("uId", userResponse.uId);
         Get.to(const HomePage());
       } else {}
       dev.log(PreferenceUtil.getString("nickname")!);

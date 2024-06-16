@@ -45,7 +45,6 @@ class LoginController extends GetxController {
       PreferenceUtil.setInt("uId", uId);
       _loginState = LoginState.success.obs;
       getUserInfoById(uId);
-      // Get.offAll(() => const HomePage());
     } else {
       _loginState = LoginState.login.obs;
       Get.offAll(() => const RegisterPage());
@@ -58,12 +57,16 @@ class LoginController extends GetxController {
     UserResponse? user = await db.getUserById(uId);
 
     if (user != null) {
+      print("응응");
+      print(user.nickname.toString());
+      PreferenceUtil.setString("nickname", user.nickname);
       PreferenceUtil.setUser(user);
+      print(PreferenceUtil.getUser().nickname);
       _loginState = LoginState.success.obs;
       Get.offAll(() => const HomePage());
     } else {
-      // _loginState = LoginState.login.obs;
-      // Get.offAll(() => const RegisterPage());
+      _loginState = LoginState.login.obs;
+      Get.offAll(() => const RegisterPage());
     }
 
     update();
