@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:haemo/controller/chat_controller.dart';
+import 'package:haemo/model/chat_model.dart';
 import 'package:haemo/model/user_response_model.dart';
 import 'package:haemo/screens/components/customAppBar.dart';
 import 'package:haemo/utils/chage_time_format.dart';
 import '../../../common/color.dart';
-import '../../../model/chat_message_model.dart';
 import '../../../utils/shared_preference.dart';
 import '../../components/customTextField.dart';
 
@@ -27,12 +27,13 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   final TextEditingController _textController = TextEditingController();
   late ChatController chatController = ChatController();
   final String studentId = PreferenceUtil.getInt("uId") != null
-      ? PreferenceUtil.getInt("uId").toString()!
+      ? PreferenceUtil.getInt("uId").toString()
       : "sender";
   final int profileImage = PreferenceUtil.getInt("profileImage") != null
       ? PreferenceUtil.getInt("profileImage")!
       : 1;
   final firestore = FirebaseFirestore.instance;
+  List<ChatMessageModel> messages = [];
 
   @override
   void initState() {
@@ -47,6 +48,9 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
   Widget build(BuildContext context) {
     double appScreenHeight = MediaQuery.of(context).size.height -
         (MediaQuery.of(context).padding.top + kToolbarHeight)!;
+
+    chatController.getChatRoomInfo(widget.chatRoomId!, widget.otherUser.uId);
+    messages = chatController.chatMessages ?? [];
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -63,14 +67,25 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
           children: [
             Expanded(
               flex: 1,
-              child: Container(child: Text("하")),
+              child: chatInfo(messages, widget.otherUser.uId),
             ),
             Container(
               height: 80,
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.symmetric(horizontal: 20),
               color: Colors.white,
-              child: chatTextField(_textController, () => _handleSubmitted()),
+              child: chatTextField(_textController, () {
+                ChatMessageModel newChat = ChatMessageModel(
+                    content: _textController.text,
+                    createdAt: DateTime.now().millisecondsSinceEpoch,
+                    from: chatController.uId,
+                    senderNickname: "뜽미니에요");
+                print("미란 보낼 채팅 정보: ${newChat.toString()}");
+                chatController.sendMessage(
+                    chatController.chatId.value, widget.otherUser.uId, newChat);
+                _textController.clear();
+                setState(() {});
+              }),
             ),
           ],
         ),
@@ -85,17 +100,22 @@ class _ChatRoomPageState extends State<ChatRoomPage> {
             borderRadius: BorderRadius.circular(15), color: Color(0xFF9cafbe)),
         child: Text(time, style: TextStyle(color: Colors.white)));
   }
-
-  void _handleSubmitted() {
-    // firestore에 저장 후 변경을 보고 가져온 리스트가 자동으로 controller로 추가되게
-
-    if (_textController.text == "") {
-      print("hey");
-    }
-  }
 }
 
-Widget receiver(String text, String name, DateTime time, dynamic profile) {
+Widget chatInfo(List<ChatMessageModel> messages, int receiverId) {
+  print("미란 메시지는용: ${messages.toString()}");
+  return Column(
+    children: [
+      for (var message in messages)
+        message.from == receiverId
+            ? receiver(
+                message.content, message.senderNickname, message.createdAt)
+            : sender(message.content, message.createdAt)
+    ],
+  );
+}
+
+Widget receiver(String text, String name, int time) {
   return Column(
     children: [
       Row(
@@ -123,7 +143,7 @@ Widget receiver(String text, String name, DateTime time, dynamic profile) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 22),
-              Text(changeDatetimeToString(time),
+              Text(changeIntToString(time),
                   style: const TextStyle(fontSize: 12, color: Colors.black26))
             ],
           )),
@@ -133,14 +153,14 @@ Widget receiver(String text, String name, DateTime time, dynamic profile) {
   );
 }
 
-Widget sender(String text, DateTime time) {
+Widget sender(String text, int time) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
         Column(
           children: [
             SizedBox(height: 18),
-            Text(changeDatetimeToString(time),
+            Text(changeIntToString(time),
                 style: TextStyle(fontSize: 12, color: Colors.black26)),
           ],
         ),

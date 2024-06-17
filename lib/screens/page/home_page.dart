@@ -7,7 +7,6 @@ import 'package:haemo/controller/club_page_controller.dart';
 import 'package:haemo/controller/hotplace_page_controller.dart';
 import 'package:haemo/model/post_type.dart';
 import 'package:haemo/screens/page/board/posting_page.dart';
-import 'package:haemo/utils/user_image.dart';
 import '../../controller/meeting_page_controller.dart';
 import '../../model/user_response_model.dart';
 import '../../service/db_service.dart';

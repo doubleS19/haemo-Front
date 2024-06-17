@@ -72,7 +72,8 @@ Widget reportingPageCustomBotton(
 Widget chatIconButton(Icon icon, Function onClick) {
   return GestureDetector(
     onTap: () {
-      onClick;
+      print("눌리긴 함");
+      onClick();
     },
     child: Container(
         width: 45,
