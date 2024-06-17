@@ -8,28 +8,29 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '4'
+    flutterVersionCode = '1'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0.4'
+    flutterVersionName = '1.0'
 }
 
 apply plugin: 'com.android.application'
+// START: FlutterFire Configuration
+apply plugin: 'com.google.gms.google-services'
+// END: FlutterFire Configuration
 apply plugin: 'kotlin-android'
-apply plugin: "com.google.gms.google-services"
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 34
+    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
-    buildToolsVersion "34"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -50,26 +51,11 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        multidexEnabled true
+          multiDexEnabled true
     }
-
-    def keystoreProperties = new Properties()
-    def keystorePropertiesFile = rootProject.file('key.properties')
-    if (keystorePropertiesFile.exists()) {
-        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-    }
-
-/*    signingConfigs {
-        release {
-            storeFile file('../keystore/key.jks')
-            storePassword file('../keystore/keystore.password').text.trim()
-            keyPassword file('../keystore/keystore.password').text.trim()
-            keyAlias 'key'
-        }
-    }*/
 
     buildTypes {
         release {
@@ -86,11 +72,7 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation ('com.google.firebase:firebase-analytics'){
-        exclude group: 'com.google.android.gms', module: 'play-services-safetynet'
-    }
-    implementation platform('com.google.firebase:firebase-bom:26.2.0'){
-        exclude group: 'com.google.android.gms', module: 'play-services-safetynet'
-    }
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 }

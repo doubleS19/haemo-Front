@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:haemo/common/user_image.dart';
-import 'package:haemo/controller/chat_controller.dart';
 import 'package:haemo/model/chat_model.dart';
-import 'package:haemo/model/user_response_model.dart';
 import 'package:haemo/screens/page/chat/chat_room_page.dart';
-import 'package:haemo/service/db_service.dart';
-import '../../../common/theme.dart';
 import '../../../controller/chatlist_controller.dart';
-import '../../../model/chat_message_model.dart';
 import '../../../utils/shared_preference.dart';
-import '../../components/customAppBar.dart';
 import '../../components/userBottomSheet.dart';
 
 class ChatListPage extends StatefulWidget {
@@ -37,6 +28,7 @@ class _ChatListPageState extends State<ChatListPage> {
   @override
   Widget build(BuildContext context) {
     chatListController.getChatList();
+    fireBaseChatModel = chatListController.fireBaseChatModel.obs.value;
 
     return Scaffold(
       appBar: AppBar(
