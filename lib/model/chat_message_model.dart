@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class ChatMessage {
   final String content;
   final bool isRead;
@@ -16,7 +14,7 @@ class ChatMessage {
   factory ChatMessage.fromJson(Map<String, dynamic> json) {
     return ChatMessage(
       content: json['content'],
-      isRead: json['isRead'],
+      isRead: json['read'],
       sendTime: json['sendTime'],
       sender: json['sender'],
     );

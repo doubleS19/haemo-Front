@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:haemo/model/user_response_model.dart';
 import 'package:haemo/service/db_service.dart';
 import 'package:haemo/utils/shared_preference.dart';
@@ -39,16 +37,12 @@ class ChatListController extends GetxController {
     orderedChatList.once().then((DatabaseEvent event) async {
       final snapshot = event.snapshot;
       if (snapshot.value != null) {
-        // final lastMessage = snapshot.value as Map<String, dynamic>;
         final lastMessageData =
             Map<String, dynamic>.from(snapshot.value as Map);
         final last = lastMessageData.values.first as Map<Object?, Object?>;
-        print(last.toString());
         final chatUsers = chatId.split('+');
         var receiverId = 0;
         var senderId = 0;
-
-        // print(lastMessage['content'] as String);
 
         if (chatUsers[0] != uId.toString()) {
           receiverId = int.parse(chatUsers[0]);
@@ -60,7 +54,7 @@ class ChatListController extends GetxController {
 
         final user = await db.getUserById(senderId);
 
-        chatList[chatId] = user!;
+        _chatList[chatId] = user!;
 
         final messageData = [
           ChatMessageModel(

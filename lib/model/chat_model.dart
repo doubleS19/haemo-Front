@@ -123,7 +123,7 @@ class ChatMessageModel {
       createdAt: json['createdAt'],
       from: json['from'],
       senderNickname: json['senderNickname'],
-      isRead: json['isRead'],
+      isRead: json['read'],
     );
   }
 
@@ -133,7 +133,7 @@ class ChatMessageModel {
       'createdAt': createdAt,
       'from': from,
       'senderNickname': senderNickname,
-      'isRead': isRead,
+      'read': isRead,
     };
   }
 }

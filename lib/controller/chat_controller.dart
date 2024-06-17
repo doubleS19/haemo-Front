@@ -1,14 +1,17 @@
 import 'dart:async';
+import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
+import 'package:haemo/service/db_service.dart';
 import 'package:intl/intl.dart';
 import '../model/chat_model.dart';
 import '../utils/shared_preference.dart';
 
 class ChatController extends GetxController {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
+  final _chatRef = FirebaseDatabase.instance.ref().child("chat");
+  final _userRef = FirebaseDatabase.instance.ref().child("user");
+  final db = DBService();
 
   var fireBaseChatModel = Rxn<FireBaseChatModel>();
   var chatMessages = <ChatMessageModel>[].obs;
@@ -16,7 +19,7 @@ class ChatController extends GetxController {
   var chatId = "".obs;
   var userChatList = <String>[].obs;
   var receiverChatList = <String>[].obs;
-  var uId = 0;
+  var uId = PreferenceUtil.getUser().uId;
 
   @override
   void onInit() {
@@ -27,8 +30,7 @@ class ChatController extends GetxController {
 
   void fetchUserChatList() async {
     try {
-      DataSnapshot snapshot =
-          await _databaseReference.child('user').child(uId.toString()).get();
+      DataSnapshot snapshot = await _userRef.child(uId.toString()).get();
       if (snapshot.exists) {
         userChatList.value = List<String>.from(snapshot.value as List);
         print("유저 채팅 정보 가져옴: ${userChatList.obs.value}");
@@ -40,23 +42,37 @@ class ChatController extends GetxController {
 
   Future<void> getChatRoomInfo(String chatId, int receiverId) async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> response =
-          await _firestore.collection('users').doc(receiverId.toString()).get();
-      if (response.exists) {
-        receiverInfo.value = ChatUserModel.fromJson(response.data()!);
-        print("미란 receiver: ${receiverInfo.value}");
-      } else {
-        print("ChatController: Failed to get receiver info");
-      }
+      _chatRef.child(chatId).once().then((DatabaseEvent event) async {
+        final snapshot = event.snapshot;
+        if (snapshot.value != null) {
+          final chatRoomData =
+              Map<Object?, Object?>.from(snapshot.value as Map);
+          print("미란 채팅방 정보: ${chatRoomData.obs.value.toString()}");
+          final sender = chatRoomData['sender'] as Map<Object?, Object?>;
+          final receiver = chatRoomData['receiver'] as Map<Object?, Object?>;
+
+          fireBaseChatModel.value = FireBaseChatModel(
+            id: chatRoomData['id'].toString(),
+            sender: ChatUserModel(
+                id: sender['id'] as int,
+                nickname: sender['nickname'].toString()),
+            receiver: ChatUserModel(
+                id: receiver['id'] as int,
+                nickname: receiver['nickname'].toString()),
+            messages: (chatRoomData['messages'] as List)
+                .map((msg) =>
+                    ChatMessageModel.fromJson(Map<String, dynamic>.from(msg)))
+                .toList(),
+          );
+        } else {
+          createNewChatRoom(chatId, receiverId, []);
+        }
+      });
     } catch (e) {
       print("ChatController: Error while getting receiver info: $e");
     }
 
-    _databaseReference
-        .child('chatRooms')
-        .child(chatId)
-        .get()
-        .then((DataSnapshot snapshot) {
+    _chatRef.child(chatId).get().then((DataSnapshot snapshot) {
       if (snapshot.exists) {
         Map<String, dynamic> result =
             Map<String, dynamic>.from(snapshot.value as Map);
@@ -75,17 +91,13 @@ class ChatController extends GetxController {
                   ChatMessageModel.fromJson(Map<String, dynamic>.from(msg)))
               .toList(),
         );
+        print("미란 채팅방 정보: ${fireBaseChatModel.value}");
       }
     }).catchError((error) {
       print("미란 chatRoom: $error");
     });
 
-    _databaseReference
-        .child('chatRooms')
-        .child(chatId)
-        .child('messages')
-        .onValue
-        .listen((event) {
+    _chatRef.child(chatId).child('messages').onValue.listen((event) {
       List<ChatMessageModel> chatMessage = [];
       List<dynamic>? messageData = event.snapshot.value as List?;
 
@@ -117,12 +129,7 @@ class ChatController extends GetxController {
 
     print("미란 채팅 메시지: ${chatMessages.obs.value}");
 
-    _databaseReference
-        .child('chatRooms')
-        .child(chatId)
-        .child('messages')
-        .update(updateMap)
-        .then((_) {
+    _chatRef.child(chatId).child('messages').update(updateMap).then((_) {
       print("미란 채팅 메시지: 메시지 읽음으로 표시 완료");
     }).catchError((exception) {
       print("미란 채팅 메시지: 메시지 읽음으로 표시 실패: $exception");
@@ -137,8 +144,7 @@ class ChatController extends GetxController {
       createNewChatRoom(chatId, receiverId, chatMessages.obs.value);
     } else {
       chatMessages.add(chatMessageModel);
-      _databaseReference
-          .child('chatRooms')
+      _chatRef
           .child(chatId)
           .child('messages')
           .set(chatMessages.obs.value.map((e) => e.toJson()).toList())
@@ -152,7 +158,6 @@ class ChatController extends GetxController {
 
   Future<void> createNewChatRoom(
       String chatId, int receiverId, List<ChatMessageModel> message) async {
-    // SharedPreferenceUtil에서 사용자 정보를 가져와 설정합니다.
     final myUserData = PreferenceUtil.getUser();
     final uId = myUserData.uId;
     final nickname = myUserData.nickname;
@@ -162,12 +167,13 @@ class ChatController extends GetxController {
 
     try {
       if (!userChatList.obs.value.contains(chatId)) {
-        final receiverInfoResponse = await _firestore
-            .collection('users')
-            .doc(receiverId.toString())
-            .get();
+        final receiverInfoResponse = await db.getUserById(receiverId);
+        if (receiverInfoResponse == null) {
+          print("미란 chatRoom: 상대방 정보 없음");
+          return;
+        }
         final receiver = ChatUserModel(
-            id: receiverId, nickname: receiverInfoResponse.data()!['nickname']);
+            id: receiverId, nickname: receiverInfoResponse.nickname);
 
         final fireBaseChatModel = FireBaseChatModel(
           id: chatId,
@@ -176,19 +182,13 @@ class ChatController extends GetxController {
           messages: message,
         );
 
-        await _databaseReference
-            .child('chatRooms')
-            .child(chatId)
-            .set(fireBaseChatModel.toJson());
+        await _chatRef.child(chatId).set(fireBaseChatModel.toJson());
         print("미란 chatRoom: 채팅룸 생성 완료");
         getChatRoomInfo(chatId, receiverId);
 
         userChatList.add(chatId);
 
-        await _databaseReference
-            .child('user')
-            .child(uId.toString())
-            .set(userChatList.obs.value);
+        await _userRef.child(uId.toString()).set(userChatList.obs.value);
         print("미란 UserChatInfo: ${userChatList.obs.value}");
         getChatRoomInfo(chatId, receiverId);
 
@@ -204,10 +204,7 @@ class ChatController extends GetxController {
 
   Future<void> getUserChatRoomList(int receiverId) async {
     try {
-      DataSnapshot snapshot = await _databaseReference
-          .child('user')
-          .child(receiverId.toString())
-          .get();
+      DataSnapshot snapshot = await _userRef.child(receiverId.toString()).get();
       if (snapshot.exists) {
         receiverChatList.value = List<String>.from(snapshot.value as List);
         print("유저 채팅 정보 가져옴: ${receiverChatList.obs.value}");
@@ -220,10 +217,7 @@ class ChatController extends GetxController {
   Future<void> setUserChatList(String receiverId, String chatId) async {
     receiverChatList.add(chatId);
     try {
-      await _databaseReference
-          .child('user')
-          .child(receiverId)
-          .set(receiverChatList.obs.value);
+      await _chatRef.child(receiverId).set(receiverChatList.obs.value);
       print("미란 UserChatInfo: ${receiverChatList.obs.value}");
     } catch (e) {
       print("미란 UserChatInfo: $e");
