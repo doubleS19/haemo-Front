@@ -3,11 +3,12 @@ import 'package:haemo/model/post_model.dart';
 
 class ClubPost extends PostBase {
   late int person;
-  late MultipartFile? logo;
+  late String? logo;
 
   /// 널 긊 불가/로고 없을 경우 사용할 기본 이미지 나중에 설정하기
   late String description;
   List<String>? hashTag;
+  late String date;
 
   ClubPost(
       {required String nickname,
@@ -17,13 +18,9 @@ class ClubPost extends PostBase {
       this.logo,
       required this.person,
       this.hashTag,
+      required this.date,
       required int wishCnt})
-      : super(
-          nickname: nickname,
-          title: title,
-          content: content,
-          wishCnt: 0,
-        );
+      : super(nickname: nickname, title: title, content: content, wishCnt: 0);
 
   factory ClubPost.fromJson(Map<String, dynamic> json) {
     return ClubPost(
@@ -32,9 +29,10 @@ class ClubPost extends PostBase {
         content: json['content'],
         description: json['description'],
         person: json['person'],
-        logo: json['image'],
+        logo: json['logo'],
         hashTag: json['hashTag'],
-        wishCnt: 0
+        wishCnt: 0,
+        date: json['date']
 
         /// 멀티파트 이미지 리스트 DB로 전송
         );
@@ -46,9 +44,10 @@ class ClubPost extends PostBase {
         'content': content,
         'description': description,
         'person': person,
-        'image': logo,
+        'logo': logo,
         'hashTag': hashTag,
-        'wishClubCnt': wishCnt
+        'wishClubCnt': wishCnt,
+        'date': date
 
         /// 멀티파트 이미지 리스트 변수 넣기
       };

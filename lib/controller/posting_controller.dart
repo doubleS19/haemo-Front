@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:haemo/controller/image_controller.dart';
 import 'package:haemo/model/hotplace_post_model.dart';
 import 'package:haemo/service/db_service.dart';
 import '../model/club_post_model.dart';
@@ -24,8 +25,9 @@ class PostController extends GetxController {
   final Rx<String> selectedMonth = ''.obs;
   final Rx<String> selectedDay = ''.obs;
   final Rx<String> selectedHour = ''.obs;
-  final RxList<MultipartFile?> selectedPhoto = [null].obs;
+  final RxList<String?> selectedPhoto = [null].obs;
   final RxList<String?> hashTag = [null].obs;
+  final Rx<String> img = "".obs;
   late Rx<Post> post = Post(
           nickname: "",
           title: "",
@@ -42,6 +44,8 @@ class PostController extends GetxController {
           description: "",
           content: "",
           person: 0,
+          logo: null,
+          date: "",
           wishCnt: 0)
       .obs;
   late Rx<HotPlacePost> hotPlacePost = HotPlacePost(
@@ -67,6 +71,7 @@ class PostController extends GetxController {
 
   void saveControllerData() {
     var nickname = PreferenceUtil.getString("nickname") ?? "a";
+    var imgSource = img.value;
 
     switch (postType) {
       case PostType.meeting:
@@ -88,9 +93,10 @@ class PostController extends GetxController {
           clubPost?.description = textControllerList[1].text;
           clubPost?.content = detailTextContext.text;
           clubPost?.person = selectedPerson.value;
-          clubPost?.logo = null;
+          clubPost?.logo = imgSource;
           clubPost?.hashTag = [''];
           clubPost?.wishCnt = 0;
+          clubPost?.date = getNow();
         });
         break;
       case PostType.hotPlace:

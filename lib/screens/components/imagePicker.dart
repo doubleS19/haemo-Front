@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:haemo/controller/posting_controller.dart';
+import 'package:haemo/model/post_type.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../common/color.dart';
 import '../../common/theme.dart';
@@ -28,6 +30,10 @@ class _CustomImagePickerState extends State<CustomImagePicker>
   Widget build(BuildContext context) {
     super.build(context);
 
+    PostType postType =
+        widget.imgType == ImageType.logo ? PostType.club : PostType.hotPlace;
+    PostController postController = PostController(postType);
+
     return GetBuilder<ImageController>(
         init: ImageController(widget.imgType),
         builder: (_) {
@@ -47,7 +53,15 @@ class _CustomImagePickerState extends State<CustomImagePicker>
                         return SizedBox(
                             width: 80,
                             height: 80,
-                            child: galleryButton(context, index.toString(), _));
+                            child:
+                                galleryButton(context, index.toString(), _, () {
+                              _.pickImageGallery().then((value) =>
+                                  postController.img.value =
+                                      value.obs as String);
+                              setState(() {
+                                postController.img.value = _.imageSrc.obs.value;
+                              });
+                            }));
                       }
                     } else {
                       return Padding(
@@ -57,18 +71,27 @@ class _CustomImagePickerState extends State<CustomImagePicker>
                   },
                 ));
           } else {
-            return changeButtonToLogo(context, _);
+            return changeButtonToLogo(context, _, () {
+              _.pickImageGallery();
+              setState(() {
+                postController.img.value = _.imageSrc.obs.value;
+              });
+              print("포스트 컨트롤러 변경됐나? ${postController.img.obs.value}");
+            });
           }
         });
   }
 }
 
-Widget changeButtonToLogo(dynamic context, ImageController imgController) {
+Widget changeButtonToLogo(
+    dynamic context, ImageController imgController, Function onClicked) {
   if (imgController.pickedImg == null) {
     return SizedBox(
         width: 80,
         height: 80,
-        child: galleryButton(context, "로고", imgController));
+        child: galleryButton(context, "로고", imgController, () {
+          onClicked();
+        }));
   } else {
     return Stack(
       children: [
@@ -113,11 +136,11 @@ Widget changeButtonToLogo(dynamic context, ImageController imgController) {
   }
 }
 
-Widget galleryButton(
-    BuildContext context, String buttonText, ImageController imgController) {
+Widget galleryButton(BuildContext context, String buttonText,
+    ImageController imgController, Function onClicked) {
   return OutlinedButton(
     onPressed: () {
-      imgController.pickImageGallery();
+      onClicked();
     },
     onFocusChange: null,
     style: OutlinedButton.styleFrom(
@@ -136,7 +159,7 @@ Widget galleryButton(
             color: AppTheme.postingPageDetailHintTextColor,
           ),
           Text(
-            "$buttonText/4",
+            "$buttonText",
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
@@ -149,7 +172,9 @@ Widget pickedImageContainer(int index, ImageController imgController) {
   final imageFile = File(imgController.pickedImgs[index].path);
 
   return FutureBuilder<void>(
-    future: imgController.pickedImgs == null ? Future.value() : Future.delayed(Duration(milliseconds: 500)),
+    future: imgController.pickedImgs == null
+        ? Future.value()
+        : Future.delayed(Duration(milliseconds: 500)),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
         return Stack(

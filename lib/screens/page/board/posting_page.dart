@@ -36,8 +36,14 @@ class _PostingPageState extends State<PostingPage> {
 /*    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.white, // 회색
     ));*/
-
+    ImageType imageType = widget.postType == PostType.club
+        ? ImageType.logo
+        : ImageType.hotPlaceImgList;
     PostController postController = Get.put(PostController(widget.postType));
+    ImageController imageController = Get.put(ImageController(
+        widget.postType == PostType.club
+            ? ImageType.logo
+            : ImageType.hotPlaceImgList));
 
     TextfieldTagsController hashTagController = TextfieldTagsController();
     PostUi postUi = PostUi.fromType(widget.postType);
@@ -96,6 +102,9 @@ class _PostingPageState extends State<PostingPage> {
                   showMyAlertDialog(
                       context, "경고!!!!!", "빈칸 안 채우면 못 지나감.", null);
                 } else {
+                  setState(() {});
+                  postController.img.value = imageController.imageSrc.obs.value;
+                  print("제바아아아아아아알: ${postController.img.value}");
                   postController.saveControllerData();
                   isSuccess = await postController.saveBoard();
                   if (isSuccess) {

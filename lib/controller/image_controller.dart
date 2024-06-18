@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:haemo/controller/posting_controller.dart';
+import 'package:haemo/model/post_type.dart';
+import 'package:haemo/service/db_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 enum ImageType { logo, hotPlaceImgList }
@@ -9,7 +12,8 @@ enum ImageType { logo, hotPlaceImgList }
 class ImageController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   final RxList<XFile> _pickedImgs = RxList<XFile>([]);
-
+  var imageSrc = "";
+  DBService db = DBService();
   List<XFile> get pickedImgs => _pickedImgs;
 
   final Rx<XFile?> _pickedImg = Rx<XFile?>(null);
@@ -23,7 +27,10 @@ class ImageController extends GetxController {
     imgType = type;
   }
 
-  Future<List<XFile>> pickImageGallery() async {
+  Future<List<String>> pickImageGallery() async {
+    PostController postController = PostController(
+        imgType == ImageType.logo ? PostType.club : PostType.hotPlace);
+
     List<XFile> images = [];
     if (imgType == ImageType.hotPlaceImgList) {
       try {
@@ -41,26 +48,31 @@ class ImageController extends GetxController {
         print('이미지 리스트 개수: ${pickedImgs.length}');
       } on PlatformException catch (e) {
         print('Failed to pick image: $e');
-      }finally{
+      } finally {
         isLoading = false;
         update();
       }
     } else {
-/*      try {
+      try {
         XFile? images = await _picker.pickImage(source: ImageSource.gallery);
         if (images == null) {
           print('이미지가 선택되지 않았습니다');
           return [];
         }
         _pickedImg.value = images;
+        imageSrc = await db
+            .uploadImage(images)
+            .then((value) => postController.img.value = value);
+        print('이미지 경로: ${postController.img}');
+        update();
       } on PlatformException catch (e) {
         print('Failed to pick image: $e');
-      } finally{
+      } finally {
         update();
       }
-      return images;*/
+      return List.of([imageSrc]);
     }
-    return images;
+    return List.of(_pickedImgs.map((e) => e.path).toList());
   }
 
   deleteImages(int index) {

@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:haemo/model/acceptation_model.dart';
 import 'package:haemo/model/acceptation_response_model.dart';
 import 'package:haemo/model/club_post_model.dart';
@@ -21,6 +20,7 @@ import 'package:haemo/model/user_response_model.dart';
 import 'package:haemo/model/wish_meeting_model.dart';
 import 'package:haemo/model/wish_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'dart:developer' as dev;
 import '../model/post_response_model.dart';
 import '../model/user_model.dart';
@@ -949,37 +949,6 @@ class DBService {
     }
   }
 
-  Future<void> uploadImage(String cpId, Uint8List imageBytes) async {
-    try {
-      if (cpId.isNotEmpty && imageBytes.isNotEmpty) {
-        String url = 'http://localhost:1004/club/uploadImage';
-        Map<String, String> headers = {
-          'Content-Type': 'application/json',
-        };
-        Map<String, dynamic> body = {
-          "imageData": base64Encode(imageBytes),
-          "cpId": cpId,
-        };
-
-        final response = await http.post(
-          Uri.parse(url),
-          headers: headers,
-          body: jsonEncode(body),
-        );
-
-        if (response.statusCode == 200) {
-          print("Image uploaded successfully.");
-        } else {
-          print("Image upload failed.");
-        }
-      } else {
-        print("Please provide cpId and select an image.");
-      }
-    } catch (e) {
-      print("Error uploading image: $e");
-    }
-  }
-
   Future<Uint8List?> getImage(String cpId) async {
     try {
       if (cpId.isNotEmpty) {
@@ -1065,6 +1034,37 @@ class DBService {
     } catch (e) {
       dev.log("Failed to sign in: ${e}");
       return false;
+    }
+  }
+
+  Future<String> uploadImage(XFile imageFile) async {
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('http://localhost:1004/image'),
+      );
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'file',
+          imageFile.path,
+        ),
+      );
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        print('Image uploaded successfully');
+        String imageUrl = await response.stream.bytesToString();
+        print('Image URL: $imageUrl');
+        return imageUrl;
+      } else {
+        print('Failed to upload image. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to upload image. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error uploading image: $e');
+      throw Exception('Error uploading image: $e');
     }
   }
 }
