@@ -1067,4 +1067,39 @@ class DBService {
       throw Exception('Error uploading image: $e');
     }
   }
+
+  Future<List<String>> uploadImageList(List<XFile> imageFile) async {
+    try {
+      var request = http.MultipartRequest(
+        'POST',
+        Uri.parse('http://localhost:1004/image/list'),
+      );
+
+      for (XFile imageFile in imageFile) {
+        request.files.add(
+          await http.MultipartFile.fromPath(
+            'file',
+            imageFile.path,
+          ),
+        );
+      }
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        print('Images uploaded successfully');
+        String responseBody = await response.stream.bytesToString();
+        List<String> imageUrls = List<String>.from(jsonDecode(responseBody));
+        print('Image URLs: $imageUrls');
+        return imageUrls;
+      } else {
+        print('Failed to upload images. Status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to upload images. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error uploading images: $e');
+      throw Exception('Error uploading images: $e');
+    }
+  }
 }
