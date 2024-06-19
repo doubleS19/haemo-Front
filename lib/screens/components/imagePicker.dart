@@ -55,18 +55,19 @@ class _CustomImagePickerState extends State<CustomImagePicker>
                             height: 80,
                             child:
                                 galleryButton(context, index.toString(), _, () {
-                              _.pickImageGallery().then((value) =>
-                                  postController.img.value =
-                                      value.obs as String);
-                              setState(() {
-                                postController.img.value = _.imageSrc.obs.value;
-                              });
+                              _.pickImageGallery().then((value) => {
+                                    postController.selectedPhoto.obs.value =
+                                        value.obs
+                                  });
+                              print(
+                                  "포스트 컨트롤러 변경됐나? ${postController.selectedPhoto.obs.value.toString()}");
                             }));
                       }
                     } else {
                       return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                          child: pickedImageContainer(index, _));
+                          child: pickedImageContainer(index, _,
+                              postController.selectedPhoto.obs.value));
                     }
                   },
                 ));
@@ -154,7 +155,7 @@ Widget galleryButton(BuildContext context, String buttonText,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.photo,
             color: AppTheme.postingPageDetailHintTextColor,
           ),
@@ -168,64 +169,49 @@ Widget galleryButton(BuildContext context, String buttonText,
   );
 }
 
-Widget pickedImageContainer(int index, ImageController imgController) {
-  final imageFile = File(imgController.pickedImgs[index].path);
-
-  return FutureBuilder<void>(
-    future: imgController.pickedImgs == null
-        ? Future.value()
-        : Future.delayed(Duration(milliseconds: 500)),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.done) {
-        return Stack(
-          children: [
-            Container(
-              width: 80,
-              height: 80,
-              padding: const EdgeInsets.all(5),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(13),
-                image: DecorationImage(
-                  image: FileImage(imageFile),
-                  fit: BoxFit.cover,
-                ),
-              ),
+Widget pickedImageContainer(
+    int index, ImageController imgController, List<String> imageFile) {
+  if (imageFile.isEmpty) {
+    return Container();
+  }
+  return Stack(
+    children: [
+      Container(
+        width: 80,
+        height: 80,
+        padding: const EdgeInsets.all(5),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(13),
+          image: DecorationImage(
+            image: Image.network(imageFile[index]).image,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+      Positioned(
+        top: 0,
+        right: 0,
+        child: InkWell(
+          onTap: () {
+            imgController.deleteImages(index);
+            imgController.update();
+          },
+          child: Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.7),
+              shape: BoxShape.circle,
             ),
-            Positioned(
-              top: 0,
-              right: 0,
-              child: InkWell(
-                onTap: () {
-                  imgController.deleteImages(index);
-                  imgController.update();
-                },
-                child: Container(
-                  width: 24,
-                  height: 24,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.withOpacity(0.7),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.close,
-                    size: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+            child: const Icon(
+              Icons.close,
+              size: 16,
+              color: Colors.white,
             ),
-          ],
-        );
-      } else {
-        return Container(
-          width: 80,
-          height: 80,
-          padding: const EdgeInsets.all(5),
-          alignment: Alignment.center,
-          child: customIndicator(30, 0),
-        );
-      }
-    },
+          ),
+        ),
+      ),
+    ],
   );
 }

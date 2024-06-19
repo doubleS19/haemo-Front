@@ -104,7 +104,9 @@ class _PostingPageState extends State<PostingPage> {
                 } else {
                   setState(() {});
                   postController.img.value = imageController.imageSrc.obs.value;
-                  print("제바아아아아아아알: ${postController.img.value}");
+                  postController.selectedPhoto.value =
+                      imageController.imageSrcList.obs.value;
+                  print("제바아아아아아아알: ${postController.selectedPhoto.obs.value}");
                   postController.saveControllerData();
                   isSuccess = await postController.saveBoard();
                   if (isSuccess) {
