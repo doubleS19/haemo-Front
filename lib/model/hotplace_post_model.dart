@@ -5,7 +5,7 @@ class HotPlacePost extends PostBase {
   late String description;
   String address;
   late String date;
-  List<MultipartFile>? photoList;
+  List<String>? photoList;
 
   HotPlacePost(
       {required String nickname,
@@ -25,12 +25,9 @@ class HotPlacePost extends PostBase {
         content: json['content'],
         address: json['address'],
         description: json['description'],
-        //photoList: json['photoList'],
+        photoList: json['imageList'],
         date: json['date'],
-        wishCnt: 0
-
-        /// 멀티파트 이미지 리스트 DB로 전송
-        );
+        wishCnt: 0);
   }
 
   Map<String, dynamic> toJson() => {
@@ -39,10 +36,8 @@ class HotPlacePost extends PostBase {
         'content': content,
         'description': description,
         'address': address,
-        //'photoList': photoList,
+        'imageList': photoList,
         'date': date,
         'wishing': wishCnt
-
-        /// 멀티파트 이미지 리스트 변수 넣기
       };
 }

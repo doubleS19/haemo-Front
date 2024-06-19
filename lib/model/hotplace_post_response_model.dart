@@ -30,7 +30,7 @@ class HotPlacePostResponse {
       address: json['address'],
       date: json['date'],
       pId: json['hpId'],
-      photoList: List<String>.from(json['imageList']),
+      photoList: json['imageList'].cast<String?>(),
       heartNum: json['wishing'],
 
       /// 멀티파트 이미지 리스트 DB로 전송
