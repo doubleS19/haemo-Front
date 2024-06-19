@@ -13,6 +13,7 @@ class ImageController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   final RxList<XFile> _pickedImgs = RxList<XFile>([]);
   var imageSrc = "";
+  var imageSrcList = <String>[];
   DBService db = DBService();
   List<XFile> get pickedImgs => _pickedImgs;
 
@@ -37,7 +38,7 @@ class ImageController extends GetxController {
         isLoading = true;
         images = await _picker.pickMultiImage();
         Future.delayed(const Duration(seconds: 2));
-        if (images == null) {
+        if (images.isEmpty) {
           print('이미지가 선택되지 않았습니다');
           return [];
         }
@@ -45,7 +46,11 @@ class ImageController extends GetxController {
           /// 이미지 개수가 너무 많다는 다이얼로그 필요
           _pickedImgs.addAll(images);
         }
-        print('이미지 리스트 개수: ${pickedImgs.length}');
+        imageSrcList = await db
+            .uploadImageList(images)
+            .then((value) => postController.selectedPhoto.value = value);
+        print(
+            '이미지 리스트 개수: ${postController.selectedPhoto.obs.value.toString()}');
       } on PlatformException catch (e) {
         print('Failed to pick image: $e');
       } finally {

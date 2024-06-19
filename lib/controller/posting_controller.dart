@@ -25,7 +25,7 @@ class PostController extends GetxController {
   final Rx<String> selectedMonth = ''.obs;
   final Rx<String> selectedDay = ''.obs;
   final Rx<String> selectedHour = ''.obs;
-  final RxList<String?> selectedPhoto = [null].obs;
+  final RxList<String> selectedPhoto = <String>[].obs;
   final RxList<String?> hashTag = [null].obs;
   final Rx<String> img = "".obs;
   late Rx<Post> post = Post(
@@ -72,6 +72,8 @@ class PostController extends GetxController {
   void saveControllerData() {
     var nickname = PreferenceUtil.getString("nickname") ?? "a";
     var imgSource = img.value;
+    var imgList = selectedPhoto.obs.value;
+    print("이미지 리스트: $imgList");
 
     switch (postType) {
       case PostType.meeting:
@@ -106,7 +108,7 @@ class PostController extends GetxController {
           hotPlacePost?.description = textControllerList[1].text;
           hotPlacePost?.content = detailTextContext.text;
           hotPlacePost?.date = getNow();
-          //hotPlacePost?.photoList = [];
+          hotPlacePost?.photoList = imgList;
           hotPlacePost?.wishCnt = 0;
         });
         break;
