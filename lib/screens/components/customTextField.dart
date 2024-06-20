@@ -19,6 +19,9 @@ Widget postingPageTitleTextField(
         hintStyle: Theme.of(context).textTheme.bodySmall,
         isDense: true),
     controller: textEdController,
+    onChanged: (value) {
+      textEdController.text = value;
+    },
   );
 }
 

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:haemo/controller/setting/contact_email_controller.dart';
+import 'package:haemo/screens/Page/home_page.dart';
+import 'package:haemo/utils/shared_preference.dart';
 
 import '../../../common/theme.dart';
 import '../../components/customAppBar.dart';
@@ -47,7 +50,10 @@ class ContactPage extends StatelessWidget {
           height: 150,
           padding: const EdgeInsets.fromLTRB(30, 40, 30, 70),
           child: settingPageCustomButton("문의하기", () {
-            contactEmailController.sendEmail();
+            contactEmailController.sendEmail(1, PreferenceUtil.getUser());
+            showReportSuccessDialog(context, "문의가 성공적으로 전송되었습니다.", "확인", () {
+              Get.offAll(() => HomePage());
+            });
           }),
         ),
       ),
