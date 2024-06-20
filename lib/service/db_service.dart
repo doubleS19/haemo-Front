@@ -10,6 +10,7 @@ import 'package:haemo/model/comment_response_model.dart';
 import 'package:haemo/model/hotplace_post_model.dart';
 import 'package:haemo/model/hotplace_post_response_model.dart';
 import 'package:haemo/model/login_model.dart';
+import 'package:haemo/model/mail_model.dart';
 import 'package:haemo/model/notice_model.dart';
 import 'package:haemo/model/notice_response_model.dart';
 import 'package:haemo/model/post_model.dart';
@@ -1100,6 +1101,28 @@ class DBService {
     } catch (e) {
       print('Error uploading images: $e');
       throw Exception('Error uploading images: $e');
+    }
+  }
+
+  Future<bool> sendMail(Mail mail) async {
+    try {
+      final response = await http.post(
+        Uri.parse("http://localhost:1004/mail"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(mail.toJson()),
+      );
+      if (response.statusCode == 200) {
+        dev.log("Successfully done");
+        return response.body == "true" ? true : false;
+      } else {
+        dev.log("결과: ${response.statusCode}");
+        throw Exception("Failed to sign in");
+      }
+    } catch (e) {
+      dev.log("Failed to sign in: ${e}");
+      return false;
     }
   }
 }
