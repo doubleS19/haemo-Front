@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haemo/common/user_image.dart';
 import 'package:haemo/model/chat_model.dart';
+import 'package:haemo/screens/components/customAppBar.dart';
 import 'package:haemo/screens/page/chat/chat_room_page.dart';
 import '../../../controller/chatlist_controller.dart';
 import '../../../utils/shared_preference.dart';
@@ -31,9 +32,10 @@ class _ChatListPageState extends State<ChatListPage> {
     fireBaseChatModel = chatListController.fireBaseChatModel.obs.value;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("채팅"),
-      ),
+      appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child:
+              Builder(builder: (context) => customColorAppbar(context, "채팅"))),
       body: Column(
         children: [
           Expanded(

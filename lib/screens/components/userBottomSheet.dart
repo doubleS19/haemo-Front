@@ -100,7 +100,7 @@ void userBottomSheet(BuildContext context, UserResponse user) {
                           color: Color(0xfff65a64)),
                       child: RawMaterialButton(
                           onPressed: (() {
-                            Get.to(ReportingPage(nickname: user.nickname));
+                            Get.to(ReportingPage(user: user));
                           }),
                           child: const Text(
                             "신고하기",
