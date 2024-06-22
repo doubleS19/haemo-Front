@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,14 @@ class _HomePageState extends State<HomePage> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.instance.getToken().then((token) {
+      print('FCM Token: $token');
     });
   }
 
@@ -163,11 +172,6 @@ class _HomePageState extends State<HomePage> {
             child: CircularProgressIndicator(),
           );
         });
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override

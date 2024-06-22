@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart'
     show GetMaterialApp;
@@ -28,7 +29,50 @@ void main() async {
   await PreferenceUtil.init();
   PreferenceUtil.setString("nickname", "뜽미니에요");
   print(PreferenceUtil.getUser().toString());
+  setFCM();
   runApp(const MyApp());
+}
+
+Future<void> backgroundHandler(RemoteMessage message) async {
+  debugPrint('fcm backgroundHandler, message');
+
+  debugPrint(message.notification?.title ?? '');
+  debugPrint(message.notification?.body ?? '');
+}
+
+Future<void> setFCM() async {
+  String token = await FirebaseMessaging.instance.getToken() ?? '';
+  debugPrint("fcmToken : $token");
+
+  NotificationSettings settings =
+      await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    badge: true,
+    provisional: false,
+    sound: true,
+  );
+
+  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    alert: true,
+    badge: true,
+    sound: true,
+  );
+
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    debugPrint('fcm getInitialMessage, message : ${message?.data ?? ''}');
+    if (message != null) {
+      return;
+    }
+  });
+
+  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+
+  FirebaseMessaging.instance.getInitialMessage().then((message) {
+    debugPrint('fcm getInitialMessage, message : ${message?.data ?? ''}');
+    if (message != null) {
+      return;
+    }
+  });
 }
 
 Future<void> initializeDefault() async {
@@ -53,6 +97,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
     return GetMaterialApp(
       title: '헤쳐모여 TUK',
       theme: CustomThemes.mainTheme,

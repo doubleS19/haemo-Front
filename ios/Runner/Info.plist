@@ -49,5 +49,25 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+<array>
+  <string>fetch</string>
+  <string>remote-notification</string>
+</array>
+<key>FirebaseAppDelegateProxyEnabled</key>
+<false/>
+<key>NSAppTransportSecurity</key>
+<dict>
+  <key>NSAllowsArbitraryLoads</key>
+  <true/>
+</dict>
+<key>NSLocationAlwaysUsageDescription</key>
+<string>YOUR_DESCRIPTION</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>YOUR_DESCRIPTION</string>
+<key>NSCameraUsageDescription</key>
+<string>YOUR_DESCRIPTION</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>YOUR_DESCRIPTION</string>
 </dict>
 </plist>

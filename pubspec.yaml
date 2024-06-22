@@ -61,6 +61,9 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   firebase_core: ^2.7.0
   firebase_database: ^10.3.2
+  firebase_messaging: ^14.9.4
+  googleapis_auth: ^1.4.1
+  flutter_local_notifications: ^17.1.2
 
 dev_dependencies:
   flutter_test:
@@ -84,6 +87,7 @@ flutter:
     - assets/images/
     - assets/user/
     - assets/icons/
+    - assets/data/
     - pubspec.yaml
 
   # The following line ensures that the Material Icons font is
