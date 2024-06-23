@@ -180,7 +180,7 @@ AppBar boardDetailAppbar(int type, int pId) {
   );
 }
 
-AppBar boardWriterAppbar() {
+AppBar boardWriterAppbar(BuildContext context, int pId, int type) {
   return AppBar(
     backgroundColor: Colors.white,
     leading: IconButton(
@@ -197,7 +197,9 @@ AppBar boardWriterAppbar() {
           icon: Image.asset("assets/icons/menu_icon.png",
               color: AppTheme.mainColor),
           color: AppTheme.mainColor,
-          onPressed: () {})
+          onPressed: () {
+            boardWriterAppBarDialog(context, pId, type);
+          })
     ],
   );
 }

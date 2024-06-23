@@ -7,6 +7,7 @@ import 'package:haemo/common/user_image.dart';
 import 'package:haemo/controller/board/attend_controller.dart';
 import 'package:haemo/model/user_response_model.dart';
 import 'package:haemo/screens/Page/home_page.dart';
+import 'package:haemo/service/db_service.dart';
 
 import '../../common/color.dart';
 
@@ -22,15 +23,47 @@ void showMyAlertDialog(
     builder: (BuildContext context) => AlertDialog(
       content: Container(
         height: 100,
-        child: Center(child: Text(title)),
+        child: Center(child: Text(content)),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       actions: <Widget>[
         TextButton(
           onPressed: () {
+            onPressed.call();
+          },
+          child: const Text('닫기'),
+        ),
+      ],
+    ),
+  );
+}
+
+void showConfirmDialog(
+    BuildContext context, String content, Function? onClick) {
+  Function? onPressed = (onClick != null)
+      ? onClick
+      : () {
+          Navigator.of(context).pop();
+        };
+  showDialog<String>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      backgroundColor: Colors.white,
+      content: Container(
+        height: 100,
+        child: Center(child: Text(content)),
+      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      actions: <Widget>[
+        TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: AppTheme.mainColor,
+          ),
+          onPressed: () {
             onPressed();
           },
-          child: Text(content),
+          child: Text("확인",
+              style: CustomThemes.customDialogConfirmButtonTextStyle),
         ),
       ],
     ),
@@ -267,7 +300,7 @@ showAttendUserDialog(BuildContext context, List<UserResponse> user, int person,
                                       flex: 3,
                                       child: Center(
                                         child: Text(attendUser.nickname,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 14.0,
                                               color: AppTheme.mainTextColor,
                                               decoration: TextDecoration.none,
@@ -279,7 +312,7 @@ showAttendUserDialog(BuildContext context, List<UserResponse> user, int person,
                                           height: 14,
                                           width: 14.0,
                                           child: Image(
-                                            image: AssetImage(
+                                            image: const AssetImage(
                                               "assets/icons/accept_user_icon.png",
                                             ),
                                             color: controller
@@ -348,5 +381,54 @@ void replyDialog(BuildContext context, String content, String cancel,
         )
       ],
     ),
+  );
+}
+
+Future<String?> boardWriterAppBarDialog(
+    BuildContext context, int pId, int type) async {
+  final db = DBService();
+  final list = ["임시 마감", "수정하기", "삭제하기"];
+  bool isDeleted = false;
+  onClick(String value) async {
+    if (value == "임시 마감") {
+      print("임시 마감");
+    } else if (value == "수정하기") {
+      print("수정하기");
+    } else if (value == "삭제하기") {
+      isDeleted = type == 1
+          ? await db.deletePost(pId)
+          : (type == 2
+              ? await db.deleteClubPost(pId)
+              : await db.deleteHotPlacePost(pId));
+      Get.back();
+    }
+  }
+
+  return await showDialog<String>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(13.0)),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: list.map((item) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop(item);
+                  onClick(item);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(item,
+                      style:
+                          CustomThemes.customSelectListDialoglContentTextStyle),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      );
+    },
   );
 }
