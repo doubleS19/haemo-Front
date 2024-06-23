@@ -27,8 +27,6 @@ void main() async {
   await initializeDefault();
   await GetStorage.init();
   await PreferenceUtil.init();
-  PreferenceUtil.setString("nickname", "뜽미니에요");
-  print(PreferenceUtil.getUser().toString());
   setFCM();
   runApp(const MyApp());
 }
@@ -59,10 +57,8 @@ Future<void> setFCM() async {
   );
 
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    debugPrint('fcm getInitialMessage, message : ${message?.data ?? ''}');
-    if (message != null) {
-      return;
-    }
+    debugPrint('fcm getInitialMessage, message : ${message.data}');
+    return;
   });
 
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);

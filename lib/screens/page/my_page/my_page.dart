@@ -7,7 +7,6 @@ import 'package:haemo/screens/page/my_page/my_meeting_page.dart';
 import 'package:haemo/screens/page/my_page/my_wish_club_page%20.dart';
 import 'package:haemo/screens/page/my_page/my_wish_meeting_page.dart';
 import 'package:haemo/screens/page/my_page/my_wish_place_page.dart';
-import 'package:haemo/screens/page/setting/settings_page.dart';
 import 'package:haemo/utils/shared_preference.dart';
 import 'package:haemo/model/user_response_model.dart';
 import 'package:haemo/service/db_service.dart';
@@ -28,6 +27,7 @@ class _MyPageState extends State<MyPage> {
     DBService db = DBService();
     return Scaffold(
         appBar: myPageAppbar("마이페이지"),
+        backgroundColor: Colors.white,
         body: FutureBuilder(
             future: db.getUserByNickname(PreferenceUtil.getString("nickname")!),
             builder: (context, snapshot) {
@@ -40,7 +40,7 @@ class _MyPageState extends State<MyPage> {
                       const SizedBox(
                         height: 30.0,
                       ),
-                      Divider(color: AppTheme.mainPageTextColor),
+                      const Divider(color: AppTheme.mainPageTextColor),
                       myPageColumn()
                     ]));
               } else {

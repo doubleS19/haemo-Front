@@ -22,15 +22,15 @@ void showMyAlertDialog(
     builder: (BuildContext context) => AlertDialog(
       content: Container(
         height: 100,
-        child: Center(child: Text(content)),
+        child: Center(child: Text(title)),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       actions: <Widget>[
         TextButton(
           onPressed: () {
-            onPressed.call();
+            onPressed();
           },
-          child: const Text('닫기'),
+          child: Text(content),
         ),
       ],
     ),

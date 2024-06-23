@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:haemo/common/theme.dart';
+import 'package:haemo/controller/user_controller.dart';
 import 'package:haemo/screens/components/customButton.dart';
+import 'package:haemo/screens/components/customDialog.dart';
+import 'package:haemo/screens/page/intro/login_page.dart';
 import 'package:haemo/screens/page/setting/settings_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../common/color.dart';
 import '../../../utils/shared_preference.dart';
 import '../../components/customAppBar.dart';
@@ -14,19 +16,26 @@ List<String> deleteAccountAlarm = [
   "프로필, 작성글 등 모든 개인 정보가 삭제됩니다."
 ];
 
-class DeleteAccountPage extends StatelessWidget {
+class DeleteAccountPage extends StatefulWidget {
   const DeleteAccountPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    bool? _isChecked = false;
+  _DeleteAccountPageState createState() => _DeleteAccountPageState();
+}
 
+class _DeleteAccountPageState extends State<DeleteAccountPage> {
+  bool _isChecked = false;
+  UserController userController = Get.put(UserController());
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
             child: Builder(
                 builder: (context) =>
                     customColorAppbar(context, menuItemList[0][1]))),
+        backgroundColor: Colors.white,
         body: Align(
           alignment: Alignment.topCenter,
           child: Container(
@@ -71,15 +80,28 @@ class DeleteAccountPage extends StatelessWidget {
                     )),
                 Row(children: [
                   Checkbox(
-                      value: _isChecked,
-                      onChanged: (value) {
-                        _isChecked = value;
-                      }),
+                    value: _isChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        _isChecked = value!;
+                      });
+                    },
+                    checkColor: Colors.white,
+                    activeColor: AppTheme.mainColor,
+                  ),
                   Text("안내사항을 모두 확인했습니다.",
                       style: CustomThemes.deleteAccountPageContentTextStyle),
                 ]),
                 const SizedBox(height: 20),
-                settingPageCustomButton("회원 탈퇴", () {})
+                settingPageCustomButton("회원 탈퇴", () {
+                  if (_isChecked == false) {
+                    showMyAlertDialog(context, "안내사항을 확인해주세요.", "확인", null);
+                  } else {
+                    showYesOrNoDialog(context, "계정을 삭제하시겠습니까?", "취소", "확인", () {
+                      userController.deleteUser();
+                    });
+                  }
+                })
               ],
             ),
           ),

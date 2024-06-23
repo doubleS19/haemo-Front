@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:haemo/screens/components/customDialog.dart';
+import 'package:haemo/utils/shared_preference.dart';
 
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
@@ -33,6 +34,7 @@ class SettingsPage extends StatelessWidget {
           preferredSize: const Size.fromHeight(kToolbarHeight),
           child:
               Builder(builder: (context) => customColorAppbar(context, "설정"))),
+      backgroundColor: Colors.white,
       body: ListView.builder(
         itemCount: menuTitleList.length,
         itemBuilder: (BuildContext context, int index) {
@@ -79,8 +81,8 @@ Widget menuItem(
       onTap: () {
         if (menuItemRoutes[sectionIndex][itemIndex] == '') {
           showYesOrNoDialog(context, "로그아웃 하시겠습니까?", '아니요', '예', () {
-            /// 로그아웃 기능 추가
-            Navigator.of(context).pop();
+            PreferenceUtil.clear();
+            Get.offAllNamed('/login');
           });
         } else {
           Get.toNamed(menuItemRoutes[sectionIndex][itemIndex]);
