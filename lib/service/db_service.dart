@@ -1143,4 +1143,58 @@ class DBService {
       return false;
     }
   }
+
+  Future<bool> deletePost(int pId) async {
+    try {
+      final response = await http.delete(
+        Uri.parse("http://localhost:1004/post/delete/$pId"),
+      );
+      if (response.statusCode == 200) {
+        dev.log("Successfully done");
+        return response.body == "true" ? true : false;
+      } else {
+        dev.log("결과: ${response.statusCode}");
+        throw Exception("Failed to sign in");
+      }
+    } catch (e) {
+      dev.log("Failed to sign in: ${e}");
+      return false;
+    }
+  }
+
+  Future<bool> deleteClubPost(int pId) async {
+    try {
+      final response = await http.delete(
+        Uri.parse("http://localhost:1004/club/delete/$pId"),
+      );
+      if (response.statusCode == 200) {
+        dev.log("Successfully done");
+        return response.body == "true" ? true : false;
+      } else {
+        dev.log("결과: ${response.statusCode}");
+        throw Exception("Failed to sign in");
+      }
+    } catch (e) {
+      dev.log("Failed to sign in: ${e}");
+      return false;
+    }
+  }
+
+  Future<bool> deleteHotPlacePost(int pId) async {
+    try {
+      final response = await http.delete(
+        Uri.parse("http://localhost:1004/hot/delete/$pId"),
+      );
+      if (response.statusCode == 200) {
+        dev.log("Successfully done");
+        return response.body == "true" ? true : false;
+      } else {
+        dev.log("결과: ${response.statusCode}");
+        throw Exception("Failed to sign in");
+      }
+    } catch (e) {
+      dev.log("Failed to sign in: ${e}");
+      return false;
+    }
+  }
 }
