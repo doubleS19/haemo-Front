@@ -168,313 +168,280 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
               }
             },
             child: Scaffold(
-                body: Scaffold(
-                    body: Scaffold(
-                        resizeToAvoidBottomInset: false,
-                        appBar: (_postUser!.uId == PreferenceUtil.getInt("uId")
-                            ? boardWriterAppbar()
-                            : boardDetailAppbar(widget.type, widget.pId)),
-                        body: SingleChildScrollView(
-                            child: Column(children: [
-                          Divider(
-                            color: AppTheme.mainColor,
-                            thickness: 1.0,
+                resizeToAvoidBottomInset: false,
+                backgroundColor: Colors.white,
+                appBar: (_postUser!.uId == PreferenceUtil.getInt("uId")
+                    ? boardWriterAppbar(context, widget.pId, widget.type)
+                    : boardDetailAppbar(widget.type, widget.pId)),
+                body: SingleChildScrollView(
+                    child: Column(children: [
+                  Divider(
+                    color: AppTheme.mainColor,
+                    thickness: 1.0,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        userProfile(context, _postUser!, date!),
+                        const SizedBox(height: 30.0),
+                        Text(
+                          title!,
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                            color: AppTheme.mainTextColor,
+                            fontWeight: FontWeight.w500,
                           ),
+                        ),
+                        const SizedBox(height: 15.0),
+                        if (widget.type == 2 &&
+                            widget.clubPost?.logo != null) ...[
                           Container(
-                            margin: const EdgeInsets.fromLTRB(
-                                20.0, 10.0, 20.0, 0.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                userProfile(context, _postUser!, date!),
-                                const SizedBox(height: 30.0),
-                                Text(
-                                  title!,
-                                  style: const TextStyle(
-                                    fontSize: 18.0,
-                                    color: AppTheme.mainTextColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                const SizedBox(height: 15.0),
-                                if (widget.type == 2 &&
-                                    widget.clubPost?.logo != null) ...[
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0)),
-                                    width: double.infinity,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.25,
-                                    child: Image.network(
-                                      widget.clubPost!.logo!,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                ] else if (widget.type == 3 &&
-                                    widget.hotPlacePost?.photoList.length !=
-                                        0) ...[
-                                  Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15.0)),
-                                      width: double.infinity,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.25,
-                                      child: Stack(
-                                          alignment: Alignment.bottomCenter,
-                                          children: <Widget>[
-                                            CarouselSlider.builder(
-                                              options: CarouselOptions(
-                                                initialPage: 0,
-                                                viewportFraction: 1,
-                                                enlargeCenterPage: true,
-                                                onPageChanged:
-                                                    (index, reason) =>
-                                                        setState(() {
-                                                  activeIndex = index;
-                                                }),
-                                              ),
-                                              itemCount: widget.hotPlacePost!
-                                                  .photoList.length,
-                                              itemBuilder:
-                                                  (context, index, realIndex) {
-                                                final path = widget
-                                                    .hotPlacePost!
-                                                    .photoList[index];
-                                                return imageSlider(path, index);
-                                              },
-                                            ),
-                                            Align(
-                                                alignment:
-                                                    Alignment.bottomCenter,
-                                                child: indicator())
-                                          ]))
-                                ],
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 10.0),
-                                  width: double.infinity,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 20.0),
-                                      Text(
-                                        content!,
-                                        style: const TextStyle(
-                                          color: AppTheme.mainTextColor,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                        maxLines: 20,
-                                      ),
-                                      const SizedBox(height: 20.0),
-                                    ],
-                                  ),
-                                ),
-                                if (widget.type == 1) ...[
-                                  Column(
-                                    children: [
-                                      Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Container(
-                                              margin: const EdgeInsets.only(
-                                                  right: 10.0),
-                                              child: Text(
-                                                  "$_attendNum/${widget.meetingPost?.person}",
-                                                  style: TextStyle(
-                                                      fontSize: 12.0,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color: AppTheme
-                                                          .mainColor)))),
-                                      const SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      Align(
-                                          alignment: Alignment.centerRight,
-                                          child: Container(
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      width: 0.5,
-                                                      color:
-                                                          AppTheme.mainColor),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          23.0),
-                                                  color: _borderColor),
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  5,
-                                              height: MediaQuery.sizeOf(context)
-                                                      .height /
-                                                  31,
-                                              child: MaterialButton(
-                                                color: _buttonColor,
-                                                elevation: 0.0,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            18.0),
-                                                    side: BorderSide(
-                                                        color: _borderColor)),
-                                                child: Text(
-                                                  _buttonText,
-                                                  style: TextStyle(
-                                                      fontSize: 10.8,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: _buttonTextColor),
-                                                ),
-                                                onPressed: () async {
-                                                  if (_postUser!.uId ==
-                                                      PreferenceUtil.getInt(
-                                                          "uId")) {
-                                                    List<UserResponse>
-                                                        userList = await db
-                                                            .getAttendUserList(
-                                                                widget.pId);
-                                                    // ignore: use_build_context_synchronously
-                                                    return showAttendUserDialog(
-                                                        context,
-                                                        userList,
-                                                        userList.length,
-                                                        attendController,
-                                                        widget.pId);
-                                                  } else {
-                                                    attendController
-                                                        .requestParticipation(
-                                                            context,
-                                                            PreferenceUtil
-                                                                .getInt("uId")!,
-                                                            widget.pId);
-                                                  }
-                                                },
-                                              ))),
-                                    ],
-                                  )
-                                ],
-                                const Divider(color: AppTheme.mainTextColor),
-                                CommentWidget(
-                                  pId: widget.pId,
-                                  type: widget.type,
-                                  onReplyPressed: (int cId) {
-                                    _focusNode.requestFocus();
-                                    commentController.cId.value = cId;
-                                    commentController.isReply.value = true;
-                                  },
-                                ),
-                              ],
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            width: double.infinity,
+                            height: MediaQuery.of(context).size.height * 0.25,
+                            child: Image.network(
+                              widget.clubPost!.logo!,
+                              fit: BoxFit.cover,
                             ),
                           )
-                        ])),
-                        bottomNavigationBar: Container(
-                            margin:
-                                const EdgeInsets.symmetric(horizontal: 15.0),
-                            child: Row(children: [
-                              Expanded(
-                                  flex: 7,
+                        ] else if (widget.type == 3 &&
+                            widget.hotPlacePost?.photoList.length != 0) ...[
+                          Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0)),
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height * 0.25,
+                              child: Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: <Widget>[
+                                    CarouselSlider.builder(
+                                      options: CarouselOptions(
+                                        initialPage: 0,
+                                        viewportFraction: 1,
+                                        enlargeCenterPage: true,
+                                        onPageChanged: (index, reason) =>
+                                            setState(() {
+                                          activeIndex = index;
+                                        }),
+                                      ),
+                                      itemCount:
+                                          widget.hotPlacePost!.photoList.length,
+                                      itemBuilder: (context, index, realIndex) {
+                                        final path = widget
+                                            .hotPlacePost!.photoList[index];
+                                        return imageSlider(path, index);
+                                      },
+                                    ),
+                                    Align(
+                                        alignment: Alignment.bottomCenter,
+                                        child: indicator())
+                                  ]))
+                        ],
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 10.0),
+                          width: double.infinity,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 20.0),
+                              Text(
+                                content!,
+                                style: const TextStyle(
+                                  color: AppTheme.mainTextColor,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                maxLines: 20,
+                              ),
+                              const SizedBox(height: 20.0),
+                            ],
+                          ),
+                        ),
+                        if (widget.type == 1) ...[
+                          Column(
+                            children: [
+                              Align(
+                                  alignment: Alignment.centerRight,
                                   child: Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          0.0, 20.0, 5.0, 25.0),
-                                      height: _textFieldHeight,
+                                      margin:
+                                          const EdgeInsets.only(right: 10.0),
+                                      child: Text(
+                                          "$_attendNum/${widget.meetingPost?.person}",
+                                          style: TextStyle(
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.w700,
+                                              color: AppTheme.mainColor)))),
+                              const SizedBox(
+                                height: 10.0,
+                              ),
+                              Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Container(
                                       decoration: BoxDecoration(
+                                          border: Border.all(
+                                              width: 0.5,
+                                              color: AppTheme.mainColor),
                                           borderRadius:
-                                              BorderRadius.circular(30.82),
-                                          color: AppTheme.receiverText),
-                                      child: AutoSizeTextField(
-                                        minFontSize: 14.0,
-                                        maxFontSize: 14.0,
-                                        focusNode: _focusNode,
-                                        controller: textController,
-                                        maxLines: 5,
-                                        minLines: 1,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14.0,
-                                            color: AppTheme.mainTextColor),
-                                        cursorColor: AppTheme.mainPageTextColor,
-                                        keyboardType: TextInputType.multiline,
-                                        textInputAction:
-                                            TextInputAction.newline,
-                                        decoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 10.0,
-                                                    horizontal: 10.0),
-                                            focusedBorder: InputBorder.none,
-                                            enabledBorder: InputBorder.none,
-                                            border: InputBorder.none,
-                                            hintText: "댓글을 작성해 주세요.",
-                                            hintStyle: TextStyle(
-                                                fontSize: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall
-                                                    ?.fontSize,
-                                                fontFamily: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall
-                                                    ?.fontFamily,
-                                                color: AppTheme
-                                                    .postingPageDetailHintTextColor)),
+                                              BorderRadius.circular(23.0),
+                                          color: _borderColor),
+                                      width:
+                                          MediaQuery.of(context).size.width / 5,
+                                      height:
+                                          MediaQuery.sizeOf(context).height /
+                                              31,
+                                      child: MaterialButton(
+                                        color: _buttonColor,
+                                        elevation: 0.0,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                            side: BorderSide(
+                                                color: _borderColor)),
+                                        child: Text(
+                                          _buttonText,
+                                          style: TextStyle(
+                                              fontSize: 10.8,
+                                              fontWeight: FontWeight.w500,
+                                              color: _buttonTextColor),
+                                        ),
+                                        onPressed: () async {
+                                          if (_postUser!.uId ==
+                                              PreferenceUtil.getInt("uId")) {
+                                            List<UserResponse> userList =
+                                                await db.getAttendUserList(
+                                                    widget.pId);
+                                            // ignore: use_build_context_synchronously
+                                            return showAttendUserDialog(
+                                                context,
+                                                userList,
+                                                userList.length,
+                                                attendController,
+                                                widget.pId);
+                                          } else {
+                                            attendController
+                                                .requestParticipation(
+                                                    context,
+                                                    PreferenceUtil.getInt(
+                                                        "uId")!,
+                                                    widget.pId);
+                                          }
+                                        },
                                       ))),
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: Obx(() {
-                                    return SizedBox(
-                                        width: 33.0,
-                                        height: 33.0,
-                                        child: RawMaterialButton(
-                                            elevation: 0.0,
-                                            fillColor: AppTheme.mainColor,
-                                            shape: const CircleBorder(),
-                                            onPressed: (() {
-                                              dev.log(
-                                                  "cId는,,,,,, ${commentController.cId.value}");
-                                              if (commentController.isReply ==
-                                                  false.obs) {
-                                                commentController
-                                                    .checkCommentValid(
-                                                        PreferenceUtil
-                                                            .getString(
-                                                                "nickname")!,
-                                                        textController.text,
-                                                        widget.pId,
-                                                        widget.type,
-                                                        context);
-                                              } else {
-                                                commentController
-                                                    .checkReplyValid(
-                                                        PreferenceUtil
-                                                            .getString(
-                                                                "nickname")!,
-                                                        textController.text,
-                                                        widget.pId,
-                                                        commentController
-                                                            .cId.value,
-                                                        widget.type,
-                                                        context);
-                                              }
-                                              setState(() {
-                                                textController.clear();
-                                              });
-                                            }),
-                                            child: Container(
-                                              width: 41,
-                                              height: 41,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Colors.transparent,
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      "assets/icons/send_comment_icon.png"),
-                                                ),
-                                              ),
-                                            )));
-                                  })),
-                            ]))))));
+                            ],
+                          )
+                        ],
+                        const Divider(color: AppTheme.mainTextColor),
+                        CommentWidget(
+                          pId: widget.pId,
+                          type: widget.type,
+                          onReplyPressed: (int cId) {
+                            _focusNode.requestFocus();
+                            commentController.cId.value = cId;
+                            commentController.isReply.value = true;
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                ])),
+                bottomNavigationBar: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Row(children: [
+                      Expanded(
+                          flex: 7,
+                          child: Container(
+                              margin: const EdgeInsets.fromLTRB(
+                                  0.0, 20.0, 5.0, 25.0),
+                              height: _textFieldHeight,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30.82),
+                                  color: AppTheme.receiverText),
+                              child: AutoSizeTextField(
+                                minFontSize: 14.0,
+                                maxFontSize: 14.0,
+                                focusNode: _focusNode,
+                                controller: textController,
+                                maxLines: 5,
+                                minLines: 1,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14.0,
+                                    color: AppTheme.mainTextColor),
+                                cursorColor: AppTheme.mainPageTextColor,
+                                keyboardType: TextInputType.multiline,
+                                textInputAction: TextInputAction.newline,
+                                decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 10.0, horizontal: 10.0),
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    border: InputBorder.none,
+                                    hintText: "댓글을 작성해 주세요.",
+                                    hintStyle: TextStyle(
+                                        fontSize: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.fontSize,
+                                        fontFamily: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.fontFamily,
+                                        color: AppTheme
+                                            .postingPageDetailHintTextColor)),
+                              ))),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Obx(() {
+                            return SizedBox(
+                                width: 33.0,
+                                height: 33.0,
+                                child: RawMaterialButton(
+                                    elevation: 0.0,
+                                    fillColor: AppTheme.mainColor,
+                                    shape: const CircleBorder(),
+                                    onPressed: (() {
+                                      dev.log(
+                                          "cId는,,,,,, ${commentController.cId.value}");
+                                      if (commentController.isReply ==
+                                          false.obs) {
+                                        commentController.checkCommentValid(
+                                            PreferenceUtil.getString(
+                                                "nickname")!,
+                                            textController.text,
+                                            widget.pId,
+                                            widget.type,
+                                            context);
+                                      } else {
+                                        commentController.checkReplyValid(
+                                            PreferenceUtil.getString(
+                                                "nickname")!,
+                                            textController.text,
+                                            widget.pId,
+                                            commentController.cId.value,
+                                            widget.type,
+                                            context);
+                                      }
+                                      setState(() {
+                                        textController.clear();
+                                      });
+                                    }),
+                                    child: Container(
+                                      width: 41,
+                                      height: 41,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.transparent,
+                                        image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/icons/send_comment_icon.png"),
+                                        ),
+                                      ),
+                                    )));
+                          })),
+                    ]))));
       }
     });
   }

@@ -95,7 +95,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                 const SizedBox(height: 20),
                 settingPageCustomButton("회원 탈퇴", () {
                   if (_isChecked == false) {
-                    showMyAlertDialog(context, "안내사항을 확인해주세요.", "확인", null);
+                    showConfirmDialog(context, "안내사항을 확인해주세요.", null);
                   } else {
                     showYesOrNoDialog(context, "계정을 삭제하시겠습니까?", "취소", "확인", () {
                       userController.deleteUser();

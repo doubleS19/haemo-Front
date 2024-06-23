@@ -34,6 +34,7 @@ class _ClubPageState extends State<ClubPage> {
 
     return Scaffold(
         appBar: customMainAppbar("소모임/동아리 게시판", "공지 24시간"),
+        backgroundColor: Colors.white,
         body: GestureDetector(
           onTap: () {
             _focusNode.unfocus();

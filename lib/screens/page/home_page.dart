@@ -62,7 +62,6 @@ class _HomePageState extends State<HomePage> {
             PreferenceUtil.setInt("uId", user.uId);
             PreferenceUtil.setInt("userImage", user.userImage);
             print("uId: " + user.uId.toString());
-            print(PreferenceUtil.getInt("userImage"));
             print("userIndex=${user.userImage.toString()}");
             return Scaffold(
                 body: SafeArea(
