@@ -19,6 +19,8 @@ class UserController extends GetxController {
 
   DBService db = DBService();
   Rx<UserResponse?> user = Rx<UserResponse?>(null);
+  final uId = PreferenceUtil.getInt("uId");
+  bool isUserDeleted = false;
 
   Future checkUserInfo(String nickname, String major, String gender) async {
     if (nickname.isNotEmpty && major != "학과 선택" && gender != "성별") {
@@ -35,7 +37,7 @@ class UserController extends GetxController {
       String nickname, String major, String gender, int image) async {
     if (_registerState == RegisterState.okay) {
       User user = User(
-          studentId: 2019000000,
+          studentId: PreferenceUtil.getInt("studentId")!,
           nickname: nickname,
           major: major,
           gender: gender,
@@ -45,10 +47,9 @@ class UserController extends GetxController {
       bool isUserSaved = await db.saveUser(user);
       if (isUserSaved) {
         UserResponse userResponse = await db.getUserByNickname(nickname);
-        PreferenceUtil.setInt("uId", userResponse.uId);
+        PreferenceUtil.setUser(userResponse);
         Get.to(const HomePage());
       } else {}
-      dev.log(PreferenceUtil.getString("nickname")!);
     } else {
       _registerState = RegisterState.fail;
       dev.log("Fail~");
@@ -69,6 +70,21 @@ class UserController extends GetxController {
           : (type == 2
               ? await db.getUserByClubPost(pId)
               : await db.getUserByHotPlace(pId));
+    } catch (e) {
+      dev.log(e.toString());
+    }
+  }
+
+  void deleteUser() async {
+    try {
+      print(uId!);
+      await db.deleteUser(uId!).then((value) {
+        if (value) {
+          isUserDeleted = true;
+          PreferenceUtil.clear();
+          Get.offAllNamed("/");
+        }
+      });
     } catch (e) {
       dev.log(e.toString());
     }
