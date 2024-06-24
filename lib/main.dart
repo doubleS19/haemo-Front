@@ -103,7 +103,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/notification-settings', page: () => SettingAlarmPage()),
         GetPage(name: '/screen-settings', page: () => SettingScreenThemePage()),
         GetPage(name: '/contact', page: () => ContactPage()),
-        GetPage(name: '/notice', page: () => NoticePage(isAdmin: true)),
+        GetPage(name: '/notice', page: () => NoticeListPage()),
         GetPage(name: '/app-version', page: () => AppVersionPage()),
       ],
     );

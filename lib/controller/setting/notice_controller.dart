@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:haemo/model/notice_response_model.dart';
+import 'package:haemo/utils/shared_preference.dart';
 import '../../model/notice_model.dart';
 import '../../service/db_service.dart';
 
@@ -15,7 +18,7 @@ class NoticeController extends GetxController {
   TextEditingController noticeTitleController = TextEditingController();
   TextEditingController noticeContentController = TextEditingController();
   TextEditingController mdController = TextEditingController();
-  late RxList<Notice>? noticeList = RxList<Notice>([]);
+  late RxList<Notice> noticeList = RxList<Notice>([]);
   Rx<NoticeState> noticeState = NoticeState.Before.obs;
 
   @override
@@ -25,22 +28,22 @@ class NoticeController extends GetxController {
   }
 
   Future<void> getNotice() async {
-    List<Notice> fetchedNotices = [];
-    try {
-      fetchedNotices = await dbService.getAllNotice();
+    List<Notice> fetchedNotices = await dbService
+        .getAllNotice()
+        .then((value) => noticeList.value = value);
 
-      if (fetchedNotices.isEmpty) {
-        noticeState.value = NoticeState.Empty;
-      } else {
-        noticeState.value = NoticeState.Success;
-        noticeList?.value =
-            fetchedNotices.where((e) => e.visible == true).toList();
-      }
-      print("print nId: ${noticeList?.value[0].nId.toString()}");
-    } catch (error) {
-      print("Error getting notices: $error");
-      noticeState.value = NoticeState.Error;
+    if (fetchedNotices.isEmpty) {
+      noticeState.value = NoticeState.Empty;
+    } else {
+      noticeState.value = NoticeState.Success;
     }
+
+    if (PreferenceUtil.getString('role') == "USER") {
+      noticeList.value =
+          fetchedNotices.where((element) => element.visible == true).toList();
+    }
+
+    update();
   }
 
   void changeVisibility(Notice notice) async {
