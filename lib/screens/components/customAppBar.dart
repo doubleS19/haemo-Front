@@ -69,7 +69,6 @@ PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle) {
           alignment: Alignment.center,
           padding: const EdgeInsets.only(top: 10.0, right: 10.0),
           onPressed: () {
-            PreferenceUtil.remove("nickname");
             Get.to(() => const ChatListPage());
           },
           icon: Image.asset("assets/icons/menu_icon.png",

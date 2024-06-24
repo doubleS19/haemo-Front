@@ -52,7 +52,8 @@ class ChatListController extends GetxController {
           senderId = int.parse(chatUsers[1]);
         }
 
-        final user = await db.getUserById(senderId);
+        final user =
+            await db.getUserById(receiverId != uId ? receiverId : senderId);
 
         _chatList[chatId] = user!;
 

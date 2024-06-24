@@ -8,7 +8,6 @@ import 'package:haemo/utils/shared_preference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/Page/home_page.dart';
 import '../model/login_model.dart';
-import '../service/login_service.dart';
 import 'auth_controller.dart';
 
 enum LoginState { none, fail, login, success }
