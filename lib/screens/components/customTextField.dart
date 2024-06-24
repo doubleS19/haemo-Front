@@ -178,64 +178,37 @@ Widget iconTextField(BuildContext context, String hintText,
 Widget chatTextField(
     TextEditingController textEditingController, Function onSubmit) {
   return Container(
-          margin: EdgeInsets.symmetric(horizontal: 4.0),
-          child: Row(
-            children: [
-              Flexible(
-                child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14),
-                    decoration: BoxDecoration(
-                      color: AppTheme.chatTextFieldBackgroundColor,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: TextFormField(
-                        controller: textEditingController,
-                        maxLines: 1,
-                        keyboardType: TextInputType.multiline,
-                        cursorColor: AppTheme.mainColor,
-                        style: const TextStyle(fontSize: 20),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                        ))),
-              ),
-              SizedBox(width: 10),
-              Container(
-                  child: chatIconButton(
-                      const Icon(FontAwesomeIcons.gear), onSubmit))
-            ],
-          ))
-
-      /*Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-    Expanded(
-        child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 14),
-            height: 50,
-            decoration: BoxDecoration(
-              color: AppTheme.chatTextFieldBackgroundColor,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Expanded(
+      margin: EdgeInsets.symmetric(horizontal: 4.0),
+      child: Row(
+        children: [
+          Flexible(
+            child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                decoration: BoxDecoration(
+                  color: AppTheme.chatTextFieldBackgroundColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 child: TextFormField(
-                  /// https://dalgoodori.tistory.com/60
-                  controller: textEditingController,
-                  maxLines: 1,
-                  keyboardType: TextInputType.multiline,
-                  cursorColor: AppTheme.mainColor,
-                  style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                  )
-                )))),
-    const SizedBox(width: 8),
-    chatIconButton(const Icon(FontAwesomeIcons.gear), onSubmit)
-  ])*/
-      ;
+                    controller: textEditingController,
+                    maxLines: 1,
+                    keyboardType: TextInputType.multiline,
+                    cursorColor: AppTheme.mainColor,
+                    style: const TextStyle(fontSize: 20),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                    ))),
+          ),
+          SizedBox(width: 10),
+          Container(
+              child:
+                  chatIconButton(const Icon(FontAwesomeIcons.gear), onSubmit))
+        ],
+      ));
 }
 
 Widget columnTextField(BuildContext context, text,
-    TextEditingController textController, bool isPassword) {
+    TextEditingController textController, bool isPassword, Function onChanged) {
   return Container(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: Column(children: [
@@ -254,32 +227,29 @@ Widget columnTextField(BuildContext context, text,
           height: 5.0,
         ),
         TextFormField(
-          controller: textController,
-          obscureText: isPassword,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            hintText: '$text 입력',
-            hintStyle: const TextStyle(
-                color: AppTheme.registerPageHintColor, fontSize: 15.0),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-              borderSide: BorderSide(width: 2, color: AppTheme.mainColor),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-              borderSide: BorderSide(width: 2, color: AppTheme.mainColor),
-            ),
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            ),
-          ),
-          validator: (value) {
-            if (value != "" && value != null) {
+            controller: textController,
+            obscureText: isPassword,
+            onChanged: (value) {
               textController.text = value;
-            }
-            return null;
-          },
-        )
+              onChanged();
+            },
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              hintText: '$text 입력',
+              hintStyle: const TextStyle(
+                  color: AppTheme.registerPageHintColor, fontSize: 15.0),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                borderSide: BorderSide(width: 2, color: AppTheme.mainColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                borderSide: BorderSide(width: 2, color: AppTheme.mainColor),
+              ),
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              ),
+            ))
       ]));
 }

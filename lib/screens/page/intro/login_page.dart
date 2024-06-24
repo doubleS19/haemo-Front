@@ -22,12 +22,21 @@ class _LoginPageState extends State<LoginPage> {
   late LoginState _loginState;
   TextEditingController idCtr = TextEditingController();
   TextEditingController passwordCtr = TextEditingController();
+  Rx<bool> isEmpty = true.obs;
 
   DBService db = DBService();
 
   @override
   Widget build(BuildContext context) {
     _loginState = _loginController.loginState;
+
+    // _loginController.idController.addListener(() {
+    //   _loginController.checkValidation();
+    // });
+
+    // _loginController.pwdController.addListener(() {
+    //   _loginController.checkValidation();
+    // });
 
     return Scaffold(
       appBar: null,
@@ -54,46 +63,77 @@ class _LoginPageState extends State<LoginPage> {
                 )),
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 0.0),
-              child: columnTextField(context, 'ID', idCtr, false),
+              child: columnTextField(
+                  context, 'ID', _loginController.idController, false, () {
+                setState(() {
+                  _loginController.checkValidation();
+                });
+              }),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 30.0),
-              child: columnTextField(context, 'P/W', passwordCtr, true),
+              child: columnTextField(
+                  context, 'P/W', _loginController.pwdController, true, () {
+                setState(() {
+                  _loginController.checkValidation();
+                });
+              }),
             ),
             Container(
                 margin: const EdgeInsets.symmetric(horizontal: 20.0),
                 height: 45.0,
                 width: MediaQuery.of(context).size.width,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0)),
-                      backgroundColor: AppTheme.mainColor),
-                  onPressed: () async {
-                    if (idCtr.text.isEmpty || passwordCtr.text.isEmpty) {
-                      return showConfirmDialog(
-                          context, "아이디와 비밀번호를 입력해주세요", null);
-                    }
-                    bool loginSuccess = await _loginController.login(
-                        idCtr.text, passwordCtr.text);
-                    if (loginSuccess) {
-                      _loginController.checkUserExist(int.parse(idCtr.text));
-                    } else {
-                      return showConfirmDialog(
-                          context, "로그인에 실패했습니다.\n아이디나 비밀번호를 확인해 주세요.", null);
-                    }
-                  },
-                  child: const Text(
-                    "등록",
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white),
-                  ),
-                ))
+                child: loginButton()),
           ]);
         },
       ),
     );
+  }
+
+  Widget? loginButton() {
+    _loginController.isValidate.listen((value) {
+      setState(() {});
+    });
+
+    if (!_loginController.isValidate.value) {
+      return Container(
+          height: 45.0,
+          decoration: BoxDecoration(
+              color: AppTheme.registerPageFormColor,
+              borderRadius: BorderRadius.circular(20.0)),
+          child: const Align(
+              alignment: Alignment.center,
+              child: Text("등록",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white))));
+    } else {
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0)),
+            backgroundColor: AppTheme.mainColor),
+        onPressed: () async {
+          if (idCtr.text.isEmpty || passwordCtr.text.isEmpty) {
+            return showConfirmDialog(context, "아이디와 비밀번호를 입력해주세요", null);
+          }
+          bool loginSuccess =
+              await _loginController.login(idCtr.text, passwordCtr.text);
+          if (loginSuccess) {
+            _loginController.checkUserExist(int.parse(idCtr.text));
+          } else {
+            return showConfirmDialog(
+                context, "로그인에 실패했습니다.\n아이디나 비밀번호를 확인해 주세요.", null);
+          }
+        },
+        child: const Text(
+          "등록",
+          style: TextStyle(
+              fontSize: 16.0, fontWeight: FontWeight.w500, color: Colors.white),
+        ),
+      );
+    }
   }
 }

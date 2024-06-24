@@ -18,6 +18,10 @@ class LoginController extends GetxController {
 
   LoginState get loginState => _loginState.value;
 
+  final TextEditingController idController = TextEditingController();
+  final TextEditingController pwdController = TextEditingController();
+  RxBool isValidate = false.obs;
+
   final RxBool isLogin = false.obs;
 
   Future<bool> login(String id, String pwd) async {
@@ -69,5 +73,13 @@ class LoginController extends GetxController {
     }
 
     update();
+  }
+
+  void checkValidation() {
+    if (idController.text.isNotEmpty && pwdController.text.isNotEmpty) {
+      isValidate = true.obs;
+    } else {
+      isValidate = false.obs;
+    }
   }
 }
