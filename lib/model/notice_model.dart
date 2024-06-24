@@ -2,7 +2,6 @@ class Notice {
   int? nId; // Nullable nId field
   String title;
   String content;
-  String MD;
   String date;
   String noticeType;
   bool visible;
@@ -11,7 +10,6 @@ class Notice {
     this.nId, // Nullable nId parameter
     required this.title,
     required this.content,
-    required this.MD,
     required this.date,
     required this.noticeType,
     required this.visible,
@@ -21,7 +19,6 @@ class Notice {
     final Map<String, dynamic> data = <String, dynamic>{
       'title': title,
       'content': content,
-      'md': MD,
       'date': date,
       'type': noticeType,
       'visible': visible,
@@ -39,7 +36,6 @@ class Notice {
       nId: json['nid'] as int?,
       title: json['title'] as String,
       content: json['content'] as String,
-      MD: json['md'] as String,
       date: json['date'] as String,
       noticeType: json['type'] as String,
       visible: json['visible'] as bool,
