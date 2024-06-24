@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haemo/common/color.dart';
+import 'package:haemo/controller/wish_controller.dart';
 import 'package:haemo/model/club_post_response_model.dart';
-import 'package:haemo/model/post_response_model.dart';
+import 'package:haemo/model/wish_model.dart';
 import 'package:haemo/screens/Page/board/board_detail_page.dart';
 import 'package:haemo/screens/components/wishStarButton.dart';
-import 'package:haemo/service/db_service.dart';
 import 'package:haemo/utils/shared_preference.dart';
 
 class MyWishClubPage extends StatefulWidget {
@@ -18,15 +17,24 @@ class MyWishClubPage extends StatefulWidget {
 
 class _MyWishClubPageState extends State<MyWishClubPage> {
   List<ClubPostResponse> postList = [];
+  WishController wishController = WishController();
 
   @override
   void initState() {
     super.initState();
+    wishController.fetchWishClubPost();
   }
 
   @override
   build(BuildContext context) {
+    wishController.wishClubPost.listen((value) {
+      setState(() {
+        postList = value;
+      });
+    });
+
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,

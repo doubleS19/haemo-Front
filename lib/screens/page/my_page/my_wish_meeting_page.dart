@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haemo/common/color.dart';
+import 'package:haemo/controller/wish_controller.dart';
 import 'package:haemo/model/post_response_model.dart';
 import 'package:haemo/screens/Page/board/board_detail_page.dart';
 import 'package:haemo/screens/components/wishStarButton.dart';
@@ -16,15 +17,24 @@ class MyWishMeetingPage extends StatefulWidget {
 
 class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
   List<PostResponse> postList = [];
+  WishController wishController = WishController();
 
   @override
   void initState() {
     super.initState();
+    wishController.fetchWishMeetingPost();
   }
 
   @override
   build(BuildContext context) {
+    wishController.wishMeetingPost.listen((value) {
+      setState(() {
+        postList = value;
+      });
+    });
+
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
@@ -64,8 +74,11 @@ class _MyWishMeetingPageState extends State<MyWishMeetingPage> {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
                 onTap: () {
-                  Get.to(
-                      () => BoardDetailPage(pId: postList[index].pId, type: 1));
+                  Get.to(() => BoardDetailPage(
+                        pId: postList[index].pId,
+                        type: 1,
+                        meetingPost: postList[index],
+                      ));
                 },
                 child: Expanded(
                     child: Column(children: [

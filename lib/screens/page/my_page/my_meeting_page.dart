@@ -17,6 +17,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
   @override
   build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
@@ -34,7 +35,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
             margin: const EdgeInsets.only(right: 10.0, left: 10.0),
             color: Colors.white,
             child: Column(children: [
-              Divider(
+              const Divider(
                 color: AppTheme.dividerColor,
                 thickness: 0.5,
               ),
@@ -53,7 +54,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
             postList.removeWhere((element) =>
                 element.nickname != PreferenceUtil.getString("nickname"));
             if (postList.isEmpty) {
-              return Center(
+              return const Center(
                   child: Text(
                 "아직 작성한 게시물이 없어요!",
                 style: TextStyle(
@@ -67,7 +68,9 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                     return GestureDetector(
                         onTap: () {
                           Get.to(() => BoardDetailPage(
-                              pId: postList[index].pId, type: 1));
+                              pId: postList[index].pId,
+                              type: 1,
+                              meetingPost: postList[index]));
                         },
                         child: Expanded(
                             child: Column(children: [
@@ -76,7 +79,6 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                   border: Border.all(
                                       color: AppTheme.borderColor, width: 0.8),
                                   borderRadius: BorderRadius.circular(15.0)),
-                              height: 68.0,
                               width: double.infinity,
                               margin:
                                   const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
@@ -96,7 +98,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                                 postList[index].title,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     color: AppTheme
                                                         .mainPageTextColor,
                                                     fontSize: 13.5,
@@ -133,7 +135,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                         children: [
                                           Text(
                                             "${postList[index].person}명",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color:
                                                     AppTheme.mainPageTextColor,
                                                 fontSize: 12.0,
@@ -141,7 +143,7 @@ class _MyMeetingPageState extends State<MyMeetingPage> {
                                           ),
                                           Text(
                                             postList[index].date,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 12.0,
                                               color: AppTheme.mainPageTextColor,
                                             ),
