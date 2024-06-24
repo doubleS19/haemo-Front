@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:haemo/common/color.dart';
 import 'package:haemo/common/user_image.dart';
 import 'package:haemo/controller/login_controller.dart';
+import 'package:haemo/screens/components/customDialog.dart';
+import 'package:haemo/screens/page/board/posting_page.dart';
 import 'package:haemo/service/db_service.dart';
 import 'package:haemo/utils/user_image.dart';
 import '../../../controller/user_controller.dart';
@@ -28,13 +30,14 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: null,
+      backgroundColor: Colors.white,
       body: GetBuilder<LoginController>(
         builder: (_loginController) {
-          return Column(children: [
+          return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(20.0, 100.0, 20.0, 20.0),
+                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -49,39 +52,41 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 )),
             Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextFormField(
-                controller: idCtr,
-                validator: (value) {
-                  return (value == null || value.isEmpty)
-                      ? 'Please Enter Email'
-                      : null;
-                },
-                decoration: const InputDecoration(labelText: 'ID'),
-              ),
+              padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 0.0),
+              child: columnTextField(context, 'ID', idCtr, false),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextFormField(
-                validator: (value) {
-                  return (value == null || value.isEmpty)
-                      ? 'Please Enter Password'
-                      : null;
-                },
-                controller: passwordCtr,
-                obscureText: true,
-                decoration: const InputDecoration(labelText: 'PW'),
-              ),
+              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 30.0),
+              child: columnTextField(context, 'P/W', passwordCtr, true),
             ),
-            OutlinedButton(
-                onPressed: () async {
-                  bool loginSuccess = await _loginController.login(
-                      idCtr.text, passwordCtr.text);
-                  if (loginSuccess) {
-                    _loginController.checkUserExist(int.parse(idCtr.text));
-                  }
-                },
-                child: const Text('Login')),
+            Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                height: 45.0,
+                width: MediaQuery.of(context).size.width,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      backgroundColor: AppTheme.mainColor),
+                  onPressed: () async {
+                    if (idCtr.text.isEmpty || passwordCtr.text.isEmpty) {
+                      return showConfirmDialog(
+                          context, "아이디와 비밀번호를 입력해주세요", null);
+                    }
+                    bool loginSuccess = await _loginController.login(
+                        idCtr.text, passwordCtr.text);
+                    if (loginSuccess) {
+                      _loginController.checkUserExist(int.parse(idCtr.text));
+                    }
+                  },
+                  child: const Text(
+                    "등록",
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                  ),
+                ))
           ]);
         },
       ),
