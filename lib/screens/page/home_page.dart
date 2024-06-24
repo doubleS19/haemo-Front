@@ -8,6 +8,7 @@ import 'package:haemo/controller/club_page_controller.dart';
 import 'package:haemo/controller/hotplace_page_controller.dart';
 import 'package:haemo/model/post_type.dart';
 import 'package:haemo/screens/page/board/posting_page.dart';
+import 'package:haemo/screens/page/setting/notice_posting_page.dart';
 import '../../controller/meeting_page_controller.dart';
 import '../../utils/shared_preference.dart';
 import '../Page/board/club_page.dart';
@@ -156,40 +157,59 @@ class _HomePageState extends State<HomePage> {
 
   Widget? floatingButton() {
     return SpeedDial(
-      animatedIcon: AnimatedIcons.add_event,
+      animatedIcon: AnimatedIcons.menu_close,
       visible: true,
       curve: Curves.bounceIn,
       foregroundColor: Colors.white,
       backgroundColor: AppTheme.mainColor,
       children: [
-        SpeedDialChild(
-          label: "핫플 글쓰기",
-          labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: AppTheme.mainColor,
-          onTap: () {
-            PreferenceUtil.remove("id");
-            Get.to(() => const PostingPage(postType: PostType.hotPlace));
-          },
-        ),
-        SpeedDialChild(
-          label: "소모임 글쓰기",
-          labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: AppTheme.mainColor,
-          onTap: () {
-            Get.to(() => const PostingPage(postType: PostType.club));
-          },
-        ),
-        SpeedDialChild(
-          label: "새 글쓰기",
-          labelStyle: const TextStyle(
-              fontWeight: FontWeight.w500, color: Colors.white, fontSize: 13.0),
-          labelBackgroundColor: AppTheme.mainColor,
-          onTap: () {
-            Get.to(() => const PostingPage(postType: PostType.meeting));
-          },
-        ),
+        if (PreferenceUtil.getString("role") == "USER") ...[
+          SpeedDialChild(
+            label: "핫플 글쓰기",
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 13.0),
+            labelBackgroundColor: AppTheme.mainColor,
+            onTap: () {
+              Get.to(() => const PostingPage(postType: PostType.hotPlace));
+            },
+          ),
+          SpeedDialChild(
+            label: "소모임 글쓰기",
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 13.0),
+            labelBackgroundColor: AppTheme.mainColor,
+            onTap: () {
+              Get.to(() => const PostingPage(postType: PostType.club));
+            },
+          ),
+          SpeedDialChild(
+            label: "새 글쓰기",
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 13.0),
+            labelBackgroundColor: AppTheme.mainColor,
+            onTap: () {
+              Get.to(() => const PostingPage(postType: PostType.meeting));
+            },
+          ),
+        ] else ...[
+          SpeedDialChild(
+            label: "공지 작성",
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 13.0),
+            labelBackgroundColor: AppTheme.mainColor,
+            onTap: () {
+              Get.to(() => NoticePostingPage());
+            },
+          ),
+        ]
       ],
     );
   }

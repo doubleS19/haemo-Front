@@ -75,7 +75,9 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
     super.initState();
     if (widget.type == 1) {
       attendController.fetchAttendList(widget.pId);
-      attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
+      if (PreferenceUtil.getString("role") != "ADMIN") {
+        attendController.checkState(PreferenceUtil.getInt("uId")!, widget.pId);
+      }
       _borderColor = AppTheme.mainColor;
       _buttonColor = Colors.white;
       _buttonTextColor = AppTheme.mainColor;
@@ -170,7 +172,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
             child: Scaffold(
                 resizeToAvoidBottomInset: false,
                 backgroundColor: Colors.white,
-                appBar: (_postUser!.uId == PreferenceUtil.getInt("uId")
+                appBar: (_postUser!.uId == PreferenceUtil.getInt("uId") ||
+                        PreferenceUtil.getString("role") == "ADMIN"
                     ? boardWriterAppbar(context, widget.pId, widget.type)
                     : boardDetailAppbar(widget.type, widget.pId)),
                 body: SingleChildScrollView(
@@ -208,7 +211,7 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                             ),
                           )
                         ] else if (widget.type == 3 &&
-                            widget.hotPlacePost?.photoList.length != 0) ...[
+                            widget.hotPlacePost!.photoList.isNotEmpty) ...[
                           Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0)),
@@ -287,8 +290,8 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                           borderRadius:
                                               BorderRadius.circular(23.0),
                                           color: _borderColor),
-                                      width:
-                                          MediaQuery.of(context).size.width / 5,
+                                      width: MediaQuery.of(context).size.width /
+                                          4.5,
                                       height:
                                           MediaQuery.sizeOf(context).height /
                                               31,
@@ -309,7 +312,11 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
                                         ),
                                         onPressed: () async {
                                           if (_postUser!.uId ==
-                                              PreferenceUtil.getInt("uId")) {
+                                                  PreferenceUtil.getInt(
+                                                      "uId") ||
+                                              PreferenceUtil.getString(
+                                                      "role") ==
+                                                  "ADMIN") {
                                             List<UserResponse> userList =
                                                 await db.getAttendUserList(
                                                     widget.pId);
@@ -446,35 +453,3 @@ class _BoardDetailPageState extends State<BoardDetailPage> {
     });
   }
 }
-
-// Widget postInfo(String title, String content, String date, List<String>? imageList) {
-//   return Column(
-//     crossAxisAlignment: CrossAxisAlignment.start,
-//     children: [
-//       Text(
-//         title,
-//         style: TextStyle(
-//           fontSize: 18.0,
-//           color: AppTheme.mainTextColor,
-//           fontWeight: FontWeight.w500,
-//         ),
-//       ),
-//       const SizedBox(height: 15.0),
-//       Text(
-//         content,
-//         style: TextStyle(
-//           color: AppTheme.mainTextColor,
-//           fontWeight: FontWeight.w400,
-//         ),
-//       ),
-//       const SizedBox(height: 20.0),
-//       Text(
-//         date,
-//         style: TextStyle(
-//           color: AppTheme.mainTextColor,
-//           fontWeight: FontWeight.w400,
-//         ),
-//       ),
-//     ],
-//   );
-// }

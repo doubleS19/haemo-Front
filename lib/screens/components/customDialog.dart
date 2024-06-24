@@ -250,10 +250,10 @@ showAttendUserDialog(BuildContext context, List<UserResponse> user, int person,
     AttendController controller, int pId) {
   return showGeneralDialog(
     context: context,
-    barrierDismissible: true, // 다이얼로그 외부를 탭하면 닫히도록 설정
+    barrierDismissible: true,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-    barrierColor: Colors.black.withOpacity(0.5), // 배경 어두움 정도 조절
-    transitionDuration: const Duration(milliseconds: 200), // 애니메이션 지속 시간
+    barrierColor: Colors.black.withOpacity(0.5),
+    transitionDuration: const Duration(milliseconds: 200),
     pageBuilder: (context, animation, secondaryAnimation) {
       return Center(
         child: Container(
@@ -420,9 +420,11 @@ Future<String?> boardWriterAppBarDialog(
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(item,
-                      style:
-                          CustomThemes.customSelectListDialoglContentTextStyle),
+                  child: Text(
+                    item,
+                    style: CustomThemes.customSelectListDialoglContentTextStyle,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               );
             }).toList(),
