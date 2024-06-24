@@ -1,5 +1,4 @@
 class Notice {
-  int? nId; // Nullable nId field
   String title;
   String content;
   String date;
@@ -7,7 +6,6 @@ class Notice {
   bool visible;
 
   Notice({
-    this.nId, // Nullable nId parameter
     required this.title,
     required this.content,
     required this.date,
@@ -24,16 +22,11 @@ class Notice {
       'visible': visible,
     };
 
-    if (nId != null) {
-      data['nId'] = nId; // Add nId if it has a value
-    }
-
     return data;
   }
 
   factory Notice.fromJson(Map<String, dynamic> json) {
     return Notice(
-      nId: json['nid'] as int?,
       title: json['title'] as String,
       content: json['content'] as String,
       date: json['date'] as String,

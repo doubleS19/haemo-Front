@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:haemo/controller/setting/notice_controller.dart';
+import 'package:haemo/model/notice_response_model.dart';
+import 'package:haemo/utils/shared_preference.dart';
 import '../../../common/color.dart';
 import '../../../common/theme.dart';
 import '../../../model/notice_model.dart';
@@ -14,10 +16,11 @@ import '../../components/customIndicator.dart';
 import 'notice_detail_page.dart';
 import 'notice_posting_page.dart';
 
-class NoticePage extends StatelessWidget {
-  NoticePage({Key? key, required this.isAdmin}) : super(key: key);
+class NoticeListPage extends StatelessWidget {
+  NoticeListPage({Key? key}) : super(key: key);
+
   NoticeController noticeController = NoticeController();
-  final bool isAdmin;
+  final bool isAdmin = PreferenceUtil.getString('role') == "ADMIN";
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +68,8 @@ class NoticePage extends StatelessWidget {
     );
   }
 
-  Widget noticeCard(
-      BuildContext context, Notice notice, NoticeController noticeController) {
+  Widget noticeCard(BuildContext context, NoticeResponse notice,
+      NoticeController noticeController) {
     return GestureDetector(
         onTap: () {
           Get.to(() => NoticeDetailPage(

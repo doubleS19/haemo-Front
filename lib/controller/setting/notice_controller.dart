@@ -18,7 +18,7 @@ class NoticeController extends GetxController {
   TextEditingController noticeTitleController = TextEditingController();
   TextEditingController noticeContentController = TextEditingController();
   TextEditingController mdController = TextEditingController();
-  late RxList<Notice> noticeList = RxList<Notice>([]);
+  late RxList<NoticeResponse> noticeList = RxList<NoticeResponse>([]);
   Rx<NoticeState> noticeState = NoticeState.Before.obs;
 
   @override
@@ -28,7 +28,7 @@ class NoticeController extends GetxController {
   }
 
   Future<void> getNotice() async {
-    List<Notice> fetchedNotices = await dbService
+    List<NoticeResponse> fetchedNotices = await dbService
         .getAllNotice()
         .then((value) => noticeList.value = value);
 
@@ -46,7 +46,7 @@ class NoticeController extends GetxController {
     update();
   }
 
-  void changeVisibility(Notice notice) async {
+  void changeVisibility(NoticeResponse notice) async {
     try {
       print("print nId: ${notice.nId}");
       await dbService.changeNoticeVisibility(notice.nId!);

@@ -465,11 +465,13 @@ class DBService {
     }
   }
 
-  Future<List<Notice>> getAllNotice() async {
+  Future<List<NoticeResponse>> getAllNotice() async {
     final response = await http.get(Uri.parse("http://localhost:1004/notice"));
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as List<dynamic>;
-      return data.map<Notice>((json) => Notice.fromJson(json)).toList();
+      return data
+          .map<NoticeResponse>((json) => NoticeResponse.fromJson(json))
+          .toList();
     } else {
       throw Exception('Failed to load hot list');
     }

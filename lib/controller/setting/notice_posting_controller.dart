@@ -20,7 +20,6 @@ class NoticePostingController extends GetxController {
       isSuccess = await dbService.saveNotice(Notice(
           title: noticeTitleTextEditingController.text,
           content: noticeContentTextEditingController.text,
-          MD: "MD",
           date: getNow(),
           noticeType: noticeType.value,
           visible: true));

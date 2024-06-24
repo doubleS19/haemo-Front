@@ -19,7 +19,7 @@ class NoticeDetailPage extends StatelessWidget {
       required this.noticeController})
       : super(key: key);
 
-  final Notice notice;
+  final NoticeResponse notice;
   final bool isAdmin;
   final NoticeController noticeController;
   NoticeVisibilityController visibilityController =
@@ -73,7 +73,7 @@ class NoticeDetailPage extends StatelessWidget {
                       style: CustomThemes.noticeDetailPageContentTextStyle)),
               Container(
                 alignment: Alignment.centerRight,
-                child: Text("- ${notice.MD} -"),
+                child: Text("- 미란 -"),
               )
             ],
           ),
