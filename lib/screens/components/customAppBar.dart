@@ -41,7 +41,7 @@ PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle) {
         children: [
           Text(
             appBarTitle,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 17.0,
               color: AppTheme.mainPageHeadlineColor,
@@ -50,7 +50,7 @@ PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle) {
           const SizedBox(height: 5),
           Text(
             subTitle,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppTheme.mainTextColor,
               fontSize: 10.0,
             ),
@@ -58,22 +58,24 @@ PreferredSizeWidget customMainAppbar(String appBarTitle, String subTitle) {
         ],
       ),
     ),
-    shape: Border(
+    shape: const Border(
       bottom: BorderSide(
         color: AppTheme.dividerColor,
         width: 0.5,
       ),
     ),
     actions: [
-      IconButton(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.only(top: 10.0, right: 10.0),
-          onPressed: () {
-            Get.to(() => const ChatListPage());
-          },
-          icon: Image.asset("assets/icons/menu_icon.png",
-              color: AppTheme.mainColor),
-          color: AppTheme.mainColor),
+      Padding(
+          padding: const EdgeInsets.all(7.0),
+          child: IconButton(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(top: 10.0, right: 10.0),
+              onPressed: () {
+                Get.to(() => const ChatListPage());
+              },
+              icon: Image.asset("assets/icons/chat_icon.png",
+                  color: AppTheme.mainColor),
+              color: AppTheme.mainColor))
     ],
     elevation: 0.0,
     automaticallyImplyLeading: false,

@@ -4,6 +4,7 @@ import 'package:haemo/common/color.dart';
 import 'package:haemo/common/user_image.dart';
 import 'package:haemo/controller/login_controller.dart';
 import 'package:haemo/screens/components/customDialog.dart';
+import 'package:haemo/screens/components/customTextField.dart';
 import 'package:haemo/screens/page/board/posting_page.dart';
 import 'package:haemo/service/db_service.dart';
 import 'package:haemo/utils/user_image.dart';
@@ -77,6 +78,9 @@ class _LoginPageState extends State<LoginPage> {
                         idCtr.text, passwordCtr.text);
                     if (loginSuccess) {
                       _loginController.checkUserExist(int.parse(idCtr.text));
+                    } else {
+                      return showConfirmDialog(
+                          context, "로그인에 실패했습니다.\n아이디나 비밀번호를 확인해 주세요.", null);
                     }
                   },
                   child: const Text(

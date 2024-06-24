@@ -1,16 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haemo/model/hotplace_post_response_model.dart';
-import 'package:haemo/model/user_response_model.dart';
+import 'package:haemo/networks/network.dart';
 import 'package:haemo/screens/page/board/board_detail_page.dart';
-import 'package:haemo/service/db_service.dart';
 import '../../../common/theme.dart';
 import '../../../controller/hotplace_page_controller.dart';
 import '../../components/customAppBar.dart';
 import '../../components/customIndicator.dart';
 import '../../components/heartButton.dart';
-import 'hotplace_board_detail_page.dart';
 
 class HotPlacePage extends StatefulWidget {
   const HotPlacePage({super.key});
@@ -62,7 +59,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
                                         hotPlaceController.uId));
                               },
                             )
-                          : Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
+                          : const Center(child: Text("인기 게시물이 존재하지 않습니다. ")))),
               Text("장소들..", style: CustomThemes.hotPlaceSubTitleTextStyle),
               Expanded(
                   child: Container(
@@ -83,8 +80,7 @@ class _HotPlacePageState extends State<HotPlacePage> {
                               itemBuilder: (BuildContext context, int index) {
                                 return hotPlaceCard(
                                   context,
-                                  hotPlaceController
-                                      .hotPlacePostList.value[index],
+                                  hotPlaceController.hotPlacePostList[index],
                                   hotPlaceController.uId,
                                 );
                               }))))),
@@ -111,7 +107,7 @@ Widget popularHotPlaceCard(
               image: DecorationImage(
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.4), BlendMode.darken),
-                  image: const AssetImage("assets/images/sunset.jpg"),
+                  image: NetworkImage(hotPlaceData.photoList[0]!),
                   fit: BoxFit.cover),
               borderRadius: BorderRadius.circular(12.0)),
           child: Stack(children: [
@@ -149,7 +145,7 @@ Widget hotPlaceCard(
               image: DecorationImage(
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.4), BlendMode.darken),
-                  image: AssetImage("assets/images/sunset.jpg"),
+                  image: NetworkImage(hotPlaceData.photoList[0]!),
                   fit: BoxFit.cover),
               borderRadius: BorderRadius.circular(12.0)),
           child: Stack(children: [

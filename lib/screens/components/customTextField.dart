@@ -233,3 +233,53 @@ Widget chatTextField(
   ])*/
       ;
 }
+
+Widget columnTextField(BuildContext context, text,
+    TextEditingController textController, bool isPassword) {
+  return Container(
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+      child: Column(children: [
+        Container(
+          margin: const EdgeInsets.only(left: 10.0),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            text,
+            style: const TextStyle(
+                color: AppTheme.mainTextColor,
+                fontSize: 14.0,
+                fontWeight: FontWeight.w800),
+          ),
+        ),
+        const SizedBox(
+          height: 5.0,
+        ),
+        TextFormField(
+          controller: textController,
+          obscureText: isPassword,
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.white,
+            hintText: '$text 입력',
+            hintStyle: const TextStyle(
+                color: AppTheme.registerPageHintColor, fontSize: 15.0),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              borderSide: BorderSide(width: 2, color: AppTheme.mainColor),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+              borderSide: BorderSide(width: 2, color: AppTheme.mainColor),
+            ),
+            border: const OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            ),
+          ),
+          validator: (value) {
+            if (value != "" && value != null) {
+              textController.text = value;
+            }
+            return null;
+          },
+        )
+      ]));
+}
